@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:cust="http://java.sun.com/jsf/composite/components">
+<h:head>
+    <script type="text/javascript" src="./resources/scripts/jquery142/jquery-1.4.2.js"></script>
+
+    <cust:imports/>
+    <cust:unittest/>
+
+    <style type = "text/css">
+        @import "./styles/style.css";
+    </style>
+    <script type="text/javascript" src="./resources/scripts/testcases/selenium4.js"></script>
+
+
+</h:head>
+<h:body>
+   <div id="myfaces.logging">
+    </div>
+    <div id = "centerDiv">
+        <h2>protocol testcase4</h2>
+        <h1>Selenium Test for body change via java.faces.Body</h1>
+        <script type = "text/javascript">
+            function testFunc1(event) {
+                var element = document.getElementById("testResults");
+                element.innerHTML = "test1 succeeded ";
+                return true;
+            }
+            var testFunc2 = "  var element = document.getElementById('testResults'); element.innerHTML += ('test2 succeeded'); return true;";
+            var testFunc3 = function() {
+                var element = document.getElementById("testResults");
+                element.innerHTML += "test3 succeeded ";
+                //this function returns false so the  chain should stop here!
+                return false;
+            }
+            var testFunc4 = function() {
+                var element = document.getElementById("testResults");
+                element.innerHTML += ("test4 failed ");
+                return false;
+            }
+          </script>
+        
+          <div id="testResults">
+                <h3>The test result will be shown here</h3>
+          </div>
+      </div>
+
+
+      
+        <input type = "button" id = "chaincall" value = "press for chaintest"
+               onclick = "jsf.util.chain(this, event, testFunc1,testFunc2,testFunc3,testFunc4);" />
+
+  </h:body>
+</html>

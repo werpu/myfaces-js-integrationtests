@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:cust="http://java.sun.com/jsf/composite/components">
+<h:head>
+    <script type="text/javascript" src="./resources/scripts/jquery142/jquery-1.4.2.js"></script>
+
+    <cust:imports/>
+    <cust:unittest/>
+
+    <style type="text/css">
+        @import "./styles/style.css";
+    </style>
+    <script type="text/javascript" src="./resources/scripts/testcases/selenium3.js"></script>
+
+</h:head>
+<h:body>
+
+<div id="centerDiv">
+    <h2>protocol testcase3</h2>
+
+    <h1>Selenium Test for body change via java.faces.Body</h1>
+
+
+    <div id="myfaces.logging">
+    </div>
+
+    <div id="testResults">
+        <h3>After triggering this test the entier page should be replaced by the test result</h3>
+    </div>
+
+
+    <form id="form1" prependId="false">
+        <input type="button" id="cmd_body1" value="replace the entire body"
+               onclick="emitPPR(this, ('undefined' != typeof event)? event: null, 'body2');"/>
+    </form>
+
+
+</div>
+</h:body>
+</html>

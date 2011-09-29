@@ -1,0 +1,56 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:cust="http://java.sun.com/jsf/composite/components"   >
+
+<h:head>
+
+    <script type="text/javascript" src="./resources/scripts/jquery142/jquery-1.4.2.js"></script>
+    <style type="text/css">
+        @import "./styles/style.css";
+    </style>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+   <title>Ajax Request</title>
+   <script type="text/javascript">
+       // <![CDATA[
+       var a = true;
+       var b = false;
+       var c = a && b;
+       setTimeout(function() {
+        if(!window.cnt) {
+            window.cnt = 1;
+        }
+        document.body.innerHTML += "refresh successul"+ (window.cnt++);
+       },100);
+       // ]]>
+   </script>
+   <cust:imports />
+   <cust:unittest />
+   <script type="text/javascript" src="./resources/scripts/testcases/selenium5.js"></script>
+
+
+</h:head>
+
+<h:body>
+
+    <div id="myfaces.logging">
+    </div>
+
+   <h1>Full page refresh test with some embedded javascripts in the head</h1>
+   <h:form id="form1" prependId="false">
+
+       <h:outputText id="out1" value="testtext"/>
+
+      <h:commandButton id="allKeyword"
+                       value="@all">
+          <f:ajax execute="@all"
+                  render="@all"/>
+      </h:commandButton>
+
+  </h:form>
+
+</h:body>
+
+</html>

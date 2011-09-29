@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:cust="http://java.sun.com/jsf/composite/components"
+      xml:lang="en" lang="en">
+<head>
+    <script type="text/javascript" src="./resources/scripts/jquery142/jquery-1.4.2.js"></script>
+
+    <cust:imports/>
+    <cust:unittest/>
+
+    <title>mypage</title>
+
+    
+
+    <style type="text/css">
+        @import "./styles/style.css";
+    </style>
+
+    <script type="text/javascript" src="./resources/scripts/testcases/pprNavCase.js"></script>
+</head>
+<h:body>
+
+    <div id="myfaces.logging">
+    </div>
+
+    <h2>ppr nav case1</h2>
+
+
+    <h:form id="mainForm" prependId="false">
+
+        <h1>content part only present on page1</h1>
+
+        <h:panelGroup id="fullContent">
+
+            <h:panelGroup id="navigation">
+                <h:commandLink id="forward" action="pprNavCase2" value="got to page2&gt;&gt;">
+
+                    <f:ajax execute="mainForm" render="fullContent"/>
+
+                </h:commandLink>
+                <h:commandLink onclick="document.body.innerHTML = 'boogy';return false;" value="inner"/>
+            </h:panelGroup>
+
+
+            <h:panelGroup id="content">
+                <h:panelGrid columns="2">
+                    <h:outputFormat value="First Name"/> <h:inputText id="firstName" value="#{navigationTestBean
+                    .firstName}"/>
+                    <h:outputFormat value="Last Name"/><h:inputText id="lastName" value="#{navigationTestBean
+                    .lastName}"/>
+                    <h:outputFormat value="City"/><h:inputText id="city" value="#{navigationTestBean.city}"/>
+                    <h:outputFormat value="Zip Code"/><h:inputText id="zip" value="#{navigationTestBean.zipCode}"/>
+                </h:panelGrid>
+            </h:panelGroup>
+
+        </h:panelGroup>
+
+    </h:form>
+
+
+</h:body>
+</html>
