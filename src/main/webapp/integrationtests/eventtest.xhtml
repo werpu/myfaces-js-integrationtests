@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:cust="http://java.sun.com/jsf/composite/components">
+<h:head>
+    <title>MyFaces 2.0 Javascript API Tests Part1</title>
+
+    <script type="text/javascript" src="../resources/scripts/jquery142/jquery-1.4.2.js"></script>
+
+    <cust:imports/>
+    <cust:unittest/>
+    <style type="text/css">
+        @import "../styles/style.css";
+    </style>
+    <script type="text/javascript" src="../resources/scripts/testcases/eventtest.js"></script>
+
+</h:head>
+<h:body>
+
+    <h3>
+        This is an integration test which checks the myfaces jsf.js
+        event system for structural damages.
+
+        in the logging console and logging div any false assertion
+        leads to a failed test
+    </h3>
+
+
+
+
+
+    <h:form prependId="false">
+        <h:panelGroup id="updatePanel">
+            <h:outputFormat value="hello world"/>
+        </h:panelGroup>
+
+
+        <h:commandLink class="updateTrigger" id="updateTrigger" value="[Press me for Update]"
+                       onclick="return false; return false;"></h:commandLink>
+    </h:form>
+
+
+    <h:form id="form1">
+        <h:commandButton value="Partial">
+            <f:ajax execute="@this" render="@this"/>
+        </h:commandButton>
+    </h:form>
+
+    <div id="myfaces.logging">
+        <h2> Logging Output </h2>
+    </div>
+
+</h:body>
+</html>
