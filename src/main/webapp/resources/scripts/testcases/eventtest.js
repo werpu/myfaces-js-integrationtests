@@ -14,7 +14,11 @@ var AjaxCase = myfaces._supportive.unittest.JSFAjaxTestCase;
 
 var testGroup = new myfaces._supportive.unittest.TestGroup(
         {
-            description:"MyFaces Event Lifecycle test"
+            description:"MyFaces Event Lifecycle test",
+            postcondition: function() {
+                this.autoForward("./integrationtests/doubleEvalDetection.jsf");
+                return true;
+            }
         });
 
 testGroup.addCase(

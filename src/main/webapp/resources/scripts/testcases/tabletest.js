@@ -4,10 +4,8 @@ var testGroup = new myfaces._supportive.unittest.TestGroup(
         {
             description:"Table Test, replacement of table elements",
             postcondition: function() {
+                this.autoForward("./integrationtests/eventtest.jsf");
 
-                if (window.location.href.indexOf("autotest=true") != -1) {
-                    window.location.href = "/TestScripts/integrationtests/eventtest.jsf?autotest=true";
-                }
                 return true;
             }
         });

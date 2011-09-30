@@ -4,10 +4,7 @@ var testGroup = new myfaces._supportive.unittest.TestGroup(
         {
             description:"Partial Page Rendering Nav Case",
             postcondition: function() {
-
-                if (window.location.href.indexOf("autotest=true") != -1) {
-                    window.location.href = "/TestScripts/integrationtests/tableTest.jsf?autotest=true";
-                }
+                this.autoForward("./integrationtests/tableTest.jsf");
                 return true;
             }
         });
@@ -24,12 +21,12 @@ testGroup.addCase(new AjaxCase({
     run: function() {
         //jsf.util.chain(document.getElementById('forward'), event,'jsf.ajax.request(\'forward\',event,{execute:\'mainForm\',render:\'fullContent\',\'javax.faces.behavior.event\':\'action\'})'); return false;
 
-        this.ajaxRequest('forward',null,{execute:'mainForm',render:'fullContent','javax.faces.behavior.event':'action'});
+        this.ajaxRequest('forward', null, {execute:'mainForm',render:'fullContent','javax.faces.behavior.event':'action'});
     },
     postcondition: function() {
-       this.assertTrue("FirstName transferred", $("span#firstName").html().indexOf("Werner") != -1);
-       this.assertTrue("LastName transferred", $("span#lastName").html().indexOf("Tester") != -1);
-       this.assertTrue("Script Executed", $("body").html().indexOf("script executed") != -1);
+        this.assertTrue("FirstName transferred", $("span#firstName").html().indexOf("Werner") != -1);
+        this.assertTrue("LastName transferred", $("span#lastName").html().indexOf("Tester") != -1);
+        this.assertTrue("Script Executed", $("body").html().indexOf("script executed") != -1);
     }
 }));
 

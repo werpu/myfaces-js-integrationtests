@@ -4,9 +4,8 @@ var testGroup = new myfaces._supportive.unittest.TestGroup(
         {
             description:"Chain Test",
             tearDown: function() {
-               if (window.location.href.indexOf("autotest=true") != -1) {
-                    window.location.href = "/TestScripts/integrationtests/selenium6.jsf?autotest=true";
-               }
+                this.autoForward("./integrationtests/selenium6.jsf");
+
             }
         });
 testGroup.addCase(new AjaxCase({

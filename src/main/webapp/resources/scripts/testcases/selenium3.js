@@ -11,9 +11,8 @@ myfaces._impl.core._Runtime.extendClass("SeleniumGroup2", myfaces._supportive.un
     description:"Full Body Replacement",
     postcondition: function() {
         this._callSuper("postcondition");
-        if (window.location.href.indexOf("autotest=true") != -1) {
-            window.location.href = "/TestScripts/integrationtests/selenium4.jsf?autotest=true";
-        }
+        this.autoForward("./integrationtests/selenium4.jsf");
+
         return true;
     },
     tearDown: function() {

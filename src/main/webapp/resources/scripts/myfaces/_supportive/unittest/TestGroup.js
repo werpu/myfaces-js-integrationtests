@@ -76,7 +76,7 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.TestGroup"
             testCases[cnt].attr("statisticsEngine", this._statisticsEngine);
             testCases[cnt].attr("testGroup", this);
 
-            (function(cnt2,_t) {
+            (function(cnt2, _t) {
                 var oldFunc = testCases[cnt2].tearDown;
                 //we decorate the teardown to trigger the next properly
                 testCases[cnt2].tearDown = _t._Lang.hitch(_t, function() {
@@ -101,10 +101,9 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.TestGroup"
         if (this._currentLifecyclePos == this.testCases.length) {
             try {
 
-                for(var cnt = 0;this._allTestsPassed && cnt < this.testCases.length; cnt++) {
+                for (var cnt = 0; this._allTestsPassed && cnt < this.testCases.length; cnt++) {
                     this._allTestsPassed = this._allTestsPassed & !this.testCases[cnt].isFailed();
                 }
-
 
                 //TODO postcondition call only if he lifecycle has succeeded
                 if (this._allTestsPassed && !this.postcondition()) {
@@ -116,7 +115,8 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.TestGroup"
                 this.tearDown();
             }
             return false;
-        };
+        }
+        ;
 
         var lifecyclePos = this._currentLifecyclePos;
         //we defer until the end of the execution to perform the next lifecycle
@@ -183,22 +183,39 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.TestGroup"
         return true;
     },
     _tearDown: function() {
-       this.logInfo("Final statistics");
-      this._statisticsEngine.tearDown();
+        this.logInfo("Final statistics");
+        this._statisticsEngine.tearDown();
     },
     tearDown: function() {
 
     },
 
     start: function() {
-            this.setup();
-            this.logInfo("Starting test");
-            if (!this.precondition()) {
-                this.logError("Precondition failed for test group");
-                return;
-            }
-            this.next();
+        this.setup();
+        this.logInfo("Starting test");
+        if (!this.precondition()) {
+            this.logError("Precondition failed for test group");
+            return;
+        }
+        this.next();
 
+    },
+
+    /**
+     * helper to reduce the auto forwarding code
+     * @param url
+     */
+    autoForward: function(url) {
+        //we timeout because then our postprocessing is securely done
+        setTimeout(function() {
+            if (window.location.href.indexOf("autotest=true") != -1) {
+                if (url.indexOf("?") == -1) {
+                    window.location.href = url + "?autotest=true";
+                } else {
+                    window.location.href = url + "&autotest=true";
+                }
+            }
+        },300);
     }
 
 });
