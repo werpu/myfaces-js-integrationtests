@@ -4,7 +4,7 @@ var testGroup = new myfaces._supportive.unittest.TestGroup(
         {
             description:"Chain Test",
             tearDown: function() {
-                this.autoForward("./integrationtests/selenium6.jsf");
+                this.autoForward("./selenium6.jsf");
 
             }
         });

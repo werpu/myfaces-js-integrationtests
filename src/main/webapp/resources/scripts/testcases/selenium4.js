@@ -5,7 +5,7 @@ var testGroup = new myfaces._supportive.unittest.TestGroup(
             description:"Chain Test",
             postcondition: function() {
 
-                this.autoForward("./integrationtests/selenium5.jsf");
+                this.autoForward("./selenium5.jsf");
 
                 return true;
             }

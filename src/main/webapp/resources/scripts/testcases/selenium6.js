@@ -20,7 +20,7 @@ myfaces._impl.core._Runtime.extendClass("SeleniumGroup6", myfaces._supportive.un
         this._callSuper("tearDown");
         //we are resetting the table to its original state
         this.tableHTML = $("#table1").html(this.tableHTML);
-        this.autoForward("./integrationtests/pprNavCase1.jsf");
+        this.autoForward("./pprNavCase1.jsf");
     },
     emitPPR: function(ajaxFunc, source, event, action, useIframe, formName) {
         document.getElementById(formName || "form2").action = target;

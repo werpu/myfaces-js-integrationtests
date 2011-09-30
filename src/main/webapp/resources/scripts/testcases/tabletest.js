@@ -4,7 +4,7 @@ var testGroup = new myfaces._supportive.unittest.TestGroup(
         {
             description:"Table Test, replacement of table elements",
             postcondition: function() {
-                this.autoForward("./integrationtests/eventtest.jsf");
+                this.autoForward("./eventtest.jsf");
 
                 return true;
             }
