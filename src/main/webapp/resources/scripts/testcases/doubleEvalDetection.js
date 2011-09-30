@@ -16,7 +16,7 @@ testGroup.addCase(new AjaxCase({
     description:"Chain test",
     defer: 2000,
     /*we enable global processing to handle a triggered click on the issuing control*/
-    globalProcess: true,
+
     manualTearDown: true,
     _ajaxCnt: 0,
     precondition: function() {
@@ -24,16 +24,14 @@ testGroup.addCase(new AjaxCase({
         return true;
     },
     run: function() {
-        $("#reloader").click();
-        $("#reloader").click();
+        this.ajaxRequest('reloader', null, {execute:'@none',render:'outputWriter','javax.faces.behavior.event':'action'});
+        this.ajaxRequest('reloader', null, {execute:'@none',render:'outputWriter','javax.faces.behavior.event':'action'});
     },
     postcondition: function() {
-        if (this._ajaxCnt == 2) {
+        if (this._ajaxCnt == 1) {
             try {
-                if (this._ajaxCnt == 99) {//last request
-                    var renderTargetHTML = $("#outputWriter").html();
-                    assertTrue("render target only is allowed to have 2 entries", renderTargetHTML == "0 1 2 ");
-                }
+                var renderTargetHTML = $("#output").html();
+                this.assertTrue("render target only is allowed to have 2 entries", renderTargetHTML == "0 1 2 ");
             } finally {
                 this.tearDown();
             }
@@ -42,3 +40,6 @@ testGroup.addCase(new AjaxCase({
         return true;
     }
 }));
+setTimeout(function() {
+    testGroup.start();
+}, 100);
