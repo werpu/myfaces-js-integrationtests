@@ -6,7 +6,7 @@ var testGroup = new myfaces._supportive.unittest.TestGroup(
             postcondition: function() {
 
                 if (window.location.href.indexOf("autotest=true") != -1) {
-                    window.location.href = "/TestScripts/selenium5.jsf?autotest=true";
+                    window.location.href = "/TestScripts/integrationtests/selenium5.jsf?autotest=true";
                 }
                 return true;
             }

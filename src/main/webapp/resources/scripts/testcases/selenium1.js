@@ -8,7 +8,7 @@ var testGroup = new myfaces._supportive.unittest.TestGroup(
             description:"MyFaces JSF Protocol Tests",
             postcondition: function() {
                 if(window.location.href.indexOf("autotest=true") != -1) {
-                    window.location.href="/TestScripts/selenium2.jsf?autotest=true";
+                    window.location.href="/TestScripts/integrationtests/selenium2.jsf?autotest=true";
                 }
                 //if the tests have passed forward to the next testing page
                 return true;

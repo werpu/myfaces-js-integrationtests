@@ -1,0 +1,98 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:cust="http://java.sun.com/jsf/composite/components">
+<h:head>
+    <title>MyFaces 2.0 Javascript API Tests Part1</title>
+
+    <cust:imports/>
+    <cust:unittest/>
+
+    <style type="text/css">
+        @import "../styles/style.css";
+    </style>
+</h:head>
+
+<body>
+
+<div id="centerDiv">
+    <h1>dom unit testcases probing various aspects of our dom library</h1>
+
+    <div id="testProbes">
+        <div id="level1" class="level1">
+            <div class="level2">
+                <div> aaa
+                    <div id="wronglevel2" class="level2">aaa</div>
+                </div>
+            </div>
+            <div class="level2">aaa</div>
+        </div>
+        <div id="wronglevel2_2" class="level2"></div>
+        <form id="form1">
+            <input name="blabla" type="text"/>
+        </form>
+
+        <form id="form2">
+            <input name="oooo" type="text"/>
+            <input id="form2:oooo2" type="text"/>
+        </form>
+    </div>
+    <div id="blabla2"></div>
+
+    <div id="testResults">
+        <div id="myfaces.logging">
+
+        </div>
+    </div>
+
+    <form action="" id="booga3">
+        <input type="hidden" id="javax.faces.ViewState" value="bla"/>
+
+    </form>
+
+</div>
+
+<script type="text/javascript">
+    var testGroup = new myfaces._supportive.unittest.TestGroup({description:"dom unit tests"});
+    var Dom = myfaces._impl._util._Dom;
+    testGroup.defineCase("five divs under level1 (including it)",
+        function() {
+            var results = this._Dom.findByTagName(Dom.byId("level1"), "div", true);
+            this.assertTrue("level1 nodes", results.length == 5);
+        }
+    ).defineCase(
+        "one element in form",
+        function() {
+            var results = this._Dom.findByTagName(Dom.byId("form1"), "input", true);
+            this.assertTrue("one element in form", results.length == 1);
+        }
+    ).defineCase("Fuzzy form detection",
+        function() {
+            var results = this._Dom.fuzzyFormDetection(Dom.findByName(document, "blabla")[0]);
+            this.assertTrue("element for fuzzy form search", null != results);
+        }
+    ).defineCase("Fuzzy form detection second case",
+        function() {
+            var results = this._Dom.fuzzyFormDetection(Dom.byId("blabla2"));
+            this.assertFalse("element for fuzzy form search", null != results);
+        }
+    );
+    testGroup.start();
+</script>
+
+
+<table id="testtable">
+    <tbody id="mybody">
+    <tr id="myrow">
+        <td>orignal body</td>
+    </tr>
+    </tbody>
+</table>
+
+
+<script type="text/javascript" src="../resources/scripts/testsupport2.js"></script>
+
+
+</body>
+</html>

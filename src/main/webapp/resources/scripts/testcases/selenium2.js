@@ -12,7 +12,7 @@ myfaces._impl.core._Runtime.extendClass("SeleniumGroup2", myfaces._supportive.un
     postcondition: function() {
         this._callSuper("postcondition");
         if (window.location.href.indexOf("autotest=true") != -1) {
-            window.location.href = "/TestScripts/selenium3.jsf?autotest=true";
+            window.location.href = "/TestScripts/integrationtests/selenium3.jsf?autotest=true";
         }
         return true;
     },

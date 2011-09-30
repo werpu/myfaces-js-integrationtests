@@ -5,7 +5,7 @@ var testGroup = new myfaces._supportive.unittest.TestGroup(
             description:"Chain Test",
             tearDown: function() {
                if (window.location.href.indexOf("autotest=true") != -1) {
-                    window.location.href = "/TestScripts/selenium6.jsf?autotest=true";
+                    window.location.href = "/TestScripts/integrationtests/selenium6.jsf?autotest=true";
                }
             }
         });

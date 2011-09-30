@@ -21,7 +21,7 @@ myfaces._impl.core._Runtime.extendClass("SeleniumGroup6", myfaces._supportive.un
         //we are resetting the table to its original state
         this.tableHTML = $("#table1").html(this.tableHTML);
         if (window.location.href.indexOf("autotest=true") != -1) {
-            window.location.href = "/TestScripts/pprNavCase1.jsf?autotest=true";
+            window.location.href = "/TestScripts/integrationtests/pprNavCase1.jsf?autotest=true";
         }
     },
     emitPPR: function(ajaxFunc, source, event, action, useIframe, formName) {
