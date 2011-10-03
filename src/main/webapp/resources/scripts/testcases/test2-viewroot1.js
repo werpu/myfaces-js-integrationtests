@@ -1,7 +1,7 @@
 var AjaxCase = myfaces._supportive.unittest.JSFAjaxTestCase;
 myfaces._impl.core._Runtime.extendClass("SeleniumGroup2", myfaces._supportive.unittest.TestGroup, {
     constructor_: function() {
-      this._callSuper("constructor_");
+        this._callSuper("constructor_");
     },
 
     setup: function() {
@@ -11,7 +11,7 @@ myfaces._impl.core._Runtime.extendClass("SeleniumGroup2", myfaces._supportive.un
     description:"Full Body Replacement",
     postcondition: function() {
         this._callSuper("postcondition");
-        this.autoForward("./selenium4.jsf");
+        this.autoForward("./test3-viewbody1.jsf");
 
         return true;
     },
@@ -41,9 +41,8 @@ myfaces._impl.core._Runtime.extendClass("SeleniumGroup2", myfaces._supportive.un
 });
 
 var testGroup = new SeleniumGroup2();
-testGroup.addStandardTestcase("Full Body Replacement normal","form1","body2", function() {
-    this.assertTrue("Check for elements", $("body").html().indexOf("testResults59") != -1);
-    this.assertTrue("Body replacement and script eval performed", $("body").html().indexOf("Body replacement test successful") != -1);
+testGroup.addStandardTestcase("Full Body Replacement normal", "form1", "body", function() {
+    this.assertTrue("Body replacement and script eval performed", $("#scriptreceiver").html().indexOf("hello from embedded script") != -1);
 });
 
 setTimeout(function() {

@@ -4,7 +4,7 @@ var testGroup = new myfaces._supportive.unittest.TestGroup(
         {
             description:"Partial Page Rendering Nav Case",
             postcondition: function() {
-                this.autoForward("./tableTest.jsf");
+                this.autoForward("./test9-spreadsheet.jsf");
                 return true;
             }
         });

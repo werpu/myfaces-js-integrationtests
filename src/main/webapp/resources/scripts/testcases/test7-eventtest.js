@@ -16,7 +16,7 @@ var testGroup = new myfaces._supportive.unittest.TestGroup(
         {
             description:"MyFaces Event Lifecycle test",
             postcondition: function() {
-                this.autoForward("./doubleEvalDetection.jsf");
+                this.autoForward("./test8-navcase1.jsf");
                 return true;
             }
         });

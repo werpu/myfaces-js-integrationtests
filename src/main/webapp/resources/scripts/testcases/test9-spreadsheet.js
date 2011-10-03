@@ -4,7 +4,7 @@ var testGroup = new myfaces._supportive.unittest.TestGroup(
         {
             description:"Table Test, replacement of table elements",
             postcondition: function() {
-                this.autoForward("./eventtest.jsf");
+                this.autoForward("./test10-doubleeval.jsf");
 
                 return true;
             }
@@ -15,7 +15,7 @@ testGroup.addCase(new AjaxCase({
     defer: 2000,
     manualTearDown: true,
     precondition: function() {
-        this._ajaxCnt = 0;
+        this._ajaxCnt = 1;
         return true;
     },
     run: function() {
@@ -39,7 +39,7 @@ testGroup.addCase(new AjaxCase({
 
     postcondition: function() {
 
-        if (this._ajaxCnt == 99) {//last request
+        if (this._ajaxCnt == 100) {//last request
             try {
 
                 for (var cnt = 0; cnt < 100; cnt++) {

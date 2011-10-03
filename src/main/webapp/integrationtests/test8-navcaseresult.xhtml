@@ -26,7 +26,13 @@
     <div id="myfaces.logging">
     </div>
 
-    <h2>ppr nav case2</h2>
+    <h1>PPR Nav Case Test Result</h1>
+    <h2>
+    This test tests the partial page navigation with an extreme
+    condition, of issuing a full update but with a render of a single element.
+    The result should be a full ViewRoot replacement in that case, due to
+    the ppr navigation being issued.
+    </h2>
 
     <h:outputScript name="jsf.js" library="javax.faces"
                     target="body"/>

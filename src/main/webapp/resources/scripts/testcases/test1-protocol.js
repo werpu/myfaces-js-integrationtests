@@ -8,7 +8,7 @@ var testGroup = new myfaces._supportive.unittest.TestGroup(
             description:"MyFaces JSF Protocol Tests",
             postcondition: function() {
                 //if the tests have passed forward to the next testing page
-                this.autoForward("./selenium2.jsf");
+                this.autoForward("./test2-viewroot1.jsf");
                 return true;
             }
         });

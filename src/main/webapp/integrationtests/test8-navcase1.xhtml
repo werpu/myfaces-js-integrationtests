@@ -19,14 +19,20 @@
         @import "../styles/style.css";
     </style>
 
-    <script type="text/javascript" src="../resources/scripts/testcases/pprNavCase.js"></script>
+    <script type="text/javascript" src="../resources/scripts/testcases/test8-navcase1.js"></script>
 </head>
 <h:body>
 
     <div id="myfaces.logging">
     </div>
 
-    <h2>ppr nav case1</h2>
+    <h1>PPR Nav Case Test</h1>
+    <h2>
+    This test tests the partial page navigation with an extreme
+    condition, of issuing a full update but with a render of a single element.
+    The result should be a full ViewRoot replacement in that case, due to
+    the ppr navigation being issued.
+    </h2>
 
 
     <h:form id="mainForm" prependId="false">
@@ -36,7 +42,7 @@
         <h:panelGroup id="fullContent">
 
             <h:panelGroup id="navigation">
-                <h:commandLink id="forward" action="pprNavCase2" value="got to page2&gt;&gt;">
+                <h:commandLink id="forward" action="test8-navcaseresult" value="got to page2&gt;&gt;">
 
                     <f:ajax execute="mainForm" render="fullContent"/>
 

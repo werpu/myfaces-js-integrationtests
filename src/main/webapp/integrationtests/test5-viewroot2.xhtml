@@ -28,7 +28,7 @@
    </script>
    <cust:imports />
    <cust:unittest />
-   <script type="text/javascript" src="../resources/scripts/testcases/selenium5.js"></script>
+   <script type="text/javascript" src="../resources/scripts/testcases/test5-viewroot2.js"></script>
 
 
 </h:head>
@@ -38,7 +38,11 @@
     <div id="myfaces.logging">
     </div>
 
-   <h1>Full page refresh test with some embedded javascripts in the head</h1>
+   <h1>ViewRoot Replacement 2</h1>
+   <h2>
+   This test replaces javax.faces.ViewRoot with embedded scripts in the head
+   and a CDATA enclosure to test the proper escapong of the content
+   </h2>
    <h:form id="form1" prependId="false">
 
        <h:outputText id="out1" value="testtext"/>

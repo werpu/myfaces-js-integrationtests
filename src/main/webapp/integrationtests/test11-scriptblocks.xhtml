@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:cust="http://java.sun.com/jsf/composite/components">
+<h:head>
+    <script type="text/javascript" src="../resources/scripts/jquery142/jquery-1.4.2.js"></script>
+
+    <cust:imports/>
+    <cust:unittest/>
+
+    <style type="text/css">
+        @import "../styles/style.css";
+    </style>
+    <script type="text/javascript">
+        if (!myfaces.config) {
+            myfaces.config = {};
+            //myfaces.config.transportAutoSelection = true;
+            //myfaces.config.transportType = "xhrQueuedGet";
+
+        }
+        myfaces.config.projectStage = "Development";
+    </script>
+</h:head>
+<h:body>
+    <div id="myfaces.logging">
+        <h2> Logging Output </h2>
+    </div>
+
+    <h1> Partial Response Writer Test for various script block </h1>
+    <h2> This is a test which tests the partial response writer
+    for various script block resolutions.</h2>
+
+    <h:panelGroup layout="block" id="resultArea">Results: <br /></h:panelGroup>
+    <h:form id="testForm" prependId="false">
+        <h:commandButton id="reloader" value="Reload panel">
+            <f:ajax execute="@none" render="outputWriter"/>
+        </h:commandButton>
+
+
+
+
+        <!--
+        If this panelGroup contains only one script, it works well - the
+script
+        is evaluated only once - in runScripts() from jsf.js.
+        But if it contains more script elements, the following code from
+        jsf.js _outerHTMLCompliant() evaluates them first:
+        item.parentNode.replaceChild(ret, item);
+        And then runScripts() evaluates them also.
+        -->
+        <h:panelGroup id="outputWriter">
+            <script type="text/javascript">
+                document.getElementById("resultArea").innerHTML = document.getElementById("resultArea").innerHTML +
+                "normal script";
+            </script>
+            <script type="text/javascript">
+            // <![CDATA[
+                 document.getElementById("resultArea").innerHTML = document.getElementById("resultArea").innerHTML
+                         +"<br />normal script -->";
+            // ]]>
+            </script>
+           <script type="text/javascript">
+            //<![CDATA[
+                document.getElementById("resultArea").innerHTML = document.getElementById("resultArea").innerHTML +
+            "<br />normal script -->";
+            //]]>
+            </script>
+            <script type="text/javascript">
+            //<!--
+                document.getElementById("resultArea").innerHTML = document.getElementById("resultArea").innerHTML +
+            "<br />normal script ]]><br />";
+            //-->
+            </script>
+        </h:panelGroup>
+
+
+    </h:form>
+
+
+</h:body>
+</html>

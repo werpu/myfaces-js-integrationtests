@@ -20,7 +20,7 @@ testGroup.addCase(new AjaxCase({
     manualTearDown: true,
     _ajaxCnt: 0,
     precondition: function() {
-        this._ajaxCnt = 0;
+        this._ajaxCnt = 1;
         return true;
     },
     run: function() {
@@ -28,7 +28,7 @@ testGroup.addCase(new AjaxCase({
         this.ajaxRequest('reloader', null, {execute:'@none',render:'outputWriter','javax.faces.behavior.event':'action'});
     },
     postcondition: function() {
-        if (this._ajaxCnt == 1) {
+        if (this._ajaxCnt == 2) {
             try {
                 var renderTargetHTML = $("#output").html();
                 this.assertTrue("render target only is allowed to have 2 entries", renderTargetHTML == "0 1 2 ");
