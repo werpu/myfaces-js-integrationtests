@@ -10,23 +10,29 @@ var testGroup = new myfaces._supportive.unittest.TestGroup(
                 return true;
             }
         });
+var  functionCalled = {};
+
 var decorate = function( /*String*/ namespace, /*function*/ toDecorate) {
+    RT.reserveNamespace(namespace, toDecorate);
+
     RT.applyToGlobalNamespace(namespace, Lang.hitch(this, function() {
-        this.functionCalled[namespace] = true;
+        functionCalled[namespace] = true;
         toDecorate.apply(toDecorate, arguments);
     }));
 };
+
+
 
 testGroup.addCase(new AjaxCase({
     description:"Script Block Test",
     /*we enable global processing to handle a triggered click on the issuing control*/
     _ajaxCnt: 0,
-    functionCalled: null,
+
 
     setup: function() {
         decorate("jsf.ajax.request", jsf.ajax.request);
         decorate("jsf.ajax.response", jsf.ajax.response);
-        decorate("jsf.getViewState", jsf.ajax.response);
+        decorate("jsf.getViewState", jsf.getViewState);
         decorate("jsf.util.chain", jsf.util.chain);
     },
 
@@ -35,10 +41,10 @@ testGroup.addCase(new AjaxCase({
     },
 
     postcondition: function() {
-        this.assertTrue("request decorated and called", !!this["jsf.ajax.request"]);
-        this.assertTrue("response decorated and called", !!this["jsf.ajax.response"]);
-        this.assertTrue("getViewState decorated and called", !!this["jsf.getViewState"]);
-        this.assertTrue("chain decorated and called", !!this["jsf.util.chain"]);
+        this.assertTrue("request decorated and called", !!functionCalled["jsf.ajax.request"]);
+        this.assertTrue("response decorated and called", !!functionCalled["jsf.ajax.response"]);
+        this.assertTrue("getViewState decorated and called", !!functionCalled["jsf.getViewState"]);
+        this.assertTrue("chain decorated and called", !!functionCalled["jsf.util.chain"]);
 
         return true;
     }
