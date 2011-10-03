@@ -28,7 +28,7 @@
         <h2> Logging Output </h2>
     </div>
 
-    <h1> Partial Response Writer Test for various script block </h1>
+    <h1> Partial Response Writer Test for various script block patterns </h1>
     <h2> This is a test which tests the partial response writer
     for various script block resolutions.
     The problem there is, that there are various ways to describe a script block.
@@ -62,19 +62,19 @@ script
             //<!-- more than one blank set here -->
             //   <![CDATA[
                  document.getElementById("resultArea").innerHTML = document.getElementById("resultArea").innerHTML
-                         +"<br />normal script -->";
+                         +"<div class=\"result2\">normal script --></div>";
             // ]]>
             </script>
            <script type="text/javascript">
             //<![CDATA[
                 document.getElementById("resultArea").innerHTML = document.getElementById("resultArea").innerHTML +
-            "<br />normal script -->";
+            "<div class=\"result3\">normal script --></div>";
             //]]>
             </script>
             <script type="text/javascript">
             //<!--
                 document.getElementById("resultArea").innerHTML = document.getElementById("resultArea").innerHTML +
-            "<br />normal script ]]><br />";
+            "<div class=\"result4\">normal script ]]></div>";
             //-->
             </script>
         </h:panelGroup>

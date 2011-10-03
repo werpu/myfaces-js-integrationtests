@@ -4,7 +4,7 @@ var testGroup = new myfaces._supportive.unittest.TestGroup(
         {
             description:"Script blocks in various formats",
             postcondition: function() {
-                this.autoForward("./test11-scriptblocks.jsf");
+                //this.autoForward("./test11-scriptblocks.jsf");
                 return true;
             }
         });
@@ -23,7 +23,12 @@ testGroup.addCase(new AjaxCase({
 
     postcondition: function() {
         var renderTargetHTML = $("#resultArea").html();
-        this.assertTrue("result area text must be correct", renderTargetHTML == "Results: <br>normal script<br>normal script --&gt;<br>normal script --&gt;<br>normal script ]]&gt;<br>");
+        //this.assertTrue("result area text must be correct", renderTargetHTML == "Results: <br>normal script<br>normal script --&gt;<br>normal script --&gt;<br>normal script ]]&gt;<br>");
+        this.assertTrue("contents of result2 must match", $(".result2").html() == "normal script --&gt;");
+        this.assertTrue("contents of result3 must match", $(".result3").html() == "normal script --&gt;");
+        //normal script ]]&gt;
+        this.assertTrue("contents of result4 must match", $(".result4").html() == "normal script ]]&gt;");
+
         return true;
     }
 }))
