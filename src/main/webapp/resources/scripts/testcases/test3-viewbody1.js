@@ -11,7 +11,7 @@ myfaces._impl.core._Runtime.extendClass("SeleniumGroup2", myfaces._supportive.un
     description:"Full Body Replacement",
     postcondition: function() {
         this._callSuper("postcondition");
-        this.autoForward("./test4-viewbody2.jsf");
+        this.autoForward("./test4-chain.jsf");
 
         return true;
     },

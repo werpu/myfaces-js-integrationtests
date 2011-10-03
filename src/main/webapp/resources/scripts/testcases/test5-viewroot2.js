@@ -10,7 +10,7 @@ var testGroup = new myfaces._supportive.unittest.TestGroup(
         });
 testGroup.addCase(new AjaxCase({
     description:"Chain test",
-    defer: 2000,
+    defer: 3000,
     run: function() {
         this.ajaxRequest("allKeyword", null, {render:"@all", execute:"@all"});
     },

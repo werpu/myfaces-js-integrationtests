@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:cust="http://java.sun.com/jsf/composite/components">
+<h:head>
+    <script type="text/javascript" src="../resources/scripts/jquery142/jquery-1.4.2.js"></script>
+
+    <cust:imports/>
+    <cust:unittest/>
+
+    <style type="text/css">
+        @import "../styles/style.css";
+    </style>
+    <script type="text/javascript">
+        if (!myfaces.config) {
+            myfaces.config = {};
+            //myfaces.config.transportAutoSelection = true;
+            //myfaces.config.transportType = "xhrQueuedGet";
+
+        }
+        myfaces.config.projectStage = "Development";
+    </script>
+    <script type="text/javascript" src="../resources/scripts/testcases/test11-scriptblocks.js"></script>
+
+</h:head>
+<h:body>
+    <div id="myfaces.logging">
+        <h2> Logging Output </h2>
+    </div>
+
+    <h1> API decortion </h1>
+    <h2> Tests if in the normal jsf lifecycle all apis are called as expected </h2>
+
+    <h:panelGroup layout="block" id="resultArea">Results: <br /></h:panelGroup>
+    <h:form id="testForm" prependId="false">
+        <h:commandButton id="reloader" value="Reload panel">
+            <f:ajax execute="@none" render="outputWriter"/>
+        </h:commandButton>
+
+
+        <h:panelGroup id="outputWriter">
+        </h:panelGroup>
+
+    </h:form>
+
+
+</h:body>
+</html>
