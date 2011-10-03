@@ -16,14 +16,17 @@
     </style>
 </h:head>
 <h:body>
+    <h1>element override</h1>
     <h2>form submit corner condition with the second component
     overriding the first via its name,
     this component tests a detachement sidebehavior
     where the first element is detached and a second one is created
     having a different id but the same name.
 
-    This is the pattern dojo and some other ajax framewors follow
-    in their decoration behavior</h2>
+    This is the pattern dojo and some other ajax frameworks follow
+    in their decoration behavior, note this test can fail
+    because it is myfaces specific to cover this corner case.
+    I therefore will not make a blocking fail in the testroutines.</h2>
     <h:form id="testForm">
         <h:panelGroup id="testGroup">
             <h:inputText id="myTest" value="#{myBean2.searchTerm}">
@@ -31,13 +34,11 @@
             </h:inputText>
 
             <script type="text/javascript">
-                alert("xxx");
                 var node = document.getElementById("testForm:myTest");
                 node.name = null;
                 var newNode = document.createElement("input");
                 newNode.name = node.id;
                 node.parentNode.appendChild(newNode);
-
             </script>
         </h:panelGroup>
     </h:form>
