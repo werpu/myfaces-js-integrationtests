@@ -4,7 +4,7 @@ var testGroup = new myfaces._supportive.unittest.TestGroup(
         {
             description:"Script blocks in various formats",
             postcondition: function() {
-                //this.autoForward("./test11-scriptblocks.jsf");
+                this.autoForward("./test12-apidecoration.jsf");
                 return true;
             }
         });
