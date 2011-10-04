@@ -6,10 +6,24 @@
       xmlns:cust="http://java.sun.com/jsf/composite/components"
       xml:lang="en" lang="en">
 <h:head>
-    <title></title>
+    <script type="text/javascript" src="../resources/scripts/jquery142/jquery-1.4.2.js"></script>
 
-    <cust:imports></cust:imports>
+    <cust:imports/>
+    <cust:unittest/>
 
+    <style type="text/css">
+        @import "../styles/style.css";
+    </style>
+    <script type="text/javascript">
+        if (!myfaces.config) {
+            myfaces.config = {};
+            //myfaces.config.transportAutoSelection = true;
+            //myfaces.config.transportType = "xhrQueuedGet";
+
+        }
+        myfaces.config.projectStage = "Development";
+    </script>
+    <script type="text/javascript" src="../resources/scripts/testcases/test14-multiform.js"></script>
 </h:head>
 <h:body styleClass="tundra">
 
@@ -26,19 +40,20 @@
         According to the JSF 2.1 spec a multiform must be handled in a way that
         if the receiving form has a render target, the viewstate must be updated
     </h2>
-
-    <h:form id="firstFirm" prependId="false">
+    <h:form id="firstForm" prependId="false">
         <h:panelGroup layout="block" id="renderTarget1"/>
         <h:inputText id="first_input" value="#{multiFormBean.inputText1}"/>
-        <h:commandButton action="#{multiFormBean.doSubmit1}" value="submit1">
-            <f:ajax render="renderTarget1 renderTarget2" execute="firstForm"/>
+        <h:commandButton action="#{multiFormBean.doSubmit1}" value="submit1"
+                         onclick="javascript:jsf.ajax.request(this, event, {execute:'firstForm', render:'renderTarget1 renderTarget2'}); return false;">
+
         </h:commandButton>
     </h:form>
     <h:form id="secondForm" prependId="false">
         <h:panelGroup layout="block" id="renderTarget2"/>
-        <h:inputText id="first_input" value="#{multiFormBean.inputText2}"/>
-        <h:commandButton action="#{multiFormBean.doSubmit2}" value="submit2">
-            <f:ajax render="renderTarget1 renderTarget2" execute="secondForm"/>
+        <h:inputText id="second_input" value="#{multiFormBean.inputText2}"/>
+        <h:commandButton action="#{multiFormBean.doSubmit2}" value="submit2"
+                         onclick="javascript:jsf.ajax.request(this, event, {execute:'firstForm', render:'renderTarget1 renderTarget2'}); return false;">
+
         </h:commandButton>
     </h:form>
 
