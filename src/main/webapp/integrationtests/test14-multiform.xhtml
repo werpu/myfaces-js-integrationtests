@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:cust="http://java.sun.com/jsf/composite/components"
+      xml:lang="en" lang="en">
+<h:head>
+    <title></title>
+
+    <cust:imports></cust:imports>
+
+</h:head>
+<h:body styleClass="tundra">
+
+    <style type="text/css">
+        @import "../styles/style.css";
+    </style>
+
+    <div id="myfaces.logging">
+    </div>
+
+    <h1>Multiform</h1>
+
+    <h2>
+        According to the JSF 2.1 spec a multiform must be handled in a way that
+        if the receiving form has a render target, the viewstate must be updated
+    </h2>
+
+    <h:form id="firstFirm" prependId="false">
+        <h:panelGroup layout="block" id="renderTarget1"/>
+        <h:inputText id="first_input" value="#{multiFormBean.inputText1}"/>
+        <h:commandButton action="#{multiFormBean.doSubmit1}" value="submit1">
+            <f:ajax render="renderTarget1 renderTarget2" execute="firstForm"/>
+        </h:commandButton>
+    </h:form>
+    <h:form id="secondForm" prependId="false">
+        <h:panelGroup layout="block" id="renderTarget2"/>
+        <h:inputText id="first_input" value="#{multiFormBean.inputText2}"/>
+        <h:commandButton action="#{multiFormBean.doSubmit2}" value="submit2">
+            <f:ajax render="renderTarget1 renderTarget2" execute="secondForm"/>
+        </h:commandButton>
+    </h:form>
+
+</h:body>
+</html>
