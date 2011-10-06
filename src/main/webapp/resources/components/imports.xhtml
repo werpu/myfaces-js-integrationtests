@@ -4,12 +4,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:cc="http://java.sun.com/jsf/composite"
-      xmlns:jstl="http://java.sun.com/jstl/core"  >
+      xmlns:jstl="http://java.sun.com/jstl/core">
 
 <!-- INTERFACE -->
 <!-- INTERFACE -->
 <cc:interface>
-    <cc:attribute name="extended" default="true" />
+    <cc:attribute name="extended" default="true"/>
 
 </cc:interface>
 
@@ -29,35 +29,40 @@
     <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/_util/_ListenerQueue.js']}"></script>
     <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/_util/_Dom.js']}"></script>
     <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/_util/_UnitTest.js']}"></script>
-    <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/_util/_HtmlStripper.js']}"></script>
-    <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/xhrCore/_FinalizeableObj.js']}"></script>
+    <jstl:if test="#{information.implementation == 'myfaces'}">
+        <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/_util/_HtmlStripper.js']}"></script>
+        <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/xhrCore/_FinalizeableObj.js']}"></script>
 
+        <!-- xhr engine -->
+        <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/xhrCore/engine/XhrConst.js']}"></script>
+        <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/xhrCore/engine/FormData.js']}"></script>
+        <script type="text/javascript"
+                src="#{resource['scripts:myfaces/_impl/xhrCore/engine/BaseRequest.js']}"></script>
 
-    <!-- xhr engine -->
-    <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/xhrCore/engine/XhrConst.js']}"></script>
-    <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/xhrCore/engine/FormData.js']}"></script>
-    <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/xhrCore/engine/BaseRequest.js']}"></script>
+        <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/xhrCore/engine/IFrame.js']}"></script>
+        <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/xhrCore/engine/Xhr1.js']}"></script>
 
-    <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/xhrCore/engine/IFrame.js']}"></script>
-    <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/xhrCore/engine/Xhr1.js']}"></script>
+        <!-- xhr jsf mappers -->
+        <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/xhrCore/_AjaxUtils.js']}"></script>
+        <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/xhrCore/_AjaxRequestQueue.js']}"></script>
 
-    <!-- xhr jsf mappers -->
-    <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/xhrCore/_AjaxUtils.js']}"></script>
-    <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/xhrCore/_AjaxRequestQueue.js']}"></script>
+        <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/xhrCore/_AjaxRequest.js']}"></script>
+        <script type="text/javascript"
+                src="#{resource['scripts:myfaces/_impl/xhrCore/_AjaxRequestLevel2.js']}"></script>
 
-    <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/xhrCore/_AjaxRequest.js']}"></script>
-    <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/xhrCore/_AjaxRequestLevel2.js']}"></script>
+        <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/xhrCore/_IFrameRequest.js']}"></script>
+        <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/xhrCore/_AjaxResponse.js']}"></script>
+        <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/xhrCore/_Transports.js']}"></script>
 
-    <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/xhrCore/_IFrameRequest.js']}"></script>
-    <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/xhrCore/_AjaxResponse.js']}"></script>
-    <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/xhrCore/_Transports.js']}"></script>
+        <!-- Implementation -->
+        <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/core/Impl.js']}"></script>
 
-    <!-- Implementation -->
-    <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/core/Impl.js']}"></script>
-
-    <!-- API -->
-    <script type="text/javascript" src="#{resource['scripts:myfaces/api/jsf.js']}"></script>
-
+        <!-- API -->
+        <script type="text/javascript" src="#{resource['scripts:myfaces/api/jsf.js']}"></script>
+    </jstl:if>
+    <jstl:if test="#{information.implementation == 'mojarra'}">
+        <script type="text/javascript" src="#{resource['javax.faces:jsf.js']}"></script>
+    </jstl:if>
     <script type="text/javascript" src="#{resource['scripts:testsupport.js']}"></script>
 </cc:implementation>
 </html>
