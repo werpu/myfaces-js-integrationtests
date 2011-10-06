@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
       xmlns:cust="http://java.sun.com/jsf/composite/components"
       xml:lang="en" lang="en">
-<head>
+<h:head>
     <script type="text/javascript" src="../resources/scripts/jquery142/jquery-1.4.2.js"></script>
 
     <cust:imports/>
@@ -19,8 +19,8 @@
         @import "../styles/style.css";
     </style>
 
-    <script type="text/javascript" src="../resources/scripts/testcases/test8-navcase1.js"></script>
-</head>
+    <h:outputScript library="scripts" name="testcases/test8-navcase1.js" target="head" />
+</h:head>
 <h:body>
 
     <div id="myfaces.logging">

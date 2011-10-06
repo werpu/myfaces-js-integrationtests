@@ -8,8 +8,14 @@
     <version>1.0-SNAPSHOT</version>
     <properties>
         <myfaces-version>2.1.4-SNAPSHOT</myfaces-version>
+        <java.source.version>1.5</java.source.version>
+        <maven-compiler-plugin.version>2.0.2</maven-compiler-plugin.version>
+
+        <juel.version>2.2.3</juel.version>
+
+        <jetty-maven-plugin.version>8.0.0.M3</jetty-maven-plugin.version>
     </properties>
-    <name>TestScripts JEE5 Webapp</name>
+    <name>TestScripts JEE6 Webapp</name>
     <url>http://maven.apache.org</url>
 
     <repositories>
@@ -65,6 +71,7 @@
 
     <dependencies>
 
+
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
@@ -72,53 +79,15 @@
             <scope>provided</scope>
         </dependency>
 
-
-        <!-- Junit -->
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.5</version>
-            <scope>test</scope>
+            <groupId>de.odysseus.juel</groupId>
+            <artifactId>juel-api</artifactId>
+            <version>${juel.version}</version>
         </dependency>
-
-        <dependency>
-            <groupId>org.seleniumhq.selenium.core</groupId>
-            <artifactId>selenium-core</artifactId>
-            <version>1.0.1</version>
-        </dependency>
-
-
-        <dependency>
-            <groupId>org.seleniumhq.selenium.client-drivers</groupId>
-            <artifactId>selenium-java-client-driver</artifactId>
-            <version>1.0.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>net.sourceforge.htmlunit</groupId>
-            <artifactId>htmlunit</artifactId>
-            <version>2.9</version>
-        </dependency>
-
-
-        <!--
-        <dependency>
-            <groupId>org.apache.myfaces.tomahawk</groupId>
-            <artifactId>tomahawk20</artifactId>
-            <version>1.1.10-SNAPSHOT</version>
-        </dependency>
-        -->
-
-        <dependency>
-            <groupId>commons-fileupload</groupId>
-            <artifactId>commons-fileupload</artifactId>
-            <version>1.2.1</version>
-        </dependency>
-
         <dependency>
             <groupId>de.odysseus.juel</groupId>
             <artifactId>juel-impl</artifactId>
-            <version>2.2.2</version>
+            <version>${juel.version}</version>
         </dependency>
 
     </dependencies>
@@ -131,8 +100,9 @@
                 <activeByDefault>false</activeByDefault>
             </activation>
             <properties>
-                 <maven.war.webxml>${basedir}/src/main/resources/mojarraconf/web.xml</maven.war.webxml>
-             </properties>
+                <maven.war.webxml>${basedir}/src/main/resources/mojarraconf/web.xml</maven.war.webxml>
+            </properties>
+
 
             <dependencies>
                 <dependency>
@@ -148,41 +118,6 @@
                     <version>2.1.2</version>
                     <scope>compile</scope>
                 </dependency>
-            </dependencies>
-        </profile>
-        <profile>
-            <id>myfaces</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
-
-
-            <properties>
-                <maven.war.webxml>${basedir}/src/main/resources/myfacesconf/web.xml</maven.war.webxml>
-            </properties>
-
-            <dependencies>
-                <dependency>
-                    <groupId>org.apache.myfaces.core</groupId>
-                    <artifactId>myfaces-api</artifactId>
-                    <version>${myfaces-version}</version>
-                    <scope>compile</scope>
-                </dependency>
-
-                <dependency>
-                    <groupId>org.apache.myfaces.core</groupId>
-                    <artifactId>myfaces-impl</artifactId>
-                    <version>${myfaces-version}</version>
-                    <scope>compile</scope>
-                </dependency>
-
-
-                <dependency>
-                    <groupId>org.apache.myfaces.extensions.scripting</groupId>
-                    <artifactId>extscript-myfaces20-bundle</artifactId>
-                    <version>1.1-SNAPSHOT</version>
-                </dependency>
-
 
             </dependencies>
         </profile>
@@ -223,79 +158,47 @@
             <plugin>
                 <groupId>org.mortbay.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
-                <version>7.0.2.v20100331</version>
+                <version>${jetty-maven-plugin.version}</version>
                 <configuration>
-
+                    <scanIntervalSeconds>10</scanIntervalSeconds>
                     <webAppConfig>
-                        <contextPath>/TestScripts</contextPath>
-
+                        <contextPath>/</contextPath>
                     </webAppConfig>
                     <connectors>
                         <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
                             <port>9080</port>
+                            <maxIdleTime>60000</maxIdleTime>
                         </connector>
                     </connectors>
-                    <scanIntervalSeconds>10</scanIntervalSeconds>
-
 
                 </configuration>
 
-
                 <dependencies>
-
                     <dependency>
-                        <groupId>javax.servlet.jsp</groupId>
-                        <artifactId>jsp-api</artifactId>
-                        <version>2.2</version>
-
+                        <groupId>de.odysseus.juel</groupId>
+                        <artifactId>juel-api</artifactId>
+                        <version>${juel.version}</version>
                     </dependency>
                     <dependency>
-                        <groupId>javax.el</groupId>
-                        <artifactId>el-api</artifactId>
-                        <version>2.2.1-b01</version>
-
-                    </dependency>
-                    <dependency>
-                        <groupId>org.glassfish.web</groupId>
-                        <artifactId>el-impl</artifactId>
-                        <version>2.2.1-b01</version>
-
-                    </dependency>
-
-
-                    <dependency>
-                        <groupId>org.mortbay.jetty</groupId>
-                        <artifactId>jsp-2.1-glassfish</artifactId>
-                        <version>9.1.1.B60.25.p2</version>
-
-                        <exclusions>
-                            <exclusion>
-                                <groupId>org.mortbay.jetty</groupId>
-                                <artifactId>jsp-api-2.1</artifactId>
-                            </exclusion>
-                            <exclusion>
-                                <groupId>org.mortbay.jetty</groupId>
-                                <artifactId>start</artifactId>
-                            </exclusion>
-                            <exclusion>
-                                <groupId>org.mortbay.jetty</groupId>
-                                <artifactId>jetty-annotations</artifactId>
-                            </exclusion>
-                        </exclusions>
+                        <groupId>de.odysseus.juel</groupId>
+                        <artifactId>juel-impl</artifactId>
+                        <version>${juel.version}</version>
                     </dependency>
                 </dependencies>
+
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>1.5</source>
-                    <target>1.5</target>
+                    <source>1.6</source>
+                    <target>1.6</target>
                     <encoding>UTF-8</encoding>
                     <fork>true</fork>
                     <meminitial>128m</meminitial>
                     <maxmem>512m</maxmem>
-                    <compilerId>eclipse</compilerId>
+
                 </configuration>
                 <dependencies>
 
@@ -308,86 +211,9 @@
                 </dependencies>
             </plugin>
 
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>tomcat-maven-plugin</artifactId>
-                <configuration>
-                    <url>http://localhost:8080/manager/text</url>
-                    <path>/TestScripts</path>
 
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.zeroturnaround</groupId>
-                <artifactId>jrebel-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>generate-rebel-xml</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <!--
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>selenium-maven-plugin</artifactId>
-                <version>1.0-beta-3</version>
-                <executions>
-                    <execution>
-                        <id>start</id>
-                        <phase>pre-integration-test</phase>
-                        <goals>
-                            <goal>start-server</goal>
-                        </goals>
-                        <configuration>
-                            <background>true</background>
-                            <logOutput>true</logOutput>
-                            <multiWindow>false</multiWindow>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>stop</id>
-                        <phase>post-integration-test</phase>
-                        <goals>
-                            <goal>stop-server</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <configuration>
-                    <excludes>
-                        <exclude>**/seleniumtests/*Test.java
-                        </exclude>
-                    </excludes>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>integration-tests</id>
-                        <phase>integration-test</phase>
-                        <goals>
-                            <goal>test</goal>
-                        </goals>
-                        <configuration>
-                            <skip>false</skip>
-                            <excludes>
-                                <exclude>none</exclude>
-                            </excludes>
-                            <includes>
-                                <include>**/seleniumtests/*Test.java
-                                </include>
-                            </includes>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            -->
+
         </plugins>
 
         <finalName>TestScripts</finalName>

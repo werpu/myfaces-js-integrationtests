@@ -15,54 +15,57 @@
 
 <cc:implementation>
     <!-- runtime -->
-    <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/core/_EvalHandlers.js']}"></script>
+    <h:outputScript name="myfaces/_impl/core/_EvalHandlers.js" library="scripts" target="head"/>
+    <h:outputScript name="myfaces/_impl/core/_Runtime.js" library="scripts" target="head"/>
 
-    <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/core/_Runtime.js']}"></script>
     <!-- i18n -->
-    <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/i18n/Messages.js']}"></script>
-    <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/i18n/Messages_de.js']}"></script>
-    <script type="text/javascript" src="#{resource['scripts:/myfaces/_impl/i18n/Messages_nl.js']}"></script>
+    <h:outputScript name="myfaces/_impl/i18n/Messages.js" library="scripts" target="head"/>
+    <h:outputScript name="myfaces/_impl/i18n/Messages_de.js" library="scripts" target="head"/>
+    <h:outputScript name="myfaces/_impl/i18n/Messages_nl.js" library="scripts" target="head"/>
+
     <!-- utils / support classes -->
-    <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/_util/_Lang.js']}"></script>
-    <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/_util/_ExtLang.js']}"></script>
-    <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/_util/_Queue.js']}"></script>
-    <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/_util/_ListenerQueue.js']}"></script>
-    <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/_util/_Dom.js']}"></script>
-    <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/_util/_UnitTest.js']}"></script>
-    <jstl:if test="#{information.implementation == 'myfaces'}">
-        <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/_util/_HtmlStripper.js']}"></script>
-        <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/xhrCore/_FinalizeableObj.js']}"></script>
+    <h:outputScript name="myfaces/_impl/_util/_Lang.js" library="scripts" target="head"/>
+    <h:outputScript name="myfaces/_impl/_util/_ExtLang.js" library="scripts" target="head"/>
+    <h:outputScript name="myfaces/_impl/_util/_Queue.js" library="scripts" target="head"/>
+    <h:outputScript name="myfaces/_impl/_util/_ListenerQueue.js" library="scripts" target="head"/>
+    <h:outputScript name="myfaces/_impl/_util/_Dom.js" library="scripts" target="head"/>
+    <h:outputScript name="myfaces/_impl/_util/_UnitTest.js" library="scripts" target="head"/>
 
-        <!-- xhr engine -->
-        <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/xhrCore/engine/XhrConst.js']}"></script>
-        <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/xhrCore/engine/FormData.js']}"></script>
-        <script type="text/javascript"
-                src="#{resource['scripts:myfaces/_impl/xhrCore/engine/BaseRequest.js']}"></script>
+    <h:outputScript name="myfaces/_impl/_util/_HtmlStripper.js" library="scripts" target="head"/>
+    <h:outputScript name="myfaces/_impl/xhrCore/_FinalizeableObj.js" library="scripts" target="head"/>
 
-        <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/xhrCore/engine/IFrame.js']}"></script>
-        <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/xhrCore/engine/Xhr1.js']}"></script>
+    <!-- xhr engine -->
+    <h:outputScript name="myfaces/_impl/xhrCore/engine/XhrConst.js" library="scripts" target="head"/>
+    <h:outputScript name="myfaces/_impl/xhrCore/engine/FormData.js" library="scripts" target="head"/>
+    <h:outputScript name="myfaces/_impl/xhrCore/engine/BaseRequest.js" library="scripts" target="head"/>
 
-        <!-- xhr jsf mappers -->
-        <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/xhrCore/_AjaxUtils.js']}"></script>
-        <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/xhrCore/_AjaxRequestQueue.js']}"></script>
+    <h:outputScript name="myfaces/_impl/xhrCore/engine/IFrame.js" library="scripts" target="head"/>
+    <h:outputScript name="myfaces/_impl/xhrCore/engine/Xhr1.js" library="scripts" target="head"/>
 
-        <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/xhrCore/_AjaxRequest.js']}"></script>
-        <script type="text/javascript"
-                src="#{resource['scripts:myfaces/_impl/xhrCore/_AjaxRequestLevel2.js']}"></script>
 
-        <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/xhrCore/_IFrameRequest.js']}"></script>
-        <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/xhrCore/_AjaxResponse.js']}"></script>
-        <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/xhrCore/_Transports.js']}"></script>
+    <!-- xhr jsf mappers -->
+    <h:outputScript name="myfaces/_impl/xhrCore/_AjaxUtils.js" library="scripts" target="head"/>
+    <h:outputScript name="myfaces/_impl/xhrCore/_AjaxRequestQueue.js" library="scripts" target="head"/>
 
-        <!-- Implementation -->
-        <script type="text/javascript" src="#{resource['scripts:myfaces/_impl/core/Impl.js']}"></script>
+    <h:outputScript name="myfaces/_impl/xhrCore/_AjaxRequest.js" library="scripts" target="head"/>
+    <h:outputScript name="myfaces/_impl/xhrCore/_AjaxRequestLevel2.js" library="scripts" target="head"/>
 
-        <!-- API -->
-        <script type="text/javascript" src="#{resource['scripts:myfaces/api/jsf.js']}"></script>
-    </jstl:if>
-    <jstl:if test="#{information.implementation == 'mojarra'}">
-        <script type="text/javascript" src="#{resource['javax.faces:jsf.js']}"></script>
-    </jstl:if>
-    <script type="text/javascript" src="#{resource['scripts:testsupport.js']}"></script>
+    <h:outputScript name="myfaces/_impl/xhrCore/_IFrameRequest.js" library="scripts" target="head"/>
+    <h:outputScript name="myfaces/_impl/xhrCore/_AjaxResponse.js" library="scripts" target="head"/>
+    <h:outputScript name="myfaces/_impl/xhrCore/_Transports.js" library="scripts" target="head"/>
+
+    <!-- Implementation -->
+    <h:outputScript name="myfaces/_impl/core/Impl.js" library="scripts" target="head"
+                    rendered="#{information.implementation == 'myfaces'}"/>
+
+    <!-- API -->
+    <h:outputScript name="myfaces/api/jsf.js" library="scripts" target="head"
+                    rendered="#{information.implementation == 'myfaces'}"/>
+
+<h:outputScript name="jsf.js" library="javax.faces"
+    target="head" rendered="#{information.implementation == 'mojarra'}"/>
+
+
+    <h:outputScript name="testsupport.js" library="scripts" target="head"/>
 </cc:implementation>
 </html>

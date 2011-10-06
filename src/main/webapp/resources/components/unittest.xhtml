@@ -12,9 +12,9 @@
 </cc:interface>
 
 <cc:implementation>
-    <script type="text/javascript" src="#{resource['scripts:myfaces/_supportive/unittest/StatisticsEngine.js']}"></script>
-    <script type="text/javascript" src="#{resource['scripts:myfaces/_supportive/unittest/TestCase.js']}"></script>
-    <script type="text/javascript" src="#{resource['scripts:myfaces/_supportive/unittest/TestGroup.js']}"></script>
-    <script type="text/javascript" src="#{resource['scripts:myfaces/_supportive/unittest/JSFAjaxTestCase.js']}"></script>
+    <h:outputScript name="myfaces/_supportive/unittest/StatisticsEngine.js" library="scripts" target="head"/>
+    <h:outputScript name="myfaces/_supportive/unittest/TestCase.js" library="scripts" target="head"/>
+    <h:outputScript name="myfaces/_supportive/unittest/TestGroup.js" library="scripts" target="head"/>
+    <h:outputScript name="myfaces/_supportive/unittest/JSFAjaxTestCase.js" library="scripts" target="head"/>
 </cc:implementation>
 </html>
