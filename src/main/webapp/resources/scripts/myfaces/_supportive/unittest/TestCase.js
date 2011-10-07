@@ -51,7 +51,7 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.TestCase",
     },
 
     setup: function() {
-
+        this._statisticsEngine.startTestCase(this._description);
     },
 
     precondition: function() {
@@ -67,11 +67,7 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.TestCase",
     },
 
     _tearDown: function() {
-        if(this._failed) {
-            this._statisticsEngine.finalFail(this._description);
-        } else {
-            this._statisticsEngine.finalSucceed(this._description);
-        }
+        this._statisticsEngine.endTestCase(this._description);
     },
 
     tearDown: function() {

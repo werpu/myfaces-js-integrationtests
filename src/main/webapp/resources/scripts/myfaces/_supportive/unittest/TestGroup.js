@@ -36,6 +36,7 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.TestGroup"
         this.testCases = [];
         this._statisticsEngine = this._statisticsEngine || new myfaces._supportive.unittest.StatisticsEngine();
         this.tearDown = this._Lang.hitch(this, this.tearDown);
+        this._tearDown = this._Lang.hitch(this, this._tearDown);
     },
 
     addCase: function(testCase) {
@@ -66,6 +67,8 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.TestGroup"
     },
 
     setup: function() {
+        this._statisticsEngine.startTestGroup(this._description);
+
         var testCases = this.testCases;
         for (var cnt = 0; cnt < testCases.length; cnt++) {
             //this is the only time the testframework can throw an error
@@ -183,11 +186,10 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.TestGroup"
         return true;
     },
     _tearDown: function() {
-        this.logInfo("Final statistics");
-        this._statisticsEngine.tearDown();
+
     },
     tearDown: function() {
-
+        this._statisticsEngine.endTestGroup(this._description);
     },
 
     start: function() {

@@ -18,14 +18,20 @@
 /**
  * A simple statistics engine which keeps track of the current progress
  * it currently only logs data
+ * This is the most basic implementation
  */
 myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.StatisticsEngine", Object, {
+
+
     _numberOfTestsPerformed: 0,
     _numberOfTestsSucceeded: 0,
     _numberOfTestsFailed: 0,
 
-    _performed: null,
+    _testCaseFailed: false,
     _fails: null,
+
+    _Lang: myfaces._impl._util._Lang,
+
 
     constructor_: function() {
         this._performed = [];
@@ -41,20 +47,19 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.Statistics
         }
     },
 
-      /**
+    /**
      * Simple assert true
      *
      * @param message the assertion message
      * @param assertionOutcome the assertion outcome (true or false)
      */
     assertTrue: function(testcase, message, assertionOutcome) {
-        var _Lang = myfaces._impl._util._Lang;
-
         if (!assertionOutcome) {
-            _Lang.logError(testcase,":", message, "assertionOutcome:", assertionOutcome);
+            this._Lang.logError(testcase, ":", message, "assertionOutcome:", assertionOutcome);
+            this._testCaseFailed = true;
             return false;
         }
-        _Lang.logInfo(testcase,":",message, "assertionOutcome:", assertionOutcome);
+        this._Lang.logInfo(testcase, ":", message, "assertionOutcome:", assertionOutcome);
         return true;
     },
 
@@ -65,53 +70,66 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.Statistics
      * @param assertionOutcome the assertion outcome (true or false)
      */
     assertFalse: function(testCase, message, assertionOutcome) {
-        var _Lang = myfaces._impl._util._Lang;
-
         if (assertionOutcome) {
-            _Lang.logError(testCase,":",message, "assertionOutcome:", assertionOutcome);
+            this._Lang.logError(testCase, ":", message, "assertionOutcome:", assertionOutcome);
+            this._testCaseFailed = true;
             return false;
         }
-        _Lang.logInfo(testCase,":", message, "assertionOutcome:", assertionOutcome);
+        this._Lang.logInfo(testCase, ":", message, "assertionOutcome:", assertionOutcome);
         return true;
     },
 
+    startTestCase: function(testCaseName) {
+        this._Lang.logInfo("Starting Testcase:", testCaseName);
+    },
+
+    endTestCase: function(testCaseName) {
+        this._numberOfTestsPerformed++;
+        if (this._testCaseFailed) {
+            this._numberOfTestsFailed ++;
+            this._testCaseFailed = false;
+            this._fails.push(testCaseName);
+        } else {
+            this._numberOfTestsSucceeded++;
+        }
+
+        this._Lang.logInfo("Ending testcase:", testCaseName);
+    },
+
+    startTestGroup: function(testGroupName) {
+        this._Lang.logInfo("Starting Testgroup:", testGroupName);
+    },
+
+    endTestGroup: function(testGroupName) {
+        var _Lang = this._Lang;
+        _Lang.logInfo("Ending Testgroup:", testGroupName);
+        _Lang.logInfo("","--------------------------------------------------------------------------------");
+        _Lang.logInfo("","Final Results");
+
+        _Lang.logInfo("","Number of tests performed", this._numberOfTestsPerformed);
+        _Lang.logInfo("","Number of tests succeeded", this._numberOfTestsSucceeded);
+        _Lang.logInfo("","Number of tests failed", this._numberOfTestsFailed);
+
+        for (var cnt = 0; cnt < this._fails.length; cnt++) {
+            _Lang.logError("Test Failed:", this._fails[cnt]);
+        }
+    },
+
+
     logInfo: function(testCase, message) {
-        myfaces._impl._util._Lang.logInfo(testCase, message);
+        this._Lang.logInfo(testCase, message);
     },
     logDebug: function(testCase, message) {
-        myfaces._impl._util._Lang.logDebug(testCase, message);
+        this._Lang.logDebug(testCase, message);
     },
     logError: function(testCase, message) {
-        myfaces._impl._util._Lang.logError(testCase, message);
+        this._Lang.logError(testCase, message);
     },
 
 
     fail: function(testCase, message) {
-        myfaces._impl._util._Lang.logError(testCase,":",message);
+        this._Lang.logError(testCase, ":", message);
+        this._testCaseFailed = true;
         return false;
-    },
-
-    finalSucceed: function() {
-        this._numberOfTestsSucceeded ++;
-        this._numberOfTestsPerformed ++;
-    },
-
-    finalFail: function(testCase) {
-        this._numberOfTestsFailed ++;
-        this._numberOfTestsPerformed ++;
-        this._fails.push(testCase);
-    },
-
-    tearDown: function() {
-        var _Lang = myfaces._impl._util._Lang;
-        _Lang.logInfo("Number of tests performed", this._numberOfTestsPerformed);
-        _Lang.logInfo("Number of tests succeeded", this._numberOfTestsSucceeded);
-        _Lang.logInfo("Number of tests failed", this._numberOfTestsFailed);
-
-
-        for(var cnt = 0; cnt < this._fails.length; cnt++) {
-            _Lang.logError("Test Failed:", this._fails[cnt]);
-        }
     }
-
 });

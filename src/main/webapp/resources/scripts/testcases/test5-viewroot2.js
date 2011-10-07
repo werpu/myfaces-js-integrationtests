@@ -4,6 +4,7 @@ var testGroup = new myfaces._supportive.unittest.TestGroup(
         {
             description:"Chain Test",
             tearDown: function() {
+                this._statisticsEngine.endTestGroup(this._description);
                 this.autoForward("./test6-tablebasic.jsf");
 
             }
