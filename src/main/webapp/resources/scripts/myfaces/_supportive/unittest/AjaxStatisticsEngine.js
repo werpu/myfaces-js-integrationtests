@@ -61,6 +61,7 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.AjaxStatis
         this._currentGroup.finalResult.numberOfTestsPerformed = 0;
         this._currentGroup.finalResult.numberOfTestsSucceeded = 0;
         this._currentGroup.finalResult.numberOfTestsFailed = 0;
+        this._groupsPerformed.push(this._currentGroup);
     },
 
     startTestCase: function(testCaseName) {
@@ -69,10 +70,12 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.AjaxStatis
         this._currentTestCase.name = testCaseName;
         this._currentTestCase.assertions = [];
         this._currentTestCase.success = true;
+        this._currentGroup.testCases.push(this._currentTestCase);
     },
 
     endTestCase: function(testCaseName) {
         this._callSuper("endTestCase", testCaseName);
+
     },
 
     endTestGroup: function(groupName) {
@@ -80,6 +83,8 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.AjaxStatis
         this._currentGroup.finalResult.numberOfTestsPerformed = this._numberOfTestsPerformed;
         this._currentGroup.finalResult.numberOfTestsSucceeded = this._numberOfTestsSucceeded;
         this._currentGroup.finalResult.numberOfTestsFailed = this._numberOfTestsFailed;
+
+        this._sendTestResults();
     },
 
     assertTrue: function(testCase, message, assertionOutcome) {
@@ -112,14 +117,13 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.AjaxStatis
     /*send the test results down the server
      * via a synchronous http post*/
     _sendTestResults: function() {
-        var xhr = new myfaces._impl.xhrCore.engine.Xhr1();
+        var xhr = new myfaces._impl.xhrCore.engine.Xhr1({xhrObject: myfaces._impl.core._Runtime.getXHRObject()});;
         var data = "sendstats=true&testGroup="+escape(this._array2json(this._groupsPerformed));
         xhr.open("post",this._serviceUrl, false);
         xhr.send(data);
+    },
 
-    }
-
-    ,/**
+    /**
      * Converts the given data structure to a JSON string.
      * Argument: arr - The data structure that must be converted to JSON
      * Example: var json_string = array2json(['e', {pluribus: 'unum'}]);
