@@ -108,6 +108,7 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.AjaxStatis
         assertion.outcome = false;
         assertion.failure = true;
     },
+
     /*send the test results down the server
      * via a synchronous http post*/
     _sendTestResults: function() {
@@ -117,6 +118,7 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.AjaxStatis
         xhr.send(data);
 
     }
+
     ,/**
      * Converts the given data structure to a JSON string.
      * Argument: arr - The data structure that must be converted to JSON
@@ -131,8 +133,8 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.AjaxStatis
         for (var key in arr) {
             var value = arr[key];
             if (typeof value == "object") { //Custom handling for arrays
-                if (is_list) parts.push(array2json(value)); /* :RECURSION: */
-                else parts[key] = array2json(value);
+                if (is_list) parts.push(this._array2json(value)); /* :RECURSION: */
+                else parts[key] = this._array2json(value);
                 /* :RECURSION: */
             } else {
                 var str = "";
