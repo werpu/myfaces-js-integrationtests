@@ -19,11 +19,38 @@
 
 package extras.apache.org.jsintegration.core;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
 /**
  * @author Werner Punz (latest modification by $Author$)
  * @version $Revision$ $Date$
+ *          <p/>
+ *          Statistics collector servlet which fetches a statistic and stores it in the session
  */
-
-public class StatisticsCollector
+public class StatisticsCollector extends HttpServlet
 {
+
+    private static final String PARAM_SENDSTATS_MARKER = "sendstats";
+    private static final String PARAM_TEST_GROUP = "testGroup";
+
+    @Override
+    protected void service(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException
+    {
+        super.service(httpServletRequest, httpServletResponse);
+        String reqParam = httpServletRequest.getParameter(PARAM_SENDSTATS_MARKER);
+        if (reqParam != null)
+        {
+            this.doCollectTestGroup(httpServletRequest);
+        }
+
+    }
+
+    private void doCollectTestGroup(HttpServletRequest httpServletRequest)
+    {
+        String encodedGroup = httpServletRequest.getParameter(PARAM_TEST_GROUP);
+    }
 }

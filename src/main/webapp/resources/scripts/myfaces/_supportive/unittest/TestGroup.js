@@ -34,7 +34,7 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.TestGroup"
     constructor_: function(args) {
         this._Lang.applyArgs(this, args);
         this.testCases = [];
-        this._statisticsEngine = this._statisticsEngine || new myfaces._supportive.unittest.StatisticsEngine();
+        this._statisticsEngine = this._statisticsEngine || new myfaces._supportive.unittest.AjaxStatisticsEngine();
         this.tearDown = this._Lang.hitch(this, this.tearDown);
         this._tearDown = this._Lang.hitch(this, this._tearDown);
     },

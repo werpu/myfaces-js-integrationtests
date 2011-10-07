@@ -42,7 +42,7 @@
  */
 myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.AjaxStatisticsEngine", myfaces._supportive.unittest.StatisticsEngine, {
 
-    _serviceUrl: null,
+    _serviceUrl: "./collector.statistics",
     _groupsPerformed: null,
     _currentGroup: null,
     _currentTestCase: null,
@@ -112,7 +112,7 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.AjaxStatis
      * via a synchronous http post*/
     _sendTestResults: function() {
         var xhr = new myfaces._impl.xhrCore.engine.Xhr1();
-        var data = "testGroup="+escape(this._array2json(this._groupsPerformed));
+        var data = "sendstats=true&testGroup="+escape(this._array2json(this._groupsPerformed));
         xhr.open("post",this._serviceUrl, false);
         xhr.send(data);
 

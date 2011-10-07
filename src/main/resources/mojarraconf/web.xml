@@ -64,9 +64,17 @@
         <servlet-class>extras.apache.org.jsintegration.protocol.JSF21Simulation</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
+    <servlet>
+        <servlet-name>StatisticsCollector</servlet-name>
+        <servlet-class>extras.apache.org.jsintegration.core.StatisticsCollector</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>JSF21Simulation</servlet-name>
         <url-pattern>*.timeout</url-pattern>
+    </servlet-mapping>
+     <servlet-mapping>
+        <servlet-name>StatisticsCollector</servlet-name>
+        <url-pattern>*.statistics</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>MockupServlet</servlet-name>
