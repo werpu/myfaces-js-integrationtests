@@ -38,7 +38,8 @@ public class StatisticsCollector extends HttpServlet
     private static final String PARAM_TEST_GROUP = "testGroup";
 
     @Override
-    protected void service(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException
+    protected void doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws
+                                                                                                     ServletException, IOException
     {
         super.service(httpServletRequest, httpServletResponse);
         String reqParam = httpServletRequest.getParameter(PARAM_SENDSTATS_MARKER);
@@ -46,6 +47,7 @@ public class StatisticsCollector extends HttpServlet
         {
             this.doCollectTestGroup(httpServletRequest);
         }
+
 
     }
 
