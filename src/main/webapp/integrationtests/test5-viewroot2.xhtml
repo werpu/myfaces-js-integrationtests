@@ -1,59 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
 
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
 <html xmlns="http://www.w3.org/1999/xhtml"
-     xmlns:h="http://java.sun.com/jsf/html"
-     xmlns:f="http://java.sun.com/jsf/core"
-     xmlns:ui="http://java.sun.com/jsf/facelets"
-     xmlns:cust="http://java.sun.com/jsf/composite/components"   >
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+<ui:composition template="../templates/template.xhtml">
+    <ui:define name="header">
+        <script type="text/javascript">
+            // <![CDATA[
+            //w try to deliberately break the xml which should
+            //be prevented by the cdata block
+            var myvar = 1 > 2;
+            var myvar = 1 < 2;
+            var myvar2 = true && true;
 
-<h:head>
+            setTimeout(function() {
+                if (!window.cnt) {
+                    window.cnt = 1;
+                }
+                document.body.innerHTML = document.body.innerHTML + "refresh successul" + (window.cnt++);
+            }, 2000);
+            // ]]>
+        </script>
+    </ui:define>
+    <ui:define name="content">
+        <h:outputScript library="scripts" name="testcases/test5-viewroot2.js" target="head"/>
 
-    <script type="text/javascript" src="../resources/scripts/jquery142/jquery-1.4.2.js"></script>
-    <style type="text/css">
-        @import "../styles/style.css";
-    </style>
-   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-   <title>Ajax Request</title>
-   <script type="text/javascript">
-       // <![CDATA[
-       var a = true;
-       var b = false;
-       var c = a && b;
-       setTimeout(function() {
-        if(!window.cnt) {
-            window.cnt = 1;
-        }
-        document.body.innerHTML = document.body.innerHTML+ "refresh successul"+ (window.cnt++);
-       },2000);
-       // ]]>
-   </script>
-   <cust:imports />
-   <cust:unittest />
 
-   <h:outputScript library="scripts" name="testcases/test5-viewroot2.js" target="head" />
-</h:head>
+        <h1>ViewRoot Replacement 2</h1>
+        <h2>
+            This test replaces javax.faces.ViewRoot with embedded scripts in the head
+            and a CDATA enclosure to test the proper escapong of the content
+        </h2>
+        <h:form id="form1" prependId="false">
+            <h:outputText id="out1" value="testtext"/>
+            <h:commandButton id="allKeyword"
+                             value="@all">
+                <f:ajax execute="@all"
+                        render="@all"/>
+            </h:commandButton>
 
-<h:body>
-
-    <div id="myfaces.logging">
-    </div>
-
-   <h1>ViewRoot Replacement 2</h1>
-   <h2>
-   This test replaces javax.faces.ViewRoot with embedded scripts in the head
-   and a CDATA enclosure to test the proper escapong of the content
-   </h2>
-   <h:form id="form1" prependId="false">
-
-       <h:outputText id="out1" value="testtext"/>
-
-      <h:commandButton id="allKeyword"
-                       value="@all">
-          <f:ajax execute="@all"
-                  render="@all"/>
-      </h:commandButton>
-
-  </h:form>
-
-</h:body>
-
+        </h:form>
+    </ui:define>
+</ui:composition>
 </html>

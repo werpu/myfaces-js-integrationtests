@@ -1,88 +1,83 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-        "http://www.w3.org/TR/html4/loose.dtd">
-<html xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:cust="http://java.sun.com/jsf/composite/components">
-<h:head>
-    <script type="text/javascript" src="../resources/scripts/jquery142/jquery-1.4.2.js"></script>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
 
-    <cust:imports/>
-    <cust:unittest/>
+  http://www.apache.org/licenses/LICENSE-2.0
 
-    <style type="text/css">
-        @import "../styles/style.css";
-    </style>
-    <script type="text/javascript">
-        if (!myfaces.config) {
-            myfaces.config = {};
-            //myfaces.config.transportAutoSelection = true;
-            //myfaces.config.transportType = "xhrQueuedGet";
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+<ui:composition template="../templates/template.xhtml">
+    <ui:define name="content">
 
-        }
-        myfaces.config.projectStage = "Development";
-    </script>
-
-    <h:outputScript library="scripts" name="testcases/test11-scriptblocks.js" target="head" />
-
-</h:head>
-<h:body>
-    <div id="myfaces.logging">
-        <h2> Logging Output </h2>
-    </div>
-
-    <h1> Partial Response Writer Test for various script block patterns </h1>
-    <h2> This is a test which tests the partial response writer
-    for various script block resolutions.
-    The problem there is, that there are various ways to describe a script block.
-    The ppr has to resolve those to proper xhtml without destroying the content.
-    </h2>
-
-    <h:panelGroup layout="block" id="resultArea">Results: <br /></h:panelGroup>
-    <h:form id="testForm" prependId="false">
-        <h:commandButton id="reloader" value="Reload panel">
-            <f:ajax execute="@none" render="outputWriter"/>
-        </h:commandButton>
+        <h:outputScript library="scripts" name="testcases/test11-scriptblocks.js" target="head"/>
 
 
+        <h1> Partial Response Writer Test for various script block patterns </h1>
+
+        <h2> This is a test which tests the partial response writer
+            for various script block resolutions.
+            The problem there is, that there are various ways to describe a script block.
+            The ppr has to resolve those to proper xhtml without destroying the content.
+        </h2>
+
+        <h:panelGroup layout="block" id="resultArea">Results: <br/></h:panelGroup>
+        <h:form id="testForm" prependId="false">
+            <h:commandButton id="reloader" value="Reload panel">
+                <f:ajax execute="@none" render="outputWriter"/>
+            </h:commandButton>
 
 
-        <!--
-        If this panelGroup contains only one script, it works well - the
-script
-        is evaluated only once - in runScripts() from jsf.js.
-        But if it contains more script elements, the following code from
-        jsf.js _outerHTMLCompliant() evaluates them first:
-        item.parentNode.replaceChild(ret, item);
-        And then runScripts() evaluates them also.
-        -->
-        <h:panelGroup id="outputWriter">
-            <script type="text/javascript">
-                document.getElementById("resultArea").innerHTML = document.getElementById("resultArea").innerHTML +
-                "normal script";
-            </script>
-            <script type="text/javascript">
-            //<!-- more than one blank set here -->
-            //   <![CDATA[
-                 document.getElementById("resultArea").innerHTML = document.getElementById("resultArea").innerHTML
-                         +"<div class=\"result2\">normal script --></div>";
-            // ]]>
-            </script>
-           <script type="text/javascript">
-            //<![CDATA[
-                document.getElementById("resultArea").innerHTML = document.getElementById("resultArea").innerHTML +
-            "<div class=\"result3\">normal script --></div>";
-            //]]>
-            </script>
-            <script type="text/javascript">
-            //<!--
-                document.getElementById("resultArea").innerHTML = document.getElementById("resultArea").innerHTML +
-            "<div class=\"result4\">normal script ]]></div>";
-            //-->
-            </script>
-        </h:panelGroup>
+            <!--
+            If this panelGroup contains only one script, it works well - the
+    script
+            is evaluated only once - in runScripts() from jsf.js.
+            But if it contains more script elements, the following code from
+            jsf.js _outerHTMLCompliant() evaluates them first:
+            item.parentNode.replaceChild(ret, item);
+            And then runScripts() evaluates them also.
+            -->
+            <h:panelGroup id="outputWriter">
+                <script type="text/javascript">
+                    document.getElementById("resultArea").innerHTML = document.getElementById("resultArea").innerHTML +
+                            "normal script";
+                </script>
+                <script type="text/javascript">
+                    //<!-- more than one blank set here -->
+                    //   <![CDATA[
+                    document.getElementById("resultArea").innerHTML = document.getElementById("resultArea").innerHTML
+                            + "<div class=\"result2\">normal script --></div>";
+                    // ]]>
+                </script>
+                <script type="text/javascript">
+                    //<![CDATA[
+                    document.getElementById("resultArea").innerHTML = document.getElementById("resultArea").innerHTML +
+                            "<div class=\"result3\">normal script --></div>";
+                    //]]>
+                </script>
+                <script type="text/javascript">
+                    //<!--
+                    document.getElementById("resultArea").innerHTML = document.getElementById("resultArea").innerHTML +
+                            "<div class=\"result4\">normal script ]]></div>";
+                    //-->
+                </script>
+            </h:panelGroup>
 
 
-    </h:form>
+        </h:form>
 
 
-</h:body>
+    </ui:define>
+</ui:composition>
 </html>

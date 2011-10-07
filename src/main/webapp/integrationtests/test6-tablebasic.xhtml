@@ -1,120 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:cust="http://java.sun.com/jsf/composite/components">
-<h:head>
-    <script type="text/javascript" src="../resources/scripts/jquery142/jquery-1.4.2.js"></script>
+<!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
 
-    <cust:imports/>
-    <cust:unittest/>
+  http://www.apache.org/licenses/LICENSE-2.0
 
-    <style type="text/css">
-        @import "../styles/style.css";
-    </style>
-    <script type="text/javascript">
-        if (!myfaces.config) {
-            myfaces.config = {};
-            //myfaces.config.transportAutoSelection = true;
-            //myfaces.config.transportType = "xhrQueuedGet";
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+<ui:composition template="../templates/template.xhtml">
+    <ui:define name="content">
 
-        }
-        myfaces.config.projectStage = "Development";
-    </script>
-
-    <h:outputScript library="scripts" name="testcases/test6-tablebasic.js" target="head" />
-
-</h:head>
-<h:body>
-
-    <h1>Table Tests</h1>
-    <h2>Table tests for the basic protocol operations. Due to the different
-    handling of table elements in the dom operations, this separate
-    test is needed.</h2>
-
-    <div id="myfaces.logging">
-    </div>
+        <h:outputScript library="scripts" name="testcases/test6-tablebasic.js" target="head"/>
 
 
-    <div id="testTable">
+        <h1>Table Tests</h1>
+
+        <h2>Table tests for the basic protocol operations. Due to the different
+            handling of table elements in the dom operations, this separate
+            test is needed.</h2>
 
 
-        <table id="table1">
-            <thead id="head1">
-            <tr id="head_row1">
-                <td id="head_col1">column1 in line1</td>
-                <td id="head_col2">colum2 in line2</td>
-            </tr>
-            </thead>
-            <tbody id="tbody1">
-            <tr id="body_row1">
-                <td id="body_row1_col1">column1 in line1 body</td>
-                <td id="body_row1_col2">column2 in line1
-                    body
-                </td>
-            </tr>
-            </tbody>
-
-        </table>
-
-    </div>
+        <div id="testTable">
 
 
-    <form id="form2" action="boog.html">
-        <input type="button" id="replace_head" value="replace head" onclick="emitPPR(this,
+            <table id="table1">
+                <thead id="head1">
+                <tr id="head_row1">
+                    <td id="head_col1">column1 in line1</td>
+                    <td id="head_col2">colum2 in line2</td>
+                </tr>
+                </thead>
+                <tbody id="tbody1">
+                <tr id="body_row1">
+                    <td id="body_row1_col1">column1 in line1 body</td>
+                    <td id="body_row1_col2">column2 in line1
+                        body
+                    </td>
+                </tr>
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <form id="form2" action="boog.html">
+            <input type="button" id="replace_head" value="replace head" onclick="emitPPR(this,
         ('undefined' == typeof event)? null:
         event,
     'table_replace_head', false, 'form2');"></input>
-        <input type="button" id="replace_body" value="replace body" onclick="emitPPR(this,
+            <input type="button" id="replace_body" value="replace body" onclick="emitPPR(this,
         ('undefined' == typeof event)? null:
         event,
         'table_replace_body', false, 'form2');"></input>
-        <input type="button" id="insert_row_head" value="insert row in head" onclick="emitPPR(this,
+            <input type="button" id="insert_row_head" value="insert row in head" onclick="emitPPR(this,
         ('undefined' == typeof event)? null: event,
         'table_insert_row_head', false, 'form2');"></input>
-        <input type="button" id="insert_row_body" value="insert insert row in body" onclick="emitPPR(this,
+            <input type="button" id="insert_row_body" value="insert insert row in body" onclick="emitPPR(this,
         ('undefined' == typeof event)? null: event,
         'table_insert_row_body', false, 'form2');"></input>
-        <input type="button" id="insert_column_head" value="insert column in head" onclick="emitPPR(this,
+            <input type="button" id="insert_column_head" value="insert column in head" onclick="emitPPR(this,
         ('undefined' == typeof event)? null: event,
         'table_insert_column_head', false, 'form2');"></input>
-        <input type="button" id="insert_column_body" value="insert column in body" onclick="emitPPR(this,
+            <input type="button" id="insert_column_body" value="insert column in body" onclick="emitPPR(this,
         ('undefined' == typeof event)? null: event,
         'table_insert_column_body', false, 'form2');"></input>
-        <input type="button" value="insert footer" onclick="emitPPR(this, ('undefined' == typeof event)? null: event,
+            <input type="button" value="insert footer" onclick="emitPPR(this, ('undefined' == typeof event)? null: event,
         'table_insert_footer',
          false, 'form2');"></input>
-        <input type="button" id="insert_body" value="insert body" onclick="emitPPR(this,
+            <input type="button" id="insert_body" value="insert body" onclick="emitPPR(this,
         ('undefined' == typeof event)? null:
             event,
         'table_insert_body', false, 'form2');"></input>
-    </form>
+        </form>
 
-    <style type="text/css">
-        #table1 {
-            border-width: 1px;
-            border-spacing: 2px;
-            border-style: outset;
-            border-color: gray;
-            border-collapse: collapse;
-        }
 
-        #table1 th, #table1 thead {
-            border-width: 1px;
-            padding: 1px;
-            border-style: inset;
-            border-color: gray;
-            -moz-border-radius:;
-            background-color: #fbd850;
-        }
-
-        #table1 td {
-            border-width: 1px;
-            padding: 1px;
-            border-style: inset;
-            border-color: gray;
-            -moz-border-radius:;
-        }
-    </style>
-</h:body>
+    </ui:define>
+</ui:composition>
 </html>

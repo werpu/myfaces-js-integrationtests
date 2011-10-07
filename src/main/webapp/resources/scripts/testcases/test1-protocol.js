@@ -55,7 +55,8 @@ testGroup.addStandardTestcase("Eval Ajax", "cmd_eval", "eval1",
         }
 );
 
-testGroup.addStandardTestcase("Upadte Insert JSDOC Insert Path", "cmd_update_insert", "updateinsert1",
+//obsolete, this path is a spec error and only supported by myfaces
+/*testGroup.addStandardTestcase("Upadte Insert JSDOC Insert Path", "cmd_update_insert", "updateinsert1",
         function() {
             checkForSucceed(this, "evalarea2");
             checkForSucceed(this, "evalarea3");
@@ -66,7 +67,7 @@ testGroup.addStandardTestcase("Upadte Insert JSDOC Insert Path", "cmd_update_ins
             $("#insertafter").remove();
 
         }
-);
+);*/
 
 testGroup.addStandardTestcase("Update Insert Spec Insert Path", "cmd_update_insert2", "updateinsert2",
         function() {

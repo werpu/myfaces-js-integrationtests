@@ -79,7 +79,7 @@ div#myfaces\.logging {
     width: 100%;
     padding: 2px;
     max-height: 200px;
-    overflow:  auto;
+    overflow: auto;
 }
 
 div.info, div.warn, div.error, div.log {
@@ -119,4 +119,30 @@ div.error {
 .consoleLog .args_0:hover {
     overflow: visible;
     width: auto;
+}
+
+/* table test */
+#table1 {
+    border-width: 1px;
+    border-spacing: 2px;
+    border-style: outset;
+    border-color: gray;
+    border-collapse: collapse;
+}
+
+#table1 th, #table1 thead {
+    border-width: 1px;
+    padding: 1px;
+    border-style: inset;
+    border-color: gray;
+    -moz-border-radius:;
+    background-color: #fbd850;
+}
+
+#table1 td {
+    border-width: 1px;
+    padding: 1px;
+    border-style: inset;
+    border-color: gray;
+    -moz-border-radius:;
 }

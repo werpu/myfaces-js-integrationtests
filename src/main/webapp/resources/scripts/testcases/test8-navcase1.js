@@ -9,7 +9,7 @@ var testGroup = new myfaces._supportive.unittest.TestGroup(
             }
         });
 testGroup.addCase(new AjaxCase({
-    description:"Chain test",
+    description:"Nav Case Test",
     defer: 2000,
     precondition: function() {
         $("#firstName").val("Werner");
