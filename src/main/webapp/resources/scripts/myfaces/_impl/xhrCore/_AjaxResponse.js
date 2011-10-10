@@ -464,10 +464,6 @@ myfaces._impl.core._Runtime.singletonExtendClass("myfaces._impl.xhrCore._AjaxRes
 
                 //we have to work around an xml parsing bug in Webkit
                 //see https://issues.apache.org/jira/browse/MYFACES-3061
-
-                //newData = newData.replace(/<script.*type=\"text\/javascript"\s*>/gi,"<script type=\"text/javascript\">\n//<!CDATA[[\n");
-                //newData = newData.replace(/<\/script>/gi,"\n//]]>\n</script>");
-
                 var doc = (!isWebkit) ? _Lang.parseXML(newData) : null;
 
                 var newHead = null;
