@@ -31,7 +31,12 @@
             This is the pattern dojo and some other ajax frameworks follow
             in their decoration behavior, note this test can fail
             because it is myfaces specific to cover this corner case.
-            I therefore will not make a blocking fail in the testroutines.</h2>
+            I therefore will not make a blocking fail in the testroutines.
+            it checks whether the submit really fetches the last entry with the same
+            name and submits it, double entries are not allowed with different behavior.
+            Also the name has higher priority than the id in submitting, this must
+            be taken under consideration if the jsf ajax data is determined.
+        </h2>
         <h:form id="testForm">
             <h:panelGroup id="testGroup">
                 <h:inputText id="myTest" value="#{myBean2.searchTerm}">
@@ -43,16 +48,11 @@
                     node.name = null;
                     var newNode = document.createElement("input");
                     newNode.name = node.id;
+                    newNode.id="override";
                     node.parentNode.appendChild(newNode);
+
                 </script>
             </h:panelGroup>
-        </h:form>
-
-
-        <!-- test for no options set -->
-        <h:form id="testForm2">
-            <h:inputText id="myTest22" value="#{myBean2.searchTerm}" onblur="jsf.ajax.request(this, event);">
-            </h:inputText>
         </h:form>
     </ui:define>
 </ui:composition>

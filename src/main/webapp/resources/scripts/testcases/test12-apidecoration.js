@@ -50,8 +50,7 @@ testGroup.addCase(new AjaxCase({
 
         return true;
     }
-}))
-        ;
+}));
 setTimeout(function() {
     testGroup.start();
 }, 100);

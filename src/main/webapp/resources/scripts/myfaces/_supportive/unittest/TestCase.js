@@ -73,16 +73,16 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.TestCase",
     tearDown: function() {
     },
 
-    assertTrue: function(condition, message) {
+    assertTrue: function( message, condition) {
         if(this._finalFail) return;
 
-        this._failed = this._failed || !this._statisticsEngine.assertTrue(this._description, condition, message);
+        this._failed = this._failed || !this._statisticsEngine.assertTrue(this._description, message, condition);
     },
 
-    assertFalse: function(condition, message) {
+    assertFalse: function( message, condition) {
         if(this._finalFail) return;
 
-        this._failed = this._failed || !this._statisticsEngine.assertFalse(this._description, condition, message);
+        this._failed = this._failed || !this._statisticsEngine.assertFalse(this._description, message, condition);
     },
 
     fail: function(message) {

@@ -88,39 +88,42 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.AjaxStatis
     },
 
     assertTrue: function(testCase, message, assertionOutcome) {
-        this._callSuper("assertTrue", testCase, message, assertionOutcome);
+        var ret = this._callSuper("assertTrue", testCase, message, assertionOutcome);
         var assertion = {};
         assertion.type = "assertTrue";
         assertion.message = message;
         assertion.outcome = assertionOutcome;
         assertion.failure = !assertionOutcome;
+        return ret;
     },
 
     assertFalse: function(testCase, message, assertionOutcome) {
-        this._callSuper("assertTrue", testCase, message, assertionOutcome);
+        var ret = this._callSuper("assertFalse", testCase, message, assertionOutcome);
         var assertion = {};
         assertion.type = "assertFalse";
         assertion.message = message;
         assertion.outcome = assertionOutcome;
         assertion.failure = assertionOutcome;
+        return ret;
     },
 
     fail: function(testCase, message) {
-        this._callSuper("fail", testCase, message);
+        var ret = this._callSuper("fail", testCase, message);
         var assertion = {};
         assertion.type = "assertFalse";
         assertion.message = message;
         assertion.outcome = false;
         assertion.failure = true;
+        return ret;
     },
 
     /*send the test results down the server
      * via a synchronous http post*/
     _sendTestResults: function() {
-        var xhr = new myfaces._impl.xhrCore.engine.Xhr1({xhrObject: myfaces._impl.core._Runtime.getXHRObject()});;
-        var data = "sendstats=true&testGroup="+escape(this._array2json(this._groupsPerformed));
-        xhr.open("post",this._serviceUrl, false);
-        xhr.send(data);
+        //  var xhr = new myfaces._impl.xhrCore.engine.Xhr1({xhrObject: myfaces._impl.core._Runtime.getXHRObject()});;
+        //  var data = "sendstats=true&testGroup="+escape(this._array2json(this._groupsPerformed));
+        //  xhr.open("post",this._serviceUrl, false);
+        //  xhr.send(data);
     },
 
     /**
