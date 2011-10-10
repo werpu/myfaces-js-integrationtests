@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:cust="http://java.sun.com/jsf/composite/components">
+<h:head>
+    <title>MyFaces 2.0 Javascript API Tests Part1</title>
+
+    <link href="./resources/scripts/jquery/jquery-ui-1.7.3.custom.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="#{resource['scripts:/jquery/jquery-1.3.2.js']}"></script>
+    <script type="text/javascript" src="#{resource['scripts:/jquery/jquery-ui-1.7.3.custom.min.js']}"></script>
+
+    <cust:importsdirect/>
+
+    <style type="text/css">
+        @import "./styles/style.css";
+    </style>
+</h:head>
+<h:body>
+
+    <h2>integration test for the myfaces jsf.js i18n capabilities</h2>
+
+    <div id="testResults">
+        <div id="myfaces.logging">
+        </div>
+    </div>
+
+
+
+    <script type="text/javascript">
+
+        function assertFuncErr(func,theMsg) {
+            try {
+                func();
+            } catch (e) {
+                Lang.logInfo("Error Message", e.message);
+                UnitTest.assertTrue(theMsg+"-"+e.message, e.message.indexOf("- undefined message") == -1);
+            }
+        }
+
+        var UnitTest = myfaces._impl._util._UnitTest;
+        var Lang = myfaces._impl._util._Lang;
+        var Dom = myfaces._impl._util._Dom;
+
+        Lang.initLocale(myfaces._impl.i18n.Messages);
+        var msg = Lang.getMessage("MSG_TEST");
+
+        UnitTest.assertTrue("standardcase", msg == "Testmessage");
+
+        msg = Lang.getMessage("does not exist", "doesnotexist");
+        UnitTest.assertTrue("override test", msg == "doesnotexist");
+
+        //language override
+        Lang.initLocale(myfaces._impl.i18n.Messages_de);
+        msg = Lang.getMessage("MSG_TEST", "doesnotexist");
+        UnitTest.assertTrue("different locale", msg == "Testnachricht");
+
+        msg = Lang.getMessage("does not exist", "doesnotexist {0} {1} {0}", "1", "2");
+        UnitTest.assertTrue("override test", msg == "doesnotexist 1 2 1");
+
+        Lang.logInfo("Addition tests which trigger errors", "section1");
+
+        //Dom Level Triggers
+      
+        assertFuncErr(function() {Dom.replaceElements(null);}, "replaceElementTest");
+        
+        assertFuncErr(function() {Dom.setAttribute(null);},"set attribute test1");
+
+        assertFuncErr(function() {Dom.setAttribute(document.body);}, "set attribute test2");
+
+
+
+
+    </script>
+
+
+</h:body>
+</html>
