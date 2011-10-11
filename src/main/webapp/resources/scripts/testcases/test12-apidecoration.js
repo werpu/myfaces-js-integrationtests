@@ -6,7 +6,7 @@ var testGroup = new myfaces._supportive.unittest.TestGroup(
         {
             description:"Testing for decorated api calls",
             postcondition: function() {
-                //this.autoForward("./test11-scriptblocks.jsf");
+                this.autoForward("./finalResults.jsf");
                 return true;
             }
         });
