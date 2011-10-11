@@ -47,6 +47,7 @@ public class StatisticsCollector extends HttpServlet
     private static final String PARAM_SENDSTATS_MARKER = "sendstats";
     private static final String PARAM_TEST_GROUP = "testGroup";
     private static final String PARAM_RESET_ALL = "resetAll";
+    public static final String TEST_RESULTS = "testResults";
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws
@@ -62,8 +63,6 @@ public class StatisticsCollector extends HttpServlet
         {
             this.doCollectTestGroup(request, response);
         }
-
-
     }
 
     private void doCollectTestGroup(HttpServletRequest request, HttpServletResponse response) throws IOException
@@ -82,7 +81,7 @@ public class StatisticsCollector extends HttpServlet
 
     private List<Group> getGroupsContainer(HttpServletRequest request)
     {
-        List<Group> finalGroups = (List<Group>) request.getSession().getAttribute("testResults");
+        List<Group> finalGroups = (List<Group>) request.getSession().getAttribute(TEST_RESULTS);
         if(finalGroups == null) {
             finalGroups = Collections.synchronizedList(new LinkedList<Group>());
             request.getSession().setAttribute("testResults", finalGroups);
