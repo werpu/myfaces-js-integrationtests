@@ -19,11 +19,14 @@
 
 package extras.apache.org.jsintegration.core;
 
+import org.apache.commons.lang.StringEscapeUtils;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * @author Werner Punz (latest modification by $Author$)
@@ -38,21 +41,28 @@ public class StatisticsCollector extends HttpServlet
     private static final String PARAM_TEST_GROUP = "testGroup";
 
     @Override
-    protected void doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws
-                                                                                                     ServletException, IOException
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws
+                                                                                                          ServletException, IOException
     {
-        super.service(httpServletRequest, httpServletResponse);
-        String reqParam = httpServletRequest.getParameter(PARAM_SENDSTATS_MARKER);
+        //super.doPost(request, response);
+        String reqParam = request.getParameter(PARAM_SENDSTATS_MARKER);
         if (reqParam != null)
         {
-            this.doCollectTestGroup(httpServletRequest);
+            this.doCollectTestGroup(request, response);
         }
 
 
     }
 
-    private void doCollectTestGroup(HttpServletRequest httpServletRequest)
+    private void doCollectTestGroup(HttpServletRequest request, HttpServletResponse response) throws IOException
     {
-        String encodedGroup = httpServletRequest.getParameter(PARAM_TEST_GROUP);
+        String group = request.getParameter(PARAM_TEST_GROUP);
+        group = StringEscapeUtils.unescapeJavaScript(group);
+        //TODO decode group
+        PrintWriter out = response.getWriter();
+        out.write(group);
+        out.flush();
+        out.close();
+
     }
 }

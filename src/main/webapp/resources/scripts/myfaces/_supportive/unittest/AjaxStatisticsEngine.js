@@ -120,10 +120,15 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.AjaxStatis
     /*send the test results down the server
      * via a synchronous http post*/
     _sendTestResults: function() {
-        //  var xhr = new myfaces._impl.xhrCore.engine.Xhr1({xhrObject: myfaces._impl.core._Runtime.getXHRObject()});;
-        //  var data = "sendstats=true&testGroup="+escape(this._array2json(this._groupsPerformed));
-        //  xhr.open("post",this._serviceUrl, false);
-        //  xhr.send(data);
+        var xhr = new myfaces._impl.xhrCore.engine.Xhr1({xhrObject: myfaces._impl.core._Runtime.getXHRObject()});
+
+        var data = "sendstats=true&testGroup=" + escape(this._array2json(this._groupsPerformed));
+        xhr.open("post", this._serviceUrl, false);
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.setRequestHeader("Content-length", data.length);
+        xhr.setRequestHeader("Connection", "close");
+
+        xhr.send(data);
     },
 
     /**
@@ -161,9 +166,79 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.AjaxStatis
 
         if (is_list) return '[' + json + ']';//Return numerical JSON
         return '{' + json + '}';//Return associative JSON
+    },
+
+    /*base 64 routines taken straight from dojo*/
+    p:"=",
+    tab:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/",
+
+    base64enc:function(/* byte[] */ba) {
+        //	summary
+        //	Encode an array of bytes as a base64-encoded string
+        var s = [], l = ba.length;
+        var rm = l % 3;
+        var x = l - rm;
+        for (var i = 0; i < x;) {
+            var t = ba[i++] << 16 | ba[i++] << 8 | ba[i++];
+            s.push(tab.charAt((t >>> 18) & 0x3f));
+            s.push(tab.charAt((t >>> 12) & 0x3f));
+            s.push(tab.charAt((t >>> 6) & 0x3f));
+            s.push(tab.charAt(t & 0x3f));
+        }
+        //	deal with trailers, based on patch from Peter Wood.
+        switch (rm) {
+            case 2:
+            {
+                var t = ba[i++] << 16 | ba[i++] << 8;
+                s.push(tab.charAt((t >>> 18) & 0x3f));
+                s.push(tab.charAt((t >>> 12) & 0x3f));
+                s.push(tab.charAt((t >>> 6) & 0x3f));
+                s.push(p);
+                break;
+            }
+            case 1:
+            {
+                var t = ba[i++] << 16;
+                s.push(tab.charAt((t >>> 18) & 0x3f));
+                s.push(tab.charAt((t >>> 12) & 0x3f));
+                s.push(p);
+                s.push(p);
+                break;
+            }
+        }
+        return s.join("");	//	string
+    },
+
+    base64decode:function(/* string */str) {
+        //	summary
+        //	Convert a base64-encoded string to an array of bytes
+        var s = str.split(""), out = [];
+        var l = s.length;
+        while (s[--l] == p) {
+        }	//	strip off trailing padding
+        for (var i = 0; i < l;) {
+            var t = tab.indexOf(s[i++]) << 18;
+            if (i <= l) {
+                t |= tab.indexOf(s[i++]) << 12
+            }
+            ;
+            if (i <= l) {
+                t |= tab.indexOf(s[i++]) << 6
+            }
+            ;
+            if (i <= l) {
+                t |= tab.indexOf(s[i++])
+            }
+            ;
+            out.push((t >>> 16) & 0xff);
+            out.push((t >>> 8) & 0xff);
+            out.push(t & 0xff);
+        }
+        //	strip off any null bytes
+        while (out[out.length - 1] == 0) {
+            out.pop();
+        }
+        return out;	//	byte[]
     }
-
-
-
 });
 
