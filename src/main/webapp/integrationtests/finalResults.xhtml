@@ -18,15 +18,22 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 <ui:composition template="../templates/template.xhtml">
+    <ui:define name="header">
+
+    <style type="text/css">
+        @import "../styles/style_result.css";
+    </style>
+    </ui:define>
+
     <ui:define name="content">
         <h2>protocol testcase1</h2>
 
         <h3>This page displays the final results of the tests</h3>
 
         <ui:repeat value="#{statisticsVisualizer.groupList}" var="group">
-            <ul class="testGroup success_#{(group.finalResult.numberOfTestsFailed == 0)?'true':'false'}">
-                <li>Testgroup: #{group.name}</li>
-                <li>TestCases:</li>
+            <ul class="testGroup ">
+                <li class="groupName success_#{(group.finalResult.numberOfTestsFailed == 0)?'true':'false'}">Testgroup: #{group.name}</li>
+                <li class="testCasesTitle">TestCases:</li>
 
                 <ui:repeat value="#{group.testCases}" var="testCase">
                     <ul class="testCase success_#{testCase.success}">

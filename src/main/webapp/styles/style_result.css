@@ -1,0 +1,26 @@
+/* =================================================================================
+   Final Result styles
+   ================================================================================= */
+.testGroup li.groupName {
+    font-size: 1.2em;
+    font-weight: 600;
+
+    background-color: #dadada;
+    border-color: 1px solid #cddef4;
+
+}
+
+.testGroup li {
+    padding-left: 20px;
+    margin-left: 0px;
+    list-style: none;
+    background-repeat: no-repeat;
+}
+
+.testGroup .success_true {
+    background-image: url(/javax.faces.resource/icons/famfam/accept.png);
+}
+
+.testGroup .success_false {
+    background-image: url(/javax.faces.resource/icons/famfam/error_delete.png);
+}
