@@ -83,7 +83,7 @@ testGroup.addStandardTestcase("Update Insert Spec Insert Path", "cmd_update_inse
 
 testGroup.addStandardTestcase("Delete", "cmd_delete", "delete1",
         function() {
-            this.assertFalse("delete area must be gone", !!document.getElementById("deleteable").length);
+            this.assertFalse("delete area must be gone", !!document.getElementById("deleteable"));
             if (!this.attr("failed")) {
                 $("#testResults").append("<div id='deleteable'>deletearea readded by automated test</div>");
             }
