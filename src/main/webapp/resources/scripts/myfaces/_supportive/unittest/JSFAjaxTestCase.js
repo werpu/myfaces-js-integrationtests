@@ -58,6 +58,7 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.JSFAjaxTes
             },
 
             setup: function() {
+                this._callSuper("setup");
                 if (this._globalProcess) {
                     jsf.ajax.addOnEvent(this._onGlobalEvent);
                     jsf.ajax.addOnError(this.onError);

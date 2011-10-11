@@ -61,6 +61,7 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.AjaxStatis
         this._currentGroup.finalResult.numberOfTestsPerformed = 0;
         this._currentGroup.finalResult.numberOfTestsSucceeded = 0;
         this._currentGroup.finalResult.numberOfTestsFailed = 0;
+        this._currentGroup.assertions = [];
         this._groupsPerformed.push(this._currentGroup);
     },
 
@@ -87,6 +88,13 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.AjaxStatis
         this._sendTestResults();
     },
 
+    pushAssertion: function(assertion) {
+        if (this._currentTestCase)
+            this._currentTestCase.assertions.push(assertion);
+        else
+            this._currentGroup.assertions.push(assertion);
+    },
+
     assertTrue: function(testCase, message, assertionOutcome) {
         var ret = this._callSuper("assertTrue", testCase, message, assertionOutcome);
         var assertion = {};
@@ -94,6 +102,7 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.AjaxStatis
         assertion.message = message;
         assertion.outcome = assertionOutcome;
         assertion.failure = !assertionOutcome;
+        this.pushAssertion(assertion);
         return ret;
     },
 
@@ -104,6 +113,7 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.AjaxStatis
         assertion.message = message;
         assertion.outcome = assertionOutcome;
         assertion.failure = assertionOutcome;
+        this.pushAssertion(assertion);
         return ret;
     },
 
@@ -114,6 +124,7 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.AjaxStatis
         assertion.message = message;
         assertion.outcome = false;
         assertion.failure = true;
+        this.pushAssertion(assertion);
         return ret;
     },
 
