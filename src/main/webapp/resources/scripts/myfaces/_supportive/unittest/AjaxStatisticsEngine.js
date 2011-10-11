@@ -20,8 +20,10 @@
  * data down to a collectors servlet once a testgroup is performed
  *
  * the data schema is
- * groups [{
- *  groupName{
+ * groups [
+ *  {
+ *      name:groupName,
+ *
  *      testCases:[ {
  *          name:<testcaseName>
  *          assertions: [{
@@ -31,14 +33,22 @@
  *              failure: <true, false>
  *          }]
  *          success: true|false
- *      }]*
+ *      }]*,
+ *
+ *      assertions: [
+ *         type: <AssertTrue, AssertFalse, Fail>
+ *         outcome: <true, false>
+ *         message: <Message>
+ *         failure: <true, false>
+ *      ],
+ *
  *      finalResult: {
  *          numberOfTestsPerformed: <No Performed>
  *          numberOfTestsSucceeded: <No Succeeded>
  *          numberOfTestsFailed: <NoFailed>
  *      }
- *  }
- * }]
+ *  }*
+ * ]
  */
 myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.AjaxStatisticsEngine", myfaces._supportive.unittest.StatisticsEngine, {
 
