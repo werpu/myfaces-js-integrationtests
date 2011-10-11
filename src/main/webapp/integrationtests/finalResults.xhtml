@@ -20,9 +20,9 @@
 <ui:composition template="../templates/template.xhtml">
     <ui:define name="header">
 
-    <style type="text/css">
-        @import "../styles/style_result.css";
-    </style>
+        <style type="text/css">
+            @import "../styles/style_result.css";
+        </style>
     </ui:define>
 
     <ui:define name="content">
@@ -36,8 +36,9 @@
                 <li class="testCasesTitle">TestCases:</li>
 
                 <ui:repeat value="#{group.testCases}" var="testCase">
-                    <ul class="testCase success_#{testCase.success}">
-                        <li>Testcase Name: #{testCase.name} Success: #{testCase.success}</li>
+                    <ul class="testCase">
+                        <li class="testName success_#{testCase.success}">Testcase Name: #{testCase.name} Success:
+                        #{testCase.success}</li>
                         <ol class="assertions">
                             <ui:repeat value="#{testCase.assertions}" var="assertion">
                                 <li class="#{assertion.type} failure_#{assertion.failure}">#{assertion.message}</li>
