@@ -19,12 +19,14 @@
 
 package extras.apache.org.jsintegration.core.model;
 
+import java.io.Serializable;
+
 /**
  * @author Werner Punz (latest modification by $Author$)
  * @version $Revision$ $Date$
  */
 
-public class FinalResult
+public class FinalResult  implements Serializable
 {
     int _numberOfTestsPerformed;
     int _numberOfTestsSucceeded;

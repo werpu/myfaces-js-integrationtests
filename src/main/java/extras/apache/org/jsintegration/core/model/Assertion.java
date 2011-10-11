@@ -19,12 +19,14 @@
 
 package extras.apache.org.jsintegration.core.model;
 
+import java.io.Serializable;
+
 /**
  * @author Werner Punz (latest modification by $Author$)
  * @version $Revision$ $Date$
  */
 
-public class Assertion
+public class Assertion implements Serializable
 {
     static final String ASSERT_TRUE = "AssertTrue";
     static final String ASSERT_FALSE = "AssertFalse";

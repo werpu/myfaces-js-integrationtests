@@ -19,6 +19,7 @@
 
 package extras.apache.org.jsintegration.core.model;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -26,7 +27,7 @@ import java.util.*;
  * @version $Revision$ $Date$
  */
 
-public class TestCase
+public class TestCase implements Serializable
 {
     String _name;
     List<Assertion> _assertions;

@@ -64,5 +64,7 @@ public class StatisticsCollector extends HttpServlet
         out.flush();
         out.close();
 
+        //TODO unjson the data and transform it into our data model for further processing
+
     }
 }
