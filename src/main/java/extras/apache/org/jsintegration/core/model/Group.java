@@ -29,9 +29,9 @@ import java.util.*;
 
 public class Group implements Serializable
 {
-    String _name;
-    List<TestCase> _testCases;
-    List<Assertion> _assertions;
+    String name;
+    List<TestCase> testCases;
+    List<Assertion> assertions;
 
     public Group()
     {
@@ -39,38 +39,38 @@ public class Group implements Serializable
 
     public Group(String name, List<TestCase> testCases, List<Assertion> assertions)
     {
-        _name = name;
-        _testCases = testCases;
-        _assertions = assertions;
+        this.name = name;
+        this.testCases = testCases;
+        this.assertions = assertions;
     }
 
     public String getName()
     {
-        return _name;
+        return name;
     }
 
     public void setName(String name)
     {
-        _name = name;
+        this.name = name;
     }
 
     public List<TestCase> getTestCases()
     {
-        return _testCases;
+        return testCases;
     }
 
     public void setTestCases(List<TestCase> testCases)
     {
-        _testCases = testCases;
+        this.testCases = testCases;
     }
 
     public List<Assertion> getAssertions()
     {
-        return _assertions;
+        return assertions;
     }
 
     public void setAssertions(List<Assertion> assertions)
     {
-        _assertions = assertions;
+        this.assertions = assertions;
     }
 }

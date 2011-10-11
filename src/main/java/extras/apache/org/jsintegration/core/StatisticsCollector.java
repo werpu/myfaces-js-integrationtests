@@ -19,6 +19,7 @@
 
 package extras.apache.org.jsintegration.core;
 
+import com.google.gson.Gson;
 import org.apache.commons.lang.StringEscapeUtils;
 
 import javax.servlet.ServletException;
@@ -27,6 +28,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+
+import extras.apache.org.jsintegration.core.model.*;
 
 /**
  * @author Werner Punz (latest modification by $Author$)
@@ -39,6 +46,7 @@ public class StatisticsCollector extends HttpServlet
 
     private static final String PARAM_SENDSTATS_MARKER = "sendstats";
     private static final String PARAM_TEST_GROUP = "testGroup";
+    private static final String PARAM_RESET_ALL = "resetAll";
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws
@@ -46,6 +54,10 @@ public class StatisticsCollector extends HttpServlet
     {
         //super.doPost(request, response);
         String reqParam = request.getParameter(PARAM_SENDSTATS_MARKER);
+        String resetAll = request.getParameter(PARAM_RESET_ALL);
+        if(resetAll != null) {
+            getGroupsContainer(request).clear();
+        }
         if (reqParam != null)
         {
             this.doCollectTestGroup(request, response);
@@ -58,13 +70,23 @@ public class StatisticsCollector extends HttpServlet
     {
         String group = request.getParameter(PARAM_TEST_GROUP);
         group = StringEscapeUtils.unescapeJavaScript(group);
-        //TODO decode group
         PrintWriter out = response.getWriter();
         out.write(group);
         out.flush();
         out.close();
+        Gson gson = new Gson();
+        Group[] groups = gson.fromJson(group, Group[].class);
+        List<Group> groupsContainer = getGroupsContainer(request);
+        groupsContainer.addAll(Arrays.asList(groups));
+    }
 
-        //TODO unjson the data and transform it into our data model for further processing
-
+    private List<Group> getGroupsContainer(HttpServletRequest request)
+    {
+        List<Group> finalGroups = (List<Group>) request.getSession().getAttribute("testResults");
+        if(finalGroups == null) {
+            finalGroups = Collections.synchronizedList(new LinkedList<Group>());
+            request.getSession().setAttribute("testResults", finalGroups);
+        }
+        return finalGroups;
     }
 }

@@ -29,9 +29,9 @@ import java.util.*;
 
 public class TestCase implements Serializable
 {
-    String _name;
-    List<Assertion> _assertions;
-    boolean _success;
+    String name;
+    List<Assertion> assertions;
+    boolean success;
 
     public TestCase()
     {
@@ -39,38 +39,38 @@ public class TestCase implements Serializable
 
     public TestCase(String name, List<Assertion> assertions, boolean success)
     {
-        _name = name;
-        _assertions = assertions;
-        _success = success;
+        this.name = name;
+        this.assertions = assertions;
+        this.success = success;
     }
 
     public String getName()
     {
-        return _name;
+        return name;
     }
 
     public void setName(String name)
     {
-        _name = name;
+        this.name = name;
     }
 
     public List<Assertion> getAssertions()
     {
-        return _assertions;
+        return assertions;
     }
 
     public void setAssertions(List<Assertion> assertions)
     {
-        _assertions = assertions;
+        this.assertions = assertions;
     }
 
     public boolean isSuccess()
     {
-        return _success;
+        return success;
     }
 
     public void setSuccess(boolean success)
     {
-        _success = success;
+        this.success = success;
     }
 }

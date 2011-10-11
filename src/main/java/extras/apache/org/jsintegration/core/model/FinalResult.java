@@ -28,9 +28,9 @@ import java.io.Serializable;
 
 public class FinalResult  implements Serializable
 {
-    int _numberOfTestsPerformed;
-    int _numberOfTestsSucceeded;
-    int _numberOfTestsFailed;
+    int numberOfTestsPerformed;
+    int numberOfTestsSucceeded;
+    int numberOfTestsFailed;
 
     public FinalResult()
     {
@@ -38,38 +38,38 @@ public class FinalResult  implements Serializable
 
     public FinalResult(int numberOfTestsPerformed, int numberOfTestsSucceeded, int numberOfTestsFailed)
     {
-        _numberOfTestsPerformed = numberOfTestsPerformed;
-        _numberOfTestsSucceeded = numberOfTestsSucceeded;
-        _numberOfTestsFailed = numberOfTestsFailed;
+        this.numberOfTestsPerformed = numberOfTestsPerformed;
+        this.numberOfTestsSucceeded = numberOfTestsSucceeded;
+        this.numberOfTestsFailed = numberOfTestsFailed;
     }
 
     public int getNumberOfTestsPerformed()
     {
-        return _numberOfTestsPerformed;
+        return numberOfTestsPerformed;
     }
 
     public void setNumberOfTestsPerformed(int numberOfTestsPerformed)
     {
-        _numberOfTestsPerformed = numberOfTestsPerformed;
+        this.numberOfTestsPerformed = numberOfTestsPerformed;
     }
 
     public int getNumberOfTestsSucceeded()
     {
-        return _numberOfTestsSucceeded;
+        return numberOfTestsSucceeded;
     }
 
     public void setNumberOfTestsSucceeded(int numberOfTestsSucceeded)
     {
-        _numberOfTestsSucceeded = numberOfTestsSucceeded;
+        this.numberOfTestsSucceeded = numberOfTestsSucceeded;
     }
 
     public int getNumberOfTestsFailed()
     {
-        return _numberOfTestsFailed;
+        return numberOfTestsFailed;
     }
 
     public void setNumberOfTestsFailed(int numberOfTestsFailed)
     {
-        _numberOfTestsFailed = numberOfTestsFailed;
+        this.numberOfTestsFailed = numberOfTestsFailed;
     }
 }

@@ -32,10 +32,10 @@ public class Assertion implements Serializable
     static final String ASSERT_FALSE = "AssertFalse";
     static final String ASSERT_FAIL = "Fail";
 
-    String _type;
-    boolean _outcome;
-    String _message;
-    boolean _failure;
+    String type;
+    boolean outcome;
+    String message;
+    boolean failure;
 
     public Assertion()
     {
@@ -43,49 +43,49 @@ public class Assertion implements Serializable
 
     public Assertion(String type, String message, boolean outcome, boolean failure)
     {
-        _type = type;
-        _outcome = outcome;
-        _message = message;
-        _failure = failure;
+        this.type = type;
+        this.outcome = outcome;
+        this.message = message;
+        this.failure = failure;
     }
 
     public String getType()
     {
-        return _type;
+        return type;
     }
 
     public void setType(String type)
     {
-        _type = type;
+        this.type = type;
     }
 
     public boolean isOutcome()
     {
-        return _outcome;
+        return outcome;
     }
 
     public void setOutcome(boolean outcome)
     {
-        _outcome = outcome;
+        this.outcome = outcome;
     }
 
     public String getMessage()
     {
-        return _message;
+        return message;
     }
 
     public void setMessage(String message)
     {
-        _message = message;
+        this.message = message;
     }
 
     public boolean isFailure()
     {
-        return _failure;
+        return failure;
     }
 
     public void setFailure(boolean failure)
     {
-        _failure = failure;
+        this.failure = failure;
     }
 }
