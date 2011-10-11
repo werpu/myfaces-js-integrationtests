@@ -122,123 +122,17 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.AjaxStatis
     _sendTestResults: function() {
         var xhr = new myfaces._impl.xhrCore.engine.Xhr1({xhrObject: myfaces._impl.core._Runtime.getXHRObject()});
 
-        var data = "sendstats=true&testGroup=" + escape(this._array2json(this._groupsPerformed));
+        var data = "sendstats=true&testGroup=" + escape(JSON.stringify(this._groupsPerformed));
         xhr.open("post", this._serviceUrl, false);
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhr.setRequestHeader("Content-length", data.length);
         xhr.setRequestHeader("Connection", "close");
 
         xhr.send(data);
-    },
-
-    /**
-     * Converts the given data structure to a JSON string.
-     * Argument: arr - The data structure that must be converted to JSON
-     * Example: var json_string = array2json(['e', {pluribus: 'unum'}]);
-     *             var json = array2json({"success":"Sweet","failure":false,"empty_array":[],"numbers":[1,2,3],"info":{"name":"Binny","site":"http:\/\/www.openjs.com\/"}});
-     * http://www.openjs.com/scripts/data/json_encode.php
-     */
-    _array2json: function(arr) {
-        var parts = [];
-        var is_list = (Object.prototype.toString.apply(arr) === '[object Array]');
-
-        for (var key in arr) {
-            var value = arr[key];
-            if (typeof value == "object") { //Custom handling for arrays
-                if (is_list) parts.push(this._array2json(value)); /* :RECURSION: */
-                else parts[key] = this._array2json(value);
-                /* :RECURSION: */
-            } else {
-                var str = "";
-                if (!is_list) str = '"' + key + '":';
-
-                //Custom handling for multiple data types
-                if (typeof value == "number") str += value; //Numbers
-                else if (value === false) str += 'false'; //The booleans
-                else if (value === true) str += 'true';
-                else str += '"' + value + '"'; //All other things
-                // :TODO: Is there any more datatype we should be in the lookout for? (Functions?)
-
-                parts.push(str);
-            }
-        }
-        var json = parts.join(",");
-
-        if (is_list) return '[' + json + ']';//Return numerical JSON
-        return '{' + json + '}';//Return associative JSON
-    },
-
-    /*base 64 routines taken straight from dojo*/
-    p:"=",
-    tab:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/",
-
-    base64enc:function(/* byte[] */ba) {
-        //	summary
-        //	Encode an array of bytes as a base64-encoded string
-        var s = [], l = ba.length;
-        var rm = l % 3;
-        var x = l - rm;
-        for (var i = 0; i < x;) {
-            var t = ba[i++] << 16 | ba[i++] << 8 | ba[i++];
-            s.push(tab.charAt((t >>> 18) & 0x3f));
-            s.push(tab.charAt((t >>> 12) & 0x3f));
-            s.push(tab.charAt((t >>> 6) & 0x3f));
-            s.push(tab.charAt(t & 0x3f));
-        }
-        //	deal with trailers, based on patch from Peter Wood.
-        switch (rm) {
-            case 2:
-            {
-                var t = ba[i++] << 16 | ba[i++] << 8;
-                s.push(tab.charAt((t >>> 18) & 0x3f));
-                s.push(tab.charAt((t >>> 12) & 0x3f));
-                s.push(tab.charAt((t >>> 6) & 0x3f));
-                s.push(p);
-                break;
-            }
-            case 1:
-            {
-                var t = ba[i++] << 16;
-                s.push(tab.charAt((t >>> 18) & 0x3f));
-                s.push(tab.charAt((t >>> 12) & 0x3f));
-                s.push(p);
-                s.push(p);
-                break;
-            }
-        }
-        return s.join("");	//	string
-    },
-
-    base64decode:function(/* string */str) {
-        //	summary
-        //	Convert a base64-encoded string to an array of bytes
-        var s = str.split(""), out = [];
-        var l = s.length;
-        while (s[--l] == p) {
-        }	//	strip off trailing padding
-        for (var i = 0; i < l;) {
-            var t = tab.indexOf(s[i++]) << 18;
-            if (i <= l) {
-                t |= tab.indexOf(s[i++]) << 12
-            }
-            ;
-            if (i <= l) {
-                t |= tab.indexOf(s[i++]) << 6
-            }
-            ;
-            if (i <= l) {
-                t |= tab.indexOf(s[i++])
-            }
-            ;
-            out.push((t >>> 16) & 0xff);
-            out.push((t >>> 8) & 0xff);
-            out.push(t & 0xff);
-        }
-        //	strip off any null bytes
-        while (out[out.length - 1] == 0) {
-            out.pop();
-        }
-        return out;	//	byte[]
     }
+
+
+
+
 });
 
