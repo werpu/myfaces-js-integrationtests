@@ -13,11 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+var _RT = myfaces._impl.core._Runtime;
+var _class = myfaces._impl.core._Runtime.extendClass;
+var _Lang = myfaces._impl._util._Lang;
+var _Dom = myfaces._impl._util._Dom;
 
 /**
  * Simple base testcase
  */
-myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.TestCase", Object, {
+_class("myfaces._supportive.unittest.TestCase", Object, {
     _description: null,
     _manualPostCondition: false,
     _statisticsEngine: null,

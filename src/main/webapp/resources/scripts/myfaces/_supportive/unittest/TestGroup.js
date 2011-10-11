@@ -22,7 +22,9 @@
  * b) is run through manually and triggered by the teardown
  * method of the testcases (needed for deferred executions)
  */
-myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.TestGroup", Object, {
+//we reserve some global vars for the tests to make them shorter
+
+_class("myfaces._supportive.unittest.TestGroup", Object, {
     _description: null,
     testCases: null,
     _allTestsPassed: true,

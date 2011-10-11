@@ -1,6 +1,7 @@
 var TestCase = myfaces._supportive.unittest.TestCase;
 var AjaxCase = myfaces._supportive.unittest.JSFAjaxTestCase;
-myfaces._impl.core._Runtime.extendClass("SeleniumGroup6", myfaces._supportive.unittest.TestGroup, {
+
+_class("SeleniumGroup6", myfaces._supportive.unittest.TestGroup, {
     constructor_: function() {
       this._callSuper("constructor_");
     },
