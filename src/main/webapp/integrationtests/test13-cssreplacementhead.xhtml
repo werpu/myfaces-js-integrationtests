@@ -29,6 +29,8 @@
                 border:  1px solid yellow;
             }
         </style>
+        <h:outputScript library="scripts" name="testcases/test13-cssreplacementhead.js" target="head"/>
+
     </ui:define>
 
     <ui:define name="content">
@@ -39,12 +41,14 @@
             different methods of a css replacement.
             All css must be replaced in the head.
         </h2>
-        <h:form id="testForm">
+        <h:form id="mainForm" prependId="false">
             <div id="div1">div1</div>
             <div id="div2">div1</div>
             <div id="div3">div1</div>
 
-            <h:commandButton action="test13-cssreplacementhead2" />
+            <h:commandButton id="nextPage" value="go to next page" action="test13-cssreplacementhead2">
+                <f:ajax execute="@this" render="@all" />
+            </h:commandButton>
         </h:form>
     </ui:define>
 </ui:composition>
