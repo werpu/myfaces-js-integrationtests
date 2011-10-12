@@ -21,7 +21,7 @@
 <ui:composition template="../templates/template.xhtml">
     <ui:define name="header">
         <style type="text/css">
-            @import "../styles/testcases/css1_replacement.css";
+            @import url("../styles/testcases/css1_replacement.css");
         </style>
         <link rel="stylesheet" type="text/css" href="../styles/testcases/css2_replacement.css" />
         <style type="text/css">
@@ -30,6 +30,8 @@
             }
         </style>
         <h:outputScript library="scripts" name="testcases/test13-cssreplacementhead.js" target="head"/>
+
+
 
     </ui:define>
 
