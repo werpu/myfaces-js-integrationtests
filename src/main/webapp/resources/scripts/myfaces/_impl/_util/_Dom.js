@@ -111,7 +111,7 @@ myfaces._impl.core._Runtime.singletonExtendClass("myfaces._impl._util._Dom", Obj
                     newSS.setAttribute("type",item.getAttribute("type") || "text/css");
                     document.getElementsByTagName("head")[0].appendChild(newSS);
                     //ie merrily again goes its own way
-                    if(window.attachEvent  && 'undefined' != typeof newSS.styleSheet && 'undefined' != newSS.styleSheet.cssText) newSS.styleSheet.cssText = style;
+                    if(window.attachEvent && !this._RT.isOpera  && 'undefined' != typeof newSS.styleSheet && 'undefined' != newSS.styleSheet.cssText) newSS.styleSheet.cssText = style;
                     else newSS.appendChild(document.createTextNode(style));
         });
 
