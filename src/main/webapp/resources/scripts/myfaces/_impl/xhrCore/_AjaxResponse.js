@@ -504,9 +504,9 @@ myfaces._impl.core._Runtime.singletonExtendClass("myfaces._impl.xhrCore._AjaxRes
                 this._Dom.deleteItems(oldTags);
 
                 //var oldTags = this._Dom.findByTagNames(document.getElementsByTagName("head")[0], {"script": true});
-                this._Dom.deleteScripts(oldTags);
+                //this._Dom.deleteScripts(oldTags);
                 this._Dom.runScripts(newHead, true);
-                //this._Dom.deleteItems(oldTags);
+
 
                 return doc;
             },

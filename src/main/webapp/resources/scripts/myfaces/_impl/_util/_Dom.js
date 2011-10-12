@@ -100,57 +100,46 @@ myfaces._impl.core._Runtime.singletonExtendClass("myfaces._impl._util._Dom", Obj
         //now of the onload handler also is overwritten we have a problem
     },
 
-    crcNode: function(item) {
-       var crcString = item.tagName+(item.getAttribute("src")?item.getAttribute("src"):"")+
-                +(item.getAttribute("href")?item.getAttribute("href"):"");
-        if(item.tagName === crcString) {
-            crcString += (item.innerHTML)?item.innerHTML:"";
-            crcString += (item.innerText)?item.innerText:"";
-        }
-        return this._Lang.crc32(crcString);
-    },
-
     runCss: function(item, xmlData) {
 
         var stylesheets = document.styleSheets;
         var finalCss    = [];
 
-
-
-        var execCss       = this._Lang.hitch(this, function(item) {
-            if (item.tagName && this._Lang.equalsIgnoreCase(item.tagName, "link") && item.getAttribute("type") == "text/css") {
-                if(document.createStyleSheet) {
-                  document.createStyleSheet('"'+item.getAttribute("src")+'"');
-                }
-                else {
-                    var style = "@import url('"+item.getAttribute("href")+"');";
-                    var newSS = document.createElement("style");
-                    newSS.setAttribute("rel", item.getAttribute("rel") || "stylesheet");
-                    newSS.setAttribute("type", item.getAttribute("type") || "text/css");
+        var applyStyle = this._Lang.hitch(this, function(item, style) {
+            var newSS = document.createElement("style");
+                    newSS.setAttribute("rel",item.getAttribute("rel") || "stylesheet");
+                    newSS.setAttribute("type",item.getAttribute("type") || "text/css");
                     document.getElementsByTagName("head")[0].appendChild(newSS);
-                    if(window.attachEvent  && 'undefined' != typeof newSS.styleSheet && 'undefined' != newSS.styleSheet.cssText) newSS.styleSheet.cssText = style;//this one's for ie
+                    //ie merrily again goes its own way
+                    if(window.attachEvent  && 'undefined' != typeof newSS.styleSheet && 'undefined' != newSS.styleSheet.cssText) newSS.styleSheet.cssText = style;
                     else newSS.appendChild(document.createTextNode(style));
-                }
+        });
+
+        var execCss = this._Lang.hitch(this, function(item) {
+            if (item.tagName && this._Lang.equalsIgnoreCase(item.tagName, "link") && item.getAttribute("type") == "text/css") {
+                //if(document.createStyleSheet) {
+                //  document.createStyleSheet('"'+item.getAttribute("href")+'"');
+                //  return;
+                //}
+                //else {
+                    var style = "@import url('"+item.getAttribute("href")+"');";
+                    applyStyle(item, style);
+                //}
             } else if(item.tagName && this._Lang.equalsIgnoreCase(item.tagName, "style") && item.getAttribute("type") == "text/css") {
                 var innerText = [];
+                //compliant browsers know childnodes
                 if(item.childNodes) {
                     var len = item.childNodes.length;
                     for(var cnt = 0; cnt < len; cnt++) {
                         innerText.push(item.childNodes[cnt].innerHTML || item.childNodes[cnt].data);
                     }
+                //non compliant ones innerHTML
                 } else if(item.innerHTML) {
                     innerText.push(item.innerHTML);
                 }
 
                 var style = innerText.join("");
-                var newSS = document.createElement("style");
-                newSS.setAttribute("rel", "stylesheet");
-                newSS.setAttribute("type", "text/css");
-                document.getElementsByTagName("head")[0].appendChild(newSS);
-                if(window.attachEvent  &&
-                        'undefined' != typeof newSS.styleSheet &&
-                        'undefined' != newSS.styleSheet.cssText) newSS.styleSheet.cssText = style;//this one's for ie
-                else newSS.appendChild(document.createTextNode(style));
+                applyStyle(item, style);
             }
         });
 
@@ -170,6 +159,7 @@ myfaces._impl.core._Runtime.singletonExtendClass("myfaces._impl._util._Dom", Obj
             //mem leaks, which are impossible to avoid
             //at this browser
             execCss = null;
+            applyStyle = null;
         }
     },
 
