@@ -33,16 +33,19 @@ public class Group implements Serializable
     List<TestCase> testCases;
     List<Assertion> assertions;
     FinalResult finalResult;
+    String url;
+
     public Group()
     {
     }
 
-    public Group(String name, List<TestCase> testCases, List<Assertion> assertions, FinalResult finalResult)
+    public Group(String name, List<TestCase> testCases, List<Assertion> assertions, FinalResult finalResult, String url)
     {
         this.name = name;
         this.testCases = testCases;
         this.assertions = assertions;
         this.finalResult = finalResult;
+        this.url = url;
     }
 
     public String getName()
@@ -83,5 +86,15 @@ public class Group implements Serializable
     public void setFinalResult(FinalResult finalResult)
     {
         this.finalResult = finalResult;
+    }
+
+    public String getUrl()
+    {
+        return url;
+    }
+
+    public void setUrl(String url)
+    {
+        this.url = url;
     }
 }

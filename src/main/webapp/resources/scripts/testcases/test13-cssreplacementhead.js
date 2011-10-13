@@ -3,7 +3,7 @@ var AjaxCase = myfaces._supportive.unittest.JSFAjaxTestCase;
 var testGroup = new (_class("Test13CSSReplacementHead", myfaces._supportive.unittest.TestGroup,
         {
             _description:"CSS Replacement testcase",
-            _url: "./test13-cssreplacementhead.jsf",
+
             constructor_: function() {
                 this._callSuper("constructor_");
             },

@@ -34,12 +34,14 @@
         <ui:repeat value="#{statisticsVisualizer.groupList}" var="group">
             <ul class="testGroup ">
                 <li class="groupName success_#{(group.finalResult.numberOfTestsFailed == 0)?'true':'false'}">Testgroup: #{group.name}</li>
+                <li class="url">URL: <a href="#{group.url}">#{group.url}</a></li>
                 <li class="testCasesTitle">TestCases:</li>
 
                 <ui:repeat value="#{group.testCases}" var="testCase">
                     <ul class="testCase">
                         <li class="testName success_#{testCase.success}">Testcase Name: #{testCase.name} Success:
                         #{testCase.success}</li>
+
                         <ol class="assertions">
                             <ui:repeat value="#{testCase.assertions}" var="assertion">
                                 <li class="#{assertion.type} failure_#{assertion.failure}">#{assertion.message}</li>
