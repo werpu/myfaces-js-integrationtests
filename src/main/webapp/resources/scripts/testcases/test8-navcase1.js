@@ -1,13 +1,18 @@
 var AjaxCase = myfaces._supportive.unittest.JSFAjaxTestCase;
 
-var testGroup = new myfaces._supportive.unittest.TestGroup(
+var testGroup = new (_class("Test8NavCase1", myfaces._supportive.unittest.TestGroup,
         {
             description:"Partial Page Rendering Nav Case",
-            postcondition: function() {
+            constructor_: function() {
+                this._callSuper("constructor_");
+            },
+            tearDown: function() {
+                this._callSuper("tearDown");
                 this.autoForward("./test9-spreadsheet.jsf");
-                return true;
+
             }
-        });
+        }))();
+
 testGroup.addCase(new AjaxCase({
     description:"Nav Case Test",
     defer: 2000,

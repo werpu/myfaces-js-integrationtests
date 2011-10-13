@@ -1,14 +1,16 @@
 var AjaxCase = myfaces._supportive.unittest.JSFAjaxTestCase;
 
-var testGroup = new myfaces._supportive.unittest.TestGroup(
+var testGroup = new (_class("Test5ViewRoot",  myfaces._supportive.unittest.TestGroup,
         {
             description:"Chain Test",
+            constructor_: function() {
+                this._callSuper("constructor_");
+            },
             tearDown: function() {
-                this._statisticsEngine.endTestGroup(this._description);
+                this._callSuper("tearDown");
                 this.autoForward("./test6-tablebasic.jsf");
-
             }
-        });
+        }))();
 testGroup.addCase(new AjaxCase({
     description:"Chain test",
     defer: 3000,

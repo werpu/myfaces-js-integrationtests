@@ -1,14 +1,17 @@
 var AjaxCase = myfaces._supportive.unittest.JSFAjaxTestCase;
 
-var testGroup = new myfaces._supportive.unittest.TestGroup(
+var testGroup = new (_class("Test9SpreadSheet", myfaces._supportive.unittest.TestGroup,
         {
             description:"Table Test, replacement of table elements",
-            postcondition: function() {
+            constructor_: function() {
+                this._callSuper("constructor_");
+            },
+            tearDown: function() {
+                this._callSuper("tearDown");
                 this.autoForward("./test10-doubleeval.jsf");
 
-                return true;
             }
-        });
+        }))();
 
 testGroup.addCase(new AjaxCase({
     description:"Chain test",

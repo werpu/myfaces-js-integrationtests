@@ -12,14 +12,17 @@ function assertEvent(testcase, data, eventComparator, global) {
 }
 var AjaxCase = myfaces._supportive.unittest.JSFAjaxTestCase;
 
-var testGroup = new myfaces._supportive.unittest.TestGroup(
+var testGroup = new  (_class("Testgroup7Eventtest", myfaces._supportive.unittest.TestGroup,
         {
             description:"MyFaces Event Lifecycle test",
-            postcondition: function() {
+            constructor_: function() {
+                this._callSuper("constructor_");
+            },
+            tearDown: function() {
+                this._callSuper("tearDown");
                 this.autoForward("./test8-navcase1.jsf");
-                return true;
             }
-        });
+        }))();
 
 testGroup.addCase(
         new AjaxCase({

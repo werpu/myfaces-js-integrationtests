@@ -1,13 +1,17 @@
 var AjaxCase = myfaces._supportive.unittest.JSFAjaxTestCase;
 
-var testGroup = new myfaces._supportive.unittest.TestGroup(
+var testGroup = new (_class("Test13CSSReplacementHead", myfaces._supportive.unittest.TestGroup,
         {
             description:"CSS Replacement testcase",
-            postcondition: function() {
+            constructor_: function() {
+                this._callSuper("constructor_");
+            },
+            tearDown: function() {
+                this._callSuper("tearDown");
                 this.autoForward("./test14-multiform.jsf");
-                return true;
+
             }
-        });
+        }))();
 testGroup.addCase(new AjaxCase({
     description:"Replacement Testcase",
     defer: 2000,

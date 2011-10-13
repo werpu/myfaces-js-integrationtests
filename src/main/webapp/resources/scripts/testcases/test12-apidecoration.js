@@ -2,14 +2,18 @@ var AjaxCase = myfaces._supportive.unittest.JSFAjaxTestCase;
 var RT = myfaces._impl.core._Runtime;
 var Lang = myfaces._impl._util._Lang;
 
-var testGroup = new myfaces._supportive.unittest.TestGroup(
+var testGroup = new (_class("Test12ApiDecoration", myfaces._supportive.unittest.TestGroup,
         {
             description:"Testing for decorated api calls",
-            postcondition: function() {
+            constructor_: function() {
+                this._callSuper("constructor_");
+            },
+            tearDown: function() {
+                this._callSuper("tearDown");
                 this.autoForward("./test13-cssreplacementhead.jsf");
-                return true;
             }
-        });
+        }))();
+
 var  functionCalled = {};
 
 var decorate = function( /*String*/ namespace, /*function*/ toDecorate) {

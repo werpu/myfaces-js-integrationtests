@@ -1,5 +1,5 @@
 var AjaxCase = myfaces._supportive.unittest.JSFAjaxTestCase;
-_class("SeleniumGroup2", myfaces._supportive.unittest.TestGroup, {
+var testGroup  = new (_class("SeleniumGroup2", myfaces._supportive.unittest.TestGroup, {
     constructor_: function() {
         this._callSuper("constructor_");
     },
@@ -11,13 +11,11 @@ _class("SeleniumGroup2", myfaces._supportive.unittest.TestGroup, {
     description:"Full Body Replacement",
     postcondition: function() {
         this._callSuper("postcondition");
-        this.autoForward("./test3-viewbody1.jsf");
-
         return true;
     },
     tearDown: function() {
         this._callSuper("tearDown");
-
+        this.autoForward("./test3-viewbody1.jsf");
     },
     emitPPR: function(ajaxFunc, source, event, action, useIframe, formName) {
         document.getElementById(formName || "form1").action = target;
@@ -38,9 +36,9 @@ _class("SeleniumGroup2", myfaces._supportive.unittest.TestGroup, {
             postcondition: postCondition
         }));
     }
-});
+}))();
 
-var testGroup = new SeleniumGroup2();
+
 testGroup.addStandardTestcase("Full Body Replacement normal", "form1", "body", function() {
     this.assertTrue("Body replacement and script eval performed", $("#scriptreceiver").html().indexOf("hello from embedded script") != -1);
 });

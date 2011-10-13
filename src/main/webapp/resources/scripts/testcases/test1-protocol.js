@@ -3,15 +3,23 @@
 var TestCase = myfaces._supportive.unittest.TestCase;
 var AjaxCase = myfaces._supportive.unittest.JSFAjaxTestCase;
 
-var testGroup = new myfaces._supportive.unittest.TestGroup(
+var testGroup = new (_class("SeleniumGroup2", myfaces._supportive.unittest.TestGroup,
         {
             description:"MyFaces JSF Protocol Tests",
+            constructor_: function() {
+                this._callSuper("constructor_");
+            },
+
             postcondition: function() {
                 //if the tests have passed forward to the next testing page
+               return true;
+            },
+            tearDown: function() {
+                this._callSuper("tearDown");
                 this.autoForward("./test2-viewroot1.jsf");
-                return true;
             }
-        });
+        }))();
+
 
 testGroup.emitPPR = function(ajaxFunc, source, event, action, useIframe, formName) {
     document.getElementById(formName || "form1").action = target;

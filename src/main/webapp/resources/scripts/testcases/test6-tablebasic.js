@@ -1,7 +1,7 @@
 var TestCase = myfaces._supportive.unittest.TestCase;
 var AjaxCase = myfaces._supportive.unittest.JSFAjaxTestCase;
 
-_class("SeleniumGroup6", myfaces._supportive.unittest.TestGroup, {
+var testGroup = new (_class("Testgroup6TableBasic", myfaces._supportive.unittest.TestGroup, {
     constructor_: function() {
       this._callSuper("constructor_");
     },
@@ -42,9 +42,9 @@ _class("SeleniumGroup6", myfaces._supportive.unittest.TestGroup, {
             postcondition: postCondition
         }));
     }
-});
+}))();
 
-var testGroup = new SeleniumGroup6();
+
 
 testGroup.addStandardTestcase("Replace Head in table", "replace_head", "table_replace_head",
         function() {

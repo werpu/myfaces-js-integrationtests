@@ -1,14 +1,17 @@
 var AjaxCase = myfaces._supportive.unittest.JSFAjaxTestCase;
 
-var testGroup = new myfaces._supportive.unittest.TestGroup(
+var testGroup = new (_class("Test14Multiform",myfaces._supportive.unittest.TestGroup,
         {
             description:"Multi form situation",
-            postcondition: function() {
-
+            constructor_: function() {
+                this._callSuper("constructor_");
+            },
+            tearDown: function() {
+                this._callSuper("tearDown");
                 this.autoForward("./finalResults.jsf")
-                return true;
+
             }
-        });
+        }))();
 
 testGroup.addCase(new AjaxCase({
     description:"Multiform testing",
@@ -22,7 +25,7 @@ testGroup.addCase(new AjaxCase({
         this._timer = setInterval(this._Lang.hitch(this, function() {
             $("#first_input").val(Math.random());
             $("#second_input").val(Math.random());
-        }),10);
+        }), 10);
     },
     precondition: function() {
         this._ajaxCnt = 1;
@@ -37,6 +40,7 @@ testGroup.addCase(new AjaxCase({
             }
         }
     },
+
     postcondition: function() {
 
         if (this._ajaxCnt == 100) {
