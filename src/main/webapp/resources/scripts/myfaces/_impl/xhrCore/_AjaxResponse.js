@@ -495,10 +495,6 @@ myfaces._impl.core._Runtime.singletonExtendClass("myfaces._impl.xhrCore._AjaxRes
                     newHead = doc.getElementsByTagName("head")[0];
                 }
 
-                //TODO we have to make a delta of styles we dont have anymore
-                //and remove those from the page
-                //the same goes for javascript
-
                 var oldTags = this._Dom.findByTagNames(document.getElementsByTagName("head")[0], {"link": true, "style":true});
                 this._Dom.runCss(newHead, true);
                 this._Dom.deleteItems(oldTags);
