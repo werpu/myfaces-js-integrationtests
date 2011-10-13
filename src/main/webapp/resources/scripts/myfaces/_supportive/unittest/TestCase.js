@@ -55,7 +55,7 @@ _class("myfaces._supportive.unittest.TestCase", Object, {
     },
 
     setup: function() {
-        this._statisticsEngine.startTestCase(this._description);
+        this._statisticsEngine.startTestCase(this);
     },
 
     precondition: function() {

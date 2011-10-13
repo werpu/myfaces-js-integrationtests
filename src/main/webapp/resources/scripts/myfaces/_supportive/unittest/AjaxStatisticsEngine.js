@@ -26,6 +26,7 @@
  *
  *      testCases:[ {
  *          name:<testcaseName>
+ *          url:<url to the originating page>
  *          assertions: [{
  *              type: <AssertTrue, AssertFalse, Fail>
  *              outcome: <true, false>
@@ -62,12 +63,13 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.AjaxStatis
         this._groupsPerformed = [];
     },
 
-    startTestGroup: function(testGroupName) {
-        this._callSuper("startTestGroup", testGroupName);
+    startTestGroup: function(testGroup) {
+        this._callSuper("startTestGroup", testGroup);
         this._currentGroup = {};
-        this._currentGroup.name = testGroupName;
+        this._currentGroup.name = testGroup.attr("description");
         this._currentGroup.testCases = [];
         this._currentGroup.finalResult = {};
+        this._currentGroup.url = testGroup.attr("url");
         this._currentGroup.finalResult.numberOfTestsPerformed = 0;
         this._currentGroup.finalResult.numberOfTestsSucceeded = 0;
         this._currentGroup.finalResult.numberOfTestsFailed = 0;
@@ -75,10 +77,10 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.AjaxStatis
         this._groupsPerformed.push(this._currentGroup);
     },
 
-    startTestCase: function(testCaseName) {
-        this._callSuper("startTestCase", testCaseName);
+    startTestCase: function(testCase) {
+        this._callSuper("startTestCase", testCase);
         this._currentTestCase = {};
-        this._currentTestCase.name = testCaseName;
+        this._currentTestCase.name = this.attr("description");
         this._currentTestCase.assertions = [];
         this._currentTestCase.success = true;
         this._currentGroup.testCases.push(this._currentTestCase);

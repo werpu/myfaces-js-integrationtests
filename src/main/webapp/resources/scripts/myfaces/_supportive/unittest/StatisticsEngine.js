@@ -79,8 +79,8 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.Statistics
         return true;
     },
 
-    startTestCase: function(testCaseName) {
-        this._Lang.logInfo("Starting Testcase:", testCaseName);
+    startTestCase: function(testCase) {
+        this._Lang.logInfo("Starting Testcase:", testCase.attr("description"));
     },
 
     endTestCase: function(testCaseName) {
@@ -96,8 +96,8 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.Statistics
         this._Lang.logInfo("Ending testcase:", testCaseName);
     },
 
-    startTestGroup: function(testGroupName) {
-        this._Lang.logInfo("Starting Testgroup:", testGroupName);
+    startTestGroup: function(testGroup) {
+        this._Lang.logInfo("Starting Testgroup:", testGroup.attr("description"));
     },
 
     endTestGroup: function(testGroupName) {

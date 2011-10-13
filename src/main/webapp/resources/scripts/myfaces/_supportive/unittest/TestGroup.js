@@ -28,7 +28,7 @@ _class("myfaces._supportive.unittest.TestGroup", Object, {
     _description: null,
     testCases: null,
     _allTestsPassed: true,
-
+    _url: null,
 
     _Lang: myfaces._impl._util._Lang,
     _Dom: myfaces._impl._util._Dom,
@@ -39,6 +39,7 @@ _class("myfaces._supportive.unittest.TestGroup", Object, {
         this._statisticsEngine = this._statisticsEngine || new myfaces._supportive.unittest.AjaxStatisticsEngine();
         this.tearDown = this._Lang.hitch(this, this.tearDown);
         this._tearDown = this._Lang.hitch(this, this._tearDown);
+        this._url = this._url || window.location.href.replace(/autotest\=true\&{0,1}/gi,"");
     },
 
     addCase: function(testCase) {
@@ -69,7 +70,7 @@ _class("myfaces._supportive.unittest.TestGroup", Object, {
     },
 
     setup: function() {
-        this._statisticsEngine.startTestGroup(this._description);
+        this._statisticsEngine.startTestGroup(this);
 
         var testCases = this.testCases;
         for (var cnt = 0; cnt < testCases.length; cnt++) {
@@ -220,6 +221,14 @@ _class("myfaces._supportive.unittest.TestGroup", Object, {
                 }
             }
         },300);
-    }
+    },
+     attr: function(name, value) {
+        if ('undefined' != typeof value) {
+            this["_" + name] = value;
+            return value;
+        } else {
+            return this["_" + name];
+        }
+    },
 
 });
