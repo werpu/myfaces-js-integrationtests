@@ -92,7 +92,6 @@ _class("myfaces._supportive.unittest.TestCase", Object, {
     fail: function(message) {
        this._statisticsEngine.fail(this._description, message);
        this._failed = true;
-       this._finalFail = true;
     },
 
     logInfo: function(message) {

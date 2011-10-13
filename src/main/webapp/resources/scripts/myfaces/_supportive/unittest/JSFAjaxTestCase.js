@@ -132,7 +132,7 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.JSFAjaxTes
              */
             _onError: function(evt) {
                 this.onError(evt);
-                this.fail("onError called, Responsecode:" + evt.responseCode + " - Responsetext:" + evt.responseText);
+                this.fail("onError called, Responsecode:" + evt.responseCode + " - Responsetext:" + evt.responseText.replace(/[^A-Za-z\s\n]+/g, " "));
                 if (!this._globalProcess) {
                     this._tearDown();
                     this.tearDown();
@@ -202,7 +202,7 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.JSFAjaxTes
                         }
                     }
                 } catch (e) {
-                    this.fail(e.toString());
+                    this.fail(e.toString().replace(/[^A-Za-z\s\n]+/g, " "));
                 }
             },
 

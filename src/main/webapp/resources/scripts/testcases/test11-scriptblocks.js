@@ -19,8 +19,13 @@ testGroup.addCase(new AjaxCase({
     /*we enable global processing to handle a triggered click on the issuing control*/
     _ajaxCnt: 0,
 
-    run: function() {
+    precondition: function() {
         $("#resultArea").html("");
+        return true;
+    },
+
+    run: function() {
+
         this.ajaxRequest('reloader', null, {execute:'@none',render:'outputWriter','javax.faces.behavior.event':'action'});
     },
 
