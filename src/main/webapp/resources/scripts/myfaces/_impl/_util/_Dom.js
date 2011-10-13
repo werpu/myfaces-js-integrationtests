@@ -107,25 +107,28 @@ myfaces._impl.core._Runtime.singletonExtendClass("myfaces._impl._util._Dom", Obj
 
         var applyStyle = this._Lang.hitch(this, function(item, style) {
             var newSS = document.createElement("style");
-                    newSS.setAttribute("rel",item.getAttribute("rel") || "stylesheet");
-                    newSS.setAttribute("type",item.getAttribute("type") || "text/css");
-                    document.getElementsByTagName("head")[0].appendChild(newSS);
-                    //ie merrily again goes its own way
-                    if(window.attachEvent && !this._RT.isOpera  && 'undefined' != typeof newSS.styleSheet && 'undefined' != newSS.styleSheet.cssText) newSS.styleSheet.cssText = style;
-                    else newSS.appendChild(document.createTextNode(style));
+
+            newSS.setAttribute("rel",item.getAttribute("rel") || "stylesheet");
+            newSS.setAttribute("type",item.getAttribute("type") || "text/css");
+            document.getElementsByTagName("head")[0].appendChild(newSS);
+            //ie merrily again goes its own way
+            if(window.attachEvent && !this._RT.isOpera  && 'undefined' != typeof newSS.styleSheet && 'undefined' != newSS.styleSheet.cssText) newSS.styleSheet.cssText = style;
+            else newSS.appendChild(document.createTextNode(style));
         });
 
         var execCss = this._Lang.hitch(this, function(item) {
-            if (item.tagName && this._Lang.equalsIgnoreCase(item.tagName, "link") && item.getAttribute("type") == "text/css") {
+            var _eqi = this._Lang.equalsIgnoreCase;
+
+            if (item.tagName && _eqi(item.tagName, "link") && _eqi(item.getAttribute("type"), "text/css")) {
                 var style = "@import url('"+item.getAttribute("href")+"');";
                 applyStyle(item, style);
-            } else if(item.tagName && this._Lang.equalsIgnoreCase(item.tagName, "style") && item.getAttribute("type") == "text/css") {
+            } else if(item.tagName && _eqi(item.tagName, "style") && _eqi(item.getAttribute("type"), "text/css")) {
                 var innerText = [];
                 //compliant browsers know childnodes
-                if(item.childNodes) {
+                if(item.childNodes) {
                     var len = item.childNodes.length;
                     for(var cnt = 0; cnt < len; cnt++) {
-                        innerText.push(item.childNodes[cnt].innerHTML || item.childNodes[cnt].data);
+                        innerText.push(item.childNodes[cnt].innerHTML || item.childNodes[cnt].data);
                     }
                 //non compliant ones innerHTML
                 } else if(item.innerHTML) {
@@ -143,9 +146,7 @@ myfaces._impl.core._Runtime.singletonExtendClass("myfaces._impl._util._Dom", Obj
             for (var cnt = 0; cnt < scriptElements.length; cnt++) {
                 execCss(scriptElements[cnt]);
             }
-            //if (finalScripts.length) {
-            //    this._RT.globalEval(finalScripts.join("\n"));
-            //}
+
         } finally {
             //the usual ie6 fix code
             //the IE6 garbage collector is broken

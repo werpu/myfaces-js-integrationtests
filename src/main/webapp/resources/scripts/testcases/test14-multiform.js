@@ -46,8 +46,7 @@ testGroup.addCase(new AjaxCase({
         }
         this._ajaxCnt++;
         return true;
-    },
-
+    }
 }));
 setTimeout(function() {
     testGroup.start();
