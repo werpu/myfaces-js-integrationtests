@@ -229,6 +229,6 @@ _class("myfaces._supportive.unittest.TestGroup", Object, {
         } else {
             return this["_" + name];
         }
-    },
+    }
 
 });
