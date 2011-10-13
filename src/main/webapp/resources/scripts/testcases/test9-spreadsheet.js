@@ -2,7 +2,7 @@ var AjaxCase = myfaces._supportive.unittest.JSFAjaxTestCase;
 
 var testGroup = new (_class("Test9SpreadSheet", myfaces._supportive.unittest.TestGroup,
         {
-            description:"Table Test, replacement of table elements",
+            _description:"Table Test, replacement of table elements",
             constructor_: function() {
                 this._callSuper("constructor_");
             },

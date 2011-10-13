@@ -2,7 +2,8 @@ var AjaxCase = myfaces._supportive.unittest.JSFAjaxTestCase;
 
 var testGroup = new (_class ("Test11ScriptBlock", myfaces._supportive.unittest.TestGroup,
         {
-            description:"Script blocks in various formats",
+            _description:"Script blocks in various formats",
+
             constructor_: function() {
                 this._callSuper("constructor_");
             },

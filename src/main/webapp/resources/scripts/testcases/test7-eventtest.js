@@ -14,7 +14,7 @@ var AjaxCase = myfaces._supportive.unittest.JSFAjaxTestCase;
 
 var testGroup = new  (_class("Testgroup7Eventtest", myfaces._supportive.unittest.TestGroup,
         {
-            description:"MyFaces Event Lifecycle test",
+            _description:"MyFaces Event Lifecycle test",
             constructor_: function() {
                 this._callSuper("constructor_");
             },

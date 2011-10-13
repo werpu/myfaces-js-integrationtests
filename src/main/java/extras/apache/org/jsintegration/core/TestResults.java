@@ -21,52 +21,55 @@ package extras.apache.org.jsintegration.core;
 
 import extras.apache.org.jsintegration.core.model.Group;
 
-import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletRequest;
 import java.util.*;
-
-import extras.apache.org.jsintegration.core.model.Group;
+import java.util.zip.CRC32;
 
 /**
  * @author Werner Punz (latest modification by $Author$)
  * @version $Revision$ $Date$
+ *          <p/>
+ *          Testresults with an idx so that a double entry cannot occur
+ *          note this class is not thread save!!! Should not be a problem
+ *          under normal conditions
  */
 
-@ManagedBean
-@RequestScoped
-public class StatisticsVisualizer
+public class TestResults
 {
-    List<Group> groupList;
+    ArrayList<Group> testGroups = new ArrayList<Group>(100);
+    Map<Long, Integer> _groupIdx = new HashMap<Long, Integer>();
+    CRC32 crcCalc = new CRC32();
 
-    @PostConstruct
-    public void postCreate()
+    public void addGroup(Group group)
     {
-        groupList = getGroupsContainer();
-    }
-
-    List<Group> getGroupsContainer()
-    {
-        Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
-        TestResults res = (TestResults) sessionMap.get(StatisticsCollector.TEST_RESULTS);
-        if (res == null)
+        crcCalc.reset();
+        crcCalc.update(group.getName().getBytes());
+        Long crc32 = crcCalc.getValue();
+        if (_groupIdx.containsKey(crc32))
         {
-            res = new TestResults();
-            sessionMap.put(StatisticsCollector
-                    .TEST_RESULTS, res);
+            testGroups.set(_groupIdx.get(crc32), group);
+        } else
+        {
+            testGroups.add(group);
+            _groupIdx.put(crc32, testGroups.indexOf(group));
         }
-        return res.getTestGroups();
     }
 
-    public List<Group> getGroupList()
+    public void addAll(Collection<Group> groups)
     {
-        return groupList;
+        for (Group group : groups)
+        {
+            addGroup(group);
+        }
     }
 
-    public void setGroupList(List<Group> groupList)
+    public void clear()
     {
-        this.groupList = groupList;
+        this.testGroups.clear();
+        this._groupIdx.clear();
+    }
+
+    public List<Group> getTestGroups()
+    {
+        return testGroups;
     }
 }

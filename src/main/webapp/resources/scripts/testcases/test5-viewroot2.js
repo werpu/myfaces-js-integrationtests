@@ -2,7 +2,7 @@ var AjaxCase = myfaces._supportive.unittest.JSFAjaxTestCase;
 
 var testGroup = new (_class("Test5ViewRoot",  myfaces._supportive.unittest.TestGroup,
         {
-            description:"Chain Test",
+            _description:"Chain Test",
             constructor_: function() {
                 this._callSuper("constructor_");
             },

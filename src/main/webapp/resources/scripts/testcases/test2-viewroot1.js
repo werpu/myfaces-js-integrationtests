@@ -1,5 +1,7 @@
 var AjaxCase = myfaces._supportive.unittest.JSFAjaxTestCase;
 var testGroup  = new (_class("SeleniumGroup2", myfaces._supportive.unittest.TestGroup, {
+    _description:"Full Body Replacement",
+
     constructor_: function() {
         this._callSuper("constructor_");
     },
@@ -8,7 +10,6 @@ var testGroup  = new (_class("SeleniumGroup2", myfaces._supportive.unittest.Test
         this._callSuper("setup");
 
     },
-    description:"Full Body Replacement",
     postcondition: function() {
         this._callSuper("postcondition");
         return true;

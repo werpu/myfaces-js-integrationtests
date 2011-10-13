@@ -2,7 +2,7 @@ var TestCase = myfaces._supportive.unittest.TestCase;
 
 var testGroup = new (_class("TestGroup4", myfaces._supportive.unittest.TestGroup,
         {
-            description:"Chain Test",
+            _description:"Chain Test",
             constructor_: function() {
                 this._callSuper("constructor_");
             },

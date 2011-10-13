@@ -2,15 +2,15 @@ var TestCase = myfaces._supportive.unittest.TestCase;
 var AjaxCase = myfaces._supportive.unittest.JSFAjaxTestCase;
 
 var testGroup = new (_class("Testgroup6TableBasic", myfaces._supportive.unittest.TestGroup, {
+    _description:"MyFaces JSF Protocol Tests with Table Target",
+
     constructor_: function() {
       this._callSuper("constructor_");
     },
-
     setup: function() {
         this._callSuper("setup");
         this.tableHTML = $("#table1").html();
     },
-    description:"MyFaces JSF Protocol Tests with Table Target",
     postcondition: function() {
         this._callSuper("postcondition");
 

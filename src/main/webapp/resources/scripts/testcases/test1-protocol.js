@@ -5,7 +5,7 @@ var AjaxCase = myfaces._supportive.unittest.JSFAjaxTestCase;
 
 var testGroup = new (_class("SeleniumGroup2", myfaces._supportive.unittest.TestGroup,
         {
-            description:"MyFaces JSF Protocol Tests",
+            _description:"MyFaces JSF Protocol Tests",
             constructor_: function() {
                 this._callSuper("constructor_");
             },

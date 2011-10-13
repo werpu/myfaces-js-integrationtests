@@ -2,7 +2,7 @@ var AjaxCase = myfaces._supportive.unittest.JSFAjaxTestCase;
 
 var testGroup = new (_class("Test8NavCase1", myfaces._supportive.unittest.TestGroup,
         {
-            description:"Partial Page Rendering Nav Case",
+            _description:"Partial Page Rendering Nav Case",
             constructor_: function() {
                 this._callSuper("constructor_");
             },

@@ -75,17 +75,17 @@ public class StatisticsCollector extends HttpServlet
         out.close();
         Gson gson = new Gson();
         Group[] groups = gson.fromJson(group, Group[].class);
-        List<Group> groupsContainer = getGroupsContainer(request);
-        groupsContainer.addAll(Arrays.asList(groups));
+        TestResults results = getGroupsContainer(request);
+        results.addAll(Arrays.asList(groups));
     }
 
-    private List<Group> getGroupsContainer(HttpServletRequest request)
+    private TestResults getGroupsContainer(HttpServletRequest request)
     {
-        List<Group> finalGroups = (List<Group>) request.getSession().getAttribute(TEST_RESULTS);
-        if(finalGroups == null) {
-            finalGroups = Collections.synchronizedList(new LinkedList<Group>());
-            request.getSession().setAttribute("testResults", finalGroups);
+        TestResults ret = (TestResults) request.getSession().getAttribute(TEST_RESULTS);
+        if(ret == null) {
+            ret = new TestResults();
+            request.getSession().setAttribute("testResults", ret);
         }
-        return finalGroups;
+        return ret;
     }
 }

@@ -4,7 +4,7 @@ var Lang = myfaces._impl._util._Lang;
 
 var testGroup = new (_class("Test12ApiDecoration", myfaces._supportive.unittest.TestGroup,
         {
-            description:"Testing for decorated api calls",
+            _description:"Testing for decorated api calls",
             constructor_: function() {
                 this._callSuper("constructor_");
             },

@@ -2,7 +2,7 @@ var AjaxCase = myfaces._supportive.unittest.JSFAjaxTestCase;
 
 var testGroup = new (_class("Test10DoubleEval", myfaces._supportive.unittest.TestGroup,
         {
-            description:"Double Eval Detection",
+            _description:"Double Eval Detection",
             constructor_: function() {
                 this._callSuper("constructor_");
             },

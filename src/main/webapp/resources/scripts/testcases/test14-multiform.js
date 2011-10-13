@@ -2,7 +2,7 @@ var AjaxCase = myfaces._supportive.unittest.JSFAjaxTestCase;
 
 var testGroup = new (_class("Test14Multiform",myfaces._supportive.unittest.TestGroup,
         {
-            description:"Multi form situation",
+            _description:"Multi form situation",
             constructor_: function() {
                 this._callSuper("constructor_");
             },
