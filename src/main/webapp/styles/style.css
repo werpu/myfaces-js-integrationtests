@@ -80,6 +80,7 @@ div#myfaces\.logging {
     padding: 2px;
     max-height: 200px;
     overflow: auto;
+    margin-top: 15px;
 }
 
 div.info, div.warn, div.error, div.log {
@@ -145,4 +146,12 @@ div.error {
     border-style: inset;
     border-color: gray;
     -moz-border-radius:;
+}
+
+.gotoFinalResults {
+    background-image: url("/javax.faces.resource/icons/famfam/arrow_right.png.jsf");
+    background-position: left 0;
+    background-repeat: no-repeat;
+    font-weight: bold;
+    padding-left: 20px;
 }

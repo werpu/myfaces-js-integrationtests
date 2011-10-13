@@ -23,8 +23,11 @@
 
 </h:head>
 <h:body>
-    <a href="./finalResults.jsf" class="gotoFinalResults" >Go To the Results page &lt;&lt;</a>
-    <div id="myfaces.logging" />
+    <ui:insert name="controls">
+        <a href="./finalResults.jsf" class="gotoFinalResults" >Go To the Results page</a>
+        <div id="myfaces.logging" />
+    </ui:insert>
+
 
     <ui:insert name="content" />
 </h:body>
