@@ -117,14 +117,8 @@ myfaces._impl.core._Runtime.singletonExtendClass("myfaces._impl._util._Dom", Obj
 
         var execCss = this._Lang.hitch(this, function(item) {
             if (item.tagName && this._Lang.equalsIgnoreCase(item.tagName, "link") && item.getAttribute("type") == "text/css") {
-                //if(document.createStyleSheet) {
-                //  document.createStyleSheet('"'+item.getAttribute("href")+'"');
-                //  return;
-                //}
-                //else {
-                    var style = "@import url('"+item.getAttribute("href")+"');";
-                    applyStyle(item, style);
-                //}
+                var style = "@import url('"+item.getAttribute("href")+"');";
+                applyStyle(item, style);
             } else if(item.tagName && this._Lang.equalsIgnoreCase(item.tagName, "style") && item.getAttribute("type") == "text/css") {
                 var innerText = [];
                 //compliant browsers know childnodes
