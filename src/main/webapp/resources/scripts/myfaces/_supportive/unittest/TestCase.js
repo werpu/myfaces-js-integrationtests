@@ -71,7 +71,7 @@ _class("myfaces._supportive.unittest.TestCase", Object, {
     },
 
     _tearDown: function() {
-        this._statisticsEngine.endTestCase(this._description);
+        this._statisticsEngine.endTestCase(this);
     },
 
     tearDown: function() {

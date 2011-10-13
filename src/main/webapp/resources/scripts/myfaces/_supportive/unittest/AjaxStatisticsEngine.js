@@ -82,17 +82,18 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.AjaxStatis
         this._currentTestCase = {};
         this._currentTestCase.name = this.attr("description");
         this._currentTestCase.assertions = [];
-        this._currentTestCase.success = !testCase.attr("failed");
+        this._currentTestCase.success = true;
         this._currentGroup.testCases.push(this._currentTestCase);
     },
 
-    endTestCase: function(testCaseName) {
-        this._callSuper("endTestCase", testCaseName);
+    endTestCase: function(testCase) {
+        this._currentTestCase.success = !testCase.attr("failed");
+        this._callSuper("endTestCase", testCase);
 
     },
 
-    endTestGroup: function(groupName) {
-        this._callSuper("endTestGroup", groupName);
+    endTestGroup: function(testGroup) {
+        this._callSuper("endTestGroup", testGroup);
         this._currentGroup.finalResult.numberOfTestsPerformed = this._numberOfTestsPerformed;
         this._currentGroup.finalResult.numberOfTestsSucceeded = this._numberOfTestsSucceeded;
         this._currentGroup.finalResult.numberOfTestsFailed = this._numberOfTestsFailed;

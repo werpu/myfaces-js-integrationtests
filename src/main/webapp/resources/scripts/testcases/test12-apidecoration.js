@@ -14,9 +14,9 @@ var testGroup = new (_class("Test12ApiDecoration", myfaces._supportive.unittest.
             }
         }))();
 
-var  functionCalled = {};
+var functionCalled = {};
 
-var decorate = function( /*String*/ namespace, /*function*/ toDecorate) {
+var decorate = function(/*String*/ namespace, /*function*/ toDecorate) {
     RT.reserveNamespace(namespace, toDecorate);
 
     RT.applyToGlobalNamespace(namespace, Lang.hitch(this, function() {
@@ -25,20 +25,17 @@ var decorate = function( /*String*/ namespace, /*function*/ toDecorate) {
     }));
 };
 
-
-
 testGroup.addCase(new AjaxCase({
     description:"Script Block Test",
     /*we enable global processing to handle a triggered click on the issuing control*/
     _ajaxCnt: 0,
 
 
-    setup: function() {
+    precondition: function() {
         decorate("jsf.ajax.request", jsf.ajax.request);
         decorate("jsf.ajax.response", jsf.ajax.response);
         decorate("jsf.getViewState", jsf.getViewState);
-        //decorate("jsf.util.chain", jsf.util.chain);
-
+        return true;
     },
 
     run: function() {

@@ -192,7 +192,7 @@ _class("myfaces._supportive.unittest.TestGroup", Object, {
 
     },
     tearDown: function() {
-        this._statisticsEngine.endTestGroup(this._description);
+        this._statisticsEngine.endTestGroup(this);
     },
 
     start: function() {
