@@ -518,7 +518,7 @@ myfaces._impl.core._Runtime.singletonExtendClass("myfaces._impl._util._Dom", Obj
      * @param markup
      */
     _outerHTMLNonCompliant: function(item, markup) {
-
+        
         var b = this._RT.browser;
         var evalNodes = null;
 
@@ -924,10 +924,10 @@ myfaces._impl.core._Runtime.singletonExtendClass("myfaces._impl._util._Dom", Obj
 
     /**
      * optimized search for an array of tag names
-     *
+     * deep scan will always be performed.
      * @param fragment the fragment which should be searched for
      * @param tagNames an map indx of tag names which have to be found
-     * @param no deep scan is possible
+     * 
      */
     findByTagNames: function(fragment, tagNames) {
         if(!fragment) {

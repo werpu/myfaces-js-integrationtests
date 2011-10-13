@@ -372,20 +372,6 @@ if (!myfaces._impl.core._Runtime) {
             return new ActiveXObject('Microsoft.XMLHTTP');
         };
 
-        this.loadCSS = function(src, type, defer, charSet, async) {
-            var xhr = _T.getXHRObject();
-            xhr.open("GET", src, false);
-            if (charSet) {
-                xhr.setRequestHeader("Content-Type", "application/text-css; charset:" + charSet);
-            }
-
-            xhr.send(null);
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                return xhr.responseText;
-            }
-            return null;
-        },
-
         /**
          * loads a script and executes it under a global scope
          * @param {String} src  the source of the script
@@ -395,41 +381,41 @@ if (!myfaces._impl.core._Runtime) {
          * @param {Boolean} async tells whether the script can be asynchronously loaded or not, currently
          * not used
          */
-                this.loadScriptEval = function(src, type, defer, charSet, async) {
-                    var xhr = _T.getXHRObject();
-                    xhr.open("GET", src, false);
+        this.loadScriptEval = function(src, type, defer, charSet, async) {
+            var xhr = _T.getXHRObject();
+            xhr.open("GET", src, false);
 
-                    if (charSet) {
-                        xhr.setRequestHeader("Content-Type", "application/x-javascript; charset:" + charSet);
-                    }
+            if (charSet) {
+                xhr.setRequestHeader("Content-Type", "application/x-javascript; charset:" + charSet);
+            }
 
-                    xhr.send(null);
+            xhr.send(null);
 
-                    //since we are synchronous we do it after not with onReadyStateChange
+            //since we are synchronous we do it after not with onReadyStateChange
 
-                    if (xhr.readyState == 4) {
-                        if (xhr.status == 200) {
-                            //defer also means we have to process after the ajax response
-                            //has been processed
-                            //we can achieve that with a small timeout, the timeout
-                            //triggers after the processing is done!
-                            if (!defer) {
-                                _T.globalEval(xhr.responseText.replace("\n", "\r\n") + "\r\n//@ sourceURL=" + src);
-                            } else {
-                                //TODO not ideal we maybe ought to move to something else here
-                                //but since it is not in use yet, it is ok
-                                setTimeout(function() {
-                                    _T.globalEval(xhr.responseText + "\r\n//@ sourceURL=" + src);
-                                }, 1);
-                            }
-                        } else {
-                            throw Error(xhr.responseText);
-                        }
+            if (xhr.readyState == 4) {
+                if (xhr.status == 200) {
+                    //defer also means we have to process after the ajax response
+                    //has been processed
+                    //we can achieve that with a small timeout, the timeout
+                    //triggers after the processing is done!
+                    if (!defer) {
+                        _T.globalEval(xhr.responseText.replace("\n", "\r\n") + "\r\n//@ sourceURL=" + src);
                     } else {
-                        throw Error("Loading of script " + src + " failed ");
+                        //TODO not ideal we maybe ought to move to something else here
+                        //but since it is not in use yet, it is ok
+                        setTimeout(function() {
+                            _T.globalEval(xhr.responseText + "\r\n//@ sourceURL=" + src);
+                        }, 1);
                     }
+                } else {
+                    throw Error(xhr.responseText);
+                }
+            } else {
+                throw Error("Loading of script " + src + " failed ");
+            }
 
-                };
+        };
 
         /**
          * load script functionality which utilizes the browser internal
@@ -670,7 +656,7 @@ if (!myfaces._impl.core._Runtime) {
                     } finally {
                         descLevel[_mappedName] = _oldDescLevel;
                     }
-                    if ('undefined' != typeof ret) {
+                    if('undefined' != typeof ret) {
                         return ret;
                     }
                 };
