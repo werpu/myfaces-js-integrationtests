@@ -33,8 +33,7 @@
         <h3>This page displays the final results of the tests</h3>
 
         <h:panelGroup layout="block" class="testGroup groupResults">
-            <h:panelGroup layout="block" class="failedGroups" rendered="#{statisticsVisualizer.failedGroups.size() gt
-            0}">
+            <h:panelGroup layout="block" class="failedGroups" rendered="#{statisticsVisualizer.failedGroups.size() gt  0}">
                 <h3>Failed Groups</h3>
                 <ul>
                     <ui:repeat value="#{statisticsVisualizer.failedGroups}" var="group">
@@ -59,19 +58,22 @@
                     <ul class="testCase">
                         <li class="testName success_#{testCase.success}">Testcase Name: #{testCase.name} Success:
                             #{testCase.success}</li>
-
-                        <ol class="assertions">
-                            <ui:repeat value="#{testCase.assertions}" var="assertion">
-                                <li class="#{assertion.type} failure_#{assertion.failure}">#{assertion.message}</li>
-                            </ui:repeat>
-                        </ol>
+                        <li>
+                            <ol class="assertions">
+                                <ui:repeat value="#{testCase.assertions}" var="assertion">
+                                    <li class="#{assertion.type} failure_#{assertion.failure}">#{assertion.message}</li>
+                                </ui:repeat>
+                            </ol>
+                        </li>
                     </ul>
                 </ui:repeat>
+                <li>
                 <ol class="assertions">
                     <ui:repeat value="#{group.assertions}" var="assertion">
                         <li class="#{assertion.type} failure_#{assertion.failure}">#{assertion.message}</li>
                     </ui:repeat>
                 </ol>
+                </li>
                 <li class="finalResultsTitle">Final Results:</li>
                 <li class="finalResult">Number of Tests Performed: #{group.finalResult.numberOfTestsPerformed}</li>
                 <li class="finalResult">Number of Tests Performed: #{group.finalResult.numberOfTestsSucceeded}</li>
