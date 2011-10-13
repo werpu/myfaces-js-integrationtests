@@ -18,11 +18,9 @@ testGroup.addCase(new AjaxCase({
     description:"Script Block Test",
     /*we enable global processing to handle a triggered click on the issuing control*/
     _ajaxCnt: 0,
-    setup: function() {
-        $("#resultArea").html("");
-    },
 
     run: function() {
+        $("#resultArea").html("");
         this.ajaxRequest('reloader', null, {execute:'@none',render:'outputWriter','javax.faces.behavior.event':'action'});
     },
 

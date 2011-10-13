@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html
-     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+        PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <!--
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -32,6 +32,23 @@
 
         <h3>This page displays the final results of the tests</h3>
 
+        <h:panelGroup layout="block" class="testGroup groupResults">
+            <h:panelGroup layout="block" class="failedGroups" rendered="#{statisticsVisualizer.failedGroups.size() gt
+            0}">
+                <h3>Failed Groups</h3>
+                <ul>
+                    <ui:repeat value="#{statisticsVisualizer.failedGroups}" var="group">
+                        <li class="groupName success_false"><a
+                                href="#{group.url}">Testgroup: #{group.name}</a>
+                        </li>
+                    </ui:repeat>
+                </ul>
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="allSucceeded" rendered="#{statisticsVisualizer.failedGroups.size() == 0}">
+                <h3>All tests have passed</h3>
+            </h:panelGroup>
+        </h:panelGroup>
+
         <ui:repeat value="#{statisticsVisualizer.groupList}" var="group">
             <ul class="testGroup ">
                 <li class="groupName success_#{(group.finalResult.numberOfTestsFailed == 0)?'true':'false'}">Testgroup: #{group.name}</li>
@@ -41,7 +58,7 @@
                 <ui:repeat value="#{group.testCases}" var="testCase">
                     <ul class="testCase">
                         <li class="testName success_#{testCase.success}">Testcase Name: #{testCase.name} Success:
-                        #{testCase.success}</li>
+                            #{testCase.success}</li>
 
                         <ol class="assertions">
                             <ui:repeat value="#{testCase.assertions}" var="assertion">

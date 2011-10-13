@@ -65,6 +65,16 @@ public class StatisticsVisualizer
         return groupList;
     }
 
+    public List<Group> getFailedGroups() {
+        List<Group> ret = new LinkedList<Group>();
+        for(Group group: groupList) {
+            if(group.getFinalResult().getNumberOfTestsFailed() != 0) {
+                ret.add(group);
+            }
+        }
+        return ret;
+    }
+
     public void setGroupList(List<Group> groupList)
     {
         this.groupList = groupList;
