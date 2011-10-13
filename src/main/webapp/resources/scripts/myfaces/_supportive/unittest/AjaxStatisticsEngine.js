@@ -82,7 +82,7 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.AjaxStatis
         this._currentTestCase = {};
         this._currentTestCase.name = this.attr("description");
         this._currentTestCase.assertions = [];
-        this._currentTestCase.success = true;
+        this._currentTestCase.success = !testCase.attr("failed");
         this._currentGroup.testCases.push(this._currentTestCase);
     },
 
