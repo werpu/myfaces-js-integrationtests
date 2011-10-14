@@ -1,4 +1,4 @@
-myfaces._impl.core._Runtime.extendClass("myfaces._impl._util.QueueElem", Object, {
+_MF_CLS("myfaces._impl._util.QueueElem", Object, {
 
     priority: 0,
     startable: null
@@ -10,7 +10,7 @@ myfaces._impl.core._Runtime.extendClass("myfaces._impl._util.QueueElem", Object,
  * we reuse our optimized high speed queue to introduce a priority queue which
  * allows multiple parallel executions
  */
-myfaces._impl.core._Runtime.extendClass("myfaces._impl._util.PriorityQueue", myfaces._impl._util._Queue, {
+_MF_CLS("myfaces._impl._util.PriorityQueue", myfaces._impl._util._Queue, {
     _inProcessCnt: 0,
 
     /**

@@ -29,7 +29,7 @@
  * A jquery like query API would be nice
  * but this would blow up our codebase significantly
  */
-myfaces._impl.core._Runtime.singletonExtendClass("myfaces._impl._util._Dom", Object,
+_MF_SINGLTN("myfaces._impl._util._Dom", Object,
 /**
  * @lends myfaces._impl._util._Dom.prototype
  */

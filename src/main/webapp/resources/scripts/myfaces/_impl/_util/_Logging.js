@@ -27,8 +27,8 @@
  * but will be used externally by extension frameworks
  * and by unit tests
  */
-/** @namespace myfaces._impl._util._ExtLang */
-myfaces._impl.core._Runtime.singletonDelegateObj("myfaces._impl._util._ExtLang", myfaces._impl._util._Lang, {
+/** @namespace myfaces._impl._util._Logging */
+_MF_SINGLTN("myfaces._impl._util._Logging",Object, {
 
     /**
      * we use a map switch instread of a log level
@@ -40,11 +40,10 @@ myfaces._impl.core._Runtime.singletonDelegateObj("myfaces._impl._util._ExtLang",
     _LOG: "log",
     _WRN: "warn",
 
+    _Lang: myfaces._impl._util._Lang,
 
     constructor_: function() {
-        //we replace the original one, and since we delegated
-        //we have everything in place
-        myfaces._impl._util._Lang = this;
+
         //due to the delegation pattern we do not have access to the browser
         this._browser = myfaces._impl.core._Runtime.browser;
 
@@ -73,7 +72,7 @@ myfaces._impl.core._Runtime.singletonDelegateObj("myfaces._impl._util._ExtLang",
      */
     _log: function(logType /*+arguments*/, args) {
 
-        var argsString = this.objToArray(arguments[1]).join("|");
+        var argsString = this._Lang.objToArray(arguments[1]).join("|");
         var c = window.console;
         
 
@@ -96,7 +95,7 @@ myfaces._impl.core._Runtime.singletonDelegateObj("myfaces._impl._util._ExtLang",
                 elem.className ="consoleLog " + logType;
             }
             logHolder.appendChild(elem);
-            var argsArr = this.objToArray(arguments[1]);
+            var argsArr = this._Lang.objToArray(arguments[1]);
             var argsStr = [];
 
             for(var cnt = 0; cnt < argsArr.length; cnt++) {

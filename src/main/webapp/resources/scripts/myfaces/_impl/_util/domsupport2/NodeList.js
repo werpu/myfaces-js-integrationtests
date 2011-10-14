@@ -19,7 +19,7 @@
  * the same methods if possible as Node
  * but for an entire nodelist
  */
-myfaces._impl.core._Runtime.extendClass("myfaces._impl._dom._NodeList", myfaces._impl._dom._Node, {
+_MF_CLS("myfaces._impl._dom._NodeList", myfaces._impl._dom._Node, {
     _nodes: null, /*array of nodes to process*/
     length: null,
     constructor_: function() {

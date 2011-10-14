@@ -1,4 +1,4 @@
-myfaces._impl.core._Runtime.extendClass("myfaces._impl._util.domsupport.Compliant", myfaces._impl._util.domsupport._Common, {
+_MF_CLS("myfaces._impl._util.domsupport.Compliant", myfaces._impl._util.domsupport._Common, {
     _Lang:  myfaces._impl._util._Lang,
     _RT:    myfaces._impl.core._Runtime,
 

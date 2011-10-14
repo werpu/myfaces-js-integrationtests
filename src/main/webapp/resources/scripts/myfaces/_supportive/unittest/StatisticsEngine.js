@@ -31,7 +31,7 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.Statistics
     _fails: null,
 
     _Lang: myfaces._impl._util._Lang,
-
+    _Logger: myfaces._impl._util._Logging,
 
     constructor_: function() {
         this._performed = [];
@@ -55,11 +55,11 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.Statistics
      */
     assertTrue: function(testcase, message, assertionOutcome) {
         if (!assertionOutcome) {
-            this._Lang.logError(testcase, ":", message, "assertionOutcome:", assertionOutcome);
+            this._Logger.logError(testcase, ":", message, "assertionOutcome:", assertionOutcome);
             this._testCaseFailed = true;
             return false;
         }
-        this._Lang.logInfo(testcase, ":", message, "assertionOutcome:", assertionOutcome);
+        this._Logger.logInfo(testcase, ":", message, "assertionOutcome:", assertionOutcome);
         return true;
     },
 
@@ -71,16 +71,16 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.Statistics
      */
     assertFalse: function(testCase, message, assertionOutcome) {
         if (assertionOutcome) {
-            this._Lang.logError(testCase, ":", message, "assertionOutcome:", assertionOutcome);
+            this._Logger.logError(testCase, ":", message, "assertionOutcome:", assertionOutcome);
             this._testCaseFailed = true;
             return false;
         }
-        this._Lang.logInfo(testCase, ":", message, "assertionOutcome:", assertionOutcome);
+        this._Logger.logInfo(testCase, ":", message, "assertionOutcome:", assertionOutcome);
         return true;
     },
 
     startTestCase: function(testCase) {
-        this._Lang.logInfo("Starting Testcase:", testCase.attr("description"));
+        this._Logger.logInfo("Starting Testcase:", testCase.attr("description"));
     },
 
     endTestCase: function(testCase) {
@@ -93,42 +93,42 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.Statistics
             this._numberOfTestsSucceeded++;
         }
 
-        this._Lang.logInfo("Ending testcase:", testCase.attr("description"));
+        this._Logger.logInfo("Ending testcase:", testCase.attr("description"));
     },
 
     startTestGroup: function(testGroup) {
-        this._Lang.logInfo("Starting Testgroup:", testGroup.attr("description"));
+        this._Logger.logInfo("Starting Testgroup:", testGroup.attr("description"));
     },
 
     endTestGroup: function(testGroup) {
-        var _Lang = this._Lang;
-        _Lang.logInfo("Ending Testgroup:", testGroup.attr("name"));
-        _Lang.logInfo("","--------------------------------------------------------------------------------");
-        _Lang.logInfo("","Final Results");
+        var _Logger = this._Logger;
+        _Logger.logInfo("Ending Testgroup:", testGroup.attr("name"));
+        _Logger.logInfo("","--------------------------------------------------------------------------------");
+        _Logger.logInfo("","Final Results");
 
-        _Lang.logInfo("","Number of tests performed", this._numberOfTestsPerformed);
-        _Lang.logInfo("","Number of tests succeeded", this._numberOfTestsSucceeded);
-        _Lang.logInfo("","Number of tests failed", this._numberOfTestsFailed);
+        _Logger.logInfo("","Number of tests performed", this._numberOfTestsPerformed);
+        _Logger.logInfo("","Number of tests succeeded", this._numberOfTestsSucceeded);
+        _Logger.logInfo("","Number of tests failed", this._numberOfTestsFailed);
 
         for (var cnt = 0; cnt < this._fails.length; cnt++) {
-            _Lang.logError("Test Failed:", this._fails[cnt]);
+            _Logger.logError("Test Failed:", this._fails[cnt]);
         }
     },
 
 
     logInfo: function(testCase, message) {
-        this._Lang.logInfo(testCase, message);
+        this._Logger.logInfo(testCase, message);
     },
     logDebug: function(testCase, message) {
-        this._Lang.logDebug(testCase, message);
+        this._Logger.logDebug(testCase, message);
     },
     logError: function(testCase, message) {
-        this._Lang.logError(testCase, message);
+        this._Logger.logError(testCase, message);
     },
 
 
     fail: function(testCase, message) {
-        this._Lang.logError(testCase, ":", message);
+        this._Logger.logError(testCase, ":", message);
         this._testCaseFailed = true;
         return false;
     }

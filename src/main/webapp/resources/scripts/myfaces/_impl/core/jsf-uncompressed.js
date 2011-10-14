@@ -27,7 +27,7 @@ if (!window.jsf) {
 
     _ls("#{resource['org.apache.myfaces.core.impl.util:_Lang.js']}", null, null, "UTF-8", false);
 
-    _ls("#{resource['org.apache.myfaces.core.impl.util:_ExtLang.js']}", null, null, "UTF-8", false);
+    _ls("#{resource['org.apache.myfaces.core.impl.util:_Logging.js']}", null, null, "UTF-8", false);
     _ls("#{resource['org.apache.myfaces.core.impl.util:_UnitTest.js']}", null, null, "UTF-8", false);
     _ls("#{resource['org.apache.myfaces.core.impl.util:_Queue.js']}", null, null, "UTF-8", false);
     _ls("#{resource['org.apache.myfaces.core.impl.util:_ListenerQueue.js']}", null, null, "UTF-8", false);

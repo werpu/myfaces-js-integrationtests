@@ -4,7 +4,7 @@
  * for the public api reference the selector api
  * and the included node and nodeutils classes
  */
-myfaces._impl.core._Runtime.extendClass("myfaces._impl._dom._DomEngine", Object, {
+_MF_CLS("myfaces._impl._dom._DomEngine", Object, {
 
     /*table elements which are used in various parts */
     TABLE_ELEMS:  {
@@ -195,7 +195,7 @@ myfaces._impl.core._Runtime.extendClass("myfaces._impl._dom._DomEngine", Object,
     }
 });
 
-myfaces._impl.core._Runtime.singletonExtendClass("myfaces._impl._dom._DomEngineCompliant", myfaces._impl._dom._DomEngine, {
+_MF_SINGLTN("myfaces._impl._dom._DomEngineCompliant", myfaces._impl._dom._DomEngine, {
     outerHTML: function(item, markup) {
         var evalNodes;
         //table element replacements like thead, tbody etc... have to be treated differently
@@ -261,7 +261,7 @@ myfaces._impl.core._Runtime.singletonExtendClass("myfaces._impl._dom._DomEngineC
 
 });
 
-myfaces._impl.core._Runtime.singletonExtendClass("myfaces._impl._dom._DomEngineNonCompliant", myfaces._impl._dom._DomEngine, {
+_MF_SINGLTN("myfaces._impl._dom._DomEngineNonCompliant", myfaces._impl._dom._DomEngine, {
 
      IE_QUIRKS_EVENTS : {
         "onabort": true,

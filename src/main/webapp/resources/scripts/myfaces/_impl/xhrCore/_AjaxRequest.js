@@ -29,7 +29,7 @@
  * @memberOf myfaces._impl.xhrCore
  * @extends myfaces._impl.xhrCore._FinalizeableObj
  */
-myfaces._impl.core._Runtime.extendClass("myfaces._impl.xhrCore._AjaxRequest", myfaces._impl.xhrCore._FinalizeableObj,
+_MF_CLS("myfaces._impl.xhrCore._AjaxRequest", myfaces._impl.xhrCore._FinalizeableObj,
         /** @lends myfaces._impl.xhrCore._AjaxRequest.prototype */
         {
 

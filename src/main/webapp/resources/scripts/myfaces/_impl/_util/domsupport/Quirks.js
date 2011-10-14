@@ -1,4 +1,4 @@
-myfaces._impl.core._Runtime.extendClass("myfaces._impl._util.domsupport._Quirks", myfaces._impl._util.domsupport._Common, {
+_MF_CLS("myfaces._impl._util.domsupport._Quirks", myfaces._impl._util.domsupport._Common, {
 
     IE_QUIRKS_EVENTS : {
         "onabort": true,

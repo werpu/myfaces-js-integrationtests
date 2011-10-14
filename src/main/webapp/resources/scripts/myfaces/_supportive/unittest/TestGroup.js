@@ -29,6 +29,9 @@ _class("myfaces._supportive.unittest.TestGroup", Object, {
     testCases: null,
     _allTestsPassed: true,
     _url: null,
+    _startTime : null,
+    _endTime: null,
+    _performanceTime: null,
 
     _Lang: myfaces._impl._util._Lang,
     _Dom: myfaces._impl._util._Dom,
@@ -70,6 +73,7 @@ _class("myfaces._supportive.unittest.TestGroup", Object, {
     },
 
     setup: function() {
+        this._startTime = new Date();
         this._statisticsEngine.startTestGroup(this);
 
         var testCases = this.testCases;
@@ -186,10 +190,14 @@ _class("myfaces._supportive.unittest.TestGroup", Object, {
 
 
     postcondition: function() {
+
         return true;
     },
     _tearDown: function() {
-
+        this._endTime = new Date();
+        if(this._endTime && this._startTime) {
+            this._performanceTime = this._endTime.getTime() - this._startTime.getTime();
+        }
     },
     tearDown: function() {
         this._statisticsEngine.endTestGroup(this);

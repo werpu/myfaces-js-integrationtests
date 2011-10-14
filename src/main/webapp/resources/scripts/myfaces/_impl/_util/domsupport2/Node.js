@@ -20,7 +20,7 @@
  *
  * Note the query ops will return the node
  */
-myfaces._impl.core._Runtime.extendClass("myfaces._impl._dom._Node", Object, {
+_MF_CLS("myfaces._impl._dom._Node", Object, {
 
     _DOM_UTILS: myfaces._impl._dom._DomUtils,
     _QUERY: myfaces._impl._dom._Query,
@@ -175,7 +175,7 @@ myfaces._impl.core._Runtime.extendClass("myfaces._impl._dom._Node", Object, {
     }
 });
 
-myfaces._impl.core._Runtime.extendClass("myfaces._impl._dom._NodeList", Object, {
+_MF_CLS("myfaces._impl._dom._NodeList", Object, {
     constructor_: function() {
 
     }

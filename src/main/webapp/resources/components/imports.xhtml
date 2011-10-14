@@ -25,7 +25,7 @@
 
     <!-- utils / support classes -->
     <h:outputScript name="myfaces/_impl/_util/_Lang.js" library="scripts" target="head"/>
-    <h:outputScript name="myfaces/_impl/_util/_ExtLang.js" library="scripts" target="head"/>
+    <h:outputScript name="myfaces/_impl/_util/_Logging.js" library="scripts" target="head"/>
     <h:outputScript name="myfaces/_impl/_util/_Queue.js" library="scripts" target="head"/>
     <h:outputScript name="myfaces/_impl/_util/_ListenerQueue.js" library="scripts" target="head"/>
     <h:outputScript name="myfaces/_impl/_util/_Dom.js" library="scripts" target="head"/>
@@ -56,6 +56,9 @@
 
     <!-- Implementation -->
     <h:outputScript name="myfaces/_impl/core/Impl.js" library="scripts" target="head"
+                    rendered="#{information.implementation == 'myfaces'}"/>
+    <!-- clean up the init code -->
+    <h:outputScript name="myfaces/_impl/core/EndImpl.js" library="scripts" target="head"
                     rendered="#{information.implementation == 'myfaces'}"/>
 
     <!-- API -->

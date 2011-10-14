@@ -58,6 +58,7 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.AjaxStatis
     _currentGroup: null,
     _currentTestCase: null,
 
+
     constructor_:function(args) {
         this._callSuper("constructor_", args);
         this._groupsPerformed = [];
@@ -75,6 +76,7 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.AjaxStatis
         this._currentGroup.finalResult.numberOfTestsFailed = 0;
         this._currentGroup.assertions = [];
         this._groupsPerformed.push(this._currentGroup);
+
     },
 
     startTestCase: function(testCase) {
@@ -97,7 +99,7 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.AjaxStatis
         this._currentGroup.finalResult.numberOfTestsPerformed = this._numberOfTestsPerformed;
         this._currentGroup.finalResult.numberOfTestsSucceeded = this._numberOfTestsSucceeded;
         this._currentGroup.finalResult.numberOfTestsFailed = this._numberOfTestsFailed;
-
+        this._currentGroup.finalResult.performanceTime = testGroup.attr("performanceTime") || 0;
         this._sendTestResults();
     },
 

@@ -24,11 +24,11 @@ var testGroup = new (_class("SeleniumGroup2", myfaces._supportive.unittest.TestG
 testGroup.emitPPR = function(ajaxFunc, source, event, action, useIframe, formName) {
     document.getElementById(formName || "form1").action = target;
 
-    if (arguments.length <= 4) {
+   // if (arguments.length <= 4) {
         ajaxFunc(/*String|Dom Node*/ source, /*|EVENT|*/ (window.event) ? window.event : event, /*{|OPTIONS|}*/ {op:action});
-    } else {
-        ajaxFunc(/*String|Dom Node*/ source, /*|EVENT|*/ (window.event) ? window.event : event, /*{|OPTIONS|}*/ {op:action, myfaces: {transportType:"multipartQueuedPost"}});
-    }
+   // } else {
+   //     ajaxFunc(/*String|Dom Node*/ source, /*|EVENT|*/ (window.event) ? window.event : event, /*{|OPTIONS|}*/ {op:action, myfaces: {transportType:"multipartQueuedPost"}});
+   // }
 };
 
 testGroup.addStandardTestcase = function(description, origin, command, postCondition) {

@@ -1,4 +1,4 @@
-myfaces._impl.core._Runtime.extendClass("myfaces._impl._util.domsupport._Common", Object, {
+_MF_CLS("myfaces._impl._util.domsupport._Common", Object, {
 
     /**
      * checks if the provided element is a table element

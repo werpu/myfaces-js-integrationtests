@@ -31,6 +31,7 @@ public class FinalResult  implements Serializable
     int numberOfTestsPerformed;
     int numberOfTestsSucceeded;
     int numberOfTestsFailed;
+    int performanceTime;
 
     public FinalResult()
     {
@@ -71,5 +72,15 @@ public class FinalResult  implements Serializable
     public void setNumberOfTestsFailed(int numberOfTestsFailed)
     {
         this.numberOfTestsFailed = numberOfTestsFailed;
+    }
+
+    public int getPerformanceTime()
+    {
+        return performanceTime;
+    }
+
+    public void setPerformanceTime(int performanceTime)
+    {
+        this.performanceTime = performanceTime;
     }
 }

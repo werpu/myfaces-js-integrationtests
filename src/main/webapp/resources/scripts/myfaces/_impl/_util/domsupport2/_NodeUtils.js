@@ -4,7 +4,7 @@
  * core class for
  */
 
-myfaces._impl.core._Runtime.singletonExtendClass("myfaces._impl._dom._NodeUtils", myfaces._impl._dom._DomEngine , {
+_MF_SINGLTN("myfaces._impl._dom._NodeUtils", myfaces._impl._dom._DomEngine , {
 
 
     _domEngine: null,
