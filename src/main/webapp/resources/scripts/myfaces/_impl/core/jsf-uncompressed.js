@@ -23,6 +23,9 @@ if (!window.jsf) {
     _ls("#{resource['org.apache.myfaces.core.impl.i18n:Messages_it.js']}", null, null, "UTF-8", false);
     _ls("#{resource['org.apache.myfaces.core.impl.i18n:Messages_fr.js']}", null, null, "UTF-8", false);
     _ls("#{resource['org.apache.myfaces.core.impl.i18n:Messages_ru.js']}", null, null, "UTF-8", false);
+    _ls("#{resource['org.apache.myfaces.core.impl.i18n:Messages_zh_CN.js']}", null, null, "UTF-8", false);
+    _ls("#{resource['org.apache.myfaces.core.impl.i18n:Messages_zh_HK.js']}", null, null, "UTF-8", false);
+    _ls("#{resource['org.apache.myfaces.core.impl.i18n:Messages_zh_TW.js']}", null, null, "UTF-8", false);
 
 
     _ls("#{resource['org.apache.myfaces.core.impl.util:_Lang.js']}", null, null, "UTF-8", false);
@@ -52,5 +55,7 @@ if (!window.jsf) {
     _ls("#{resource['org.apache.myfaces.core.impl.xhrCore:_AjaxResponse.js']}", null, null, "UTF-8", false);
     _ls("#{resource['org.apache.myfaces.core.impl.xhrCore:_Transports.js']}", null, null, "UTF-8", false);
     _ls("#{resource['org.apache.myfaces.core.impl.core:Impl.js']}", null, null, "UTF-8", false);
+    _ls("#{resource['org.apache.myfaces.core.impl.core:_EndImpl.js']}", null, null, "UTF-8", false);
+
     _ls("#{resource['org.apache.myfaces.core.api:jsf.js']}", null, null, "UTF-8", false);
 }    
