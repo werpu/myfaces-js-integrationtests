@@ -117,14 +117,13 @@ _MF_SINGLTN("myfaces._impl._util._Dom", Object,
         });
 
         var execCss = this._Lang.hitch(this, function(item) {
-            var _eqi = this._Lang.equalsIgnoreCase;
+            var equalsIgnoreCase = this._Lang.equalsIgnoreCase;
 
-            if (item.tagName && _eqi(item.tagName, "link") && _eqi(item.getAttribute("type"), "text/css")) {
-                var style = "@import url('"+item.getAttribute("href")+"');";
-                applyStyle(item, style);
-            } else if(item.tagName && _eqi(item.tagName, "style") && _eqi(item.getAttribute("type"), "text/css")) {
+            if (item.tagName && equalsIgnoreCase(item.tagName, "link") && equalsIgnoreCase(item.getAttribute("type"), "text/css")) {
+                applyStyle(item, "@import url('"+item.getAttribute("href")+"');");
+            } else if(item.tagName && equalsIgnoreCase(item.tagName, "style") && equalsIgnoreCase(item.getAttribute("type"), "text/css")) {
                 var innerText = [];
-                //compliant browsers know childnodes
+                //compliant browsers know child nodes
                 if(item.childNodes) {
                     var len = item.childNodes.length;
                     for(var cnt = 0; cnt < len; cnt++) {
@@ -135,8 +134,7 @@ _MF_SINGLTN("myfaces._impl._util._Dom", Object,
                     innerText.push(item.innerHTML);
                 }
 
-                var style = innerText.join("");
-                applyStyle(item, style);
+                applyStyle(item, innerText.join(""));
             }
         });
 
@@ -1417,7 +1415,8 @@ _MF_SINGLTN("myfaces._impl._util._Dom", Object,
     ,
 
     html5FormDetection: function(item) {
-        if (this._RT.browser.isIEMobile && this._RT.browser.isIEMobile <= 7) {
+        var browser =  this._RT.browser;
+        if (browser.isIEMobile && browser.isIEMobile <= 7) {
             return null;
         }
         var elemForm = this.getAttribute(item, "form");
@@ -1475,58 +1474,7 @@ _MF_SINGLTN("myfaces._impl._util._Dom", Object,
             parentItem = parentItem.parentNode;
         }
         return (parentItem) ? parentItem : null;
-    }
-    ,
-
-    /**
-     * a closure based child filtering routine
-     * which steps one level down the tree and
-     * applies the filter closure
-     *
-     * @param item the node which has to be investigates
-     * @param filter the filter closure
-     */
-    getFilteredChild: function(item, filter) {
-        if (!item) {
-            throw Error(this._Lang.getMessage("ERR_MUST_BE_PROVIDED1",null, "_Dom.getFilteredParent", "item {DomNode}"));
-        }
-        if (!filter) {
-            throw Error(this._Lang.getMessage("ERR_MUST_BE_PROVIDED1",null, "_Dom.getFilteredParent", "filter {function}"));
-        }
-
-        var childs = item.childNodes;
-        if (!childs) {
-            return null;
-        }
-        for (var c = 0, cLen = childs.length; c < cLen; c++) {
-            if (filter(childs[c])) {
-                return childs[c];
-            }
-        }
-        return null;
-    }
-    ,
-
-    /**
-     * gets the child of an item with a given tag name
-     * @param {Node} item - parent element
-     * @param {String} childName - TagName of child element
-     * @param {String} itemName - name  attribute the child can have (can be null)
-     * @Deprecated
-     */
-    getChild: function(item, childName, itemName) {
-        var _Lang = this._Lang;
-
-        function filter(node) {
-            return node.tagName
-                    && _Lang.equalsIgnoreCase(node.tagName, childName)
-                    && (!itemName || (itemName && itemName == node.getAttribute("name")));
-
-        }
-
-        return this.getFilteredChild(item, filter);
-    }
-    ,
+    },
 
     /**
      * cross ported from dojo
