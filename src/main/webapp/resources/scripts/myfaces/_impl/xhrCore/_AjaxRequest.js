@@ -287,25 +287,27 @@ _MF_CLS("myfaces._impl.xhrCore._AjaxRequest", myfaces._impl.xhrCore._Finalizeabl
              * which keeps the final Send Representation of the
              */
             getFormData : function() {
+                var _AJAXUTIL = this._AJAXUTIL;
+                var _Lang = this._Lang;
+                var ctxmf = this._context.myfaces;
 
                 var ret = null;
 
                 //now this is less performant but we have to call it to allow viewstate decoration
                 if(!this._partialIdsArray ||!this._partialIdsArray.length) {
                     var viewState = jsf.getViewState(this._sourceForm);
-                    ret = this._Lang.createFormDataDecorator(viewState);
+                    ret = _Lang.createFormDataDecorator(viewState);
 
                     //just in case the source item is outside of the form
                     //only if the form override is set we have to append the issuing item
                     //otherwise it is an element of the parent form
-                    if(this._source && this._context.myfaces && this._context.myfaces.form)
-                        this._AJAXUTIL.appendIssuingItem(this._source);
+                    if(this._source && ctxmf && ctxmf.form)
+                        _AJAXUTIL.appendIssuingItem(this._source);
                 } else {
-                    ret = this._Lang.createFormDataDecorator(new Array());
-                    this._AJAXUTIL.encodeSubmittableFields(ret,
-                            this._sourceForm, this._partialIdsArray);
-                    if(this._source && this._context.myfaces && this._context.myfaces.form)
-                        this._AJAXUTIL.appendIssuingItem(this._source);
+                    ret = _Lang.createFormDataDecorator(new Array());
+                    _AJAXUTIL.encodeSubmittableFields(ret, this._sourceForm, this._partialIdsArray);
+                    if(this._source && ctxmf && ctxmf.form)
+                        _AJAXUTIL.appendIssuingItem(this._source);
                 }
 
                 return ret;
