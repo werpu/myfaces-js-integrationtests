@@ -289,7 +289,7 @@ _MF_CLS("myfaces._impl.xhrCore._AjaxRequest", myfaces._impl.xhrCore._Finalizeabl
             getFormData : function() {
                 var _AJAXUTIL = this._AJAXUTIL;
                 var _Lang = this._Lang;
-                var ctxmf = this._context.myfaces;
+                var myfacesOptions = this._context.myfaces;
 
                 var ret = null;
 
@@ -301,12 +301,12 @@ _MF_CLS("myfaces._impl.xhrCore._AjaxRequest", myfaces._impl.xhrCore._Finalizeabl
                     //just in case the source item is outside of the form
                     //only if the form override is set we have to append the issuing item
                     //otherwise it is an element of the parent form
-                    if(this._source && ctxmf && ctxmf.form)
+                    if(this._source && myfacesOptions && myfacesOptions.form)
                         _AJAXUTIL.appendIssuingItem(this._source);
                 } else {
                     ret = _Lang.createFormDataDecorator(new Array());
                     _AJAXUTIL.encodeSubmittableFields(ret, this._sourceForm, this._partialIdsArray);
-                    if(this._source && ctxmf && ctxmf.form)
+                    if(this._source && myfacesOptions && myfacesOptions.form)
                         _AJAXUTIL.appendIssuingItem(this._source);
                 }
 
@@ -366,7 +366,6 @@ _MF_CLS("myfaces._impl.xhrCore._AjaxRequest", myfaces._impl.xhrCore._Finalizeabl
                 //final cleanup to terminate everything
                 this._Lang.clearExceptionProcessed();
 
-                //_t._context.source;
                 if (this._xhr.readyState == this._XHR_CONST.READY_STATE_DONE) {
                     this._callSuper("_finalize");
                 }
