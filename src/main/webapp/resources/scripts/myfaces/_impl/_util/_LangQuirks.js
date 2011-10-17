@@ -50,6 +50,10 @@ _MF_SINGLTN("myfaces._impl._util._LangQuirks", myfaces._impl._util._Lang, {
     constructor_: function() {
         this._callSuper("constructor_");
         myfaces._impl._util._Lang = this;
+        for(var key in singletons) {
+            var nms = this._RT.fetchNamespace(key);
+             this._Lang.attr(nms,"_Lang", this);
+        }
     },
 
     /**

@@ -40,6 +40,12 @@ _MF_SINGLTN("myfaces._impl._util._DomQuirks", myfaces._impl._util._Dom, /**
         }
         this._callSuper("constructor_");
         myfaces._impl._util._Dom = this;
+        //we register ourselves into the existing singletons
+        var singletons = this._Lang.attr(this._RT, "registeredSingletons");
+        for(var key in singletons) {
+            var nms = this._RT.fetchNamespace(key);
+             this._Lang.attr(nms,"_Dom", this);
+        }
     },
 
        /**

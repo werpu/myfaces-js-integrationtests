@@ -55,6 +55,14 @@ _MF_SINGLTN("myfaces._impl.core.Object", Object, {
 
     applyArgs: function(args) {
         this._Lang.applyArgs(this, args);
+    },
+
+    updateSingletons: function(key) {
+        var singletons = this._Lang.attr(this._RT, "registeredSingletons");
+        for(var key in singletons) {
+            var nms = this._RT.fetchNamespace(key);
+             this._Lang.attr(nms,key, this);
+        }
     }
 
 });

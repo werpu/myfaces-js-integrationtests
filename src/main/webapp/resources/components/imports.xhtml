@@ -25,7 +25,6 @@
 
     <!-- utils / support classes -->
     <h:outputScript name="myfaces/_impl/_util/_Lang.js" library="scripts" target="head"/>
-    <h:outputScript name="myfaces/_impl/_util/_LangQuirks.js" library="scripts" target="head"/>
 
     <h:outputScript name="myfaces/_impl/core/Object.js" library="scripts" target="head"/>
 
@@ -33,7 +32,6 @@
     <h:outputScript name="myfaces/_impl/_util/_Queue.js" library="scripts" target="head"/>
     <h:outputScript name="myfaces/_impl/_util/_ListenerQueue.js" library="scripts" target="head"/>
     <h:outputScript name="myfaces/_impl/_util/_Dom.js" library="scripts" target="head"/>
-    <h:outputScript name="myfaces/_impl/_util/_DomQuirks.js" library="scripts" target="head"/>
 
     <h:outputScript name="myfaces/_impl/_util/_UnitTest.js" library="scripts" target="head"/>
 
@@ -61,9 +59,21 @@
     <h:outputScript name="myfaces/_impl/xhrCore/_AjaxResponse.js" library="scripts" target="head"/>
     <h:outputScript name="myfaces/_impl/xhrCore/_Transports.js" library="scripts" target="head"/>
 
+
+
     <!-- Implementation -->
     <h:outputScript name="myfaces/_impl/core/Impl.js" library="scripts" target="head"
                     rendered="#{information.implementation == 'myfaces'}"/>
+    <!--
+        we try to register our overrides deliberately later
+        to check whether they register themselves properly
+        into the system post init
+    -->
+
+    <h:outputScript name="myfaces/_impl/_util/_LangQuirks.js" library="scripts" target="head"/>
+    <h:outputScript name="myfaces/_impl/xhrCore/_ExtTransports.js" library="scripts" target="head"/>
+    <h:outputScript name="myfaces/_impl/_util/_DomQuirks.js" library="scripts" target="head"/>
+
     <!-- clean up the init code -->
     <h:outputScript name="myfaces/_impl/core/EndImpl.js" library="scripts" target="head"
                     rendered="#{information.implementation == 'myfaces'}"/>

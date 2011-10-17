@@ -20,6 +20,15 @@ myfaces._impl.core._Runtime.singletonDelegateObj("myfaces._impl._util._ExtDom", 
     _Lang:myfaces._impl._util._Lang,
     _RT:myfaces._impl.core._Runtime,
 
+    constructor_: function() {
+        this._callSuper("constructor_");
+        var singletons = this._Lang.attr(this._RT, "registeredSingletons");
+        for(var key in singletons) {
+            var nms = this._RT.fetchNamespace(key);
+             this._Lang.attr(nms,"_Dom", this);
+        }
+    },
+
     /**
      * finds the elements by an attached style class
      *

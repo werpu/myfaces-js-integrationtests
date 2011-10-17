@@ -60,6 +60,7 @@ if (!myfaces._impl.core._Runtime) {
 
         //namespace idx to speed things up by hitting eval way less
         this._reservedNMS = {};
+        this._registeredSingletons = [];
 
         /**
          * replacement counter for plugin classes
@@ -603,6 +604,7 @@ if (!myfaces._impl.core._Runtime) {
          * @param {Object} protoFuncs (Map) an optional map of prototype functions which in case of overwriting a base function get an inherited method
          */
         this.singletonExtendClass = function(newCls, extendsCls, protoFuncs, nmsFuncs) {
+            this._registeredSingletons[newCls] = true;
             return _T._makeSingleton(_T.extendClass, newCls, extendsCls, protoFuncs, nmsFuncs);
         };
 
@@ -794,14 +796,3 @@ if (!myfaces._impl.core._Runtime) {
     };
 }
 
-/*we cannot privatize with a global function hence we store the values away for the init part*/
-(function() {
-    //some mobile browsers do not have a window object
-    var target = window || document;
-    var _RT = myfaces._impl.core._Runtime;
-    _RT._MF_CLS = target._MF_CLS;
-    _RT._MF_SINGLTN = target._MF_SINGLTN;
-
-    target._MF_CLS = _RT.extendClass;
-    target._MF_SINGLTN = _RT.singletonExtendClass;
-})();
