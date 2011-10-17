@@ -105,7 +105,7 @@ var _Lang = _MF_SINGLTN("myfaces._impl._util._Lang", Object,
         var i18nRoot = myfaces._impl.i18n;
         var i18nHolder = i18nRoot["Messages_"+variantStr] ||
                          i18nRoot["Messages_"+langStr]    ||
-                         i18nRoot.Messages;
+                         i18nRoot["Messages"];
 
         this._installedLocale = new i18nHolder();
     },
@@ -811,6 +811,10 @@ var _Lang = _MF_SINGLTN("myfaces._impl._util._Lang", Object,
 
     /**
      * define a property mechanism which is browser neutral
+     * we cannot use the existing setter and getter mechanisms
+     * for now because old browsers do not support them
+     * in the long run we probably can switch over
+     * or make a code split between legacy and new
      *
      * @param obj
      * @param name

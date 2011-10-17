@@ -311,7 +311,40 @@ myfaces._impl.core._Runtime.singletonDelegateObj("myfaces._impl._util._ExtDom", 
         }
 
         return this.getFilteredChild(item, filter);
+    },
+
+     /**
+     * fetches the style class for the node
+     * cross ported from the dojo toolkit
+     * @param {String|Object} node the node to search
+     * @returns the className or ""
+     */
+    getClass : function(node) {
+        node = this.byId(node);
+        if (!node) {
+            return "";
+        }
+        var cs = "";
+        if (node.className) {
+            cs = node.className;
+        } else {
+            if (this.hasAttribute(node, "class")) {
+                cs = this.getAttribute(node, "class");
+            }
+        }
+        return cs.replace(/^\s+|\s+$/g, "");
+    },
+
+    /**
+     * fetches the class for the node,
+     * cross ported from the dojo toolkit
+     * @param {String|Object}node the node to search
+     */
+    getClasses : function(node) {
+        var c = this.getClass(node);
+        return (c == "") ? [] : c.split(/\s+/g);
     }
+    ,
 
 
 

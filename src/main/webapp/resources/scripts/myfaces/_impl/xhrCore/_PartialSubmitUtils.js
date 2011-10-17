@@ -100,7 +100,7 @@ _MF_SINGLTN("myfaces._impl.xhrCore._PartialSubmitUtils", myfaces._impl.xhrCore._
         //viewstate covered, do a preemptive check
         if (targetBuf.hasKey(_Impl.P_VIEWSTATE)) return;
 
-        var viewStates = _Dom.findByName(parentNode, _Impl.P_VIEWSTATE, true);
+        var viewStates = _Dom.findByName(parentNode, _Impl.P_VIEWSTATE);
         if (viewStates && viewStates.length) {
             for (var cnt2 = 0; cnt2 < viewStates.length; cnt2++) {
                 this.encodeElement(viewStates[cnt2], targetBuf);
