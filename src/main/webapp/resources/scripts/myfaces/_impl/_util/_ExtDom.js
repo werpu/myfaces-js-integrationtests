@@ -136,12 +136,8 @@ myfaces._impl.core._Runtime.singletonDelegateObj("myfaces._impl._util._ExtDom", 
      * @returns the found node or null otherwise
      */
     findFormElement : function(form, nameId) {
-        if (!form) {
-            throw Error("_Dom.findFormElement a form node must be given");
-        }
-        if (!nameId) {
-            throw Error("_Dom.findFormElement an element or identifier must be given");
-        }
+        this._assertStdParams(form, nameId, "findFormElement");
+
         if (!form.elements) return null;
         return form.elements[nameId] || this.findById(form, nameId);
     },
@@ -273,12 +269,8 @@ myfaces._impl.core._Runtime.singletonDelegateObj("myfaces._impl._util._ExtDom", 
      * @param filter the filter closure
      */
     getFilteredChild: function(item, filter) {
-        if (!item) {
-            throw Error(this._Lang.getMessage("ERR_MUST_BE_PROVIDED1",null, "_Dom.getFilteredParent", "item {DomNode}"));
-        }
-        if (!filter) {
-            throw Error(this._Lang.getMessage("ERR_MUST_BE_PROVIDED1",null, "_Dom.getFilteredParent", "filter {function}"));
-        }
+
+        this._assertStdParams(item, filter, "getFilteredChild");
 
         var childs = item.childNodes;
         if (!childs) {
@@ -344,10 +336,4 @@ myfaces._impl.core._Runtime.singletonDelegateObj("myfaces._impl._util._ExtDom", 
         var c = this.getClass(node);
         return (c == "") ? [] : c.split(/\s+/g);
     }
-    ,
-
-
-
-
-
-});
+ });

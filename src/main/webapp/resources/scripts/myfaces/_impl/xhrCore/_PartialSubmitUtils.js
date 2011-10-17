@@ -106,6 +106,6 @@ _MF_SINGLTN("myfaces._impl.xhrCore._PartialSubmitUtils", myfaces._impl.xhrCore._
                 this.encodeElement(viewStates[cnt2], targetBuf);
             }
         }
-    },
+    }
 
 });

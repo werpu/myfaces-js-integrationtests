@@ -27,7 +27,9 @@
  * we will focus with our dom routines to only
  * the parts which our impl uses.
  * A jquery like query API would be nice
- * but this would blow up our codebase significantly
+ * but this would increase up our codebase significantly
+ *
+ * <p>This class provides the proper fallbacks for ie8- and Firefox 3.6-</p>
  */
 _MF_SINGLTN("myfaces._impl._util._Dom", Object,
 /**
@@ -536,14 +538,6 @@ _MF_SINGLTN("myfaces._impl._util._Dom", Object,
         return depth;
     },
 
-
-    //now to another nasty issue:
-    //for ie we have to walk recursively over all nodes:
-    //http://msdn.microsoft.com/en-us/library/bb250448%28VS.85%29.aspx
-    //http://weblogs.java.net/blog/driscoll/archive/2009/11/13/ie-memory-management-and-you
-    //http://home.orange.nl/jsrosman/
-    //http://www.quirksmode.org/blog/archives/2005/10/memory_leaks_li.html
-    //http://www.josh-davis.org/node/7
     _removeNode: function(node, breakEventsOpen) {
         if (!node) return;
         if ('undefined' != typeof node.parentNode && null != node.parentNode) //if the node has a parent

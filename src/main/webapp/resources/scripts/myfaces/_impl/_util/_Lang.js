@@ -46,7 +46,7 @@
  * decorates the namespace myfaces._impl.core._Runtime and adds a bunch of new methods to
  * what _Runtime provided
  * */
-var _Lang = _MF_SINGLTN("myfaces._impl._util._Lang", Object,
+_MF_SINGLTN("myfaces._impl._util._Lang", Object,
         /**
          * @lends myfaces._impl._util._Lang.prototype
          */
@@ -57,6 +57,10 @@ var _Lang = _MF_SINGLTN("myfaces._impl._util._Lang", Object,
     _installedLocale: null,
 
     _RT: myfaces._impl.core._Runtime,
+
+    constructor_: function() {
+
+    },
 
     /**
      * returns a given localized message upon a given key
@@ -80,7 +84,7 @@ var _Lang = _MF_SINGLTN("myfaces._impl._util._Lang", Object,
 
         var msg = this._installedLocale[key] || defaultMessage || key + " - undefined message";
         for(var cnt = 2; cnt < arguments.length; cnt++) {
-          msg = msg.replace(new RegExp(["\\{",cnt-2,"\\}"].join(""),"g"),new String(arguments[cnt]));   
+          msg = msg.replace(new RegExp(["\\{",cnt-2,"\\}"].join(""),"g"),new String(arguments[cnt]));
         }
         return msg;
     },
@@ -245,15 +249,6 @@ var _Lang = _MF_SINGLTN("myfaces._impl._util._Lang", Object,
     },
 
     /**
-     @see this._RT.extendClass
-     */
-    /*extendClass : function(newClass, extendsClass, functionMap, inherited) {
-     return this._RT.extendClass(newClass, extendsClass, functionMap, inherited);
-     },*/
-
-    //core namespacing and inheritance done, now to the language extensions
-
-    /**
      * Save document.getElementById (this code was ported over from dojo)
      * the idea is that either a string or domNode can be passed
      * @param {Object} reference the reference which has to be byIded
@@ -392,12 +387,7 @@ var _Lang = _MF_SINGLTN("myfaces._impl._util._Lang", Object,
             throw Error(this.getMessage("ERR_MUST_BE_PROVIDED",null,"_Lang.contains", "arr {array}", "str {string}"));
         }
 
-        for (var cnt = 0; cnt < arr.length; cnt++) {
-            if (arr[cnt] == str) {
-                return true;
-            }
-        }
-        return false;
+        return this.arrIndexOf(arr, str) != -1;
     },
 
 
@@ -409,7 +399,6 @@ var _Lang = _MF_SINGLTN("myfaces._impl._util._Lang", Object,
         for (var cnt = 0; cnt < len; cnt++) {
             ret[arr[cnt]] = cnt + offset;
         }
-
         return ret;
     },
 
@@ -433,15 +422,16 @@ var _Lang = _MF_SINGLTN("myfaces._impl._util._Lang", Object,
 
         delimiter = delimiter || "\n";
         return arr.join(delimiter);
-    }
-    ,
-
+    },
 
     objToArray: function(obj, offset, pack) {
         if (!obj) {
             return null;
         }
         //since offset is numeric we cannot use the shortcut due to 0 being false
+        //special condition array delivered no offset no pack
+        if(obj instanceof Array && !offset && !pack)  return obj;
+
         var finalOffset = ('undefined' != typeof offset || null != offset) ? offset : 0;
         var finalPack = pack || [];
         try {
@@ -459,8 +449,7 @@ var _Lang = _MF_SINGLTN("myfaces._impl._util._Lang", Object,
             return finalPack;
         }
 
-    }
-    ,
+    },
 
     /**
      * foreach implementation utilizing the
@@ -480,32 +469,15 @@ var _Lang = _MF_SINGLTN("myfaces._impl._util._Lang", Object,
      */
     arrForEach: function(arr, func /*startPos, scope*/) {
         if(!arr || !arr.length ) return;
-        try {
-            var startPos = Number(arguments[2]) || 0;
-            var thisObj = arguments[3];
 
-            //check for an existing foreach mapping on array prototypes
-            //IE9 still does not pass array objects as result for dom ops
-            if (Array.prototype.forEach && arr.forEach) {
-                (startPos) ? arr.slice(startPos).forEach(func, thisObj) : arr.forEach(func, thisObj);
-            } else {
-                startPos = (startPos < 0) ? Math.ceil(startPos) : Math.floor(startPos);
-                if (typeof func != "function") {
-                    throw new TypeError();
-                }
-                for (var cnt = 0; cnt < arr.length; cnt++) {
-                    if (thisObj) {
-                        func.call(thisObj, arr[cnt], cnt, arr);
-                    } else {
-                        func(arr[cnt], cnt, arr);
-                    }
-                }
-            }
-        } finally {
-            func = null;
-        }
-    }
-    ,
+        var startPos = Number(arguments[2]) || 0;
+        var thisObj = arguments[3];
+
+        //check for an existing foreach mapping on array prototypes
+        //IE9 still does not pass array objects as result for dom ops
+        arr = this.objToArray(arr);
+        (startPos) ? arr.slice(startPos).forEach(func, thisObj) : arr.forEach(func, thisObj);
+    },
 
 
     /**
@@ -525,36 +497,9 @@ var _Lang = _MF_SINGLTN("myfaces._impl._util._Lang", Object,
      */
     arrFilter: function(arr, func /*startPos, scope*/) {
         if(!arr || !arr.length ) return [];
-        try {
-            var startPos = Number(arguments[2]) || 0;
-            var thisObj = arguments[3];
-
-            //check for an existing foreach mapping on array prototypes
-            if (Array.prototype.filter) {
-                return ((startPos) ? arr.slice(startPos).filter(func, thisObj) : arr.filter(func, thisObj));
-            } else {
-                if (typeof func != "function") {
-                    throw new TypeError();
-                }
-                var ret = [];
-                startPos = (startPos < 0) ? Math.ceil(startPos) : Math.floor(startPos);
-
-                for (var cnt = startPos; cnt < arr.length; cnt++) {
-                    var elem = null;
-                    if (thisObj) {
-                        elem = arr[cnt];
-                        if (func.call(thisObj, elem, cnt, arr)) ret.push(elem);
-                    } else {
-                        elem = arr[cnt];
-                        if (func(arr[cnt], cnt, arr)) ret.push(elem);
-                    }
-                }
-            }
-        } finally {
-            func = null;
-        }
-    }
-    ,
+        arr = this.objToArray(arr);
+        return ((startPos) ? arr.slice(startPos).filter(func, thisObj) : arr.filter(func, thisObj));
+    },
 
     /**
      * adds a EcmaScript optimized indexOf to our mix,
@@ -568,24 +513,9 @@ var _Lang = _MF_SINGLTN("myfaces._impl._util._Lang", Object,
     arrIndexOf: function(arr, element /*fromIndex*/) {
         if (!arr || !arr.length) return -1;
         var pos = Number(arguments[2]) || 0;
-
-        if (Array.prototype.indexOf) {
-            return arr.indexOf(element, pos);
-        }
-        //var cnt = this._space;
-        var len = arr.length;
-        pos = (pos < 0) ? Math.ceil(pos) : Math.floor(pos);
-
-        //if negative then it is taken from as offset from the length of the array
-        if (pos < 0) {
-            pos += len;
-        }
-        while (pos < len && arr[pos] !== element) {
-            pos++;
-        }
-        return (pos < len) ? pos : -1;
-    }
-    ,
+        arr = this.objToArray(arr);
+        return arr.indexOf(element, pos);
+    },
 
 
     /**
@@ -668,27 +598,15 @@ var _Lang = _MF_SINGLTN("myfaces._impl._util._Lang", Object,
 
     parseXML: function(txt) {
         try {
-            var parser = null, xmlDoc = null;
-            if (window.DOMParser) {
-                parser = new DOMParser();
-                xmlDoc = parser.parseFromString(txt, "text/xml");
-            }
-            else // Internet Explorer
-            {
-                xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
-                xmlDoc.async = "false";
-                xmlDoc.loadXML(txt);
-            }
-            return xmlDoc;
+            var parser = new DOMParser();
+            return parser.parseFromString(txt, "text/xml");
         } catch (e) {
             //undefined internal parser error
             return null;
         }
-    }
-    ,
+    },
 
     serializeXML: function(xmlNode, escape) {
-        if (xmlNode.xml) return xmlNode.xml; //IE
         if(!escape) {
             if (xmlNode.data) return xmlNode.data; //CDATA block has raw data
             if (xmlNode.textContent) return xmlNode.textContent; //textNode has textContent
@@ -703,10 +621,10 @@ var _Lang = _MF_SINGLTN("myfaces._impl._util._Lang", Object,
             buffer.push(this.serializeXML(xmlNode.childNodes[cnt]));
         }
         return buffer.join("");
-    }
-    ,
-    isXMLParseError: function(xmlContent) {
+    },
 
+    isXMLParseError: function(xmlContent) {
+        //TODO determine the ie specific part here
         //no xml content
         if (xmlContent == null) return true;
 
@@ -723,8 +641,8 @@ var _Lang = _MF_SINGLTN("myfaces._impl._util._Lang", Object,
                 findParseError(xmlContent);
 
 
-    }
-    ,
+    },
+
     /**
      * creates a neutral form data wrapper over an existing form Data element
      * the wrapper delegates following methods, append
@@ -815,6 +733,9 @@ var _Lang = _MF_SINGLTN("myfaces._impl._util._Lang", Object,
      * for now because old browsers do not support them
      * in the long run we probably can switch over
      * or make a code split between legacy and new
+     *
+     * TODO find a way to map this mechanism to the standard
+     * props mechanism modern browsers have
      *
      * @param obj
      * @param name
