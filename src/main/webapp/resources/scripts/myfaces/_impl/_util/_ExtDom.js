@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-if(!myfaces._impl._util._Dom.isDomCompliant()) {
+
     /*only quirksmode browsers get the quirks part of the code*/
     myfaces._impl.core._Runtime.singletonDelegateObj("myfaces._impl._util._ExtDom", myfaces._impl._util._Dom, {
 
@@ -348,4 +348,3 @@ if(!myfaces._impl._util._Dom.isDomCompliant()) {
         }
      });
 
-}

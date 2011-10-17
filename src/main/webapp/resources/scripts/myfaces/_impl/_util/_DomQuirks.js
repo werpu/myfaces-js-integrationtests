@@ -1,3 +1,4 @@
+if(!myfaces._impl._util._Dom.isDomCompliant()) {
 /***
  Dom.js version for non html5 browsers
  */
@@ -219,8 +220,7 @@ _MF_SINGLTN("myfaces._impl._util._DomQuirks", myfaces._impl._util._Dom, /**
             } catch (e1) {
             }
         }
-    }
-    ,
+    },
 
 
 
@@ -504,3 +504,5 @@ _MF_SINGLTN("myfaces._impl._util._DomQuirks", myfaces._impl._util._Dom, /**
         }
     }
 });
+
+}
