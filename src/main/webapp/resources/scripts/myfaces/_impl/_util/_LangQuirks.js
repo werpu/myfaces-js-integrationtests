@@ -27,7 +27,8 @@
  space is not worth the loss of readability
  */
 
-
+//html5 ecmascript 3 compliant browser, no quirks mode needed
+if(!Array.prototype.indexOf) {
 /**
  * @memberOf myfaces._impl
  * @namespace
@@ -49,11 +50,14 @@ _MF_SINGLTN("myfaces._impl._util._LangQuirks", myfaces._impl._util._Lang, {
 
     constructor_: function() {
         this._callSuper("constructor_");
+        var _RT = this._RT;
+        var singletons = this.attr(_RT, "registeredSingletons");
+        var _T = this;
+        _RT.iterateSingletons(function(namespace) {
+            if(namespace._Lang) namespace._Lang = _T;
+        });
+
         myfaces._impl._util._Lang = this;
-        for(var key in singletons) {
-            var nms = this._RT.fetchNamespace(key);
-             this._Lang.attr(nms,"_Lang", this);
-        }
     },
 
     /**
@@ -201,3 +205,5 @@ _MF_SINGLTN("myfaces._impl._util._LangQuirks", myfaces._impl._util._Lang, {
         return this._callSuper("serializeXML", xmlNode, escape);
     }
 });
+
+}

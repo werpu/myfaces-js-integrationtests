@@ -17,11 +17,10 @@
     <!-- runtime -->
     <h:outputScript name="myfaces/_impl/core/_EvalHandlers.js" library="scripts" target="head"/>
     <h:outputScript name="myfaces/_impl/core/_Runtime.js" library="scripts" target="head"/>
+    <h:outputScript name="myfaces/_impl/core/_StartImpl.js" library="scripts" target="head"/>
 
     <!-- i18n -->
     <h:outputScript name="myfaces/_impl/i18n/Messages.js" library="scripts" target="head"/>
-    <h:outputScript name="myfaces/_impl/i18n/Messages_de.js" library="scripts" target="head"/>
-    <h:outputScript name="myfaces/_impl/i18n/Messages_nl.js" library="scripts" target="head"/>
 
     <!-- utils / support classes -->
     <h:outputScript name="myfaces/_impl/_util/_Lang.js" library="scripts" target="head"/>
@@ -33,7 +32,6 @@
     <h:outputScript name="myfaces/_impl/_util/_ListenerQueue.js" library="scripts" target="head"/>
     <h:outputScript name="myfaces/_impl/_util/_Dom.js" library="scripts" target="head"/>
 
-    <h:outputScript name="myfaces/_impl/_util/_UnitTest.js" library="scripts" target="head"/>
 
     <h:outputScript name="myfaces/_impl/_util/_HtmlStripper.js" library="scripts" target="head"/>
 
@@ -42,20 +40,17 @@
     <h:outputScript name="myfaces/_impl/xhrCore/engine/FormData.js" library="scripts" target="head"/>
     <h:outputScript name="myfaces/_impl/xhrCore/engine/BaseRequest.js" library="scripts" target="head"/>
 
-    <h:outputScript name="myfaces/_impl/xhrCore/engine/IFrame.js" library="scripts" target="head"/>
     <h:outputScript name="myfaces/_impl/xhrCore/engine/Xhr1.js" library="scripts" target="head"/>
 
 
     <!-- xhr jsf mappers -->
     <h:outputScript name="myfaces/_impl/xhrCore/_AjaxUtils.js" library="scripts" target="head"/>
-    <h:outputScript name="myfaces/_impl/xhrCore/_PartialSubmitUtils.js" library="scripts" target="head"/>
 
     <h:outputScript name="myfaces/_impl/xhrCore/_AjaxRequestQueue.js" library="scripts" target="head"/>
 
     <h:outputScript name="myfaces/_impl/xhrCore/_AjaxRequest.js" library="scripts" target="head"/>
     <h:outputScript name="myfaces/_impl/xhrCore/_AjaxRequestLevel2.js" library="scripts" target="head"/>
 
-    <h:outputScript name="myfaces/_impl/xhrCore/_IFrameRequest.js" library="scripts" target="head"/>
     <h:outputScript name="myfaces/_impl/xhrCore/_AjaxResponse.js" library="scripts" target="head"/>
     <h:outputScript name="myfaces/_impl/xhrCore/_Transports.js" library="scripts" target="head"/>
 
@@ -69,10 +64,17 @@
         to check whether they register themselves properly
         into the system post init
     -->
+    <h:outputScript name="myfaces/_impl/i18n/Messages_de.js" library="scripts" target="head"/>
+    <h:outputScript name="myfaces/_impl/i18n/Messages_nl.js" library="scripts" target="head"/>
 
     <h:outputScript name="myfaces/_impl/_util/_LangQuirks.js" library="scripts" target="head"/>
-    <h:outputScript name="myfaces/_impl/xhrCore/_ExtTransports.js" library="scripts" target="head"/>
     <h:outputScript name="myfaces/_impl/_util/_DomQuirks.js" library="scripts" target="head"/>
+    <h:outputScript name="myfaces/_impl/xhrCore/_ExtTransports.js" library="scripts" target="head"/>
+    <h:outputScript name="myfaces/_impl/xhrCore/engine/IFrame.js" library="scripts" target="head"/>
+    <h:outputScript name="myfaces/_impl/xhrCore/_IFrameRequest.js" library="scripts" target="head"/>
+    <h:outputScript name="myfaces/_impl/xhrCore/_PartialSubmitUtils.js" library="scripts" target="head"/>
+    <h:outputScript name="myfaces/_impl/_util/_UnitTest.js" library="scripts" target="head"/>
+
 
     <!-- clean up the init code -->
     <h:outputScript name="myfaces/_impl/core/EndImpl.js" library="scripts" target="head"

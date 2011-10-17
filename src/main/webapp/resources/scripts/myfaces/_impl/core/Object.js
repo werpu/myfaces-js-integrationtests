@@ -58,11 +58,10 @@ _MF_SINGLTN("myfaces._impl.core.Object", Object, {
     },
 
     updateSingletons: function(key) {
-        var singletons = this._Lang.attr(this._RT, "registeredSingletons");
-        for(var key in singletons) {
-            var nms = this._RT.fetchNamespace(key);
-             this._Lang.attr(nms,key, this);
-        }
+        var _T = this;
+        this._RT.iterateSingletons(function(namespace) {
+            if(namespace[key]) namespace[key] = _T;
+        });
     }
 
 });

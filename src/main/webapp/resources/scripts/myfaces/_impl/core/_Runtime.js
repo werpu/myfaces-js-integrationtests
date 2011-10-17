@@ -60,7 +60,7 @@ if (!myfaces._impl.core._Runtime) {
 
         //namespace idx to speed things up by hitting eval way less
         this._reservedNMS = {};
-        this._registeredSingletons = [];
+        this._registeredSingletons = {};
 
         /**
          * replacement counter for plugin classes
@@ -212,6 +212,19 @@ if (!myfaces._impl.core._Runtime) {
                 _T._reservedNMS[tmpNmsName.join(".")] = true;
             }
             return true;
+        };
+
+        /**
+         * iterates over all registered singletons in the namespace
+         * @param operator a closure which applies a certain function
+         * on the namespace singleton
+         */
+        this.iterateSingletons = function(operator) {
+            var singletons = _T._registeredSingletons;
+            for(var key in singletons) {
+                var nms = _T.fetchNamespace(key);
+                operator(nms);
+            }
         };
 
         /**
@@ -516,6 +529,7 @@ if (!myfaces._impl.core._Runtime) {
             if (!_T.isString(newCls)) {
                 throw Error("new class namespace must be of type String");
             }
+            var className = newCls;
 
             if (_T._reservedNMS[newCls]) {
                 return;
@@ -571,6 +585,9 @@ if (!myfaces._impl.core._Runtime) {
                         //we now store the level position as new descension level for callSuper
                         descLevel[_mappedName] = _parentCls;
                         //and call the code on this
+                        if(!_parentCls[methodName]) {
+                            throw Error("Method _callSuper('"+ methodName+"')  called from "+className+" Method does not exist ");
+                        }
                         ret = _parentCls[methodName].apply(this, passThrough);
                     } finally {
                         descLevel[_mappedName] = _oldDescLevel;
@@ -604,7 +621,7 @@ if (!myfaces._impl.core._Runtime) {
          * @param {Object} protoFuncs (Map) an optional map of prototype functions which in case of overwriting a base function get an inherited method
          */
         this.singletonExtendClass = function(newCls, extendsCls, protoFuncs, nmsFuncs) {
-            this._registeredSingletons[newCls] = true;
+            _T._registeredSingletons[newCls] = true;
             return _T._makeSingleton(_T.extendClass, newCls, extendsCls, protoFuncs, nmsFuncs);
         };
 

@@ -326,7 +326,13 @@ _MF_SINGLTN("myfaces._impl._util._Dom", Object,
      * browsers capabilities
      */
     isDomCompliant: function() {
-        return true;
+        if('undefined' == typeof this._isCompliantBrowser) {
+            this._isCompliantBrowser = !! ((window.Range
+                    && typeof Range.prototype.createContextualFragment == 'function') //createContextualFragment hints to a no quirks browser but we need more fallbacks
+                    || document.querySelectoryAll  //query selector all hints to html5 capabilities
+                    || document.createTreeWalker);   //treewalker is either firefox 3.5+ or ie9 standards mode
+        }
+        return this._isCompliantBrowser;
     },
 
     /**
