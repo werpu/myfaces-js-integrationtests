@@ -60,8 +60,10 @@ _MF_SINGLTN("myfaces._impl.core.Object", Object, {
 });
 
 (function() {
+    /*some mobile browsers do not have a window object*/
+    var target = window || document;
     var _RT = myfaces._impl.core._Runtime;
-    _RT._MF_OBJECT = window._MF_OBJECT;
+    _RT._MF_OBJECT = target._MF_OBJECT;
 
-     window._MF_OBJECT = myfaces._impl.core.Object;
+     target._MF_OBJECT = myfaces._impl.core.Object;
 })();
