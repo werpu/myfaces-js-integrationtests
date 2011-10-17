@@ -64,11 +64,9 @@ _MF_CLS("myfaces._impl.xhrCore._Transports" , _MF_OBJECT,
      */
     _q: new myfaces._impl.xhrCore._AjaxRequestQueue(),
 
-
-
-    _Lang :  myfaces._impl._util._Lang,
-    _RT: myfaces._impl.core._Runtime,
-
+    constructor_: function() {
+        this._callSuper("constructor_");
+    },
 
     /**
      * a simple not enqueued xhr post
@@ -179,7 +177,6 @@ _MF_CLS("myfaces._impl.xhrCore._Transports" , _MF_OBJECT,
         this._q.enqueue(
                 new (this._getMultipartReqClass(context))(args));
     },
-
 
     /**
      * iframe get without queueing
@@ -309,19 +306,6 @@ _MF_CLS("myfaces._impl.xhrCore._Transports" , _MF_OBJECT,
         if (_getConfig(context, srcParm, null) != null) {
             destination[destParm] = _getConfig(context, srcParm, null);
         }
-    },
-
-
-
-
-
-
-
-    _loadImpl: function() {
-        if (!this._Impl) {
-            this._Impl = myfaces._impl.core._Runtime.getGlobalConfig("jsfAjaxImpl", myfaces._impl.core.Impl);
-        }
-        return this._Impl;
     },
 
     /**

@@ -31,6 +31,7 @@ _MF_SINGLTN("myfaces._impl.xhrCore._AjaxUtils", _MF_OBJECT,
      * Constructor
      */
     constructor_ : function() {
+        this._callSuper("constructor_");
     },
 
 
@@ -65,7 +66,7 @@ _MF_SINGLTN("myfaces._impl.xhrCore._AjaxUtils", _MF_OBJECT,
     },
 
     _assertParItem: function(parItem) {
-        if (!parentItem) {
+        if (!parItem) {
             throw "NO_PARITEM";
         }
     },

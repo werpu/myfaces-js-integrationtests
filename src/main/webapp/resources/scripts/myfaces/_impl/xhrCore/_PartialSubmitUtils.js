@@ -2,8 +2,14 @@
  * A drop in replacement which replaces the original ajax utils with added ppr functionality
  * we use it to strip down the code for the minimal version to the core
  */
-_MF_SINGLTN("myfaces._impl.xhrCore._AjaxUtils", myfaces._impl.xhrCore._AjaxUtils, {
+_MF_SINGLTN("myfaces._impl.xhrCore._PartialSubmitUtils", myfaces._impl.xhrCore._AjaxUtils, {
     _AjaxUtils: myfaces._impl.xhrCore._AjaxUtils,
+
+    constructor_: function() {
+       this._callSuper("constructor_");
+       //we replace the original class with our new implementation
+       myfaces._impl.xhrCore._AjaxUtils = this;
+    },
 
     /**
      * determines fields to submit
@@ -19,6 +25,7 @@ _MF_SINGLTN("myfaces._impl.xhrCore._AjaxUtils", myfaces._impl.xhrCore._AjaxUtils
         } else {
             this._callSuper("encodeSubmittableFields", targetBuf, parentItem, partialIds);
         }
+
     },
 
     /**
@@ -39,7 +46,7 @@ _MF_SINGLTN("myfaces._impl.xhrCore._AjaxUtils", myfaces._impl.xhrCore._AjaxUtils
      */
     encodePartialSubmit : function(node, submitAll, partialIds, targetBuf) {
         var _Lang = this._Lang;
-        var _Impl = myfaces._impl.core.Impl;
+        var _Impl = this.attr("impl");
         var _Dom = this._Dom;
 
         var partialIdsFilter = function(curNode) {
@@ -88,7 +95,7 @@ _MF_SINGLTN("myfaces._impl.xhrCore._AjaxUtils", myfaces._impl.xhrCore._AjaxUtils
      */
     appendViewState: function(parentNode, targetBuf) {
         var _Dom = this._Dom;
-        var _Impl = myfaces._impl.core.Impl;
+        var _Impl = this.attr("impl");
 
         //viewstate covered, do a preemptive check
         if (targetBuf.hasKey(_Impl.P_VIEWSTATE)) return;
