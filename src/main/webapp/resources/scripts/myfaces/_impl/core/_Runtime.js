@@ -797,8 +797,8 @@ if (!myfaces._impl.core._Runtime) {
 /*we cannot privatize with a global function hence we store the values away for the init part*/
 (function() {
     var _RT = myfaces._impl.core._Runtime;
-    _RT._oldExtends = window._MF_CLS;
-    _RT._oldSingleton = window._MF_SINGLTN;
+    _RT._MF_CLS = window._MF_CLS;
+    _RT._MF_SINGLTN = window._MF_SINGLTN;
 
     window._MF_CLS = _RT.extendClass;
     window._MF_SINGLTN = _RT.singletonExtendClass;

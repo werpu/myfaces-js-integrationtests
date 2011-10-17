@@ -28,7 +28,7 @@
  * and by unit tests
  */
 /** @namespace myfaces._impl._util._Logging */
-_MF_SINGLTN("myfaces._impl._util._Logging",Object, {
+_MF_SINGLTN("myfaces._impl._util._Logging", _MF_OBJECT, {
 
     /**
      * we use a map switch instread of a log level
@@ -43,6 +43,7 @@ _MF_SINGLTN("myfaces._impl._util._Logging",Object, {
     _Lang: myfaces._impl._util._Lang,
 
     constructor_: function() {
+        this._callSuper("constructor_");
 
         //due to the delegation pattern we do not have access to the browser
         this._browser = myfaces._impl.core._Runtime.browser;

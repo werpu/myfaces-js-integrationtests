@@ -27,9 +27,9 @@
  * @class
  * @name _AjaxRequest
  * @memberOf myfaces._impl.xhrCore
- * @extends myfaces._impl.xhrCore._FinalizeableObj
+ * @extends myfaces._impl.core.Object
  */
-_MF_CLS("myfaces._impl.xhrCore._AjaxRequest", myfaces._impl.xhrCore._FinalizeableObj,
+_MF_CLS("myfaces._impl.xhrCore._AjaxRequest", _MF_OBJECT,
         /** @lends myfaces._impl.xhrCore._AjaxRequest.prototype */
         {
 
@@ -101,7 +101,7 @@ _MF_CLS("myfaces._impl.xhrCore._AjaxRequest", myfaces._impl.xhrCore._Finalizeabl
                     this._onException = this._Lang.hitch(this, this._stdErrorHandler);
                     this._onWarn = this._Lang.hitch(this, this._stdErrorHandler);
 
-                    this._Lang.applyArgs(this, args);
+                    this.applyArgs(args);
                     var mfInternal = this._context._mfInternal;
                     mfInternal._onException = this._onException;
                     mfInternal._onWarning = this._onWarn;

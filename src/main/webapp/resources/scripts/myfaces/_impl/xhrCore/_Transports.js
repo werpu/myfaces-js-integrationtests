@@ -39,7 +39,7 @@
  * to different transport implementations and the auto passing of parameters into their
  * corresponding protected attributes on class level in the transports themselves)
  */
-_MF_CLS("myfaces._impl.xhrCore._Transports" , Object,
+_MF_CLS("myfaces._impl.xhrCore._Transports" , _MF_OBJECT,
      /** @lends myfaces._impl.xhrCore._Transports.prototype */ {
 
     _PAR_ERRORLEVEL:"errorlevel",

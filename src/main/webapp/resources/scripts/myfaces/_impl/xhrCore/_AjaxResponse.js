@@ -18,7 +18,7 @@
  * @class
  * @name _AjaxResponse
  * @memberOf myfaces._impl.xhrCore
- * @extends myfaces._impl.xhrCore._FinalizeableObj
+ * @extends myfaces._impl.core.Object
  * @description
  * This singleton is responsible for handling the standardized xml ajax response
  * Note: since the semantic processing can be handled about 90% in a functional
@@ -28,7 +28,7 @@
  * The singleton approach also improves performance
  * due to less object gc compared to the old instance approach.
  */
-_MF_SINGLTN("myfaces._impl.xhrCore._AjaxResponse", Object,
+_MF_SINGLTN("myfaces._impl.xhrCore._AjaxResponse", _MF_OBJECT,
         /** @lends myfaces._impl.xhrCore._AjaxResponse.prototype */
         {
 
@@ -55,16 +55,13 @@ _MF_SINGLTN("myfaces._impl.xhrCore._AjaxResponse", Object,
             P_VIEWHEAD: "javax.faces.ViewHead",
             P_VIEWBODY: "javax.faces.ViewBody",
 
-            _Lang: myfaces._impl._util._Lang,
-            _Dom: myfaces._impl._util._Dom,
-            _RT: myfaces._impl.core._Runtime,
 
 
             /**
              * Standard constructor
              */
             constructor_: function() {
-
+                this._callSuper("constructor_");
             }
             ,
             /**

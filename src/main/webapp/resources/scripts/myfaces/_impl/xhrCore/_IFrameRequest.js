@@ -19,7 +19,7 @@
  * @class
  * @name _AjaxRequest
  * @memberOf myfaces._impl.xhrCore
- * @extends myfaces._impl.xhrCore._FinalizeableObj
+ * @extends myfaces._impl.xhrCore._AjaxRequest
  * @description specialized implementation of the jsf js ajax request class
  * which utilizes an iframe transport for communications to the server
  */

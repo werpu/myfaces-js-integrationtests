@@ -21,7 +21,7 @@
  * @description Implementation singleton which implements all interface method
  * defined by our jsf.js API
  * */
-_MF_SINGLTN("myfaces._impl.core.Impl", Object,
+_MF_SINGLTN("myfaces._impl.core.Impl", _MF_OBJECT,
 /**
  * @lends myfaces._impl.core.Impl.prototype
  */
@@ -76,8 +76,6 @@ _MF_SINGLTN("myfaces._impl.core.Impl", Object,
     CLIENT_ERROR:   "clientError",
     TIMEOUT_EVENT:  "timeout",
 
-    _Lang:  myfaces._impl._util._Lang,
-    _Dom:   myfaces._impl._util._Dom,
 
     /*error reporting threshold*/
     _threshold: "ERROR",
@@ -85,6 +83,10 @@ _MF_SINGLTN("myfaces._impl.core.Impl", Object,
     /*blockfilter for the passthrough filtering, the attributes given here
      * will not be transmitted from the options into the passthrough*/
     _BLOCKFILTER: {onerror: true, onevent: true, render: true, execute: true, myfaces: true},
+
+    constructor_: function() {
+        this._callSuper("constructor_");
+    },
 
     /**
      * collect and encode data for a given form element (must be of type form)

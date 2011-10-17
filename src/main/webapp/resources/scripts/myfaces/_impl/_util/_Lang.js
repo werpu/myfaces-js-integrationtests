@@ -91,7 +91,7 @@ var _Lang = _MF_SINGLTN("myfaces._impl._util._Lang", Object,
      * a new locale can be installed optionally
      * to our i18n subsystem
      *
-     * @param newLocale locale override 
+     * @param newLocale locale override
      */
     initLocale: function(newLocale) {
         if(newLocale) {
@@ -807,5 +807,46 @@ var _Lang = _MF_SINGLTN("myfaces._impl._util._Lang", Object,
         }
 
         return bufInstance;
+    },
+
+    /**
+     * define a property mechanism which is browser neutral
+     *
+     * @param obj
+     * @param name
+     * @param value
+     */
+    attr: function(obj, name, value) {
+        var findAccessor =  function(theName) {
+            return (obj["_" + name]) ? "_" + name : ( (obj[name]) ? name : null)
+        };
+        var applyAttr = function(obj, theName, value) {
+             if (value) {
+                obj[theName] = value;
+                return null;
+            }
+            return obj[theName];
+        }
+        try {
+            var finalAttr = findAccessor(name);
+            //simple attibute no setter and getter overrides
+            if(finalAttr) {
+              return applyAttr(obj, finalAttr, value);
+            }
+            //lets check for setter and getter overrides
+            var found = false;
+
+            var prefix = (value)?"set":"get";
+            finalAttr = [prefix,name.substr(0,1).toUpperCase(),name.substr(1)].join("");
+            finalAttr = findAccessor(finalAttr);
+            if(finalAttr) {
+              return applyAttr(obj, finalAttr, value);
+            }
+
+            throw Error("property"+name+"not found");
+        } finally {
+            findAccessor = null;
+            applyAttr = null;
+        }
     }
 });
