@@ -28,7 +28,7 @@ _MF_SINGLTN("myfaces._impl.core.Impl", _MF_OBJECT,
 {
 
     //third option myfaces._impl.xhrCoreAjax which will be the new core impl for now
-    _transport      : new (myfaces._impl.core._Runtime.getGlobalConfig("transport", myfaces._impl.xhrCore._Transports))(),
+    _transport      : myfaces._impl.core._Runtime.getGlobalConfig("transport", myfaces._impl.xhrCore._Transports),
 
     /**
      * external event listener queue!

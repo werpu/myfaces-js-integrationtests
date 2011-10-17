@@ -817,18 +817,22 @@ var _Lang = _MF_SINGLTN("myfaces._impl._util._Lang", Object,
      * @param value
      */
     attr: function(obj, name, value) {
-        var findAccessor =  function(theName) {
-            return (obj["_" + name]) ? "_" + name : ( (obj[name]) ? name : null)
+        var findAccessor =  function(theObj, theName) {
+            return (theObj["_" + theName]) ? "_" + theName : ( (theObj[theName]) ? theName : null)
         };
-        var applyAttr = function(obj, theName, value) {
+        var applyAttr = function(theObj, theName, value, isFunc) {
              if (value) {
-                obj[theName] = value;
+                 if(isFunc) {
+                    theObj[theName](value);
+                 } else {
+                     theObj[theName] = value;
+                 }
                 return null;
             }
-            return obj[theName];
-        }
+            return (isFunc)?theObj[theName]() : theObj[theName];
+        };
         try {
-            var finalAttr = findAccessor(name);
+            var finalAttr = findAccessor(obj, name);
             //simple attibute no setter and getter overrides
             if(finalAttr) {
               return applyAttr(obj, finalAttr, value);
@@ -838,12 +842,12 @@ var _Lang = _MF_SINGLTN("myfaces._impl._util._Lang", Object,
 
             var prefix = (value)?"set":"get";
             finalAttr = [prefix,name.substr(0,1).toUpperCase(),name.substr(1)].join("");
-            finalAttr = findAccessor(finalAttr);
+            finalAttr = findAccessor(obj, finalAttr);
             if(finalAttr) {
-              return applyAttr(obj, finalAttr, value);
+              return applyAttr(obj, finalAttr, value, true);
             }
 
-            throw Error("property"+name+"not found");
+            throw Error("property "+name+" not found");
         } finally {
             findAccessor = null;
             applyAttr = null;

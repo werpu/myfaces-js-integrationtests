@@ -45,7 +45,7 @@ _MF_SINGLTN("myfaces._impl.core.Object", Object, {
     },
 
     attr: function(name, value) {
-        this._Lang.attr(this, name, value);
+       return this._Lang.attr(this, name, value);
     },
 
     getImpl: function() {
