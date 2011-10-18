@@ -1045,7 +1045,7 @@ _MF_SINGLTN(_PFX_UTIL+"_Dom", Object,
     },
 
     isManualScriptEval: function() {
-        return false;
+        return true;
     },
 
     isMultipartCandidate: function(executes) {
