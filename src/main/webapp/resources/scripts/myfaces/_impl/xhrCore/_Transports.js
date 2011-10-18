@@ -39,8 +39,8 @@
  * to different transport implementations and the auto passing of parameters into their
  * corresponding protected attributes on class level in the transports themselves)
  */
-_MF_SINGLTN(_PFX_XHR+"_Transports" , _MF_OBJECT,
-     /** @lends myfaces._impl.xhrCore._Transports.prototype */ {
+_MF_SINGLTN(_PFX_XHR + "_Transports", _MF_OBJECT,
+        /** @lends myfaces._impl.xhrCore._Transports.prototype */ {
 
     _PAR_ERRORLEVEL:"errorlevel",
     _PAR_QUEUESIZE:"queuesize",
@@ -64,9 +64,6 @@ _MF_SINGLTN(_PFX_XHR+"_Transports" , _MF_OBJECT,
      */
     _q: new myfaces._impl.xhrCore._AjaxRequestQueue(),
 
-    constructor_: function() {
-        this._callSuper("constructor_");
-    },
 
 
     /**
@@ -106,9 +103,9 @@ _MF_SINGLTN(_PFX_XHR+"_Transports" , _MF_OBJECT,
         //TODO check if we cannot eliminate the _mfRequest object in the long run
         //given we have to pass a request object anyway
 
-        var ajaxObj = (internalContext && internalContext._mfRequest) ||  new (this._getAjaxReqClass(context))({xhr: request, context: context});
+        var ajaxObj = (internalContext && internalContext._mfRequest) || new (this._getAjaxReqClass(context))({xhr: request, context: context});
         //ie gc fix
-        if(internalContext && internalContext._mfRequest){
+        if (internalContext && internalContext._mfRequest) {
             internalContext._mfRequest = null;
             delete internalContext._mfRequest;
         }
@@ -129,8 +126,11 @@ _MF_SINGLTN(_PFX_XHR+"_Transports" , _MF_OBJECT,
     _getArguments: function(source, sourceForm, context, passThrgh) {
         var _RT = myfaces._impl.core._Runtime;
         /** @ignore */
-        var _getConfig = _RT.getLocalOrGlobalConfig;
         var _Lang = myfaces._impl._util._Lang;
+        var applyCfg = _Lang.hitch(this, this._applyConfig);
+        //RT does not have this references, hence no hitch needed
+        var getCfg = _RT.getLocalOrGlobalConfig;
+
 
         var ret = {
             "source": source,
@@ -138,18 +138,18 @@ _MF_SINGLTN(_PFX_XHR+"_Transports" , _MF_OBJECT,
             "context": context,
             "passThrough": passThrgh,
             "xhrQueue": this._q
-       };
+        };
 
         //we now mix in the config settings which might either be set globally
-        //or pushed in under the context myfaces.<contextValue> into the current request 
-        this._applyConfig(ret, context, "alarmThreshold", this._PAR_ERRORLEVEL);
-        this._applyConfig(ret, context, "queueSize", this._PAR_QUEUESIZE);
-        this._applyConfig(ret, context, "timeout", this._PAR_TIMEOUT);
-        this._applyConfig(ret, context, "delay", this._PAR_DELAY);
+        //or pushed in under the context myfaces.<contextValue> into the current request
+        applyCfg(ret, context, "alarmThreshold", this._PAR_ERRORLEVEL);
+        applyCfg(ret, context, "queueSize", this._PAR_QUEUESIZE);
+        applyCfg(ret, context, "timeout", this._PAR_TIMEOUT);
+        applyCfg(ret, context, "delay", this._PAR_DELAY);
 
         //now partial page submit needs a different treatment
         //since pps == execute strings
-        if (_getConfig(context, this._PAR_PPS, false)
+        if (getCfg(context, this._PAR_PPS, false)
                 && _Lang.exists(passThrgh, myfaces._impl.core.Impl.P_EXECUTE)
                 && passThrgh[myfaces._impl.core.Impl.P_EXECUTE].length > 0) {
             ret['partialIdsArray'] = passThrgh[myfaces._impl.core.Impl.P_EXECUTE].split(" ");
@@ -184,7 +184,7 @@ _MF_SINGLTN(_PFX_XHR+"_Transports" , _MF_OBJECT,
         //if (this._RT.getLocalOrGlobalConfig(context, "transportAutoSelection", false) && this._RT.getXHRLvl() >= 2) {
         //    return myfaces._impl.xhrCore._AjaxRequestLevel2;
         //} else {
-            return myfaces._impl.xhrCore._IFrameRequest;
+        return myfaces._impl.xhrCore._IFrameRequest;
         //}
     },
 
@@ -192,7 +192,7 @@ _MF_SINGLTN(_PFX_XHR+"_Transports" , _MF_OBJECT,
     _getAjaxReqClass: function(context) {
         // var _RT = myfaces._impl.core._Runtime;
         //if(_RT.getXHRLvl() < 2) {
-            return myfaces._impl.xhrCore._AjaxRequest;
+        return myfaces._impl.xhrCore._AjaxRequest;
         //} else {
         //    return myfaces._impl.xhrCore._AjaxRequestLevel2;
         //}

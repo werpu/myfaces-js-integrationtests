@@ -49,19 +49,16 @@ _MF_SINGLTN(_PFX_UTIL+"_Logging", _MF_OBJECT, {
         this._browser = myfaces._impl.core._Runtime.browser;
 
         this.logLevels = {};
-        this.logLevels[this._ERR] = true;
-        this.logLevels[this._INF] = true;
-        this.logLevels[this._DEB] = true;
-        this.logLevels[this._LOG] = true;
-        this.logLevels[this._WRN] = true;
-
-        //printing of a stack trace if possible
         this.stackTraceLevels = {};
+        var levels = [this._ERR, this._INF, this._DEB, this._LOG, this._WRN];
+
+        this._Lang.arrForEach(levels,function(elem){
+            this.logLevels[elem] = true;
+        });
+        this._Lang.arrForEach(levels,function(elem){
+             this.stackTraceLevels[elem] = false;
+        });
         this.stackTraceLevels[this._ERR] = true;
-        this.stackTraceLevels[this._INF] = false;
-        this.stackTraceLevels[this._DEB] = false;
-        this.stackTraceLevels[this._LOG] = false;
-        this.stackTraceLevels[this._WRN] = false;
     },
 
     /**

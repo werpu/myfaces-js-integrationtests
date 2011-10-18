@@ -401,7 +401,7 @@ _MF_SINGLTN(_PFX_UTIL+"_Dom", Object,
             if (this.isDomCompliant()) {
                 ret = this._outerHTMLCompliant(item, markup);
             } else {
-
+                //call into abstract method
                 ret = this._outerHTMLNonCompliant(item, markup);
             }
 
@@ -570,16 +570,18 @@ _MF_SINGLTN(_PFX_UTIL+"_Dom", Object,
      * @param markup the mark
      * @param caller
      */
-    _assertStdParams: function(item, markup, caller) {
+    _assertStdParams: function(item, markup, caller, params) {
          //internal error
          if(!caller) throw Error("Caller must be set for assertion");
+         var _Lang = this._Lang;
          var ERR_PROV = "ERR_MUST_BE_PROVIDED1";
          var DOM = "myfaces._impl._util._Dom.";
+         var finalParams = params || ["item", "markup"];
          if (!item) {
-            throw Error(this._Lang.getMessage(ERR_PROV,null,DOM+caller, "item"));
+            throw Error(_Lang.getMessage(ERR_PROV,null,DOM+caller, params[0]));
         }
         if (!markup) {
-            throw Error(this._Lang.getMessage(ERR_PROV,null, DOM+caller, "markup"));
+            throw Error(_Lang.getMessage(ERR_PROV,null, DOM+caller, params[1]));
         }
     },
 
@@ -669,7 +671,7 @@ _MF_SINGLTN(_PFX_UTIL+"_Dom", Object,
      * 
      */
     findByTagNames: function(fragment, tagNames) {
-        this._assertStdParams(fragment, tagNames, "findByTagNames");
+        this._assertStdParams(fragment, tagNames, "findByTagNames",["fragment", "tagNames"]);
 
         var nodeType = fragment.nodeType;
         if(nodeType != 1 && nodeType != 9 && nodeType != 11) return null;
@@ -716,7 +718,7 @@ _MF_SINGLTN(_PFX_UTIL+"_Dom", Object,
      *
      */
     findByTagName : function(fragment, tagName) {
-        this._assertStdParams(fragment, tagName, "findByTagName");
+        this._assertStdParams(fragment, tagName, "findByTagName", ["fragment", "tagName"]);
 
         var nodeType = fragment.nodeType;
         if(nodeType != 1 && nodeType != 9 && nodeType != 11) return null;
@@ -731,7 +733,7 @@ _MF_SINGLTN(_PFX_UTIL+"_Dom", Object,
     },
 
     findByName : function(fragment, name) {
-        this._assertStdParams(fragment, name, "findByName");
+        this._assertStdParams(fragment, name, "findByName", ["fragment", "name"]);
 
         var nodeType = fragment.nodeType;
         if(nodeType != 1 && nodeType != 9 && nodeType != 11) return null;
@@ -812,7 +814,7 @@ _MF_SINGLTN(_PFX_UTIL+"_Dom", Object,
      * bugfixing for ie6 which does not cope properly with setAttribute
      */
     setAttribute : function(node, attr, val) {
-        this._assertStdParams(node, attr, "setAttribute");
+        this._assertStdParams(node, attr, "setAttribute", ["fragment", "name"]);
         if (!node.setAttribute) {
             return;
         }
@@ -994,7 +996,7 @@ _MF_SINGLTN(_PFX_UTIL+"_Dom", Object,
      * @param {function} filter the filter closure
      */
     getFilteredParent : function(item, filter) {
-        this._assertStdParams(item, filter, "getFilteredParent");
+        this._assertStdParams(item, filter, "getFilteredParent",["item", "filter"]);
 
         //search parent tag parentName
         var parentItem = (item.parentNode) ? item.parentNode : null;

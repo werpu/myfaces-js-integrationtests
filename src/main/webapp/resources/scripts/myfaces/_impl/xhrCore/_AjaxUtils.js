@@ -27,12 +27,6 @@
 _MF_SINGLTN(_PFX_XHR+"_AjaxUtils", _MF_OBJECT,
 /** @lends myfaces._impl.xhrCore._AjaxUtils.prototype */
 {
-    /**
-     * Constructor
-     */
-    constructor_ : function() {
-        this._callSuper("constructor_");
-    },
 
 
     /**

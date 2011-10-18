@@ -26,9 +26,7 @@
 /** @namespace myfaces._impl._util._UnitTest*/
 _MF_SINGLTN(_PFX_UTIL+"_UnitTest", _MF_OBJECT, {
 
-    constructor_: function() {
-        this._callSuper("constructor_");
-    },
+
 
     /**
      * Simple assert true

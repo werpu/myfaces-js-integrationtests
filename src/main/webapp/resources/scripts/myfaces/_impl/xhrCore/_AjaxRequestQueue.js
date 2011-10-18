@@ -25,12 +25,7 @@ _MF_CLS(_PFX_XHR+"_AjaxRequestQueue", myfaces._impl._util._Queue,
     _curReq : null,
 
 
-    /**
-     * the standard constructur of our class
-     */
-    constructor_: function() {
-        this._callSuper("constructor");
-    },
+
 
     /**
      * delay request, then call enqueue

@@ -58,9 +58,6 @@ _MF_SINGLTN(_PFX_UTIL+"_Lang", Object,
 
     _RT: myfaces._impl.core._Runtime,
 
-    constructor_: function() {
-
-    },
 
     /**
      * returns a given localized message upon a given key
@@ -560,18 +557,27 @@ _MF_SINGLTN(_PFX_UTIL+"_Lang", Object,
     createErrorMsg: function(sourceClass, func, error) {
         var ret = [];
 
-        var keyValToStr = this.keyValToStr;
-        ret.push(keyValToStr(this.getMessage("MSG_AFFECTED_CLASS"), sourceClass));
-        ret.push(keyValToStr(this.getMessage("MSG_AFFECTED_METHOD"), func));
+        var keyValToStr = this.hitch(this, this.keyValToStr);
+        var getMsg = this.hitch(this, this.getMessage);
+
+        ret.push(keyValToStr(getMsg("MSG_AFFECTED_CLASS"), sourceClass));
+        ret.push(keyValToStr(getMsg("MSG_AFFECTED_METHOD"), func));
+
+        /*we push the values into separate vars to improve the compression*/
+        var errName = error.name;
+        var errMsg = error.message;
+        var errDesc = error.description;
+        var errNum = error.number;
+        var errLineNo = error.lineNumber;
 
         if (error) {
             var _UDEF = "undefined";
 
-            ret.push(keyValToStr(this.getMessage("MSG_ERROR_NAME"), error.name ? error.name : _UDEF));
-            ret.push(keyValToStr(this.getMessage("MSG_ERROR_MESSAGE"), error.message ? error.message : _UDEF));
-            ret.push(keyValToStr(this.getMessage("MSG_ERROR_DESC"), error.description ? error.description : _UDEF));
-            ret.push(keyValToStr(this.getMessage("MSG_ERROR_NO"), _UDEF != typeof error.number ? error.number : _UDEF));
-            ret.push(keyValToStr(this.getMessage("MSG_ERROR_LINENO"), _UDEF != typeof error.lineNumber ? error.lineNumber : _UDEF));
+            ret.push(keyValToStr(getMsg("MSG_ERROR_NAME"), errName ? errName : _UDEF));
+            ret.push(keyValToStr(getMsg("MSG_ERROR_MESSAGE"), errMsg ? errMsg : _UDEF));
+            ret.push(keyValToStr(getMsg("MSG_ERROR_DESC"), errDesc ? errDesc : _UDEF));
+            ret.push(keyValToStr(getMsg("MSG_ERROR_NO"), _UDEF != typeof errNum ? errNum : _UDEF));
+            ret.push(keyValToStr(getMsg("MSG_ERROR_LINENO"), _UDEF != typeof errLineNo ? errLineNo : _UDEF));
         }
         return ret.join("");
     }

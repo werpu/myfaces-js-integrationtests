@@ -56,14 +56,6 @@ _MF_SINGLTN(_PFX_XHR+"_AjaxResponse", _MF_OBJECT,
             P_VIEWBODY: "javax.faces.ViewBody",
 
 
-
-            /**
-             * Standard constructor
-             */
-            constructor_: function() {
-                this._callSuper("constructor_");
-            }
-            ,
             /**
              * uses response to start Html element replacement
              *
@@ -361,7 +353,7 @@ _MF_SINGLTN(_PFX_XHR+"_AjaxResponse", _MF_OBJECT,
                     // may refer to an invalid document if an update of the entire body has occurred before this point.
                     var viewStateValue = node.firstChild.nodeValue;
                     var mfInternal = context._mfInternal;
-                    var fuzzyFormDetection = this._Dom.fuzzyFormDetection;
+                    var fuzzyFormDetection = this._Lang.hitch(this._Dom, this._Dom.fuzzyFormDetection);
                     
                     var elementId = (mfInternal) ? mfInternal["_mfSourceControlId"] : context.source.id;
                     var sourceForm = (mfInternal) ? (document.forms[mfInternal["_mfSourceFormId"]] || fuzzyFormDetection(elementId)) : fuzzyFormDetection(elementId);
@@ -382,7 +374,7 @@ _MF_SINGLTN(_PFX_XHR+"_AjaxResponse", _MF_OBJECT,
                     // response may contain several blocks
                     var cDataBlock = this._Dom.concatCDATABlocks(node);
                     var resultNode = null;
-                    var pushOperationResult = this._pushOperationResult; 
+                    var pushOpRes = this._Lang.hitch(this, this._pushOperationResult);
                     
                     switch (node.getAttribute('id')) {
                         case this.P_VIEWROOT:
@@ -393,7 +385,7 @@ _MF_SINGLTN(_PFX_XHR+"_AjaxResponse", _MF_OBJECT,
 
                             resultNode = ('undefined' != typeof parsedData && null != parsedData) ? this._replaceBody(request, context, cDataBlock, parsedData) : this._replaceBody(request, context, cDataBlock);
                             if (resultNode) {
-                                pushOperationResult(context, resultNode);
+                                pushOpRes(context, resultNode);
                             }
                             break;
                         case this.P_VIEWHEAD:
@@ -406,14 +398,14 @@ _MF_SINGLTN(_PFX_XHR+"_AjaxResponse", _MF_OBJECT,
                             //we assume the cdata block is our body including the tag
                             resultNode = this._replaceBody(request, context, cDataBlock);
                             if (resultNode) {
-                                pushOperationResult(context, resultNode);
+                                pushOpRes(context, resultNode);
                             }
                             break;
 
                         default:
                             resultNode = this.replaceHtmlItem(request, context, node.getAttribute('id'), cDataBlock);
                             if (resultNode) {
-                                pushOperationResult(context, resultNode);
+                                pushOpRes(context, resultNode);
                             }
                             break;
                     }

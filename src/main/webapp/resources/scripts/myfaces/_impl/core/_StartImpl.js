@@ -3,13 +3,13 @@
     //some mobile browsers do not have a window object
     var target = window || document.body;
     var _RT = myfaces._impl.core._Runtime;
-
+    var impl = "myfaces._impl.";
     var params = {_MF_CLS: _RT.extendClass,
         _MF_SINGLTN: _RT.singletonExtendClass,
-        _PFX_UTIL: "myfaces._impl._util.",
-        _PFX_CORE:"myfaces._impl.core.",
-        _PFX_XHR: "myfaces._impl.xhrCore.",
-        _PFX_I18N: "myfaces._impl.i18n."};
+        _PFX_UTIL: impl+"_util.",
+        _PFX_CORE:impl+"core.",
+        _PFX_XHR: impl+"xhrCore.",
+        _PFX_I18N: impl+"i18n."};
 
     for (var key in params) {
         _RT[key] = target[key];

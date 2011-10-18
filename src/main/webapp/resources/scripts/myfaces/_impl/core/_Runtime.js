@@ -534,23 +534,18 @@ if (!myfaces._impl.core._Runtime) {
             if (_T._reservedNMS[newCls]) {
                 return;
             }
+            var constr = "constructor_";
+            var parClassRef = "_mfClazz";
+            if(!protoFuncs[constr]) {
+              protoFuncs[constr] =  (extendCls[parClassRef]  || (extendCls.prototype && extendCls.prototype[parClassRef])) ?
+                      function() {this._callSuper("constructor_");}: function() {};
+              var assigned = true;
+            }
 
             if ('function' != typeof newCls) {
                 newCls = _reserveClsNms(newCls, protoFuncs);
                 if (!newCls) return null;
             }
-            var constr = "constructor_";
-            var parClassRef = "_mfClazz";
-            var prototype = "prototype";
-            //if no constructor is given we add one to
-            //allow code reduction on the side
-            //of the implementor
-
-            if(!protoFuncs[constr]) {
-              protoFuncs[constr] =  (extendCls[parClassRef]  || (extendCls[prototype] && extendCls[prototype][parClassRef])) ?
-                      function() {this._callSuper(constr);}: function() {};
-            }
-
             //if the type information is known we use that one
             //with this info we can inherit from objects also
             //instead of only from classes
@@ -565,34 +560,31 @@ if (!myfaces._impl.core._Runtime) {
                 //problem
                 var tmpFunc = function() {
                 };
-                tmpFunc.prototype = extendCls[prototype];
+                tmpFunc.prototype = extendCls.prototype;
 
                 var newClazz = newCls;
                 newClazz.prototype = new tmpFunc();
                 tmpFunc = null;
-                var proto = newClazz[prototype];
-
-                proto.constructor = newCls;
-                proto._parentCls = extendCls[prototype];
+                newClazz.prototype.constructor = newCls;
+                newClazz.prototype._parentCls = extendCls.prototype;
                 /**
                  * @ignore
                  */
-                proto._callSuper = function(methodName) {
-                    var dscLevelRef = "_mfClsDescLvl";
-                    var passThrough = (arguments.length == 1) ? [] : Array[prototype].slice.call(arguments, 1);
-
+                newClazz.prototype._callSuper = function(methodName) {
+                    var passThrough = (arguments.length == 1) ? [] : Array.prototype.slice.call(arguments, 1);
+                    var accDescLevel = "_mfClsDescLvl";
                     //we store the descension level of each method under a mapped
                     //name to avoid name clashes
                     //to avoid name clashes with internal methods of array
                     //if we don't do this we trap the callSuper in an endless
                     //loop after descending one level
                     var _mappedName = ["_",methodName,"_mf_r"].join("");
-                    this[dscLevelRef] = this[dscLevelRef] || new Array();
-                    var descLevel = this[dscLevelRef];
+                    this[accDescLevel] = this[accDescLevel] || new Array();
+                    var descLevel = this[accDescLevel];
                     //we have to detect the descension level
                     //we now check if we are in a super descension for the current method already
                     //if not we are on this level
-                    var _oldDescLevel = this[dscLevelRef][_mappedName] || this;
+                    var _oldDescLevel = this._mfClsDescLvl[_mappedName] || this;
                     //we now step one level down
                     var _parentCls = _oldDescLevel._parentCls;
                     var ret = null;
@@ -612,7 +604,7 @@ if (!myfaces._impl.core._Runtime) {
                     }
                 };
                 //reference to its own type
-                proto[parClassRef] = newCls;
+                newClazz.prototype[parClassRef] = newCls;
             }
 
             //we now map the function map in
