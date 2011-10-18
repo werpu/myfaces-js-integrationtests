@@ -1,8 +1,8 @@
-if(!myfaces._impl._util._Dom.isDomCompliant()) {
+if(!document.querySelectorAll) {
 /***
  Dom.js version for non html5 browsers
  */
-_MF_SINGLTN("myfaces._impl._util._DomQuirks", myfaces._impl._util._Dom, /**
+_MF_SINGLTN(_PFX_UTIL+"DomQuirks", myfaces._impl._util._Dom, /**
  * @lends myfaces._impl._util._DomQuirks.prototype
  */
 {
@@ -220,7 +220,8 @@ _MF_SINGLTN("myfaces._impl._util._DomQuirks", myfaces._impl._util._Dom, /**
             } catch (e1) {
             }
         }
-    },
+    }
+    ,
 
 
 

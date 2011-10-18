@@ -39,7 +39,7 @@
  * to different transport implementations and the auto passing of parameters into their
  * corresponding protected attributes on class level in the transports themselves)
  */
-_MF_SINGLTN("myfaces._impl.xhrCore._ExtTransports" , myfaces._impl.xhrCore._Transports,
+_MF_SINGLTN(_PFX_XHR+"_ExtTransports" , myfaces._impl.xhrCore._Transports,
      /** @lends myfaces._impl.xhrCore._Transports.prototype */ {
 
 

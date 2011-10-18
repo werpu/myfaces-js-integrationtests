@@ -24,7 +24,7 @@
  * which test the various functions of the framework
  */
 /** @namespace myfaces._impl._util._UnitTest*/
-_MF_SINGLTN("myfaces._impl._util._UnitTest", _MF_OBJECT, {
+_MF_SINGLTN(_PFX_UTIL+"_UnitTest", _MF_OBJECT, {
 
     constructor_: function() {
         this._callSuper("constructor_");

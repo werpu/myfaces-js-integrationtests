@@ -46,7 +46,7 @@ if(!Array.prototype.indexOf) {
  * what _Runtime provided
  * <p>This class provides the proper fallbacks for ie8- and Firefox 3.6-</p>
  * */
-_MF_SINGLTN("myfaces._impl._util._LangQuirks", myfaces._impl._util._Lang, {
+_MF_SINGLTN(_PFX_UTIL+"_LangQuirks", myfaces._impl._util._Lang, {
 
     constructor_: function() {
         this._callSuper("constructor_");

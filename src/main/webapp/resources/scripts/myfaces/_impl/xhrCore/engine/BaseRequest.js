@@ -69,7 +69,7 @@
  *      <li>statusText</li>
  * </ul>
  */
-_MF_CLS("myfaces._impl.xhrCore.engine.BaseRequest", _MF_OBJECT,
+_MF_CLS(_PFX_XHR+"engine.BaseRequest", _MF_OBJECT,
         /** @lends myfaces._impl.xhrCore.engine.BaseRequest.prototype */
         {
             /*standard attributes*/

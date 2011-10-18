@@ -21,7 +21,7 @@
  * @description Implementation singleton which implements all interface method
  * defined by our jsf.js API
  * */
-_MF_SINGLTN("myfaces._impl.core.Impl", _MF_OBJECT,
+_MF_SINGLTN(_PFX_CORE+"Impl", _MF_OBJECT,
 /**
  * @lends myfaces._impl.core.Impl.prototype
  */

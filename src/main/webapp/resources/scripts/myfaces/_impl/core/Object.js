@@ -1,7 +1,7 @@
 /**
  Base class which provides several helper functions over all objects
  */
-_MF_SINGLTN("myfaces._impl.core.Object", Object, {
+_MF_SINGLTN(_PFX_CORE+"Object", Object, {
 
 
 
@@ -31,13 +31,13 @@ _MF_SINGLTN("myfaces._impl.core.Object", Object, {
      * on other browsers this method does nothing
      */
     _finalize: function() {
-        if (!myfaces._impl.core._Runtime.browser.isIE || !this._resettableContent) {
+        if (!this._RT.browser.isIE || !this._resettableContent) {
             //no ie, no broken garbage collector
             return;
         }
 
         for (var key in this._resettableContent) {
-            if (myfaces._impl.core._Runtime.exists(this[key], "_finalize")) {
+            if (this._RT.exists(this[key], "_finalize")) {
                 this[key]._finalize();
             }
             delete this[key];
@@ -49,7 +49,7 @@ _MF_SINGLTN("myfaces._impl.core.Object", Object, {
     },
 
     getImpl: function() {
-        this._Impl = this._Impl || myfaces._impl.core._Runtime.getGlobalConfig("jsfAjaxImpl", myfaces._impl.core.Impl);
+        this._Impl = this._Impl || this._RT.getGlobalConfig("jsfAjaxImpl", myfaces._impl.core.Impl);
         return this._Impl;
     },
 
@@ -68,7 +68,7 @@ _MF_SINGLTN("myfaces._impl.core.Object", Object, {
 
 (function() {
     /*some mobile browsers do not have a window object*/
-    var target = window || document;
+    var target = window ||document;
     var _RT = myfaces._impl.core._Runtime;
     _RT._MF_OBJECT = target._MF_OBJECT;
 

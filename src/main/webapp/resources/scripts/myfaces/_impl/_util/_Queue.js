@@ -22,7 +22,7 @@
  * improved version of
  * @see <a href="http://safalra.com/web-design/javascript/queues/Queue.js">http://safalra.com/web-design/javascript/queues/Queue.js</a>
  */
-_MF_CLS("myfaces._impl._util._Queue", _MF_OBJECT,
+_MF_CLS(_PFX_UTIL+"_Queue", _MF_OBJECT,
   /**
    * @lends myfaces._impl._util._Queue.prototype
    */

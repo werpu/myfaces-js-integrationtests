@@ -28,7 +28,7 @@
  * and by unit tests
  */
 /** @namespace myfaces._impl._util._Logging */
-_MF_SINGLTN("myfaces._impl._util._Logging", _MF_OBJECT, {
+_MF_SINGLTN(_PFX_UTIL+"_Logging", _MF_OBJECT, {
 
     /**
      * we use a map switch instread of a log level

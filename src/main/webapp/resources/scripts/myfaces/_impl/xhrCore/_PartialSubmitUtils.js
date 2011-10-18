@@ -2,7 +2,7 @@
  * A drop in replacement which replaces the original ajax utils with added ppr functionality
  * we use it to strip down the code for the minimal version to the core
  */
-_MF_SINGLTN("myfaces._impl.xhrCore._PartialSubmitUtils", myfaces._impl.xhrCore._AjaxUtils, {
+_MF_SINGLTN(_PFX_XHR+"_PartialSubmitUtils", myfaces._impl.xhrCore._AjaxUtils, {
     _AjaxUtils: myfaces._impl.xhrCore._AjaxUtils,
 
     constructor_: function() {

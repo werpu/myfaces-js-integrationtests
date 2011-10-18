@@ -24,7 +24,7 @@
  * TODO move this into a singleton, the current structure is
  * still a j4fry legacy we need to get rid of it in the long run
  */
-_MF_SINGLTN("myfaces._impl.xhrCore._AjaxUtils", _MF_OBJECT,
+_MF_SINGLTN(_PFX_XHR+"_AjaxUtils", _MF_OBJECT,
 /** @lends myfaces._impl.xhrCore._AjaxUtils.prototype */
 {
     /**

@@ -46,7 +46,7 @@
  * decorates the namespace myfaces._impl.core._Runtime and adds a bunch of new methods to
  * what _Runtime provided
  * */
-_MF_SINGLTN("myfaces._impl._util._Lang", Object,
+_MF_SINGLTN(_PFX_UTIL+"_Lang", Object,
         /**
          * @lends myfaces._impl._util._Lang.prototype
          */

@@ -29,7 +29,7 @@
  * @memberOf myfaces._impl.xhrCore
  * @extends myfaces._impl.core.Object
  */
-_MF_CLS("myfaces._impl.xhrCore._AjaxRequest", _MF_OBJECT,
+_MF_CLS(_PFX_XHR+"_AjaxRequest", _MF_OBJECT,
         /** @lends myfaces._impl.xhrCore._AjaxRequest.prototype */
         {
 

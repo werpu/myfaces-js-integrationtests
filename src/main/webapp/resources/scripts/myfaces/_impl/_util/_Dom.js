@@ -31,7 +31,7 @@
  *
  * <p>This class provides the proper fallbacks for ie8- and Firefox 3.6-</p>
  */
-_MF_SINGLTN("myfaces._impl._util._Dom", Object,
+_MF_SINGLTN(_PFX_UTIL+"_Dom", Object,
 /**
  * @lends myfaces._impl._util._Dom.prototype
  */
@@ -60,7 +60,6 @@ _MF_SINGLTN("myfaces._impl._util._Dom", Object,
         //under normal circumstances this works, if there are no normal ones
         //then this also will work at the second time, but the onload handler
         //should cover 99% of all use cases to avoid a loading race condition
-
         this._RT.addOnLoad(window, function() {
             myfaces._impl._util._Dom.isManualScriptEval();
         });
@@ -112,7 +111,7 @@ _MF_SINGLTN("myfaces._impl._util._Dom", Object,
         });
 
         try {
-            var scriptElements = this.findByTagNames(item, {"link":true,"style":true}, true);
+            var scriptElements = this.findByTagNames(item, {"link":1,"style":1}, true);
             if (scriptElements == null) return;
             for (var cnt = 0; cnt < scriptElements.length; cnt++) {
                 execCss(scriptElements[cnt]);
@@ -326,13 +325,7 @@ _MF_SINGLTN("myfaces._impl._util._Dom", Object,
      * browsers capabilities
      */
     isDomCompliant: function() {
-        if('undefined' == typeof this._isCompliantBrowser) {
-            this._isCompliantBrowser = !! ((window.Range
-                    && typeof Range.prototype.createContextualFragment == 'function') //createContextualFragment hints to a no quirks browser but we need more fallbacks
-                    || document.querySelectoryAll  //query selector all hints to html5 capabilities
-                    || document.createTreeWalker);   //treewalker is either firefox 3.5+ or ie9 standards mode
-        }
-        return this._isCompliantBrowser;
+        return true;
     },
 
     /**
@@ -580,11 +573,13 @@ _MF_SINGLTN("myfaces._impl._util._Dom", Object,
     _assertStdParams: function(item, markup, caller) {
          //internal error
          if(!caller) throw Error("Caller must be set for assertion");
+         var ERR_PROV = "ERR_MUST_BE_PROVIDED1";
+         var DOM = "myfaces._impl._util._Dom.";
          if (!item) {
-            throw Error(this._Lang.getMessage("ERR_MUST_BE_PROVIDED1",null,"myfaces._impl._util._Dom."+caller, "item"));
+            throw Error(this._Lang.getMessage(ERR_PROV,null,DOM+caller, "item"));
         }
         if (!markup) {
-            throw Error(this._Lang.getMessage("ERR_MUST_BE_PROVIDED1",null, "myfaces._impl._util._Dom."+caller, "markup"));
+            throw Error(this._Lang.getMessage(ERR_PROV,null, DOM+caller, "markup"));
         }
     },
 
@@ -769,8 +764,7 @@ _MF_SINGLTN("myfaces._impl._util._Dom", Object,
             return this._recursionSearchAll(rootNode, filter, deepScan);
         }
 
-    }
-    ,
+    },
 
 
 
@@ -1051,39 +1045,7 @@ _MF_SINGLTN("myfaces._impl._util._Dom", Object,
     },
 
     isManualScriptEval: function() {
-
-        if (!this._Lang.exists(myfaces, "config._autoeval")) {
-
-            //now we rely on the document being processed if called for the first time
-            var evalDiv = document.createElement("div");
-            this._Lang.reserveNamespace("myfaces.config._autoeval");
-            //null not swallowed
-            myfaces.config._autoeval = false;
-
-            var markup = "<script type='text/javascript'> myfaces.config._autoeval = true; </script>";
-            //now we rely on the same replacement mechanisms as outerhtml because
-            //some browsers have different behavior of embedded scripts in the contextualfragment
-            //or innerhtml case (opera for instance), this way we make sure the
-            //eval detection is covered correctly
-            this.setAttribute(evalDiv, "style", "display:none");
-
-            //it is less critical in some browsers (old ie versions)
-            //to append as first element than as last
-            //it should not make any difference layoutwise since we are on display none anyway.
-            this.insertFirst(evalDiv);
-
-            //we remap it into a real boolean value
-            if (window.Range
-                    && typeof Range.prototype.createContextualFragment == 'function') {
-                this._outerHTMLCompliant(evalDiv, markup);
-            } else {
-                //will not be called placeholder for quirks class
-                this._outerHTMLNonCompliant(evalDiv, markup);
-            }
-
-        }
-
-        return  !myfaces.config._autoeval;
+        return false;
     },
 
     isMultipartCandidate: function(executes) {

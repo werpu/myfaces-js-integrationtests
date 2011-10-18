@@ -16,7 +16,7 @@
  */
 
     /*only quirksmode browsers get the quirks part of the code*/
-    myfaces._impl.core._Runtime.singletonDelegateObj("myfaces._impl._util._ExtDom", myfaces._impl._util._Dom, {
+    _MF_SINGLTN(_PFX_UTIL+"_ExtDom", myfaces._impl._util._Dom, {
 
         _Lang:myfaces._impl._util._Lang,
         _RT:myfaces._impl.core._Runtime,
@@ -28,6 +28,7 @@
                 var nms = this._RT.fetchNamespace(key);
                  this._Lang.attr(nms,"_Dom", this);
             }
+            myfaces._impl._util._Dom = this;
         },
 
         /**
@@ -79,7 +80,7 @@
                 } else {
                     //fallback to the classical filter methods if we cannot use the
                     //html 5 selectors for whatever reason
-                    return this._callDelegate("findAll", fragment, filter, deepScan);
+                    return this._callSuper("findAll", fragment, filter, deepScan);
                 }
 
             } finally {
