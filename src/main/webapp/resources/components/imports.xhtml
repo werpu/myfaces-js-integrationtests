@@ -27,7 +27,6 @@
 
     <h:outputScript name="myfaces/_impl/core/Object.js" library="scripts" target="head"/>
 
-    <h:outputScript name="myfaces/_impl/_util/_Logging.js" library="scripts" target="head"/>
     <h:outputScript name="myfaces/_impl/_util/_Queue.js" library="scripts" target="head"/>
     <h:outputScript name="myfaces/_impl/_util/_ListenerQueue.js" library="scripts" target="head"/>
     <h:outputScript name="myfaces/_impl/_util/_Dom.js" library="scripts" target="head"/>
@@ -64,6 +63,13 @@
         to check whether they register themselves properly
         into the system post init
     -->
+
+
+
+    <!-- clean up the init code -->
+
+    <!-- API -->
+
     <h:outputScript name="myfaces/_impl/i18n/Messages_de.js" library="scripts" target="head"/>
     <h:outputScript name="myfaces/_impl/i18n/Messages_nl.js" library="scripts" target="head"/>
 
@@ -74,18 +80,17 @@
     <h:outputScript name="myfaces/_impl/xhrCore/_IFrameRequest.js" library="scripts" target="head"/>
     <h:outputScript name="myfaces/_impl/xhrCore/_PartialSubmitUtils.js" library="scripts" target="head"/>
     <h:outputScript name="myfaces/_impl/_util/_UnitTest.js" library="scripts" target="head"/>
-
-
-    <!-- clean up the init code -->
     <h:outputScript name="myfaces/_impl/core/EndImpl.js" library="scripts" target="head"
                     rendered="#{information.implementation == 'myfaces'}"/>
 
-    <!-- API -->
+
     <h:outputScript name="myfaces/api/jsf.js" library="scripts" target="head"
                     rendered="#{information.implementation == 'myfaces'}"/>
 
+
     <h:outputScript name="jsf.js" library="javax.faces"
                     target="head" rendered="#{information.implementation == 'mojarra'}"/>
+
 
 
     <h:outputScript name="testsupport.js" library="scripts" target="head"/>

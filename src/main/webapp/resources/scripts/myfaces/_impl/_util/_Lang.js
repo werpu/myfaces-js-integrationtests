@@ -59,6 +59,7 @@ _MF_SINGLTN(_PFX_UTIL+"_Lang", Object,
     _RT: myfaces._impl.core._Runtime,
 
 
+
     /**
      * returns a given localized message upon a given key
      * basic java log like templating functionality is included

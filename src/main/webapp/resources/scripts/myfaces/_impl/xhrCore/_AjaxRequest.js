@@ -96,10 +96,12 @@ _MF_CLS(_PFX_XHR+"_AjaxRequest", _MF_OBJECT,
 
                 try {
                     this._callSuper("constructor_", args);
-                    this._initDefaultFinalizableFields();
+
 
                     this._onException = this._Lang.hitch(this, this._stdErrorHandler);
                     this._onWarn = this._Lang.hitch(this, this._stdErrorHandler);
+                    this._initDefaultFinalizableFields();
+                    delete this._resettableContent["_xhrQueue"];
 
                     this.applyArgs(args);
                     var mfInternal = this._context._mfInternal;

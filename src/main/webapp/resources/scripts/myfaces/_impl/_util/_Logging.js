@@ -53,13 +53,11 @@ _MF_SINGLTN(_PFX_UTIL+"_Logging", _MF_OBJECT, {
         var logLevels = this.logLevels;
         var traceLevels = this.stackTraceLevels;
         var levels = [this._ERR, this._INF, this._DEB, this._LOG, this._WRN];
-
-        this._Lang.arrForEach(levels,function(elem){
+        for(var cnt = 0; cnt < levels.length; cnt++) {
+            var elem = levels[cnt];
             logLevels[elem] = true;
-        });
-        this._Lang.arrForEach(levels,function(elem){
-             traceLevels[elem] = false;
-        });
+            traceLevels[elem] = false;
+        }
         traceLevels[this._ERR] = true;
     },
 

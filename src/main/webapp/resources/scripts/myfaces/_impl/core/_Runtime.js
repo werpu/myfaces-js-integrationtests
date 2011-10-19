@@ -61,7 +61,7 @@ if (!myfaces._impl.core._Runtime) {
         //namespace idx to speed things up by hitting eval way less
         this._reservedNMS = {};
         this._registeredSingletons = {};
-
+        this._registeredClasses = [];
         /**
          * replacement counter for plugin classes
          */
@@ -224,6 +224,17 @@ if (!myfaces._impl.core._Runtime) {
             for(var key in singletons) {
                 var nms = _T.fetchNamespace(key);
                 operator(nms);
+            }
+        };
+        /**
+         * iterates over all registered singletons in the namespace
+         * @param operator a closure which applies a certain function
+         * on the namespace singleton
+         */
+        this.iterateClasses = function(operator) {
+            var classes = _T._registeredClasses;
+            for(var cnt  = 0; cnt < classes.length; cnt++) {
+                operator(classes[cnt], cnt);
             }
         };
 
@@ -605,6 +616,7 @@ if (!myfaces._impl.core._Runtime) {
                 };
                 //reference to its own type
                 newClazz.prototype[parClassRef] = newCls;
+                _T._registeredClasses.push(newClazz.prototype);
             }
 
             //we now map the function map in

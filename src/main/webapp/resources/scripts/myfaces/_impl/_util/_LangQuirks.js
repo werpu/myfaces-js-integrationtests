@@ -53,11 +53,15 @@ _MF_SINGLTN(_PFX_UTIL+"_LangQuirks", myfaces._impl._util._Lang, {
         var _RT = this._RT;
         var singletons = this.attr(_RT, "registeredSingletons");
         var _T = this;
-        _RT.iterateSingletons(function(namespace) {
-            if(namespace._Lang) namespace._Lang = _T;
-        });
+        //we only apply lazy if the jsf part is loaded already
+        //otherwise we are at the correct position
+        if(myfaces._impl.core.Impl) {
+            _RT.iterateClasses(function(proto) {
+                if(proto._Lang) proto._Lang = _T;
+            });
+        }
 
-        myfaces._impl._util._Lang = this;
+        myfaces._impl._util._Lang = _T;
     },
 
     /**

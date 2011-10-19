@@ -1,16 +1,38 @@
+/* Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to you under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 /**
  Base class which provides several helper functions over all objects
  */
-_MF_SINGLTN(_PFX_CORE+"Object", Object, {
+_MF_CLS(_PFX_CORE+"Object", Object, {
 
 
 
     constructor_: function() {
         this._resettableContent = {};
-        //we add our three util singletons
-        this._RT =  myfaces._impl.core._Runtime,
-        this._Lang = myfaces._impl._util._Lang,
-        this._Dom =  myfaces._impl._util._Dom
+        //to make those singleton references
+        //overridable in the instance we have
+        //to load them into the prototype instead
+        //of the instance
+        var proto = this._mfClazz.prototype;
+        var impl = myfaces._impl;
+        if(!proto._RT) {
+            proto._RT  =  impl.core._Runtime;
+            proto._Lang = impl._util._Lang;
+            proto._Dom =  impl._util._Dom;
+        }
     },
 
     /*optional functionality can be provided
@@ -31,16 +53,20 @@ _MF_SINGLTN(_PFX_CORE+"Object", Object, {
      * on other browsers this method does nothing
      */
     _finalize: function() {
-        if (!this._RT.browser.isIE || !this._resettableContent) {
-            //no ie, no broken garbage collector
-            return;
-        }
-
-        for (var key in this._resettableContent) {
-            if (this._RT.exists(this[key], "_finalize")) {
-                this[key]._finalize();
+        try {
+            if (this._isGCed || !this._RT.browser.isIE || !this._resettableContent) {
+                //no ie, no broken garbage collector
+                return;
             }
-            delete this[key];
+
+            for (var key in this._resettableContent) {
+                if (this._RT.exists(this[key], "_finalize")) {
+                    this[key]._finalize();
+                }
+                delete this[key];
+            }
+        } finally {
+            this._isGCed = true;
         }
     },
 
