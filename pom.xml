@@ -14,6 +14,10 @@
         <juel.version>2.2.3</juel.version>
 
         <jetty-maven-plugin.version>8.0.0.M3</jetty-maven-plugin.version>
+        <webapp.name>TestScripts</webapp.name>
+        <java.version>1.6</java.version>
+        <plexus-compiler-eclipse.version>1.6</plexus-compiler-eclipse.version>
+        <shared.resources>src/main/extra-resources/shared-deploy/webapp</shared.resources>
     </properties>
     <name>TestScripts JEE6 Webapp</name>
     <url>http://maven.apache.org</url>
@@ -108,10 +112,30 @@
             <activation>
                 <activeByDefault>false</activeByDefault>
             </activation>
-            <properties>
-                <maven.war.webxml>${basedir}/src/main/resources/mojarraconf/web.xml</maven.war.webxml>
-            </properties>
 
+            <build>
+                <plugins>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-war-plugin</artifactId>
+                        <version>2.1.1</version>
+                        <configuration>
+                            <webResources>
+                                <resource>
+                                    <directory>${shared.resources}</directory>
+                                </resource>
+                                <resource>
+                                    <!-- this is relative to the pom.xml directory -->
+                                    <directory>src/main/extra-resources/mojarra/webapp</directory>
+
+                                </resource>
+                            </webResources>
+                        </configuration>
+                    </plugin>
+
+                </plugins>
+            </build>
 
             <dependencies>
                 <dependency>
@@ -129,10 +153,62 @@
                 </dependency>
 
             </dependencies>
+
+
         </profile>
 
         <profile>
-            <id>myfacesFull</id>
+            <id>myfacesDeploy</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+
+            <build>
+                <plugins>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-war-plugin</artifactId>
+                        <version>2.1.1</version>
+                        <configuration>
+                            <webResources>
+                                <resource>
+                                    <directory>${shared.resources}</directory>
+                                </resource>
+                                <resource>
+                                    <!-- this is relative to the pom.xml directory -->
+                                    <directory>src/main/extra-resources/myfaces-deploy/webapp</directory>
+
+                                </resource>
+                            </webResources>
+                        </configuration>
+                    </plugin>
+
+                </plugins>
+            </build>
+
+            <dependencies>
+                <dependency>
+                    <groupId>org.apache.myfaces.core</groupId>
+                    <artifactId>myfaces-api</artifactId>
+                    <version>${myfaces-version}</version>
+                    <scope>compile</scope>
+                </dependency>
+
+                <dependency>
+                    <groupId>org.apache.myfaces.core</groupId>
+                    <artifactId>myfaces-impl</artifactId>
+                    <version>${myfaces-version}</version>
+                    <scope>compile</scope>
+                </dependency>
+            </dependencies>
+
+
+        </profile>
+
+
+        <profile>
+            <id>myfacesDev</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
@@ -180,6 +256,7 @@
                         </connector>
                     </connectors>
 
+
                 </configuration>
 
                 <dependencies>
@@ -200,9 +277,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
                 <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                     <encoding>UTF-8</encoding>
                     <fork>true</fork>
                     <meminitial>128m</meminitial>
@@ -214,7 +292,7 @@
                     <dependency>
                         <groupId>org.codehaus.plexus</groupId>
                         <artifactId>plexus-compiler-eclipse</artifactId>
-                        <version>1.6</version>
+                        <version>${plexus-compiler-eclipse.version}</version>
                     </dependency>
 
                 </dependencies>
@@ -223,7 +301,7 @@
 
         </plugins>
 
-        <finalName>TestScripts</finalName>
+        <finalName>${webapp.name}</finalName>
     </build>
 
 </project>

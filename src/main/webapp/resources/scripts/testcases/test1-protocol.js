@@ -3,6 +3,7 @@
 
 var TestCase = myfaces._supportive.unittest.TestCase;
 var AjaxCase = myfaces._supportive.unittest.JSFAjaxTestCase;
+var target = "./test.mockup";
 
 var testGroup = new (_class("SeleniumGroup2", myfaces._supportive.unittest.TestGroup,
         {

@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:jstl="http://java.sun.com/jstl/core">
+
+<!-- INTERFACE -->
+<!-- INTERFACE -->
+<cc:interface>
+</cc:interface>
+
+<cc:implementation>
+    <!-- runtime -->
+    <h:outputScript name="myfaces/_impl/core/_EvalHandlers.js" library="scripts" target="head"/>
+    <h:outputScript name="myfaces/_impl/core/_Runtime.js" library="scripts" target="head"/>
+    <h:outputScript name="myfaces/_impl/core/_StartImpl.js" library="scripts" target="head"/>
+
+    <!-- i18n -->
+    <h:outputScript name="myfaces/_impl/i18n/Messages.js" library="scripts" target="head"/>
+
+    <!-- utils / support classes -->
+    <h:outputScript name="myfaces/_impl/_util/_Lang.js" library="scripts" target="head"/>
+    <h:outputScript name="myfaces/_impl/_util/_LangQuirks.js" library="scripts" target="head"/>
+
+    <h:outputScript name="myfaces/_impl/core/Object.js" library="scripts" target="head"/>
+
+    <h:outputScript name="myfaces/_impl/_util/_Queue.js" library="scripts" target="head"/>
+    <h:outputScript name="myfaces/_impl/_util/_Dom.js" library="scripts" target="head"/>
+    <h:outputScript name="myfaces/_impl/_util/_DomQuirks.js" library="scripts" target="head"/>
+
+    <!-- xhr engine -->
+      <h:outputScript name="myfaces/_impl/xhrCore/engine/XhrConst.js" library="scripts" target="head"/>
+      <h:outputScript name="myfaces/_impl/xhrCore/engine/FormData.js" library="scripts" target="head"/>
+      <h:outputScript name="myfaces/_impl/xhrCore/engine/BaseRequest.js" library="scripts" target="head"/>
+
+      <h:outputScript name="myfaces/_impl/xhrCore/engine/Xhr1.js" library="scripts" target="head"/>
+
+
+
+    <h:outputScript name="myfaces/_impl/_util/_UnitTest.js" library="scripts" target="head"/>
+    <h:outputScript name="myfaces/_impl/_util/_Logging.js" library="scripts" target="head"/>
+
+    <h:outputScript name="myfaces/_supportive/unittest/JSON.js" library="scripts" target="head"/>
+    <h:outputScript name="myfaces/_supportive/unittest/StatisticsEngine.js" library="scripts" target="head"/>
+    <h:outputScript name="myfaces/_supportive/unittest/AjaxStatisticsEngine.js" library="scripts" target="head"/>
+    <h:outputScript name="myfaces/_supportive/unittest/TestCase.js" library="scripts" target="head"/>
+    <h:outputScript name="myfaces/_supportive/unittest/TestGroup.js" library="scripts" target="head"/>
+    <h:outputScript name="myfaces/_supportive/unittest/JSFAjaxTestCase.js" library="scripts" target="head"/>
+    <h:outputScript name="myfaces/_impl/core/_EndImpl.js" library="scripts" target="head"/>
+
+</cc:implementation>
+</html>

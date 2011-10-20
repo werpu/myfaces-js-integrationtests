@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+    version="3.0">
+
+
+    <context-param>
+        <param-name>javax.faces.DEFAULT_SUFFIX</param-name>
+        <param-value>.xhtml</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>javax.faces.FACELETS_VIEW_MAPPINGS</param-name>
+        <param-value>*.xhtml;*.jspx;*.jsf</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>javax.faces.PROJECT_STAGE</param-name>
+        <param-value>Production</param-value>
+    </context-param>
+
+
+    <context-param>
+        <param-name>org.apache.myfaces.AUTO_SCROLL</param-name>
+        <param-value>true</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>org.apache.extras.myfaces.ImplType</param-name>
+        <param-value>mojarra</param-value>
+    </context-param>
+
+
+    <servlet>
+        <servlet-name>MockupServlet</servlet-name>
+        <servlet-class>extras.apache.org.jsintegration.protocol.ResponseMockup</servlet-class>
+    </servlet>
+
+    <!-- Faces Servlet -->
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <!--
+         <multipart-config>true</multipart-config>
+         <load-on-startup>1</load-on-startup>
+
+        -->
+    </servlet>
+    <servlet>
+        <servlet-name>JSF21Simulation</servlet-name>
+        <servlet-class>extras.apache.org.jsintegration.protocol.JSF21Simulation</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet>
+        <servlet-name>StatisticsCollector</servlet-name>
+        <servlet-class>extras.apache.org.jsintegration.core.StatisticsCollector</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>JSF21Simulation</servlet-name>
+        <url-pattern>*.timeout</url-pattern>
+    </servlet-mapping>
+     <servlet-mapping>
+        <servlet-name>StatisticsCollector</servlet-name>
+        <url-pattern>*.statistics</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MockupServlet</servlet-name>
+        <url-pattern>*.mockup</url-pattern>
+    </servlet-mapping>
+
+    <!-- Faces Servlet Mapping -->
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>/faces/*</url-pattern>
+        <url-pattern>*.jsf</url-pattern>
+    </servlet-mapping>
+
+
+</web-app>
