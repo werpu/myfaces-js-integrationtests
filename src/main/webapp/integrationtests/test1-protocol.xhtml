@@ -50,6 +50,8 @@
                 <input type="button" id="cmd_illegalresponse" value="illegal response, error trigger"
                        onclick="emitPPR(this, ('undefined' == typeof event)? null: event, 'illegalResponse');"/>
 
+                <input type="button" id="cmd_error" value="Server error with error response"
+                             onclick="emitPPR(this, ('undefined' == typeof event)? null: event, 'errors');"/>
 
                 <h2>Same with an iframe transport</h2>
 
@@ -66,6 +68,12 @@
                        onclick="emitPPR(this, ('undefined' == typeof event)? null: event, 'attributes', true);"/>
                 <input type="button" id="cmd_illegalresponse2" value="illegal response, error trigger"
                        onclick="emitPPR(this, ('undefined' == typeof event)? null: event, 'illegalResponse', true);"/>
+
+                <input type="button" id="cmd_error2" value="Server error with error response"
+                                       onclick="emitPPR(this, ('undefined' == typeof event)? null: event, 'errors',
+                                       true
+                                       );"/>
+
             </form>
             <br/>
 

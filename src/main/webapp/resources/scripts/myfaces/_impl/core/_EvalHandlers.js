@@ -120,11 +120,11 @@ if (!myfaces._impl.core._EvalHandlers) {
             //capabilities   
             var _et = "_evalType";
             var _w = window;
-            var _b = _T.browser;
-            if ('undefined' == typeof _T[_et]) {
+            var _b = myfaces._impl.core._Runtime.browser;
+            if (!_T[_et]) {
                 _T[_et] = _w.execScript ? "_evalExecScript" : null;
-                _T[_et] = !_T[_et] && _w.eval && (!_b.isBlackBerry || _b.isBlackBerry >= 6) ? "_standardGlobalEval" : null;
-                _T[_et] = (_w.eval && !_T[_et]) ? "_evalBBOld" : null;
+                _T[_et] = _T[_et] || (( _w.eval && (!_b.isBlackBerry || _b.isBlackBerry >= 6)) ? "_standardGlobalEval" : null);
+                _T[_et] = _T[_et] || ((_w.eval ) ? "_evalBBOld" : null);
             }
             if (_T[_et]) {
                 return _T[_T[_et]](c);
