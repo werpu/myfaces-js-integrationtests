@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:cust="http://java.sun.com/jsf/composite/components"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jstl/core">
+<h:head>
+    <script type="text/javascript" src="../resources/scripts/jquery164/jquery.js"></script>
+
+    <cust:imports/>
+    <cust:unittest/>
+
+    <style type="text/css">
+        @import "../styles/style.css";
+    </style>
+
+    <ui:insert name="header"/>
+
+</h:head>
+<h:body>
+    <ui:insert name="controls">
+        <div id="myfaces.logging"/>
+    </ui:insert>
+
+
+    <div id="content">
+          <h:form id="sidebarLeftFormId">
+
+            <h:commandLink value="pressme" action="#{testNav3.doNav}">
+                <f:ajax execute="@form" render=":centerContentDiv  :centerForm"/>
+            </h:commandLink>
+            <h:inputText value="#{testNav3.val}" />
+        </h:form>
+        <h:panelGroup id="centerContentDiv" layout="block">
+            <ui:insert name="content"/>
+        </h:panelGroup>
+    </div>
+</h:body>
+</html>

@@ -40,6 +40,11 @@
     </context-param>
 
     <context-param>
+        <param-name>org.apache.myfaces.JSF_JS_MODE</param-name>
+        <param-value>normal</param-value>
+    </context-param>
+
+    <context-param>
         <param-name>org.apache.extras.myfaces.ImplType</param-name>
         <param-value>myfaces</param-value>
     </context-param>

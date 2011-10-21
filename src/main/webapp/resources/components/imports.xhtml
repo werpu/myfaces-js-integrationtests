@@ -14,6 +14,12 @@
 </cc:interface>
 
 <cc:implementation>
+    <script type="text/javascript">
+        window.myfaces = window.myfaces || {};
+        myfaces.config = myfaces.config || {};
+        myfaces.config.projectStage = "Development";
+    </script>
+
     <!-- runtime -->
     <h:outputScript name="myfaces/_impl/core/_EvalHandlers.js" library="scripts" target="head"/>
     <h:outputScript name="myfaces/_impl/core/_Runtime.js" library="scripts" target="head"/>
