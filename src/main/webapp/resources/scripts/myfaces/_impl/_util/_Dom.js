@@ -51,21 +51,6 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
      * standard constructor
      */
     constructor_: function() {
-        //we have to trigger it upfront because mozilla runs the eval
-        //after the dom updates and hence causes a race conditon if used on demand
-        //under normal circumstances this works, if there are no normal ones
-        //then this also will work at the second time, but the onload handler
-        //should cover 99% of all use cases to avoid a loading race condition
-        this._RT.addOnLoad(window, function() {
-            myfaces._impl._util._Dom.isManualScriptEval();
-        });
-        //safety fallback if the window onload handler is overwritten and not chained
-        if (document.body) {
-            this._RT.addOnLoad(document.body, function() {
-                myfaces._impl._util._Dom.isManualScriptEval();
-            });
-        }
-        //now of the onload handler also is overwritten we have a problem
     },
 
     runCss: function(item, xmlData) {
@@ -86,16 +71,17 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
 
                 execCss = this._Lang.hitch(this, function(item) {
                     var equalsIgnoreCase = this._Lang.equalsIgnoreCase;
-
-                    if (item.tagName && equalsIgnoreCase(item.tagName, "link") && equalsIgnoreCase(item.getAttribute("type"), "text/css")) {
+                    var tagName = item.tagName;
+                    if (tagName && equalsIgnoreCase(tagName, "link") && equalsIgnoreCase(item.getAttribute("type"), "text/css")) {
                         applyStyle(item, "@import url('" + item.getAttribute("href") + "');");
-                    } else if (item.tagName && equalsIgnoreCase(item.tagName, "style") && equalsIgnoreCase(item.getAttribute("type"), "text/css")) {
+                    } else if (tagName && equalsIgnoreCase(tagName, "style") && equalsIgnoreCase(item.getAttribute("type"), "text/css")) {
                         var innerText = [];
                         //compliant browsers know child nodes
-                        if (item.childNodes) {
-                            var len = item.childNodes.length;
+                        var childNodes = item.childNodes;
+                        if (childNodes) {
+                            var len = childNodes.length;
                             for (var cnt = 0; cnt < len; cnt++) {
-                                innerText.push(item.childNodes[cnt].innerHTML || item.childNodes[cnt].data);
+                                innerText.push(childNodes[cnt].innerHTML || childNodes[cnt].data);
                             }
                             //non compliant ones innerHTML
                         } else if (item.innerHTML) {
@@ -148,7 +134,8 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
         var finalScripts = [],
 
                 execScrpt = _Lang.hitch(this, function(item) {
-                    if (item.tagName && _Lang.equalsIgnoreCase(item.tagName, "script")) {
+                    var tagName = item.tagName;
+                    if (tagName && _Lang.equalsIgnoreCase(tagName, "script")) {
                         var src = item.getAttribute('src');
                         if ('undefined' != typeof src
                                 && null != src
@@ -224,8 +211,9 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
      * @param {String} elem
      */
     byIdOrName: function(elem) {
-        if (!this._Lang.isString(elem)) return elem;
         if (!elem) return null;
+        if (!this._Lang.isString(elem)) return elem;
+
         var ret = this.byId(elem);
         if (ret) return ret;
         //we try the unique name fallback
@@ -453,8 +441,7 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
     },
 
     _isTable: function(item) {
-        var itemNodeName = (item.nodeName || item.tagName).toLowerCase();
-        return itemNodeName == "table";
+        return "table" == (item.nodeName || item.tagName).toLowerCase();
     },
 
     /**
@@ -462,8 +449,7 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
      * @param itemNodeName
      */
     _isTableElement: function(item) {
-        var itemNodeName = (item.nodeName || item.tagName).toLowerCase();
-        return !!this.TABLE_ELEMS[itemNodeName];
+        return !!this.TABLE_ELEMS[(item.nodeName || item.tagName).toLowerCase()];
     },
 
     /**
@@ -645,14 +631,11 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
                     parentNode.insertBefore(resultArr[cnt], sibling);
                 } else {
                     parentNode.appendChild(resultArr[cnt]);
-
                 }
             }
         }
-
         return resultArr;
-    }
-    ,
+    },
 
     /**
      * optimized search for an array of tag names
@@ -798,8 +781,7 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
         //noinspection StatementWithEmptyBodyJS
         while (treeWalker.nextNode());
         return retVal;
-    }
-    ,
+    },
 
     /**
      * bugfixing for ie6 which does not cope properly with setAttribute
@@ -933,8 +915,7 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
             searchClosure = null;
             _Lang = null;
         }
-    }
-    ,
+    },
 
     /**
      * A parent walker which uses
@@ -1000,19 +981,8 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
         return true;
     },
 
-    //TODO move this into the extended features part
     isMultipartCandidate: function(executes) {
-        if (this._Lang.isString(executes)) {
-            executes = this._Lang.strToArray(executes, /\s+/);
-        }
-
-        for (var exec in executes) {
-            var element = this.byId(executes[exec]);
-            var inputs = this.findByTagName(element, "input", true);
-            for (var key in inputs) {
-                if (this.getAttribute(inputs[key], "type") == "file") return true;
-            }
-        }
+        //implementation in the experimental part
         return false;
     },
 
@@ -1032,7 +1002,7 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
     getDummyPlaceHolder: function() {
         var created = false;
         if (!this._dummyPlaceHolder) {
-            this._dummyPlaceHolder = document.createElement("div");
+            this._dummyPlaceHolder = this.createElement("div");
             created = true;
         }
         return this._dummyPlaceHolder;
@@ -1045,9 +1015,9 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
      * todo move this into the experimental part
      */
     getWindowId: function() {
+        //implementation in the experimental part
         return null;
     }
-
 });
 
 

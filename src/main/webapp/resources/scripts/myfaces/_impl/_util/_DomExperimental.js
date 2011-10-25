@@ -27,6 +27,21 @@ if (_MF_SINGLTN) {
             }
             var elemForm = this.getAttribute(item, "form");
             return (elemForm) ? this.byId(elemForm) : null;
+        },
+        //TODO move this into the extended features part
+        isMultipartCandidate: function(executes) {
+            if (this._Lang.isString(executes)) {
+                executes = this._Lang.strToArray(executes, /\s+/);
+            }
+
+            for (var exec in executes) {
+                var element = this.byId(executes[exec]);
+                var inputs = this.findByTagName(element, "input", true);
+                for (var key in inputs) {
+                    if (this.getAttribute(inputs[key], "type") == "file") return true;
+                }
+            }
+            return false;
         }
     });
 }

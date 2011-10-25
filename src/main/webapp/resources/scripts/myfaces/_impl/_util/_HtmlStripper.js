@@ -95,6 +95,7 @@ _MF_CLS(_PFX_UTIL+"_HtmlStripper", Object,
 
     checkBackForComment: function(theStr, tagPos) {
         var toCheck = theStr.substring(tagPos);
+
         var lastBeginComment = toCheck.lastIndexOf("<!--");
         var lastEndComment = toCheck.lastIndexOf("-->");
 
