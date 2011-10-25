@@ -615,16 +615,17 @@ _MF_SINGLTN(_PFX_CORE+"Impl", _MF_OBJECT,
     chain : function(source, event) {
         var len   = arguments.length;
         var _Lang = this._Lang;
-
+        var throwErr = function(msgKey) {
+            throw Error(_Lang.getMessage(msgKey));
+        };
         //the spec is contradicting here, it on one hand defines event, and on the other
         //it says it is optional, I have cleared this up now
         //the spec meant the param must be passed down, but can be 'undefined'
         if (len < 2) {
-            throw new Error(_Lang.getMessage("ERR_EV_OR_UNKNOWN"));
+            throwErr("ERR_EV_OR_UNKNOWN");
         } else if (len < 3) {
             if ('function' == typeof event || this._Lang.isString(event)) {
-
-                throw new Error(_Lang.getMessage("ERR_EVT_PASS"));
+                throwErr("ERR_EVT_PASS");
             }
             //nothing to be done here, move along
             return true;
@@ -635,21 +636,22 @@ _MF_SINGLTN(_PFX_CORE+"Impl", _MF_OBJECT,
 
         //assertions source either null or set as dom element:
 
+
         if ('undefined' == typeof source) {
-            throw new Error(_Lang.getMessage("ERR_SOURCE_DEF_NULL"));
+            throwErr("ERR_SOURCE_DEF_NULL");
             //allowed chain datatypes
         } else if ('function' == typeof source) {
-            throw new Error(_Lang.getMessage("ERR_SOURCE_FUNC"));
+            throwErr("ERR_SOURCE_FUNC");
         }
         if (this._Lang.isString(source)) {
-            throw new Error(_Lang.getMessage("ERR_SOURCE_NOSTR"));
+            throwErr("ERR_SOURCE_NOSTR");
         }
 
         //assertion if event is a function or a string we already are in our function elements
         //since event either is undefined, null or a valid event object
 
         if ('function' == typeof event || this._Lang.isString(event)) {
-            throw new Error(_Lang.getMessage("ERR_EV_OR_UNKNOWN"));
+            throwErr("ERR_EV_OR_UNKNOWN");
         }
 
         for (var cnt = 2; cnt < len; cnt++) {
