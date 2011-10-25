@@ -136,6 +136,17 @@ _MF_SINGLTN(_PFX_UTIL+"DomQuirks", myfaces._impl._util._Dom, /**
 
     },
 
+     replaceElement: function(item, evalNode) {
+
+        var _Browser = this._RT.browser;
+        if (!_Browser.isIE || _Browser.isIE >= 8) {
+            //standards conform no leaking browser
+            item.parentNode.replaceChild(evalNode, item);
+        } else {
+            this._callSuper("replaceElement", item, evalNode);
+        }
+    },
+
     /**
      * builds the ie nodes properly in a placeholder
      * and bypasses a non script insert bug that way

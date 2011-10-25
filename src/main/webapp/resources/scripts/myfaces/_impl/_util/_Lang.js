@@ -525,23 +525,23 @@ _MF_SINGLTN(_PFX_UTIL+"_Lang", Object,
      * @param argNames the argument names to be transferred
      */
     applyArgs: function(dest, args, argNames) {
-        var _undef = 'undefined';
+        var UDEF = 'undefined';
         if (argNames) {
             for (var cnt = 0; cnt < args.length; cnt++) {
                 //dest can be null or 0 hence no shortcut
-                if (_undef != typeof dest["_" + argNames[cnt]]) {
+                if (UDEF != typeof dest["_" + argNames[cnt]]) {
                     dest["_" + argNames[cnt]] = args[cnt];
                 }
-                if (_undef != typeof dest[ argNames[cnt]]) {
+                if (UDEF != typeof dest[ argNames[cnt]]) {
                     dest[argNames[cnt]] = args[cnt];
                 }
             }
         } else {
             for (var key in args) {
-                if (_undef != typeof dest["_" + key]) {
+                if (UDEF != typeof dest["_" + key]) {
                     dest["_" + key] = args[key];
                 }
-                if (_undef != typeof dest[key]) {
+                if (UDEF != typeof dest[key]) {
                     dest[key] = args[key];
                 }
             }
@@ -558,11 +558,12 @@ _MF_SINGLTN(_PFX_UTIL+"_Lang", Object,
     createErrorMsg: function(sourceClass, func, error) {
         var ret = [];
 
-        var keyValToStr = this.hitch(this, this.keyValToStr);
-        var getMsg = this.hitch(this, this.getMessage);
+        var keyValToStr = this.hitch(this, this.keyValToStr),
+            getMsg = this.hitch(this, this.getMessage),
+            pushRet = this.hitch(ret, ret.push);
 
-        ret.push(keyValToStr(getMsg("MSG_AFFECTED_CLASS"), sourceClass));
-        ret.push(keyValToStr(getMsg("MSG_AFFECTED_METHOD"), func));
+        pushRet(keyValToStr(getMsg("MSG_AFFECTED_CLASS"), sourceClass));
+        pushRet(keyValToStr(getMsg("MSG_AFFECTED_METHOD"), func));
 
         /*we push the values into separate vars to improve the compression*/
         var errName = error.name;
@@ -574,11 +575,11 @@ _MF_SINGLTN(_PFX_UTIL+"_Lang", Object,
         if (error) {
             var _UDEF = "undefined";
 
-            ret.push(keyValToStr(getMsg("MSG_ERROR_NAME"), errName ? errName : _UDEF));
-            ret.push(keyValToStr(getMsg("MSG_ERROR_MESSAGE"), errMsg ? errMsg : _UDEF));
-            ret.push(keyValToStr(getMsg("MSG_ERROR_DESC"), errDesc ? errDesc : _UDEF));
-            ret.push(keyValToStr(getMsg("MSG_ERROR_NO"), _UDEF != typeof errNum ? errNum : _UDEF));
-            ret.push(keyValToStr(getMsg("MSG_ERROR_LINENO"), _UDEF != typeof errLineNo ? errLineNo : _UDEF));
+            pushRet(keyValToStr(getMsg("MSG_ERROR_NAME"), errName ? errName : _UDEF));
+            pushRet(keyValToStr(getMsg("MSG_ERROR_MESSAGE"), errMsg ? errMsg : _UDEF));
+            pushRet(keyValToStr(getMsg("MSG_ERROR_DESC"), errDesc ? errDesc : _UDEF));
+            pushRet(keyValToStr(getMsg("MSG_ERROR_NO"), _UDEF != typeof errNum ? errNum : _UDEF));
+            pushRet(keyValToStr(getMsg("MSG_ERROR_LINENO"), _UDEF != typeof errLineNo ? errLineNo : _UDEF));
         }
         return ret.join("");
     }
@@ -592,12 +593,13 @@ _MF_SINGLTN(_PFX_UTIL+"_Lang", Object,
      */
     keyValToStr: function(key, val, delimiter) {
         var ret = [];
-        ret.push(key);
-        ret.push(val);
+        pushRet = this.hitch(ret, ret.push);
+        pushRet(key);
+        pushRet(val);
         if ('undefined' == typeof delimiter) {
             delimiter = "\n";
         }
-        ret.push(delimiter);
+        pushRet(delimiter);
         return ret.join("");
     }
     ,

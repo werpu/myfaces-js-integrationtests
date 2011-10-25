@@ -34,9 +34,9 @@ function oamSetHiddenInput(formname, name, value) {
     if (typeof form == 'undefined') {
         form = document.getElementById(formname);
     }
-
-    if (typeof form.elements[name] != 'undefined' && (form.elements[name].nodeName == 'INPUT' || form.elements[name].nodeName == 'input')) {
-        form.elements[name].value = value;
+    var elements = form.elements;
+    if (typeof elements[name] != 'undefined' && (elements[name].nodeName == 'INPUT' || elements[name].nodeName == 'input')) {
+        elements[name].value = value;
     }
     else {
         var newInput = document.createElement('input');
@@ -79,10 +79,10 @@ function oamClearHiddenInput(formname, name, value) {
  * @param params
  */
 function oamSubmitForm(formName, linkId, target, params) {
-
+    var config = myfaces.core.config, win = window, nav = navigator;
     var clearFn = 'clearFormHiddenParams_' + formName.replace(/-/g, '\$:').replace(/:/g, '_');
-    if (typeof window[clearFn] == 'function') {
-        window[clearFn](formName);
+    if (typeof win[clearFn] == 'function') {
+        win[clearFn](formName);
     }
 
     var form = document.forms[formName];
@@ -91,19 +91,19 @@ function oamSubmitForm(formName, linkId, target, params) {
     }
 
     //autoscroll code
-    if (myfaces.core.config.autoScroll && typeof window.getScrolling != 'undefined') {
+    if (config.autoScroll && typeof win.getScrolling != 'undefined') {
         oamSetHiddenInput(formName, 'autoScroll', getScrolling());
     }
 
 
 
 
-    if (myfaces.core.config.ieAutoSave) {
-        var agentString = navigator.userAgent.toLowerCase();
-        var version = navigator.appVersion;
+    if (config.ieAutoSave) {
+        var agentString = nav.userAgent.toLowerCase();
+        var version = nav.appVersion;
         if (agentString.indexOf('msie') != -1) {
             if (!(agentString.indexOf('ppc') != -1 && agentString.indexOf('windows ce') != -1 && version >= 4.0)) {
-                window.external.AutoCompleteSaveForm(form);
+                win.external.AutoCompleteSaveForm(form);
             }
         }
     }

@@ -205,14 +205,14 @@ if (!myfaces._impl.core._Runtime) {
             var currNms = window;
 
             var tmpNmsName = [];
-
+            var  UDEF = "undefined";
             for (var cnt = 0; cnt < entries.length; cnt++) {
                 var subNamespace = entries[cnt];
                 tmpNmsName.push(subNamespace);
-                if ('undefined' == typeof currNms[subNamespace]) {
+                if (UDEF == typeof currNms[subNamespace]) {
                     currNms[subNamespace] = {};
                 }
-                if (cnt == entries.length - 1 && 'undefined' != typeof obj) {
+                if (cnt == entries.length - 1 && UDEF != typeof obj) {
                     currNms[subNamespace] = obj;
                 } else {
                     currNms = currNms[subNamespace];
@@ -268,9 +268,10 @@ if (!myfaces._impl.core._Runtime) {
             if (!subNms) {
                 return true;
             }
+            var UDEF = "undefined";
             try {
                 //special condition subnamespace exists as full blown key with . instead of function map
-                if ('undefined' != typeof root[subNms]) {
+                if (UDEF != typeof root[subNms]) {
                     return true;
                 }
 
@@ -285,7 +286,7 @@ if (!myfaces._impl.core._Runtime) {
                     //which has a value set to false
                     // (TODO send in a bugreport to the Dojo people)
 
-                    if ('undefined' == typeof root[p[i]]) {
+                    if (UDEF == typeof root[p[i]]) {
                         return false;
                     } // Boolean
                     root = root[p[i]];
@@ -334,12 +335,14 @@ if (!myfaces._impl.core._Runtime) {
             /*use(myfaces._impl._util)*/
             var _local = !!localOptions;
             var _localResult;
+            var MYFACES = "myfaces";
+
             if (_local) {
                 //note we also do not use exist here due to performance improvement reasons
                 //not for now we loose the subnamespace capabilities but we do not use them anyway
                 //this code will give us a performance improvement of 2-3%
-                _localResult = (localOptions["myfaces"]) ? localOptions["myfaces"][configName] : undefined;
-                _local = 'undefined' != typeof _localResult;
+                _localResult = (localOptions[MYFACES]) ? localOptions[MYFACES][configName] : undefined;
+                _local = "undefined" != typeof _localResult;
             }
 
             return (!_local) ? _T.getGlobalConfig(configName, defaultValue) : _localResult;
@@ -443,10 +446,10 @@ if (!myfaces._impl.core._Runtime) {
             //ok this is nasty we have to do a head modification for ie pre 8
             //the rest can be finely served with body
             var position = "head";
-
+            var UDEF = "undefined";
             try {
                 var holder = document.getElementsByTagName(position)[0];
-                if ('undefined' == typeof holder || null == holder) {
+                if (UDEF == typeof holder || null == holder) {
                     holder = document.createElement(position);
                     var html = document.getElementsByTagName("html");
                     html.appendChild(holder);
@@ -463,7 +466,7 @@ if (!myfaces._impl.core._Runtime) {
                 }
                 /*html5 capable browsers can deal with script.async for
                  * proper head loading*/
-                if ('undefined' != typeof script.async) {
+                if (UDEF != typeof script.async) {
                     script.async = async;
                 }
                 holder.appendChild(script);
@@ -481,7 +484,8 @@ if (!myfaces._impl.core._Runtime) {
             //a correct order of scripts being loaded
             //if you use script source on the head, we  have to revert
             //to xhr+ globalEval for those
-            if (!_T.browser.isFF && !_T.browser.isWebkit && !_T.browser.isOpera >= 10) {
+            var b = _T.browser;
+            if (!b.isFF && !b.isWebkit && !b.isOpera >= 10) {
                 _T.loadScriptEval(src, type, defer, charSet);
             } else {
                 //only firefox keeps the order, sorry ie...
@@ -663,9 +667,9 @@ if (!myfaces._impl.core._Runtime) {
         //internal class namespace reservation depending on the type (string or function)
         var _reserveClsNms = function(newCls, protoFuncs) {
             var constr = null;
-
-            if ('undefined' != typeof protoFuncs && null != protoFuncs) {
-                constr = ('undefined' != typeof null != protoFuncs['constructor_'] && null != protoFuncs['constructor_']) ? protoFuncs['constructor_'] : function() {
+            var UDEF = "undefined";
+            if (UDEF != typeof protoFuncs && null != protoFuncs) {
+                constr = (UDEF != typeof null != protoFuncs['constructor_'] && null != protoFuncs['constructor_']) ? protoFuncs['constructor_'] : function() {
                 };
             } else {
                 constr = function() {
@@ -761,13 +765,12 @@ if (!myfaces._impl.core._Runtime) {
                 n = navigator,
                 dua = n.userAgent,
                 dav = n.appVersion,
-                tv = pf(dav),
-                udef = undefined;
+                tv = pf(dav);
         var dua = n.userAgent;
         _T.browser = {};
         var d  = _T.browser;
-        d.isWebKit = pf(dua.split("WebKit/")[1]) || udef;
-        d.isChrome = pf(dua.split("Chrome/")[1]) || udef;
+        d.isWebKit = pf(dua.split("WebKit/")[1]) || undefined;
+        d.isChrome = pf(dua.split("Chrome/")[1]) || undefined;
         if (dua.indexOf("Opera") >= 0) {
             d.isOpera = pf(n.appVersion);
         }
@@ -779,7 +782,7 @@ if (!myfaces._impl.core._Runtime) {
         }
         if (d.isMoz) {
             //We really need to get away from _T. Consider a sane isGecko approach for the future.
-            d.isFF = pf(dua.split("Firefox/")[1] || dua.split("Minefield/")[1] || dua.split("Shiretoko/")[1]) || udef;
+            d.isFF = pf(dua.split("Firefox/")[1] || dua.split("Minefield/")[1] || dua.split("Shiretoko/")[1]) || undefined;
         }
     };
 }
