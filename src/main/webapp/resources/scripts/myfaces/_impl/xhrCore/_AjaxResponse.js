@@ -76,8 +76,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT,
                 mfInternal.appliedViewState = null;
 
                 try {
-                    var _Impl = this.attr("impl");
-                    var _Lang = this._Lang;
+                    var _Impl = this.attr("impl"), _Lang = this._Lang;
                     // TODO:
                     // Solution from
                     // http://www.codingforums.com/archive/index.php/t-47018.html
