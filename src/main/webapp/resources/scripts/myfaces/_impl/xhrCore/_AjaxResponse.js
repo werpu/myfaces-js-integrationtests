@@ -152,8 +152,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT,
                     delete mfInternal._updateForms;
                     delete mfInternal.appliedViewState;
                 }
-            }
-            ,
+            },
 
             /**
              * fixes the viewstates in the current page

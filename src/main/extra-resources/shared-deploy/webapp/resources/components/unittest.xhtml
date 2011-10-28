@@ -12,7 +12,7 @@
 </cc:interface>
 
 <cc:implementation>
-    <h:outputScript name="jsf-i18n.js" library="myfaces" />
+    <h:outputScript name="jsf-i18n.js" library="myfaces" target="head" />
 
     <!-- runtime -->
     <h:outputScript name="myfaces/_impl/core/_EvalHandlers.js" library="scripts" target="head"/>
@@ -51,6 +51,8 @@
     <h:outputScript name="myfaces/_supportive/unittest/TestGroup.js" library="scripts" target="head"/>
     <h:outputScript name="myfaces/_supportive/unittest/JSFAjaxTestCase.js" library="scripts" target="head"/>
     <h:outputScript name="myfaces/_impl/core/_EndImpl.js" library="scripts" target="head"/>
+
+
 
 </cc:implementation>
 </html>

@@ -220,7 +220,7 @@ _MF_CLS(_PFX_XHR + "_AjaxRequest", _MF_OBJECT, /** @lends myfaces._impl.xhrCore.
         } catch (e) {
             errorText = _Lang.getMessage("ERR_REQ_FAILED_UNKNOWN", null);
         } finally {
-            var _Impl = this._getImpl();
+            var _Impl = this.attr("impl");
             _Impl.sendError(xhr, context, _Impl.HTTPERROR,
                     _Impl.HTTPERROR, errorText);
         }
@@ -338,7 +338,8 @@ _MF_CLS(_PFX_XHR + "_AjaxRequest", _MF_OBJECT, /** @lends myfaces._impl.xhrCore.
     },
 
     _sendEvent: function(evtType) {
-        this.attr("impl").sendEvent(this._xhr, this._context, _Impl[evtType]);
+        var _Impl = this.attr("impl");
+        _Impl.sendEvent(this._xhr, this._context, _Impl[evtType]);
     },
 
     _requestDone: function() {

@@ -28,6 +28,7 @@ if (_MF_SINGLTN) {
             var elemForm = this.getAttribute(item, "form");
             return (elemForm) ? this.byId(elemForm) : null;
         },
+
         //TODO move this into the extended features part
         isMultipartCandidate: function(executes) {
             if (this._Lang.isString(executes)) {
