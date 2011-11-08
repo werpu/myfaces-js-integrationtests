@@ -1,0 +1,22 @@
+As of version 2.1.4 myfaces allows modular jsf.js includes to reduce the overall filesizes according to your
+browsers demands.
+
+Following modes are available under the web.xml context parameter:
+ org.apache.myfaces.JSF_JS_MODE
+
+
+ * normal all submodules included into a separate bundle
+ * minimal ... all features for modern and legacy browsers excluding experimental features and i18n support
+ * minimal-modern ... all base features and the code is stripped of legacy browser support,
+ the latest stable browsers are the baseline for this mode (IE9, Firefox 8, etc...), this baseline is a moving
+ target and code will be further reduced according to the latest stable browsers capabilities.
+
+ If you work with minimal or minimal-modern and need to add some of the features of normal on a per usage base you
+ can to it via following includes:
+ library file
+ myfaces  jsf-experimental.js experimental features
+ myfaces  jsf-i18n.js  i18n bundles for additional languages for the client side error messages
+ myfaces  jsf-legacy.js legacy browser support
+
+
+the include can be performed following way
