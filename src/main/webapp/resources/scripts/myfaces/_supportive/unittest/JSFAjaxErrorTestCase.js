@@ -58,12 +58,10 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.JSFAjaxErr
      * @param evt the incoming event data
      */
     _onError: function(evt) {
+        this._onErrorCalled = true;
         this.onError(evt);
-        this.fail("onError called, Responsecode:" + evt.responseCode + " - Responsetext:" + evt.responseText.replace(/[^A-Za-z\s\n]+/g, " "));
         if (!this._globalProcess) {
             this.postcondition(evt);
-            this._tearDown();
-            this.tearDown();
         }
     },
     onError: function(evt) {
@@ -71,7 +69,9 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.JSFAjaxErr
     },
 
     onSuccess: function(evt) {
-        this.fail("onSuccess called, Responsecode");
+        if(!this._onErrorCalled) {
+            this.fail("onSuccess called, Responsecode");
+        }
         if (!this._globalProcess) {
             this._tearDown();
             this.tearDown();

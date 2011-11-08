@@ -114,7 +114,7 @@ testGroup.addStandardTestcase("Attributes change", "cmd_attributeschange", "attr
 
 
 testGroup.addCase(new AjaxErrorCase({
-    description:"Error Trigger Ajax Illegal Respinse",
+    description:"Error Trigger Ajax Illegal Response",
     globalProcess: false,
     /*postcondition of the error gets the event data*/
     run: function() {
@@ -129,11 +129,11 @@ testGroup.addCase(new AjaxErrorCase({
         this.assertTrue("test failed event is coming in", !!evt )
     }
 }));
-
+/*
 testGroup.addCase(new AjaxErrorCase({
     description:"Error Trigger Ajax Illegal Response IFrame",
     globalProcess: false,
-    /*postcondition of the error gets the event data*/
+
     run: function() {
             this.attr("testGroup").emitPPR(this.ajaxRequest, "cmd_illegalresponse2", null, "illegalResponse");
     },
@@ -146,7 +146,7 @@ testGroup.addCase(new AjaxErrorCase({
         this.assertTrue("test failed event is coming in", !!evt )
     }
 }));
-
+*/
 
 testGroup.addCase(new AjaxErrorCase({
     description:"Error Trigger Ajax Server Error",
@@ -160,17 +160,17 @@ testGroup.addCase(new AjaxErrorCase({
     }
 }));
 
-testGroup.addCase(new AjaxErrorCase({
+/*testGroup.addCase(new AjaxErrorCase({
     description:"Error Trigger Ajax Server Error IFrame",
     globalProcess: false,
-    /*postcondition of the error gets the event data*/
+
     run: function() {
             this.attr("testGroup").emitPPR(this.ajaxRequest, "cmd_error2", null, "errors");
     },
     postcondition: function(evt) {
         this.assertTrue("test failed event is coming in", !!evt )
     }
-}));
+}));*/
 
 setTimeout(function() {
     testGroup.start();
