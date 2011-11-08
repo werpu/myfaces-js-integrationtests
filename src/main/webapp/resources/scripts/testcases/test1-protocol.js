@@ -3,6 +3,7 @@
 
 var TestCase = myfaces._supportive.unittest.TestCase;
 var AjaxCase = myfaces._supportive.unittest.JSFAjaxTestCase;
+var AjaxErrorCase = myfaces._supportive.unittest.JSFAjaxErrorTestCase;
 var target = "./test.mockup";
 
 var testGroup = new (_class("SeleniumGroup2", myfaces._supportive.unittest.TestGroup,
@@ -52,6 +53,8 @@ testGroup.addStandardTestcase = function(description, origin, command, postCondi
         postcondition: postCondition
     }));
 };
+
+
 
 function checkForSucceed(asserter, identifier) {
     var innerText = $("#" + identifier).html();
@@ -108,6 +111,66 @@ testGroup.addStandardTestcase("Attributes change", "cmd_attributeschange", "attr
             $("#attributeChange").css("border", "0px solid black");
         }
 );
+
+
+testGroup.addCase(new AjaxErrorCase({
+    description:"Error Trigger Ajax Illegal Respinse",
+    globalProcess: false,
+    /*postcondition of the error gets the event data*/
+    run: function() {
+            this.attr("testGroup").emitPPR(this.ajaxRequest, "cmd_illegalresponse", null, "illegalResponse");
+    },
+    postcondition: function(evt) {
+        this.assertTrue("Error Type must be error",evt.type === "error");
+        this.assertTrue("Error status must be malformedXML", evt.status === "malformedXML")
+        this.assertTrue("Response Code 200", evt.responseCode == 200)
+        this.assertTrue("Response Code 200", evt.source.id == "cmd_illegalresponse")
+
+        this.assertTrue("test failed event is coming in", !!evt )
+    }
+}));
+
+testGroup.addCase(new AjaxErrorCase({
+    description:"Error Trigger Ajax Illegal Response IFrame",
+    globalProcess: false,
+    /*postcondition of the error gets the event data*/
+    run: function() {
+            this.attr("testGroup").emitPPR(this.ajaxRequest, "cmd_illegalresponse2", null, "illegalResponse");
+    },
+    postcondition: function(evt) {
+        this.assertTrue("Error Type must be error",evt.type === "error");
+        this.assertTrue("Error status must be malformedXML", evt.status === "malformedXML")
+        this.assertTrue("Response Code 200", evt.responseCode == 200)
+        this.assertTrue("Response Code 200", evt.source.id == "cmd_illegalresponse2")
+
+        this.assertTrue("test failed event is coming in", !!evt )
+    }
+}));
+
+
+testGroup.addCase(new AjaxErrorCase({
+    description:"Error Trigger Ajax Server Error",
+    globalProcess: false,
+    /*postcondition of the error gets the event data*/
+    run: function() {
+            this.attr("testGroup").emitPPR(this.ajaxRequest, "cmd_error", null, "errors");
+    },
+    postcondition: function(evt) {
+        this.assertTrue("test failed event is coming in", !!evt )
+    }
+}));
+
+testGroup.addCase(new AjaxErrorCase({
+    description:"Error Trigger Ajax Server Error IFrame",
+    globalProcess: false,
+    /*postcondition of the error gets the event data*/
+    run: function() {
+            this.attr("testGroup").emitPPR(this.ajaxRequest, "cmd_error2", null, "errors");
+    },
+    postcondition: function(evt) {
+        this.assertTrue("test failed event is coming in", !!evt )
+    }
+}));
 
 setTimeout(function() {
     testGroup.start();

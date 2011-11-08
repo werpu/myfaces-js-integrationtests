@@ -21,6 +21,7 @@
             _PFX_CORE:impl + "core.",
             _PFX_XHR: impl + "xhrCore.",
             _PFX_I18N: impl + "i18n."};
+
     if ('undefined' != typeof target.myfaces) {
         //some mobile browsers do not have a window object
         var _RT = myfaces._impl.core._Runtime;
