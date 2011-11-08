@@ -29,7 +29,7 @@
 
     <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
-        <param-value>Development</param-value>
+        <param-value>Production</param-value>
     </context-param>
 
 
@@ -41,7 +41,7 @@
 
     <context-param>
         <param-name>org.apache.myfaces.JSF_JS_MODE</param-name>
-        <param-value>minimal-modern</param-value>
+        <param-value>minimal</param-value>
     </context-param>
 
 
