@@ -256,6 +256,55 @@
         </profile>
 
         <profile>
+            <id>minimalModernAll</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+
+            <build>
+                <plugins>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-war-plugin</artifactId>
+                        <version>${maven-war-plugin.version}</version>
+                        <configuration>
+                            <webResources>
+                                <resource>
+                                    <directory>${shared.resources}</directory>
+                                </resource>
+                                <resource>
+                                    <!-- this is relative to the pom.xml directory -->
+                                    <directory>src/main/extra-resources/minimal-modern-all/webapp</directory>
+
+                                </resource>
+                            </webResources>
+                        </configuration>
+                    </plugin>
+
+                </plugins>
+            </build>
+
+            <dependencies>
+                <dependency>
+                    <groupId>org.apache.myfaces.core</groupId>
+                    <artifactId>myfaces-api</artifactId>
+                    <version>${myfaces-version}</version>
+                    <scope>compile</scope>
+                </dependency>
+
+                <dependency>
+                    <groupId>org.apache.myfaces.core</groupId>
+                    <artifactId>myfaces-impl</artifactId>
+                    <version>${myfaces-version}</version>
+                    <scope>compile</scope>
+                </dependency>
+            </dependencies>
+
+        </profile>
+
+
+        <profile>
             <id>myfacesDeploy</id>
             <activation>
                 <activeByDefault>false</activeByDefault>
