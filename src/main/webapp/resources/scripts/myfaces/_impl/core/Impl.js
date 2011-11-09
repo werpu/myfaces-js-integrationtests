@@ -82,7 +82,7 @@ _MF_SINGLTN(_PFX_CORE+"Impl", _MF_OBJECT,
 
     /*blockfilter for the passthrough filtering, the attributes given here
      * will not be transmitted from the options into the passthrough*/
-    _BLOCKFILTER: {onerror: true, onevent: true, render: true, execute: true, myfaces: true},
+    _BLOCKFILTER: {onerror: 1, onevent: 1, render: 1, execute: 1, myfaces: 1, delay: 1},
 
 
 
@@ -273,7 +273,7 @@ _MF_SINGLTN(_PFX_CORE+"Impl", _MF_OBJECT,
         //delay handling is an experimental feature which will most likely
         //make it into jsf 2.2
         /* jsf2.2 only: options.delay || */
-        var delayTimeout =    this._RT.getLocalOrGlobalConfig(context, "delay", false);
+        var delayTimeout = options.delay ||  this._RT.getLocalOrGlobalConfig(context, "delay", false);
         if(delayTimeout) {
             this._delayTimeout = setTimeout(_Lang.hitch(this, function(){
                  this._transport[transportType](elem, form, context, passThrgh);

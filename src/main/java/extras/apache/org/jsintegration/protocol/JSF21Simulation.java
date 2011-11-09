@@ -35,6 +35,13 @@ public class JSF21Simulation extends HttpServlet {
             PartialResponse root = new PartialResponse();
             if (request.getParameter("op") != null && request.getParameter("op").equals("timeout")) {
                 renderTimeout(out, root);
+            } else if (request.getParameter("op") != null && request.getParameter("op").equals("cleardelay")) {
+                TIMEOUT_REQS = 0;
+                Changes changes = new Changes(root);
+                changes.addChild(new Update(changes, "delayoutput", "<div id='delayoutput'>Number of requests so far " + TIMEOUT_REQS + "  </div>"));
+                root.addElement(changes);
+                out.println(root.toString());
+                out.flush();
             } else if (request.getParameter("op") != null && request.getParameter("op").equals("delay")) {
                 TIMEOUT_REQS++;
                 Changes changes = new Changes(root);
