@@ -33,7 +33,7 @@ _MF_CLS(_PFX_XHR+"_AjaxRequestQueue", myfaces._impl._util._Queue,
      */
     enqueue : function(request) {
 
-        if (typeof request._delay == "number") {
+        /*if (typeof request._delay == "number") {
             this.clearDelayTimeout();
             var _Lang = myfaces._impl._util._Lang;
             this._delayTimeoutId = window.setTimeout(
@@ -43,7 +43,7 @@ _MF_CLS(_PFX_XHR+"_AjaxRequestQueue", myfaces._impl._util._Queue,
                         delete request._delay;
                         this.enqueue(request);
                     }), request._delay);
-        } else {
+        } else {    */
             if (this._curReq == null) {
                 this._curReq = request;
                 this._curReq.send();
@@ -53,14 +53,14 @@ _MF_CLS(_PFX_XHR+"_AjaxRequestQueue", myfaces._impl._util._Queue,
                     this.setQueueSize(request._queueSize);
                 }
             }
-        }
+        //}
     },
 
     /**
      * timeout clearing routine
      * for timeout requests
      */
-    clearDelayTimeout : function() {
+    /*clearDelayTimeout : function() {
         try {
             if (typeof this._delayTimeoutId == "number") {
                 window.clearTimeout(this._delayTimeoutId);
@@ -69,7 +69,7 @@ _MF_CLS(_PFX_XHR+"_AjaxRequestQueue", myfaces._impl._util._Queue,
         } catch (e) {
             // already timed out
         }
-    },
+    },*/
 
 
     /**

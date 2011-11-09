@@ -141,7 +141,10 @@ _MF_SINGLTN(_PFX_CORE+"Impl", _MF_OBJECT,
      * b) passThrough handling with a map copy with a filter map block map
      */
     request : function(elem, event, options) {
-
+        if(this._delayTimeout) {
+            clearTimeout(this._delayTimeout);
+            delete this._delayTimeout;
+        }
         /*namespace remap for our local function context we mix the entire function namespace into
          *a local function variable so that we do not have to write the entire namespace
          *all the time
@@ -267,8 +270,16 @@ _MF_SINGLTN(_PFX_CORE+"Impl", _MF_OBJECT,
         //wont hurt but for the sake of compatibility we are going to add it
         passThrgh[form.id] = form.id;
 
-        this._transport[transportType](elem, form, context, passThrgh);
-
+        var delayTimeout = options.delay || 
+                myfaces._impl.core._Runtime.getLocalOrGlobalConfig(context, "delay", false);
+        if(delayTimeout) {
+            var t_ = this;
+            this._delayTimeout = setTimeout(_Lang.hitch(this, function(){
+                 this._transport[transportType](elem, form, context, passThrgh);
+            } ), delayTimeout);
+        } else {
+            this._transport[transportType](elem, form, context, passThrgh);
+        }
     },
 
     /**
