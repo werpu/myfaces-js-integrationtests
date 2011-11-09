@@ -155,8 +155,30 @@ testGroup.addCase(new AjaxErrorCase({
     run: function() {
             this.attr("testGroup").emitPPR(this.ajaxRequest, "cmd_error", null, "errors");
     },
+
+    _onError: function(evt) {
+        //try {
+            this._onErrorCalled = true;
+            this.onError(evt);
+
+        //} finally {
+        //    if (!this._globalProcess && !this._manualTearDown) {
+        //        this._tearDown();
+        //        this.tearDown();
+        //    }
+        //}
+
+    },
+    onError: function(evt) {
+        this._onErrorCalled = true;
+    },
+
+    onSuccess: function(evt) {
+        this._onSuccessCalled = true;
+    },
+
     postcondition: function(evt) {
-        this.assertTrue("test failed event is coming in", !!evt )
+        this.assertTrue("onerror and onsuccess must have been called in this case", this._onErrorCalled && this._onSuccessCalled )
     }
 }));
 

@@ -14,6 +14,7 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.JSFAjaxErr
      * @param data the incoming jsf.js xhr data
      */
     _onEvent: function(evt) {
+
         try {
             var processedEvent = {};
             this._Lang.mixMaps(processedEvent, evt);
@@ -58,23 +59,25 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.JSFAjaxErr
      * @param evt the incoming event data
      */
     _onError: function(evt) {
-        this._onErrorCalled = true;
-        this.onError(evt);
-        if (!this._globalProcess) {
-            this.postcondition(evt);
+        try {
+            this._onErrorCalled = true;
+            this.onError(evt);
+            if (!this._globalProcess) {
+                this.postcondition(evt);
+            }
+        } finally {
+            if (!this._globalProcess && !this._manualTearDown) {
+                this._tearDown();
+                this.tearDown();
+            }
         }
+
     },
     onError: function(evt) {
         //handle the ajax error handling here
     },
 
     onSuccess: function(evt) {
-        if(!this._onErrorCalled) {
-            this.fail("onSuccess called, Responsecode");
-        }
-        if (!this._globalProcess) {
-            this._tearDown();
-            this.tearDown();
-        }
+        this.fail("onsuccess called");
     }
 });
