@@ -481,10 +481,16 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
                 itemNodeName = (item.nodeName || item.tagName).toLowerCase(),
                 probe = this.getDummyPlaceHolder(); //document.createElement("div");
 
-        var depth = (itemNodeName == "td") ? 3 : 1;
+        var tmpNodeName = itemNodeName;
+        var depth = 0;
+        while(tmpNodeName != "table") {
+           item = item.parentNode;
+           tmpNodeName = (item.nodeName || item.tagName).toLowerCase();
+           depth++;
+        }
 
         var dummyPlaceHolder = this.getDummyPlaceHolder();//document.createElement("div");
-        if (depth == 3 /*node == td*/) {
+        if (itemNodeName == "td") {
             dummyPlaceHolder.innerHTML = "<table><tbody><tr>" + markup + "</tr></tbody></table>";
         } else {
             dummyPlaceHolder.innerHTML = "<table>" + markup + "</table>";
@@ -493,13 +499,25 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
         for (var cnt = 0; cnt < depth; cnt++) {
             evalNodes = evalNodes.childNodes[0];
         }
-        evalNodes = (evalNodes.parentNode) ? evalNodes.parentNode.childNodes : null;
-        return this.detach(evalNodes);
+
+        return this.detach(evalNodes.childNodes);
     },
 
     _removeChildNodes: function(node, breakEventsOpen) {
         if (!node) return;
         node.innerHTML = "";
+    },
+
+    _determineDepth: function(probe) {
+        var depth = 0;
+        var newProbe = probe;
+        for (; newProbe &&
+                       newProbe.childNodes &&
+                       newProbe.childNodes.length &&
+                       newProbe.nodeType == 1; depth++) {
+            newProbe = newProbe.childNodes[0];
+        }
+        return depth;
     },
 
     _removeNode: function(node, breakEventsOpen) {
