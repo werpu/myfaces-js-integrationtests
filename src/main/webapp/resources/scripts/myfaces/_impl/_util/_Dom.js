@@ -477,30 +477,29 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
      * @param markup
      */
     _buildTableNodes: function(item, markup) {
-        var evalNodes,
-                itemNodeName = (item.nodeName || item.tagName).toLowerCase(),
-                probe = this.getDummyPlaceHolder(); //document.createElement("div");
+        var itemNodeName = (item.nodeName || item.tagName).toLowerCase(),
+                probe = document.createElement("div");
 
         var tmpNodeName = itemNodeName;
         var depth = 0;
-        while(tmpNodeName != "table") {
-           item = item.parentNode;
-           tmpNodeName = (item.nodeName || item.tagName).toLowerCase();
-           depth++;
+        while (tmpNodeName != "table") {
+            item = item.parentNode;
+            tmpNodeName = (item.nodeName || item.tagName).toLowerCase();
+            depth++;
         }
 
-        var dummyPlaceHolder = this.getDummyPlaceHolder();//document.createElement("div");
+        var dummyPlaceHolder = document.createElement("div");
         if (itemNodeName == "td") {
             dummyPlaceHolder.innerHTML = "<table><tbody><tr>" + markup + "</tr></tbody></table>";
         } else {
             dummyPlaceHolder.innerHTML = "<table>" + markup + "</table>";
         }
-        evalNodes = dummyPlaceHolder;
+
         for (var cnt = 0; cnt < depth; cnt++) {
-            evalNodes = evalNodes.childNodes[0];
+            dummyPlaceHolder = dummyPlaceHolder.childNodes[0];
         }
 
-        return this.detach(evalNodes.childNodes);
+        return this.detach(dummyPlaceHolder.childNodes);
     },
 
     _removeChildNodes: function(node, breakEventsOpen) {
