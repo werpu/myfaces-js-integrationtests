@@ -507,17 +507,7 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
         node.innerHTML = "";
     },
 
-    _determineDepth: function(probe) {
-        var depth = 0;
-        var newProbe = probe;
-        for (; newProbe &&
-                       newProbe.childNodes &&
-                       newProbe.childNodes.length &&
-                       newProbe.nodeType == 1; depth++) {
-            newProbe = newProbe.childNodes[0];
-        }
-        return depth;
-    },
+
 
     _removeNode: function(node, breakEventsOpen) {
         if (!node) return;
