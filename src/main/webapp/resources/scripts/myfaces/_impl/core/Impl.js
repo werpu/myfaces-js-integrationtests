@@ -551,17 +551,15 @@ _MF_SINGLTN(_PFX_CORE+"Impl", _MF_OBJECT,
         this._evtListeners.broadcastEvent(eventData);
     },
 
+
     /**
-     * processes the ajax response if the ajax request completes successfully
-     * this is the case for non queued outside calls which are triggered by calling response
-     * themselves and hence the case according to the spec
-     *
-     * @param {Object} request (xhrRequest) the ajax request!
-     * @param {Object} context (Map) context map keeping context data not being passed down over
-     * the request boundary but kept on the client
+     * Spec. 13.3.3
+     * Examining the response markup and updating the DOM tree
+     * @param {XMLHttpRequest} request - the ajax request
+     * @param {Object} context - the ajax context
      */
     response : function(request, context) {
-        this._transport.response(request, context);
+        this._RT.getLocalOrGlobalConfig(context, "responseHandler", myfaces._impl.xhrCore._AjaxResponse).processResponse(request, context);
     },
 
     /**

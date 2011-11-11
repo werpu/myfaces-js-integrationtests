@@ -44,7 +44,7 @@ testGroup.addCase(new AjaxCase({
 
 testGroup.addCase(new AjaxCase({
     description:"Delay Test not delayed",
-    defer: 1000,
+    defer: 6000,
     manualTearDown: true,
     _timer : null,
 
@@ -63,6 +63,7 @@ testGroup.addCase(new AjaxCase({
     postcondition: function() {
         if (this._timer) {
             clearTimeout(this._timer);
+            this._timer =  null;
         }
         var _t = this;
         this._timer = setTimeout(function() {
@@ -73,7 +74,7 @@ testGroup.addCase(new AjaxCase({
             } finally {
                 _t.tearDown();
             }
-        }, 100);
+        }, 1000);
         return true;
     }
 }));
