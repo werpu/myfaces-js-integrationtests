@@ -98,19 +98,18 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT,
 
                     if (_Lang.isXMLParseError(xmlContent)) {
                         this._errMalFormedXML(request, context, "");
-                        return;
+
                     }
                     var partials = xmlContent.childNodes[0];
                     if ('undefined' == typeof partials || partials == null) {
                         this._errMalFormedXML(request, context, "");
-                        return;
+
                     } else {
                         if (partials.tagName != this.RESP_PARTIAL) {
                             // IE 8 sees XML Header as first sibling ...
                             partials = partials.nextSibling;
                             if (!partials || partials.tagName != this.RESP_PARTIAL) {
                                 this._errMalFormedXML(request, context, "");
-                                return;
                             }
                         }
                     }
@@ -134,11 +133,10 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT,
                         //insert!
                         if (tagName == this.CMD_ERROR) {
                             this.processError(request, context, childNode);
-                            return;
                         } else if (tagName == this.CMD_REDIRECT) {
-                            if (!this.processRedirect(request, context, childNode)) return;
+                            this.processRedirect(request, context, childNode);
                         } else if (tagName == this.CMD_CHANGES) {
-                            if (!this.processChanges(request, context, childNode)) return;
+                            this.processChanges(request, context, childNode);
                         }
                     }
 
@@ -257,8 +255,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT,
                     errorMessage = node.childNodes[1].firstChild.data || "";
 
                 this.attr("impl").sendError(request, context, _Impl.SERVER_ERROR, errorName, errorMessage);
-            }
-            ,
+            },
 
             /**
              * processes an incoming xml redirect directive from the ajax response
@@ -274,7 +271,6 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT,
                 var redirectUrl = node.getAttribute("url");
                 if (!redirectUrl) {
                     this._errMalFormedXML(request, context, _Lang.getMessage("ERR_RED_URL", null, "_AjaxResponse.processRedirect"));
-                    return false;
                 }
                 redirectUrl = _Lang.trim(redirectUrl);
                 if (redirectUrl == "") {
@@ -306,27 +302,24 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT,
                     switch (changes[i].tagName) {
 
                         case this.CMD_UPDATE:
-                            if (!this.processUpdate(request, context, changes[i])) {
-                                return false;
-                            }
+                            this.processUpdate(request, context, changes[i]);
                             break;
                         case this.CMD_EVAL:
                             this._Lang.globalEval(changes[i].firstChild.data);
                             break;
                         case this.CMD_INSERT:
-                            if (!this.processInsert(request, context, changes[i])) return false;
+                            this.processInsert(request, context, changes[i]);
                             break;
                         case this.CMD_DELETE:
-                            if (!this.processDelete(request, context, changes[i])) return false;
+                            this.processDelete(request, context, changes[i]);
                             break;
                         case this.CMD_ATTRIBUTES:
-                            if (!this.processAttributes(request, context, changes[i])) return false;
+                            this.processAttributes(request, context, changes[i]);
                             break;
                         case this.CMD_EXTENSION:
                             break;
                         default:
-                            this._errMalFormedXML(request, context, "");
-                            return false;
+                            this._errMalFormedXML(request, context, null , new Error("_AjaxResponse.processChanges: Illegal Command Issued"));
                     }
                 }
 
@@ -477,7 +470,6 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT,
                         } catch (e) {
                             //we give up no further fallbacks
                             this._errMalFormedXML(request, context, "Error head replacement failed reason:" + e.toString());
-                            return null;
                         }
                     }
                 } else {
@@ -625,7 +617,6 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT,
                 var opNode = this._Dom.byIdOrName(insertData.opId);
                 if (!opNode) {
                     this._errMalFormedXML(request, context, this._Lang.getMessage("ERR_PPR_INSERTBEFID_1", null, "_AjaxResponse.processInsert", insertData.opId));
-                    return false;
                 }
 
                 //call insertBefore or insertAfter in our dom routines
@@ -689,7 +680,6 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT,
 
                     if (opType != "before" && opType != "after") {
                         this._errMalFormedXML(request, context, this._Lang.getMessage("ERR_PPR_INSERTBEFID"));
-                        return false;
                     }
                     opType = opType.toLowerCase();
                     var beforeAfterId = node.childNodes[0].getAttribute("id");
@@ -701,7 +691,6 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT,
                             [_Lang.getMessage("ERR_PPR_IDREQ"),
                              "\n ",
                              _Lang.getMessage("ERR_PPR_INSERTBEFID")].join(""));
-                    return false;
                 }
                 ret.opId = _Lang.trim(ret.opId);
                 return ret;
@@ -715,7 +704,6 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT,
 
                 if (!deleteId) {
                     this._errMalFormedXML(request, context, _Lang.getMessage("ERR_PPR_DELID", null, "_AjaxResponse.processDelete"));
-                    return false;
                 }
 
                 var item = _Dom.byIdOrName(deleteId);
@@ -746,7 +734,6 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT,
 
                 if (!elemId) {
                     this._errMalFormedXML(request, context, "Error in attributes, id not in xml markup");
-                    return false;
                 }
                 var childNodes = node.childNodes;
 
@@ -791,11 +778,15 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT,
                 }
                 return true;
             },
-            _errMalFormedXML: function(request, context, msg) {
+            _errMalFormedXML: function(request, context, msg, err) {
                 var _Impl = this._Impl;
-                _Impl.sendError(request, context, _Impl.MALFORMEDXML
-                        , _Impl.MALFORMEDXML, msg);
+                var err = err || new Error(msg);
+                err._mfInternal = {};
+                err._mfInternal.title = _Impl.MALFORMEDXML;
+                err._mfInternal.msg = _Impl.MALFORMEDXML;
+
                 context._mfInternal.internalError = true;
+                throw err;
             }
 
         })
