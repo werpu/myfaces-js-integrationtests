@@ -701,8 +701,6 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
         return ret;
     },
 
-
-
     /**
      * a filtered findAll for subdom treewalking
      * (which uses browser optimizations wherever possible)

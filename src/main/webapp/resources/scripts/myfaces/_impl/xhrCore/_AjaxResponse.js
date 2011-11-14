@@ -27,6 +27,8 @@
  *
  * The singleton approach also improves performance
  * due to less object gc compared to the old instance approach.
+ *
+ * TODO replace the entire error handling with a throw only mechanism
  */
 _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT,
         /** @lends myfaces._impl.xhrCore._AjaxResponse.prototype */
@@ -251,12 +253,10 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT,
                  *      <error-message><![CDATA[message]]></error-message>
                  * <error>
                  */
-                var errorName = node.firstChild.textContent || "";
-                var errorMessage = node.childNodes[1].firstChild.data || "";
+                var errorName = node.firstChild.textContent || "",
+                    errorMessage = node.childNodes[1].firstChild.data || "";
 
-                var _Impl = this.attr("impl");
-
-                _Impl.sendError(request, context, _Impl.SERVER_ERROR, errorName, errorMessage);
+                this.attr("impl").sendError(request, context, _Impl.SERVER_ERROR, errorName, errorMessage);
             }
             ,
 
