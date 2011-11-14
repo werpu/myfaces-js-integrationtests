@@ -97,19 +97,19 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT,
                     //while the rest of the world keeps it as element under the first node
 
                     if (_Lang.isXMLParseError(xmlContent)) {
-                        this._errMalFormedXML(request, context, "");
+                        throw this._errMalFormedXML(request, context, "");
 
                     }
                     var partials = xmlContent.childNodes[0];
                     if ('undefined' == typeof partials || partials == null) {
-                        this._errMalFormedXML(request, context, "");
+                        throw this._errMalFormedXML(request, context, "");
 
                     } else {
                         if (partials.tagName != this.RESP_PARTIAL) {
                             // IE 8 sees XML Header as first sibling ...
                             partials = partials.nextSibling;
                             if (!partials || partials.tagName != this.RESP_PARTIAL) {
-                                this._errMalFormedXML(request, context, "");
+                               throw this._errMalFormedXML(request, context, "");
                             }
                         }
                     }
@@ -270,7 +270,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT,
                 var _Lang = this._Lang;
                 var redirectUrl = node.getAttribute("url");
                 if (!redirectUrl) {
-                    this._errMalFormedXML(request, context, _Lang.getMessage("ERR_RED_URL", null, "_AjaxResponse.processRedirect"));
+                    throw this._errMalFormedXML(request, context, _Lang.getMessage("ERR_RED_URL", null, "_AjaxResponse.processRedirect"));
                 }
                 redirectUrl = _Lang.trim(redirectUrl);
                 if (redirectUrl == "") {
@@ -319,7 +319,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT,
                         case this.CMD_EXTENSION:
                             break;
                         default:
-                            this._errMalFormedXML(request, context, null , new Error("_AjaxResponse.processChanges: Illegal Command Issued"));
+                           throw this._errMalFormedXML(request, context, null , new Error("_AjaxResponse.processChanges: Illegal Command Issued"));
                     }
                 }
 
@@ -469,7 +469,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT,
                             newHead.innerHTML = headData;
                         } catch (e) {
                             //we give up no further fallbacks
-                            this._errMalFormedXML(request, context, "Error head replacement failed reason:" + e.toString());
+                            throw this._errMalFormedXML(request, context, "Error head replacement failed reason:" + e.toString());
                         }
                     }
                 } else {
@@ -616,7 +616,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT,
 
                 var opNode = this._Dom.byIdOrName(insertData.opId);
                 if (!opNode) {
-                    this._errMalFormedXML(request, context, this._Lang.getMessage("ERR_PPR_INSERTBEFID_1", null, "_AjaxResponse.processInsert", insertData.opId));
+                   throw this._errMalFormedXML(request, context, this._Lang.getMessage("ERR_PPR_INSERTBEFID_1", null, "_AjaxResponse.processInsert", insertData.opId));
                 }
 
                 //call insertBefore or insertAfter in our dom routines
@@ -679,7 +679,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT,
                     var opType = node.childNodes[0].tagName;
 
                     if (opType != "before" && opType != "after") {
-                        this._errMalFormedXML(request, context, this._Lang.getMessage("ERR_PPR_INSERTBEFID"));
+                        throw this._errMalFormedXML(request, context, this._Lang.getMessage("ERR_PPR_INSERTBEFID"));
                     }
                     opType = opType.toLowerCase();
                     var beforeAfterId = node.childNodes[0].getAttribute("id");
@@ -687,7 +687,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT,
                     ret.opId = beforeAfterId;
                     ret.cDataBlock = concatCDATA(node.childNodes[0]);
                 } else {
-                    this._errMalFormedXML(request, context,
+                    throw this._errMalFormedXML(request, context,
                             [_Lang.getMessage("ERR_PPR_IDREQ"),
                              "\n ",
                              _Lang.getMessage("ERR_PPR_INSERTBEFID")].join(""));
@@ -703,7 +703,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT,
                         deleteId = node.getAttribute('id');
 
                 if (!deleteId) {
-                    this._errMalFormedXML(request, context, _Lang.getMessage("ERR_PPR_DELID", null, "_AjaxResponse.processDelete"));
+                    throw this._errMalFormedXML(request, context, _Lang.getMessage("ERR_PPR_DELID", null, "_AjaxResponse.processDelete"));
                 }
 
                 var item = _Dom.byIdOrName(deleteId);
@@ -733,7 +733,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT,
                         elemId = node.getAttribute('id');
 
                 if (!elemId) {
-                    this._errMalFormedXML(request, context, "Error in attributes, id not in xml markup");
+                    throw this._errMalFormedXML(request, context, "Error in attributes, id not in xml markup");
                 }
                 var childNodes = node.childNodes;
 
@@ -758,12 +758,10 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT,
 
                     switch (elemId) {
                         case this.P_VIEWROOT:
-                            throw new Error(_Lang.getMessage("ERR_NO_VIEWROOTATTR", null, "_AjaxResponse.processAttributes"));
-                            break;
+                            throw  Error(_Lang.getMessage("ERR_NO_VIEWROOTATTR", null, "_AjaxResponse.processAttributes"));
 
                         case this.P_VIEWHEAD:
-                            throw new Error(_Lang.getMessage("ERR_NO_HEADATTR", null, "_AjaxResponse.processAttributes"));
-                            break;
+                            throw  Error(_Lang.getMessage("ERR_NO_HEADATTR", null, "_AjaxResponse.processAttributes"));
 
                         case this.P_VIEWBODY:
                             var element = document.getElementsByTagName("body")[0];
@@ -786,7 +784,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT,
                 err._mfInternal.msg = _Impl.MALFORMEDXML;
 
                 context._mfInternal.internalError = true;
-                throw err;
+                return err;
             }
 
         })
