@@ -229,7 +229,7 @@ _MF_SINGLTN(_PFX_UTIL + "_Lang", Object, /** @lends myfaces._impl._util._Lang.pr
     },
     _assertStr: function(it, functionName, paramName) {
         if (!this.isString(it)) {
-            throw this.makeException(null, null, this._nameSpace, "" + caller, this.getMessage("ERR_PARAM_STR", null, "myfaces._impl._util._Lang." + functionName, paramName));
+            throw this.makeException(null, null, this._nameSpace, arguments.caller.toString(), this.getMessage("ERR_PARAM_STR", null, "myfaces._impl._util._Lang." + functionName, paramName));
         }
     },
     /**
@@ -673,7 +673,7 @@ _MF_SINGLTN(_PFX_UTIL + "_Lang", Object, /** @lends myfaces._impl._util._Lang.pr
         ret._mfInternal.name = name || "clientError";
         ret._mfInternal.title = title || "clientError";
         ret._mfInternal.caller = callerCls || this._nameSpace;
-        ret._mfInternal.callFunc = callFunc || (""+caller);
+        ret._mfInternal.callFunc = callFunc || (""+arguments.caller.toString());
         return ret;
     }
 });
