@@ -580,6 +580,7 @@ if (!myfaces._impl.core._Runtime) {
                 var clzProto = newClazz.prototype;
                 clzProto.constructor = newCls;
                 clzProto._parentCls = extendCls.prototype;
+                clzProto._nameSpace = className;
                 /**
                  * @ignore
                  */

@@ -21,11 +21,7 @@
  * @description Implementation singleton which implements all interface method
  * defined by our jsf.js API
  * */
-_MF_SINGLTN(_PFX_CORE+"Impl", _MF_OBJECT,
-/**
- * @lends myfaces._impl.core.Impl.prototype
- */
-{
+_MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.prototype */ {
 
     //third option myfaces._impl.xhrCoreAjax which will be the new core impl for now
     _transport      : myfaces._impl.core._Runtime.getGlobalConfig("transport", myfaces._impl.xhrCore._Transports),
@@ -112,7 +108,7 @@ _MF_SINGLTN(_PFX_CORE+"Impl", _MF_OBJECT,
         var ajaxUtils = myfaces._impl.xhrCore._AjaxUtils;
 
         var ret = this._Lang.createFormDataDecorator([]);
-        ajaxUtils.encodeSubmittableFields(ret,  form, null);
+        ajaxUtils.encodeSubmittableFields(ret, form, null);
 
         return ret.makeFinal();
     },
@@ -141,7 +137,7 @@ _MF_SINGLTN(_PFX_CORE+"Impl", _MF_OBJECT,
      * b) passThrough handling with a map copy with a filter map block map
      */
     request : function(elem, event, options) {
-        if(this._delayTimeout) {
+        if (this._delayTimeout) {
             clearTimeout(this._delayTimeout);
             delete this._delayTimeout;
         }
@@ -150,8 +146,8 @@ _MF_SINGLTN(_PFX_CORE+"Impl", _MF_OBJECT,
          *all the time
          **/
         var _Lang = this._Lang,
-             _Dom =  this._Dom,
-             WINDOW_ID = "javax.faces.windowId";
+                _Dom = this._Dom,
+                WINDOW_ID = "javax.faces.windowId";
         /*assert if the onerror is set and once if it is set it must be of type function*/
         _Lang.assertType(options.onerror, "function");
         /*assert if the onevent is set and once if it is set it must be of type function*/
@@ -160,11 +156,11 @@ _MF_SINGLTN(_PFX_CORE+"Impl", _MF_OBJECT,
         //options not set we define a default one with nothing
         options = options || {};
 
-		/*preparations for jsf 2.2 windowid handling*/
+        /*preparations for jsf 2.2 windowid handling*/
         //pass the window id into the options if not set already
-        if(!options.windowId) {
+        if (!options.windowId) {
             var windowId = _Dom.getWindowId();
-            (windowId) ? options[WINDOW_ID] = windowId: null;
+            (windowId) ? options[WINDOW_ID] = windowId : null;
         } else {
             options[WINDOW_ID] = options.windowId;
             delete options.windowId;
@@ -212,8 +208,8 @@ _MF_SINGLTN(_PFX_CORE+"Impl", _MF_OBJECT,
          * so that people can use dummy forms and work
          * with detached objects
          */
-        var form = (options.myfaces && options.myfaces.form)?
-                _Lang.byId(options.myfaces.form):
+        var form = (options.myfaces && options.myfaces.form) ?
+                _Lang.byId(options.myfaces.form) :
                 this._getForm(elem, event);
 
         /**
@@ -259,9 +255,9 @@ _MF_SINGLTN(_PFX_CORE+"Impl", _MF_OBJECT,
         context._mfInternal = {};
         var mfInternal = context._mfInternal;
 
-        mfInternal["_mfSourceFormId"]    =  form.id;
-        mfInternal["_mfSourceControlId"] =  elementId;
-        mfInternal["_mfTransportType"]   =  transportType;
+        mfInternal["_mfSourceFormId"] = form.id;
+        mfInternal["_mfSourceControlId"] = elementId;
+        mfInternal["_mfTransportType"] = transportType;
 
         //mojarra compatibility, mojarra is sending the form id as well
         //this is not documented behavior but can be determined by running
@@ -274,10 +270,10 @@ _MF_SINGLTN(_PFX_CORE+"Impl", _MF_OBJECT,
         //make it into jsf 2.2
         /* jsf2.2 only: options.delay || */
         var delayTimeout = this._RT.getLocalOrGlobalConfig(context, "delay", false);
-        if(delayTimeout) {
-            this._delayTimeout = setTimeout(_Lang.hitch(this, function(){
-                 this._transport[transportType](elem, form, context, passThrgh);
-            } ), delayTimeout);
+        if (delayTimeout) {
+            this._delayTimeout = setTimeout(_Lang.hitch(this, function() {
+                this._transport[transportType](elem, form, context, passThrgh);
+            }), delayTimeout);
         } else {
             this._transport[transportType](elem, form, context, passThrgh);
         }
@@ -291,18 +287,19 @@ _MF_SINGLTN(_PFX_CORE+"Impl", _MF_OBJECT,
      * @param event
      */
     _getForm: function(elem, event) {
-        var _Dom =  this._Dom;
+        var _Dom = this._Dom;
         var _Lang = this._Lang;
-        var form =  _Dom.fuzzyFormDetection(elem);
+        var form = _Dom.fuzzyFormDetection(elem);
 
         if (!form && event) {
             //in case of no form is given we retry over the issuing event
             form = _Dom.fuzzyFormDetection(_Lang.getEventTarget(event));
             if (!form) {
-                throw Error(_Lang.getMessage("ERR_FORM"));
+                throw this._Lang.makeException(null, null, this._nameSpace, "_getForm", _Lang.getMessage("ERR_FORM"));
             }
         } else if (!form) {
-            throw Error(_Lang.getMessage("ERR_FORM"));
+            throw this._Lang.makeException(null, null, this._nameSpace, "_getForm", _Lang.getMessage("ERR_FORM"));
+
         }
         return form;
     },
@@ -321,11 +318,11 @@ _MF_SINGLTN(_PFX_CORE+"Impl", _MF_OBJECT,
          * we have to pass them down as a blank delimited string representation
          * of an array of ids!
          */
-        //for now we turn off the transport auto selection, to enable 2.0 backwards compatibility
-        //on protocol level, the file upload only can be turned on if the auto selection is set to true
+            //for now we turn off the transport auto selection, to enable 2.0 backwards compatibility
+            //on protocol level, the file upload only can be turned on if the auto selection is set to true
         var getConfig = this._RT.getLocalOrGlobalConfig,
-            _Lang     = this._Lang,
-            _Dom      = this._Dom;
+                _Lang = this._Lang,
+                _Dom = this._Dom;
 
         var transportAutoSelection = getConfig(context, "transportAutoSelection", false);
         var isMultipart = (transportAutoSelection && _Dom.getAttribute(form, "enctype") == "multipart/form-data") ?
@@ -349,7 +346,7 @@ _MF_SINGLTN(_PFX_CORE+"Impl", _MF_OBJECT,
                 getConfig(context, "transportType", "multipartQueuedPost");
         if (!this._transport[transportType]) {
             //throw new Error("Transport type " + transportType + " does not exist");
-            throw new Error(_Lang.getMessage("ERR_TRANSPORT",null, transportType));
+            throw new Error(_Lang.getMessage("ERR_TRANSPORT", null, transportType));
         }
         return transportType;
 
@@ -374,12 +371,12 @@ _MF_SINGLTN(_PFX_CORE+"Impl", _MF_OBJECT,
         //the offset variable is there to prevent 0 which results in a javascript
         //false
         var offset = 1,
-                vals  = (srcStr) ? srcStr.split(/\s+/) : [],
+                vals = (srcStr) ? srcStr.split(/\s+/) : [],
                 idIdx = (vals.length) ? _Lang.arrToMap(vals, offset) : {},
 
-                //helpers to improve speed and compression
-                none    = idIdx[this.IDENT_NONE],
-                all     = idIdx[this.IDENT_ALL],
+            //helpers to improve speed and compression
+                none = idIdx[this.IDENT_NONE],
+                all = idIdx[this.IDENT_ALL],
                 theThis = idIdx[this.IDENT_THIS],
                 theForm = idIdx[this.IDENT_FORM];
 
@@ -449,21 +446,19 @@ _MF_SINGLTN(_PFX_CORE+"Impl", _MF_OBJECT,
             return (name && name === myfaces._impl.core.Impl.MALFORMEDXML) ? _Lang.getMessage("ERR_MALFORMEDXML") : "";
         };
 
-
-
         //by setting unknown values to unknown we can handle cases
         //better where a simulated context is pushed into the system
         eventData.type = this.ERROR;
 
-        eventData.status            = name || UNKNOWN;
-        eventData.serverErrorName   = serverErrorName || UNKNOWN;
-        eventData.serverErrorMessage =  serverErrorMessage || UNKNOWN;
+        eventData.status = name || UNKNOWN;
+        eventData.serverErrorName = serverErrorName || UNKNOWN;
+        eventData.serverErrorMessage = serverErrorMessage || UNKNOWN;
 
         try {
-            eventData.source        = context.source || UNKNOWN;
-            eventData.responseCode  = request.status || UNKNOWN;
-            eventData.responseText  = request.responseText  || UNKNOWN;
-            eventData.responseXML   = request.responseXML || UNKNOWN;
+            eventData.source = context.source || UNKNOWN;
+            eventData.responseCode = request.status || UNKNOWN;
+            eventData.responseText = request.responseText || UNKNOWN;
+            eventData.responseXML = request.responseXML || UNKNOWN;
         } catch (e) {
             // silently ignore: user can find out by examining the event data
         }
@@ -478,24 +473,22 @@ _MF_SINGLTN(_PFX_CORE+"Impl", _MF_OBJECT,
 
         if (jsf.getProjectStage() === "Development" && this._errListeners.length() == 0 && !context["onerror"]) {
             var defaultErrorOutput = myfaces._impl.core._Runtime.getGlobalConfig("defaultErrorOutput", alert),
-                finalMessage = [],
+                    finalMessage = [],
                 //we remap the function to achieve a better compressability
-                finalMessagePush = _Lang.hitch(finalMessage, finalMessage.push);
+                    finalMessagePush = _Lang.hitch(finalMessage, finalMessage.push);
 
             finalMessagePush((name) ? name : "");
-            if (name)
-            {
+            if (name) {
                 finalMessagePush(": ");
             }
             finalMessagePush((serverErrorName) ? serverErrorName : "");
-            if (serverErrorName)
-            {
+            if (serverErrorName) {
                 finalMessagePush(" ");
             }
             finalMessagePush((serverErrorMessage) ? serverErrorMessage : "");
             finalMessagePush(malFormedMessage());
             finalMessagePush("\n\n");
-            finalMessagePush( _Lang.getMessage("MSG_DEV_MODE"));
+            finalMessagePush(_Lang.getMessage("MSG_DEV_MODE"));
             defaultErrorOutput(finalMessage.join(""));
         }
     },
@@ -513,7 +506,6 @@ _MF_SINGLTN(_PFX_CORE+"Impl", _MF_OBJECT,
         eventData.status = name;
         eventData.source = context.source;
 
-
         if (name !== this.BEGIN) {
 
             try {
@@ -528,7 +520,7 @@ _MF_SINGLTN(_PFX_CORE+"Impl", _MF_OBJECT,
 
                 eventData.responseCode = getValue(request, "status");
                 eventData.responseText = getValue(request, "responseText");
-                eventData.responseXML  = getValue(request, "responseXML");
+                eventData.responseXML = getValue(request, "responseXML");
 
             } catch (e) {
                 var impl = myfaces._impl.core._Runtime.getGlobalConfig("jsfAjaxImpl", myfaces._impl.core.Impl);
@@ -569,17 +561,17 @@ _MF_SINGLTN(_PFX_CORE+"Impl", _MF_OBJECT,
      */
     getProjectStage : function() {
         //since impl is a singleton we only have to do it once at first access
-        if(!this._projectStage) {
-            var  PRJ_STAGE  = "projectStage",
-                 STG_PROD   = "Production",
+        if (!this._projectStage) {
+            var PRJ_STAGE = "projectStage",
+                    STG_PROD = "Production",
 
-                 scriptTags = document.getElementsByTagName("script"),
-                 getConfig  = myfaces._impl.core._Runtime.getGlobalConfig,
-                 projectStage = null,
-                 found      = false,
-                 allowedProjectStages = {STG_PROD:1,"Development":1, "SystemTest":1,"UnitTest":1};
+                    scriptTags = document.getElementsByTagName("script"),
+                    getConfig = myfaces._impl.core._Runtime.getGlobalConfig,
+                    projectStage = null,
+                    found = false,
+                    allowedProjectStages = {STG_PROD:1,"Development":1, "SystemTest":1,"UnitTest":1};
 
-             /* run through all script tags and try to find the one that includes jsf.js */
+            /* run through all script tags and try to find the one that includes jsf.js */
             for (var i = 0; i < scriptTags.length && !found; i++) {
                 if (scriptTags[i].src.search(/\/javax\.faces\.resource\/jsf\.js.*ln=javax\.faces/) != -1) {
                     var result = scriptTags[i].src.match(/stage=([^&;]*)/);
@@ -623,7 +615,7 @@ _MF_SINGLTN(_PFX_CORE+"Impl", _MF_OBJECT,
      *   but can be undefined
      */
     chain : function(source, event) {
-        var len   = arguments.length;
+        var len = arguments.length;
         var _Lang = this._Lang;
         var throwErr = function(msgKey) {
             throw Error(_Lang.getMessage(msgKey));
@@ -645,7 +637,6 @@ _MF_SINGLTN(_PFX_CORE+"Impl", _MF_OBJECT,
         //arguments only are give if not set to undefined even null values!
 
         //assertions source either null or set as dom element:
-
 
         if ('undefined' == typeof source) {
             throwErr("ERR_SOURCE_DEF_NULL");
@@ -694,37 +685,19 @@ _MF_SINGLTN(_PFX_CORE+"Impl", _MF_OBJECT,
      *
      * @param request the request currently being processed
      * @param context the context affected by this error
-     * @param sourceClass the sourceclass throwing the error
-     * @param func the function throwing the error
      * @param exception the exception being thrown
      */
-     stdErrorHandler: function(request, context, sourceClass, func, exception) {
-
-        var _Lang = myfaces._impl._util._Lang;
-        var exProcessed = _Lang.isExceptionProcessed(exception);
-        try {
+    stdErrorHandler: function(request, context, exception) {
             //newer browsers do not allow to hold additional values on native objects like exceptions
             //we hence capsule it into the request, which is gced automatically
             //on ie as well, since the stdErrorHandler usually is called between requests
             //this is a valid approach
-
-            if (this._threshold == "ERROR" && !exProcessed) {
-                this.sendError(request, context, this.CLIENT_ERROR, exception.name,
-                        "MyFaces ERROR:" + this._Lang.createErrorMsg(sourceClass, func, exception));
+            if (this._threshold == "ERROR") {
+                var mfInternal = exception._mfInternal || {};
+                this.sendError(request, context,
+                        mfInternal.title || this.CLIENT_ERROR, mfInternal.name || exception.name, exception.message());
             }
-        } finally {
 
-            //we forward the exception, just in case so that the client
-            //will receive it in any way
-            try {
-                if (!exProcessed) {
-                    _Lang.setExceptionProcessed(exception);
-                }
-            } catch(e) {
-
-            }
-            throw exception;
-        }
     }
 });
 
