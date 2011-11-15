@@ -688,7 +688,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
                 deleteId = node.getAttribute('id');
 
         if (!deleteId) {
-            throw this._raiseError("_AjaxResponse.processDelete","processDelete");
+            throw this._raiseError(_Lang.getMessage("ERR_PPR_UNKNOWNCID", null, "_AjaxResponse.processDelete", ""),"processDelete");
         }
 
         var item = _Dom.byIdOrName(deleteId);
@@ -769,7 +769,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
      * @param title the title of the error (optional)
      * @param name the name of the error (optional)
      */
-    _raiseError: function(message, title, name, caller) {
+    _raiseError: function(message,  caller, title, name) {
         var _Impl = this.attr("impl");
         var finalTitle = title || _Impl.MALFORMEDXML;
         var finalName = name || _Impl.MALFORMEDXML;

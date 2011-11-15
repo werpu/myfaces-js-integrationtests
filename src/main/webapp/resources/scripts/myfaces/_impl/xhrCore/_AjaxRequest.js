@@ -166,7 +166,7 @@ _MF_CLS(_PFX_XHR + "_AjaxRequest", _MF_OBJECT, /** @lends myfaces._impl.xhrCore.
 
         } catch (e) {
             //_onError//_onError
-            e = (e._mfInternal)? e: this._Lang.makeException("sendError","sendError", this._nameSpace, "send", e.message());
+            e = (e._mfInternal)? e: this._Lang.makeException("sendError","sendError", this._nameSpace, "send", e.message);
             this._stdErrorHandler(this._xhr, this._context, e);
         }
     },
@@ -297,7 +297,7 @@ _MF_CLS(_PFX_XHR + "_AjaxRequest", _MF_OBJECT, /** @lends myfaces._impl.xhrCore.
     _stdErrorHandler: function(request, context, exception) {
         var xhrQueue = this._xhrQueue;
         try {
-             this.attr("impl").sendError(request, context, exception);
+             this.attr("impl").stdErrorHandler(request, context, exception);
         } finally {
             if (xhrQueue) {
                 xhrQueue.cleanup();

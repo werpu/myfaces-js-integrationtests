@@ -544,7 +544,7 @@ if (!myfaces._impl.core._Runtime) {
             var className = newCls;
 
             if (_T._reservedNMS[newCls]) {
-                return;
+                return _T.fetchNamespace(newCls);
             }
             var constr = "constructor_";
             var parClassRef = "_mfClazz";
@@ -582,7 +582,7 @@ if (!myfaces._impl.core._Runtime) {
                 clzProto._parentCls = extendCls.prototype;
                 //in case of overrides the namespace is altered with mfclazz
                 //we want the final namespace
-                clzProto._nameSpace = className.replace(/\._mfClazz$/+,"");
+                clzProto._nameSpace = className.replace(/(\._mfClazz)+$/,"");
                 /**
                  * @ignore
                  */
@@ -763,6 +763,8 @@ if (!myfaces._impl.core._Runtime) {
         //we only have one xml special case so webkit and opera is the
         //only detection we still need for the minimal case
         //TODO determine how to eliminate this check
+        //minimal modern should be able to cope without any browser checks
+        //at all
         //with a direct capabilities check
         _T.browser = {};
         var d  = _T.browser;

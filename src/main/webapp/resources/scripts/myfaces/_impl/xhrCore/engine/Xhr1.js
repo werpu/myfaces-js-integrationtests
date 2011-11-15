@@ -90,7 +90,7 @@ _MF_CLS(_PFX_XHR+"engine.Xhr1", myfaces._impl.xhrCore.engine.BaseRequest,
                 var xhr = this._xhrObject;
                 var XHRConst = this._XHRConst;
                 this.readyState = xhr.readyState;
-                
+                this.status = xhr.status;
 
                 switch (this.readyState) {
 
@@ -115,6 +115,9 @@ _MF_CLS(_PFX_XHR+"engine.Xhr1", myfaces._impl.xhrCore.engine.BaseRequest,
                         break;
 
                     case XHRConst.READY_STATE_DONE:
+                        this.responseText = xhr.responseText;
+                        this.responseXML = xhr.responseXML;
+
                         this._addProgressAttributes(myevt, 100, 100);
                         //xhr level1 does not have timeout handler
                         if (this._timeoutTimer) {

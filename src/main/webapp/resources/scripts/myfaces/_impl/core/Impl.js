@@ -696,7 +696,7 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
                 var mfInternal = exception._mfInternal || {};
                 //TODO clean the name mess here
                 this.sendError(request, context,
-                        mfInternal.title || this.CLIENT_ERROR, mfInternal.name || exception.name, exception.message());
+                        mfInternal.title || this.CLIENT_ERROR, mfInternal.name || exception.name, exception.message);
             }
 
     }
