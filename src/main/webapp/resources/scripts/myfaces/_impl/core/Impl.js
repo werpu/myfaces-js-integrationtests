@@ -695,8 +695,17 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
             if (this._threshold == "ERROR") {
                 var mfInternal = exception._mfInternal || {};
                 //TODO clean the name mess here
+                var finalMsg = [];
+
+                //extended error message only in dev mode
+                if(jsf.getProjectStage() === "Development") {
+                   (mfInternal.caller)? finalMsg.push("Caller: "+mfInternal.caller):null;
+                   (mfInternal.callFunc)? finalMsg.push("Caller Function: "+mfInternal.callFunc):null;
+                }
+
+                finalMsg.push(exception.message);
                 this.sendError(request, context,
-                        mfInternal.title || this.CLIENT_ERROR, mfInternal.name || exception.name, exception.message);
+                        mfInternal.title || this.CLIENT_ERROR, mfInternal.name || exception.name, finalMsg.join("˜\n"));
             }
 
     }
