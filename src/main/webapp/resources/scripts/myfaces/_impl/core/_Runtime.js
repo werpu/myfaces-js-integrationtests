@@ -580,7 +580,9 @@ if (!myfaces._impl.core._Runtime) {
                 var clzProto = newClazz.prototype;
                 clzProto.constructor = newCls;
                 clzProto._parentCls = extendCls.prototype;
-                clzProto._nameSpace = className;
+                //in case of overrides the namespace is altered with mfclazz
+                //we want the final namespace
+                clzProto._nameSpace = className.replace(/\._mfClazz$/+,"");
                 /**
                  * @ignore
                  */
