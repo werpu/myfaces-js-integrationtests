@@ -705,7 +705,7 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
 
                 finalMsg.push(exception.message);
                 this.sendError(request, context,
-                        mfInternal.title || this.CLIENT_ERROR, mfInternal.name || exception.name, finalMsg.join("˜\n"));
+                        mfInternal.title || this.CLIENT_ERROR, mfInternal.name || exception.name, finalMsg.join("\n"));
             }
 
     }
