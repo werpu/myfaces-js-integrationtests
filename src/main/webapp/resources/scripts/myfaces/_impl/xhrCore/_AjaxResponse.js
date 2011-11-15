@@ -775,6 +775,8 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
         var finalTitle = title || _Impl.MALFORMEDXML;
         var finalName = name || _Impl.MALFORMEDXML;
         var finalMessage = message || "";
+        //TODO caller handling here and in the calling code
+        //TODO _namespace comes with _mfClazz we need to chage that
         return this._Lang.makeException(finalTitle, finalName, this._nameSpace, (arguments.caller)? arguments.caller.toString() : "_raiseError", finalMessage);
     }
 });
