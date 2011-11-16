@@ -86,8 +86,12 @@ _MF_CLS(_PFX_XHR + "engine.Xhr1", myfaces._impl.xhrCore.engine.BaseRequest, /** 
         //we have to simulate the attributes as well
         var xhr = this._xhrObject;
         var XHRConst = this._XHRConst;
+        try {
         this.readyState = xhr.readyState;
-        this.status = xhr.status;
+        this.status = ""+xhr.status;
+        } catch(e) {
+            //IE 6 has an internal error
+        }
 
         switch (this.readyState) {
 
@@ -168,4 +172,6 @@ _MF_CLS(_PFX_XHR + "engine.Xhr1", myfaces._impl.xhrCore.engine.BaseRequest, /** 
     getXHRObject: function() {
         return this._xhrObject;
     }
+
+
 });
