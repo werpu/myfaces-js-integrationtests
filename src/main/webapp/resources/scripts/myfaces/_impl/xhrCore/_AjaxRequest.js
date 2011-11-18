@@ -150,7 +150,8 @@ _MF_CLS(_PFX_XHR + "_AjaxRequest", _MF_OBJECT, /** @lends myfaces._impl.xhrCore.
 
             var contentType = this._contentType;
 
-            contentType = contentType + "; charset:" + (this._encoding  ||this._Dom.getEncoding());
+            contentType = contentType+"; charset=" + ((this._encoding) ? this._encoding: "ISO-8859-15");
+            //(this._encoding  ||this._Dom.getEncoding());
 
 
             xhr.setRequestHeader(this._CONTENT_TYPE, contentType);

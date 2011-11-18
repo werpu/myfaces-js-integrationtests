@@ -21,7 +21,9 @@ package extras.apache.org.jsintegration.other;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import java.io.Serializable;
+import java.util.Map;
 
 /**
  * @author Werner Punz (latest modification by $Author$)
@@ -35,6 +37,8 @@ public class EncodingBean implements Serializable
     String text = "";
 
     public String doIncrease() {
+        Map testMap = FacesContext.getCurrentInstance().getExternalContext().getRequestHeaderMap();
+        String contentType = (String) testMap.get("Content-Type");
         cnt++;
         return null;
     }

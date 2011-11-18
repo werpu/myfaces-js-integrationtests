@@ -1008,27 +1008,7 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
     },
 
     getEncoding: function(defaults) {
-        return "ISO-8859-15";
-        if(!this._encoding) {
-            this._encoding = document.charset ||document.characterSet;
-            if(this._encoding) return this._encoding;
-            //alternative method over parsing
-            var len = document.childNodes.length;
-            var encodingMatch =/encoding\s*\=\s*['"](([^'"])+)['"]/i;
-            for(var cnt = 0; cnt < len; cnt++) {
-               var node = document.childNodes[cnt];
-               var val = node.textContent ||node.nodeValue;
-               if(val) {
-                   var res = encodingMatch.exec(val);
-                   if(res.length > 1) {
-                       this._encoding = res[1];
-                       return res[1];
-                   }
-               }
-            }
-            this._this._encoding = defaults ||"utf-8";
-        }
-        return defaults || this._encoding;
+       return defaults || "utf-8";
     }
 });
 
