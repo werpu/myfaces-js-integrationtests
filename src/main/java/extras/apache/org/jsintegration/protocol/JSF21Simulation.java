@@ -1,9 +1,11 @@
 package extras.apache.org.jsintegration.protocol;
 
-import extras.apache.org.jsintegration.protocol.xmlNodes.*;
+import extras.apache.org.jsintegration.protocol.xmlNodes.Changes;
+import extras.apache.org.jsintegration.protocol.xmlNodes.ErrorResponse;
+import extras.apache.org.jsintegration.protocol.xmlNodes.PartialResponse;
+import extras.apache.org.jsintegration.protocol.xmlNodes.Update;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

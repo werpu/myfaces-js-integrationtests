@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+<!DOCTYPE html
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:cust="http://java.sun.com/jsf/composite/components"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+    <script type="text/javascript" src="../resources/scripts/jquery164/jquery.js"></script>
+
+    <cust:imports />
+    <cust:unittest />
+
+    <style type="text/css">
+        @import "../styles/style.css";
+    </style>
+    <ui:insert name="header" />
+</h:head>
+<h:body>
+    <ui:insert name="controls">
+        <a href="./finalResults.jsf" class="gotoFinalResults" >Go To the Results page</a>
+        <div id="myfaces.logging" />
+    </ui:insert>
+
+
+    <ui:insert name="content" />
+</h:body>
+</html>

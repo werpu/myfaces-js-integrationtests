@@ -670,10 +670,10 @@ _MF_SINGLTN(_PFX_UTIL + "_Lang", Object, /** @lends myfaces._impl._util._Lang.pr
     makeException: function(title, name, callerCls, callFunc, message) {
         var ret = new Error(message || "");
         ret._mfInternal = {};
-        ret._mfInternal.name = name || "clientError";
-        ret._mfInternal.title = title || "clientError";
-        ret._mfInternal.caller = callerCls || this._nameSpace;
-        ret._mfInternal.callFunc = callFunc || (""+arguments.caller.toString());
+        ret._mfInternal.name = name ||"clientError";
+        ret._mfInternal.title = title ||"clientError";
+        ret._mfInternal.caller = callerCls ||this._nameSpace;
+        ret._mfInternal.callFunc = callFunc ||(""+arguments.caller.toString());
         return ret;
     }
 });
