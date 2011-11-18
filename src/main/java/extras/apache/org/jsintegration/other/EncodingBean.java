@@ -32,6 +32,7 @@ import java.io.Serializable;
 public class EncodingBean implements Serializable
 {
     int cnt = 0;
+    String text = "";
 
     public String doIncrease() {
         cnt++;
@@ -46,5 +47,15 @@ public class EncodingBean implements Serializable
     public void setCnt(int cnt)
     {
         this.cnt = cnt;
+    }
+
+    public String getText()
+    {
+        return text;
+    }
+
+    public void setText(String text)
+    {
+        this.text = text;
     }
 }

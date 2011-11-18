@@ -22,20 +22,6 @@
 <ui:composition template="../templates/template-iso8859-15.xhtml">
     <ui:define name="content">
 
-        <h:outputScript library="scripts" name="testcases/test15-jsf22delay.js" target="head"/>
-        <script type="text/javascript">
-            /**
-             helpper function to encapsule the recurring parts
-             @param source the source (same as the source of jsf.ajax request
-             @param event the event which causes the trigger
-             @param options the options passed down
-             @param target a helper target to trigger various simulation backend servlets
-             */
-            function emitPPR(source, event, options, target) {
-                document.getElementById("testform").action = target;
-                jsf.ajax.request(/*String|Dom Node*/ source, /*|EVENT|*/ event, /*{|OPTIONS|}*/ options);
-            }
-        </script>
 
 
         <h2>
@@ -43,7 +29,9 @@
         </h2>
         <h:form id="testform" prependId="false">
             Press fast for a delay
+            <h:inputText value="#{encodingBean.text}" />
             <h:outputText id="output" value="Blörks #{encodingBean.cnt} zahl über...$%" />
+
 
             <h:commandLink id="pressme" action="#{encodingBean.doIncrease}" value="Über Pressen">
                 <f:ajax render="testform" execute="testform" />

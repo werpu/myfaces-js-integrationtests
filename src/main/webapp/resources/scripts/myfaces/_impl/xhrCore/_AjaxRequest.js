@@ -149,9 +149,9 @@ _MF_CLS(_PFX_XHR + "_AjaxRequest", _MF_OBJECT, /** @lends myfaces._impl.xhrCore.
             xhr.timeout = this._timeout || 0;
 
             var contentType = this._contentType;
-            if (this._encoding) {
-                contentType = contentType + "; charset:" + this._encoding;
-            }
+
+            contentType = contentType + "; charset:" + (this._encoding  ||this._Dom.getEncoding());
+
 
             xhr.setRequestHeader(this._CONTENT_TYPE, contentType);
             xhr.setRequestHeader(this._HEAD_FACES_REQ, this._VAL_AJAX);
