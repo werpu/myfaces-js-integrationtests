@@ -21,7 +21,12 @@
       xmlns:f="http://java.sun.com/jsf/core">
 <ui:composition template="../templates/template-iso8859-15.xhtml">
     <ui:define name="content">
-
+        <script type="text/javascript">
+            function emitPPR(origin, evt) {
+                document.getElementById("testform").action = "./test.encoding";
+                jsf.ajax.request(origin, evt, {execute:"testform", render:"@none"});
+            }
+        </script>
 
 
         <h2>
@@ -29,12 +34,13 @@
         </h2>
         <h:form id="testform" prependId="false">
             Press fast for a delay
-            <h:inputText value="#{encodingBean.text}" />
+            <h:inputText id="inputtext" value="#{encodingBean.text}" />
             <h:outputText id="output" value="Blörks #{encodingBean.cnt} zahl über...$%" />
 
 
-            <h:commandLink id="pressme" action="#{encodingBean.doIncrease}" value="Über Pressen">
-                <f:ajax render="testform" execute="testform" />
+            <h:commandLink id="pressme" action="#{encodingBean.doIncrease}"
+                           onclick="emitPPR(this, event); return false;" value="Über Pressen">
+
             </h:commandLink>
         </h:form>
     </ui:define>

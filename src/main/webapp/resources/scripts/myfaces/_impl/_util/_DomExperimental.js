@@ -18,7 +18,11 @@ if (_MF_SINGLTN) {
             var results = regex.exec(href);
             return (results != null) ? results[1] : null;
         },
-
+        /**
+         * detection of the html5 form attribute
+         *
+         * @param item the item to be investigated
+         */
         html5FormDetection: function(item) {
             var browser = this._RT.browser;
             //ie shortcut, not really needed but speeds things up
@@ -29,7 +33,12 @@ if (_MF_SINGLTN) {
             return (elemForm) ? this.byId(elemForm) : null;
         },
 
-        //TODO move this into the extended features part
+        /**
+         * checks if the current form is a candidate for
+         * a special multipart request handling
+         *
+         * @param executes
+         */
         isMultipartCandidate: function(executes) {
             if (this._Lang.isString(executes)) {
                 executes = this._Lang.strToArray(executes, /\s+/);
@@ -44,10 +53,18 @@ if (_MF_SINGLTN) {
             }
             return false;
         },
+        /**
+         * fetches the current document encoding
+         *
+         * @param defaults the default encoding which should be used
+         * if no encoding could be found
+         */
         getEncoding: function(defaults) {
-            if (!this._encoding) {
-                this._encoding = document.charset || document.characterSet;
-                if (this._encoding) return this._encoding;
+            var encoding = "_encoding";
+            var T = this;
+            if (!this[encoding]) {
+                this[encoding] = document.charset || document.characterSet;
+                if (this[encoding]) return this[encoding];
                 //alternative method over parsing
                 var len = document.childNodes.length;
                 var encodingMatch = /encoding\s*\=\s*['"](([^'"])+)['"]/i;
@@ -62,9 +79,9 @@ if (_MF_SINGLTN) {
                         }
                     }
                 }
-                this._this._encoding = defaults || "utf-8";
+                this[encoding] = defaults || "utf-8";
             }
-            return defaults || this._encoding;
+            this[encoding];
         }
     });
 }

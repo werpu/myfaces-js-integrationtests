@@ -538,6 +538,8 @@ _MF_SINGLTN(_PFX_UTIL + "_Lang", Object, /** @lends myfaces._impl._util._Lang.pr
      */
     createFormDataDecorator: function(formData) {
         //we simulate the dom level 2 form element here
+        //escape works but then the viewstate is not recognized, TODO check what the issue is
+        var encoder = encodeURIComponent;//(myfaces._impl._util._Dom.getEncoding("utf-8") == "utf-8")?encodeURIComponent : escape;
         var _newCls = null;
         var bufInstance = null;
         if (!this.FormDataDecoratorArray) {
@@ -547,7 +549,7 @@ _MF_SINGLTN(_PFX_UTIL + "_Lang", Object, /** @lends myfaces._impl._util._Lang.pr
             };
             _newCls = this.FormDataDecoratorArray;
             _newCls.prototype.append = function(key, val) {
-                this._valBuf.push([encodeURIComponent(key), encodeURIComponent(val)].join("="));
+                this._valBuf.push([encoder(key), encoder(val)].join("="));
                 this._idx[key] = true;
             };
             _newCls.prototype.hasKey = function(key) {
@@ -565,7 +567,7 @@ _MF_SINGLTN(_PFX_UTIL + "_Lang", Object, /** @lends myfaces._impl._util._Lang.pr
             };
             _newCls = this.FormDataDecoratorString;
             _newCls.prototype.append = function(key, val) {
-                this._valBuf.push([encodeURIComponent(key), encodeURIComponent(val)].join("="));
+                this._valBuf.push([encoder(key), encoder(val)].join("="));
                 this._idx[key] = true;
             };
             //for now we check only for keys which are added subsequently otherwise we do not perform any checks

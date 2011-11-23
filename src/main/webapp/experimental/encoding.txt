@@ -1,0 +1,20 @@
+encoding issues:
+a) all browsers except ie and opera ignore an encoding passed down in the request header
+
+b) jsf determines the content type upon the first request and then stores it in the session
+it therefore ignores the encoding pushed down by the ajax request
+
+so theoretically b kills a as bug
+
+Next problem
+on the javascript side we cannot use encodeURIComponent which works only on UTF-8 properly
+
+encodeUriComponent:
+Encodes a Uniform Resource Identifier (URI)
+component by replacing each instance of certain characters by one,
+two, or three escape sequences representing the UTF-8 encoding of the character.
+
+So we get here escape sequences which are utf based. So an internal conversion from
+iso to unicode is performend here, which then the server should restore back to iso.
+
+

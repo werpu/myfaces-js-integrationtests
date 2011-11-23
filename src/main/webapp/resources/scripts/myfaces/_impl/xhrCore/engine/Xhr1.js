@@ -41,6 +41,11 @@ _MF_CLS(_PFX_XHR + "engine.Xhr1", myfaces._impl.xhrCore.engine.BaseRequest, /** 
         this._Lang.applyArgs(this, params);
     },
 
+    setCharacterEncoding: function(encoding) {
+        //if(this._xhrObject)
+        //this._xhrObject.setCharacterEncoding(encoding);
+    },
+
     // void open(DOMString method, DOMString url, boolean async);
     open: function(method, url, async) {
 
