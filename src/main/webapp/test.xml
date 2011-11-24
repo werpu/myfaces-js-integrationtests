@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<partial-response>
+    <changes>
+        <update id="testform"><![CDATA[
+            <form id="testform" name="testform"
+            method="post" action="/experimental/iso-8859-15.jsf"
+            enctype="application/x-www-form-urlencoded">
+                    Press fast for a delay
+                    <input id="testform:inputtext"
+                    name="testform:inputtext"
+                    type="text" value="&euro;&euro;&euro;&euro;&euro;" />
+                    <span id="testform:outputtext">&euro;&euro;&euro;&euro;&euro;</span>
+                    <span id="testform:output">Bl&ouml;rks 33 zahl &uuml;ber...$%</span>
+                    <a href="#"
+                    onclick="jsf.util.chain(document.getElementById('testform:pressme'), event,'jsf.ajax.request(\'testform:pressme\',event,{execute:\'@this testform:inputtext testform:pressme\',render:\'testform\',\'javax.faces.behavior.event\':\'action\'})'); return false;"
+                    id="testform:pressme" name="testform:pressme">&Uuml;ber Pressen</a>
+                    <input type="hidden" name="testform_SUBMIT" value="1" /></form>]]>
+            </update>
+        <update id="javax.faces.ViewState">
+            <![CDATA[X4esYFadbDOTm2+eJEayTfM3M/7uX1jS5+ZVXaklBMszHBFWKU4GwDucc84o8baxZJzgvTk8yLtX6ptwas+25gXNr8ivBBplW4WUOPqc0q87kwchVx50nD0YDYZKVUndUQ3X+09LD6e0YRrTgmBa4EMJkro=]]></update>
+    </changes>
+</partial-response>

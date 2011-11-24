@@ -23,20 +23,20 @@
     <ui:define name="content">
 
 
-
         <h2>
             This is a testcase for the jsf2.2 delay functionality
         </h2>
-        <h:form id="testform" prependId="false">
-            Press fast for a delay
-            <h:inputText value="#{encodingBean.text}" />
-            <h:outputText id="output" value="Blörks #{encodingBean.cnt} zahl über...$%" />
-
-
-            <h:commandLink id="pressme" action="#{encodingBean.doIncrease}" value="Über Pressen">
-                <f:ajax render="testform" execute="testform" />
-            </h:commandLink>
-        </h:form>
+        <f:view id="testview">
+            <h:form id="testform">
+                Press fast for a delay
+                <h:inputText id="inputtext" value="#{encodingBean.text}"/>
+                <h:outputText id="outputtext" value="#{encodingBean.text}"/>
+                <h:outputText id="output" value="Blörks #{encodingBean.cnt} zahl über...$%"/>
+                <h:commandLink id="pressme" action="#{encodingBean.doIncrease}" value="Über Pressen">
+                    <f:ajax render="testform" execute="@this inputtext pressme"/>
+                </h:commandLink>
+            </h:form>
+        </f:view>
     </ui:define>
 </ui:composition>
 </html>
