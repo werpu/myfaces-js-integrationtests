@@ -99,7 +99,7 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.AjaxStatis
         this._currentGroup.finalResult.numberOfTestsPerformed = this._numberOfTestsPerformed;
         this._currentGroup.finalResult.numberOfTestsSucceeded = this._numberOfTestsSucceeded;
         this._currentGroup.finalResult.numberOfTestsFailed = this._numberOfTestsFailed;
-        this._currentGroup.finalResult.performanceTime = testGroup.attr("performanceTime") ||Â 0;
+        this._currentGroup.finalResult.performanceTime = testGroup.attr("performanceTime") || 0;
         this._sendTestResults();
     },
 

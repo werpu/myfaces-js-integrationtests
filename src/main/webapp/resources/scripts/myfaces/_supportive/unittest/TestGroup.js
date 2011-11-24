@@ -42,7 +42,7 @@ _class("myfaces._supportive.unittest.TestGroup", Object, {
         this._statisticsEngine = this._statisticsEngine || new myfaces._supportive.unittest.AjaxStatisticsEngine();
         this.tearDown = this._Lang.hitch(this, this.tearDown);
         this._tearDown = this._Lang.hitch(this, this._tearDown);
-        this._url = this._url || window.location.href.replace(/autotest\=true\&{0,1}/gi,"");
+        this._url = this._url ||window.location.href.replace(/autotest\=true\&{0,1}/gi,"");
     },
 
     addCase: function(testCase) {
