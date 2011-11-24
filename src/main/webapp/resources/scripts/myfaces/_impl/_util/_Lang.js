@@ -528,6 +528,13 @@ _MF_SINGLTN(_PFX_UTIL + "_Lang", Object, /** @lends myfaces._impl._util._Lang.pr
                 (this.exists(xmlContent, "parseError.errorCode") && xmlContent.parseError.errorCode != 0) ||
                 findParseError(xmlContent);
     },
+    _extendedEscape: function(instr) {
+        instr = escape(instr);
+        instr = instr.replace(/\+/g, "%2B");
+
+        return instr;
+    },
+
     /**
      * creates a neutral form data wrapper over an existing form Data element
      * the wrapper delegates following methods, append
@@ -539,7 +546,7 @@ _MF_SINGLTN(_PFX_UTIL + "_Lang", Object, /** @lends myfaces._impl._util._Lang.pr
     createFormDataDecorator: function(formData) {
         //we simulate the dom level 2 form element here
         //escape works but then the viewstate is not recognized, TODO check what the issue is
-        var encoder = encodeURIComponent;//(myfaces._impl._util._Dom.getEncoding("utf-8") == "utf-8")?encodeURIComponent : escape;
+        var encoder = encodeURIComponent; // (myfaces._impl._util._Dom.getEncoding("utf-8") == "utf-8") ? encodeURIComponent : this._extendedEscape;
         var _newCls = null;
         var bufInstance = null;
         if (!this.FormDataDecoratorArray) {
