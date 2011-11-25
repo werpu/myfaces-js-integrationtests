@@ -80,13 +80,13 @@ _class("myfaces._supportive.unittest.TestCase", Object, {
     assertTrue: function( message, condition) {
         if(this._finalFail) return;
         condition = !! condition;
-        this._failed = this._failed || !this._statisticsEngine.assertTrue(this._description, message, condition);
+        this._failed = this._failed ||!this._statisticsEngine.assertTrue(this._description, message, condition);
     },
 
     assertFalse: function( message, condition) {
         if(this._finalFail) return;
         condition = !! condition;
-        this._failed = this._failed || !this._statisticsEngine.assertFalse(this._description, message, condition);
+        this._failed = this._failed ||!this._statisticsEngine.assertFalse(this._description, message, condition);
     },
 
     fail: function(message) {

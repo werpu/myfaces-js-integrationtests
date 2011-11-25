@@ -137,7 +137,7 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
      * b) passThrough handling with a map copy with a filter map block map
      */
     request : function(elem, event, options) {
-        if (this._delayTimeout) {
+        if(this._delayTimeout) {
             clearTimeout(this._delayTimeout);
             delete this._delayTimeout;
         }
@@ -561,7 +561,7 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
      */
     getProjectStage : function() {
         //since impl is a singleton we only have to do it once at first access
-        if (!this._projectStage) {
+        if(!this._projectStage) {
             var PRJ_STAGE = "projectStage",
                     STG_PROD = "Production",
 
