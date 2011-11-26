@@ -8,6 +8,9 @@ function assertEvent(testcase, data, eventComparator, global) {
     testcase.assertTrue((global ? "[Global Handler]" : "[Local Handler]") + "event status is part of the standard events" + data.status, eventComparator[data.status]);
     testcase.assertTrue((global ? "[Global Handler]" : "[Local Handler]") + "event.source is set", data.source);
     testcase.assertTrue((global ? "[Global Handler]" : "[Local Handler]") + "event.source.id is set", data.source.id);
+    if(data.status === "complete" || data.status === "success") {
+        testcase.assertTrue((global ? "[Global Handler]" : "[Local Handler]") + "responseText and responseXML must be set", (!!data.responseText) && (!!data.responseXML) );
+    }
 
 }
 var AjaxCase = myfaces._supportive.unittest.JSFAjaxTestCase;

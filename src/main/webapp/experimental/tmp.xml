@@ -1,0 +1,16 @@
+<h:form id="firstForm" prependId="false">
+    <h:panelGroup layout="block" id="renderTarget1"/>
+    <h:inputText id="first_input" value="#{multiFormBean.inputText1}"/>
+    <h:commandButton action="#{multiFormBean.doSubmit1}" value="submit1"
+                     onclick="javascript:jsf.ajax.request(this, event, {execute:'firstForm', render:'renderTarget1 renderTarget2'}); return false;">
+
+    </h:commandButton>
+</h:form>
+<h:form id="secondForm" prependId="false">
+<h:panelGroup layout="block" id="renderTarget2"/>
+<h:inputText id="second_input" value="#{multiFormBean.inputText2}"/>
+<h:commandButton action="#{multiFormBean.doSubmit2}" value="submit2"
+                 onclick="javascript:jsf.ajax.request(this, event, {execute:'firstForm', render:'renderTarget1 renderTarget2'}); return false;">
+
+</h:commandButton>
+</h:form>

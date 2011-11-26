@@ -230,7 +230,7 @@ _class("myfaces._supportive.unittest.TestGroup", Object, {
             }
         },300);
     },
-     attr: function(name, value) {
+    attr: function(name, value) {
         if ('undefined' != typeof value) {
             this["_" + name] = value;
             return value;
