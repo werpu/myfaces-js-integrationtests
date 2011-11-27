@@ -30,7 +30,11 @@
        </h2>
        <script type="text/javascript" >
            function emitPPR() {
-                jQuery("testForm:tabA:header:inactive").click();
+                //TODO issue a click on tabB or a triggered switch
+                //just issuing the ajax request does not cut it
+                jsf.ajax.request("testForm:tabB", null, {execute:"@component",
+                "org.richfaces.ajax.component":"testForm:tabB",
+                render:"@component", "AJAX:EVENTS_COUNT":1,"testForm:tabB":"testForm:tabB",testForm:"testForm"});
            }
        </script>
         <h:form id="testForm">
