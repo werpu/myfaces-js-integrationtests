@@ -32,8 +32,6 @@
         <param-value>Production</param-value>
     </context-param>
 
-
-
     <context-param>
         <param-name>org.apache.myfaces.AUTO_SCROLL</param-name>
         <param-value>true</param-value>
@@ -54,7 +52,6 @@
         <listener-class>org.apache.myfaces.webapp.StartupServletContextListener</listener-class>
     </listener>
 
-
     <servlet>
         <servlet-name>MockupServlet</servlet-name>
         <servlet-class>extras.apache.org.jsintegration.protocol.ResponseMockup</servlet-class>
@@ -67,7 +64,6 @@
         <!--
          <multipart-config>true</multipart-config>
          <load-on-startup>1</load-on-startup>
-
         -->
     </servlet>
 

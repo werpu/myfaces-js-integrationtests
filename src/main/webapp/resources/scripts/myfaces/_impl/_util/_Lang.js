@@ -661,11 +661,11 @@ _MF_SINGLTN(_PFX_UTIL + "_Lang", Object, /** @lends myfaces._impl._util._Lang.pr
      * creates an exeption with additional internal parameters
      * for extra information
      *
-     * @param {String} title the exception title
+     * @param {String} title the exception title
      * @param {String} name  the exception name
-     * @param {String} callerCls the caller class
-     * @param {String} callFunc the caller function
-     * @param {String} message the message for the exception
+     * @param {String} callerCls the caller class
+     * @param {String} callFunc the caller function
+     * @param {String} message the message for the exception
      */
     makeException: function(title, name, callerCls, callFunc, message) {
         var ret = new Error(message || "");
