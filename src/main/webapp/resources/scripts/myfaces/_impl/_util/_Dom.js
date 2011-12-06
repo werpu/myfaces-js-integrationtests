@@ -576,8 +576,6 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
         }
     },
 
-
-
     /**
      * for performance reasons we work with replaceElement and replaceElements here
      * after measuring performance it has shown that passing down an array instead
@@ -721,10 +719,7 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
             //will not be called in dom level3 compliant browsers
             return this._recursionSearchAll(rootNode, filter, deepScan);
         }
-
     },
-
-
 
     /**
      * the faster dom iterator based search, works on all newer browsers

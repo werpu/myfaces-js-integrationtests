@@ -26,8 +26,8 @@ import javax.faces.context.FacesContext;
 /**
  * @author Werner Punz (latest modification by $Author$)
  * @version $Revision$ $Date$
- *
- * Central information singleton
+ *          <p/>
+ *          Central information singleton
  */
 @ManagedBean
 @ApplicationScoped
@@ -42,8 +42,4 @@ public class Information
                 .getInitParameter("org.apache.extras.myfaces.ImplType");
         return (implType != null) ? implType : IMPL_MYFACES;
     }
-
-
-
-
 }
