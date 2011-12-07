@@ -119,7 +119,6 @@ if (!document.querySelectorAll && _MF_SINGLTN) {
         _outerHTMLNonCompliant:function (item, markup) {
 
             var b = this._RT.browser;
-            var evalNodes = null;
 
             try {
                 //check for a subtable rendering case
@@ -463,9 +462,10 @@ if (!document.querySelectorAll && _MF_SINGLTN) {
                 if (this.IE_QUIRKS_EVENTS[attr]) {
                     if (this._Lang.isString(attr)) {
                         //event resolves to window.event in ie
+                        var _t = this;
                         node.setAttribute(attr, function () {
                             //event implicitly used
-                            return this._Lang.globalEval(val);
+                            return _t._Lang.globalEval(val);
                         });
                     }
                 } else {
