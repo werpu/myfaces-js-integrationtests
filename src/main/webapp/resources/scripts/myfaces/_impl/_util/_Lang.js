@@ -418,8 +418,7 @@ _MF_SINGLTN(_PFX_UTIL + "_Lang", Object, /** @lends myfaces._impl._util._Lang.pr
      * @param delimiter the delimiter
      */
     keyValToStr: function(key, val, delimiter) {
-        var ret = [];
-        pushRet = this.hitch(ret, ret.push);
+        var ret = [], pushRet = this.hitch(ret, ret.push);
         pushRet(key);
         pushRet(val);
         delimiter = delimiter || "\n";
