@@ -56,19 +56,21 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
     runCss: function(item/*, xmlData*/) {
 
         var  UDEF = "undefined",
-                applyStyle = this._Lang.hitch(this, function(item, style) {
+                _RT = this._RT,
+                _Lang = this._Lang,
+                applyStyle = function(item, style) {
                     var newSS = document.createElement("style");
 
                     newSS.setAttribute("rel", item.getAttribute("rel") || "stylesheet");
                     newSS.setAttribute("type", item.getAttribute("type") || "text/css");
                     document.getElementsByTagName("head")[0].appendChild(newSS);
                     //ie merrily again goes its own way
-                    if (window.attachEvent && !this._RT.isOpera && UDEF != typeof newSS.styleSheet && UDEF != newSS.styleSheet.cssText) newSS.styleSheet.cssText = style;
+                    if (window.attachEvent && _RT.isOpera && UDEF != typeof newSS.styleSheet && UDEF != newSS.styleSheet.cssText) newSS.styleSheet.cssText = style;
                     else newSS.appendChild(document.createTextNode(style));
-                }),
+                },
 
-                execCss = this._Lang.hitch(this, function(item) {
-                    var equalsIgnoreCase = this._Lang.equalsIgnoreCase;
+                execCss = function(item) {
+                    var equalsIgnoreCase = _Lang.equalsIgnoreCase;
                     var tagName = item.tagName;
                     if (tagName && equalsIgnoreCase(tagName, "link") && equalsIgnoreCase(item.getAttribute("type"), "text/css")) {
                         applyStyle(item, "@import url('" + item.getAttribute("href") + "');");
@@ -88,7 +90,7 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
 
                         applyStyle(item, innerText.join(""));
                     }
-                });
+                };
 
         try {
             var scriptElements = this.findByTagNames(item, {"link":1,"style":1}, true);
@@ -115,60 +117,60 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
      * @param {Node} item
      */
     runScripts: function(item, xmlData) {
-        var _Lang = this._Lang;
-        var finalScripts = [],
+        var _Lang = this._Lang,
+            _RT = this._RT,
+            finalScripts = [],
+            execScrpt = function(item) {
+                var tagName = item.tagName;
+                if (tagName && _Lang.equalsIgnoreCase(tagName, "script")) {
+                    var src = item.getAttribute('src');
+                    if ('undefined' != typeof src
+                            && null != src
+                            && src.length > 0
+                            ) {
+                        //we have to move this into an inner if because chrome otherwise chokes
+                        //due to changing the and order instead of relying on left to right
+                        if ((src.indexOf("ln=scripts") == -1 && src.indexOf("ln=javax.faces") == -1) || (src.indexOf("/jsf.js") == -1
+                                && src.indexOf("/jsf-uncompressed.js") == -1)) {
+                            if (finalScripts.length) {
+                                //script source means we have to eval the existing
+                                //scripts before running the include
+                                _RT.globalEval(finalScripts.join("\n"));
 
-                execScrpt = _Lang.hitch(this, function(item) {
-                    var tagName = item.tagName;
-                    if (tagName && _Lang.equalsIgnoreCase(tagName, "script")) {
-                        var src = item.getAttribute('src');
-                        if ('undefined' != typeof src
-                                && null != src
-                                && src.length > 0
-                                ) {
-                            //we have to move this into an inner if because chrome otherwise chokes
-                            //due to changing the and order instead of relying on left to right
-                            if ((src.indexOf("ln=scripts") == -1 && src.indexOf("ln=javax.faces") == -1) || (src.indexOf("/jsf.js") == -1
-                                    && src.indexOf("/jsf-uncompressed.js") == -1)) {
-                                if (finalScripts.length) {
-                                    //script source means we have to eval the existing
-                                    //scripts before running the include
-                                    this._RT.globalEval(finalScripts.join("\n"));
-
-                                    finalScripts = [];
-                                }
-                                //if jsf.js is already registered we do not replace it anymore
-                                if (!window.jsf) {
-                                    this._RT.loadScriptEval(src, item.getAttribute('type'), false, "UTF-8", false);
-                                }
+                                finalScripts = [];
                             }
-                            //TODO handle embedded scripts
-                        } else {
-                            // embedded script auto eval
-                            var test = (!xmlData) ? item.text : _Lang.serializeChilds(item);
-                            var go = true;
-                            while (go) {
-                                go = false;
-                                if (test.substring(0, 1) == " ") {
-                                    test = test.substring(1);
-                                    go = true;
-                                }
-                                if (test.substring(0, 4) == "<!--") {
-                                    test = test.substring(4);
-                                    go = true;
-                                }
-                                if (test.substring(0, 11) == "//<![CDATA[") {
-                                    test = test.substring(11);
-                                    go = true;
-                                }
+                            //if jsf.js is already registered we do not replace it anymore
+                            if (!window.jsf) {
+                                _RT.loadScriptEval(src, item.getAttribute('type'), false, "UTF-8", false);
                             }
-                            // we have to run the script under a global context
-                            //we store the script for less calls to eval
-                            finalScripts.push(test);
-
                         }
+                        //TODO handle embedded scripts
+                    } else {
+                        // embedded script auto eval
+                        var test = (!xmlData) ? item.text : _Lang.serializeChilds(item);
+                        var go = true;
+                        while (go) {
+                            go = false;
+                            if (test.substring(0, 1) == " ") {
+                                test = test.substring(1);
+                                go = true;
+                            }
+                            if (test.substring(0, 4) == "<!--") {
+                                test = test.substring(4);
+                                go = true;
+                            }
+                            if (test.substring(0, 11) == "//<![CDATA[") {
+                                test = test.substring(11);
+                                go = true;
+                            }
+                        }
+                        // we have to run the script under a global context
+                        //we store the script for less calls to eval
+                        finalScripts.push(test);
+
                     }
-                });
+                }
+            };
         try {
             var scriptElements = this.findByTagName(item, "script", true);
             if (scriptElements == null) return;
@@ -176,7 +178,7 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
                 execScrpt(scriptElements[cnt]);
             }
             if (finalScripts.length) {
-                this._RT.globalEval(finalScripts.join("\n"));
+                _RT.globalEval(finalScripts.join("\n"));
             }
         } finally {
             //the usual ie6 fix code
