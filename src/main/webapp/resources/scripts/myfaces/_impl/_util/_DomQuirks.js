@@ -164,8 +164,6 @@ if (!document.querySelectorAll && _MF_SINGLTN) {
          */
         _buildNodesNonCompliant:function (markup) {
 
-            var evalNodes = null;
-
             //now to the non w3c compliant browsers
             //http://blogs.perl.org/users/clinton_gormley/2010/02/forcing-ie-to-accept-script-tags-in-innerhtml.html
             //we have to cope with deficiencies between ie and its simulations in this case
@@ -185,7 +183,7 @@ if (!document.querySelectorAll && _MF_SINGLTN) {
             //fortunately a table element also works which is less critical than form elements regarding
             //the inner content
             dummyPlaceHolder.innerHTML = "<table><tbody><tr><td>" + markup + "</td></tr></tbody></table>";
-            evalNodes = dummyPlaceHolder;
+            var evalNodes = dummyPlaceHolder;
 
             for (var cnt = 0; cnt < depth; cnt++) {
                 evalNodes = evalNodes.childNodes[0];
@@ -198,6 +196,7 @@ if (!document.querySelectorAll && _MF_SINGLTN) {
                 dummyPlaceHolder.innerHTML = "<div>" + markup + "</div>";
                 //note this is triggered only in htmlunit no other browser
                 //so we are save here
+                //TODO Fix this (probaby ret is needed here, check the history)
                 evalNodes = this.detach(dummyPlaceHolder.childNodes[0].childNodes);
             }
 
@@ -545,6 +544,7 @@ if (!document.querySelectorAll && _MF_SINGLTN) {
             if (!node) return;
             var evtArr = this.IE_QUIRKS_EVENTS;
             for (var key in evtArr) {
+                if(!evtArr.hasOwnProperty(key)) continue;
                 if (key != "onunload" && node[key]) {
                     node[key] = null;
                 }
