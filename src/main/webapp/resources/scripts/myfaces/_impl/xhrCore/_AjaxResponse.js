@@ -214,7 +214,8 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
 
     _setVSTInnerForms: function(context, elem) {
 
-        var _Lang = this._Lang, _Dom = this._Dom, elem = _Dom.byIdOrName(elem);
+        var _Lang = this._Lang, _Dom = this._Dom;
+        elem = _Dom.byIdOrName(elem);
 
         var replacedForms = _Dom.findByTagName(elem, "form", false);
         var applyVST = _Lang.hitch(this, function(elem) {
@@ -330,13 +331,12 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
             //update the submitting forms viewstate to the new value
             // The source form has to be pulled out of the CURRENT document first because the context object
             // may refer to an invalid document if an update of the entire body has occurred before this point.
-            var viewStateValue = node.firstChild.nodeValue,
-                    mfInternal = context._mfInternal,
+            var mfInternal = context._mfInternal,
                     fuzzyFormDetection = this._Lang.hitch(this._Dom, this._Dom.fuzzyFormDetection),
                     elementId = (mfInternal) ? mfInternal["_mfSourceControlId"] : context.source.id,
                     sourceForm = (mfInternal) ? (document.forms[mfInternal["_mfSourceFormId"]] || fuzzyFormDetection(elementId)) : fuzzyFormDetection(elementId);
 
-            mfInternal.appliedViewState = viewStateValue;
+            mfInternal.appliedViewState = node.firstChild.nodeValue;
             //source form could not be determined either over the form identifer or the element
             //we now skip this phase and just add everything we need for the fixup code
 
@@ -508,9 +508,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
 
         newBody.appendChild(placeHolder);
 
-        var bodyData = null;
-
-        var doc = null;
+        var bodyData, doc = null;
 
         //we have to work around an xml parsing bug in Webkit
         //see https://issues.apache.org/jira/browse/MYFACES-3061
