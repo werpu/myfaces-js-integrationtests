@@ -237,7 +237,7 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
         }
 
         /**
-         * multiple transports upcoming jsf 2.1 feature currently allowed
+         * multiple transports upcoming jsf 2.x feature currently allowed
          * default (no value) xhrQueuedPost
          *
          * xhrQueuedPost
