@@ -7,7 +7,6 @@ package extras.apache.org.jsintegration.protocol;
 import extras.apache.org.jsintegration.protocol.xmlNodes.*;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,7 +31,7 @@ public class ResponseMockup extends HttpServlet
      * @param request  servlet request
      * @param response servlet response
      * @throws javax.servlet.ServletException if a servlet-specific error occurs
-     * @throws java.io.IOException      if an I/O error occurs
+     * @throws java.io.IOException            if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
@@ -136,8 +135,8 @@ public class ResponseMockup extends HttpServlet
                         "<div id='scriptreceiver'></div>\n" +
                         "        " +
                         "   <script type='text/javascript'>var b = true && true; document.getElementById" +
-                        "('scriptreceiver').innerHTML="+
-                        "'hello from embedded script & in the body'; "+
+                        "('scriptreceiver').innerHTML=" +
+                        "'hello from embedded script & in the body'; " +
                         "</script>            </div>" +
                         "    </div>" +
                         "</body>" +
@@ -305,7 +304,7 @@ public class ResponseMockup extends HttpServlet
                 out.println(root.toString());
             } else if (op.trim().toLowerCase().equals("table_insert_column_body"))
             {
-                 Changes changes = new Changes(root);
+                Changes changes = new Changes(root);
                 changes.addChild(new Insert2(changes, "body_row1_col1", "<td id='body_row1_col1_1_" + (elemCnt++) +
                         "'>inserted " +
                         "before" + elemCnt + "</td>" + "<td id='body_row1_col1_1_" + (elemCnt++) + "'>inserted " +
@@ -355,7 +354,7 @@ public class ResponseMockup extends HttpServlet
      * @param request  servlet request
      * @param response servlet response
      * @throws javax.servlet.ServletException if a servlet-specific error occurs
-     * @throws java.io.IOException      if an I/O error occurs
+     * @throws java.io.IOException            if an I/O error occurs
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -370,7 +369,7 @@ public class ResponseMockup extends HttpServlet
      * @param request  servlet request
      * @param response servlet response
      * @throws javax.servlet.ServletException if a servlet-specific error occurs
-     * @throws java.io.IOException      if an I/O error occurs
+     * @throws java.io.IOException            if an I/O error occurs
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
