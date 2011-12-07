@@ -156,9 +156,5 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.AjaxStatis
 
         xhr.send(data);
     }
-
-
-
-
 });
 
