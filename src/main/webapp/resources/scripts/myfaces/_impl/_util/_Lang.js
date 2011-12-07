@@ -254,6 +254,7 @@ _MF_SINGLTN(_PFX_UTIL + "_Lang", Object, /** @lends myfaces._impl._util._Lang.pr
         }
         var _undef = "undefined";
         for (var key in src) {
+            if(!src.hasOwnProperty(key)) continue;
             if (blockFilter && blockFilter[key]) {
                 continue;
             }
@@ -399,6 +400,7 @@ _MF_SINGLTN(_PFX_UTIL + "_Lang", Object, /** @lends myfaces._impl._util._Lang.pr
             }
         } else {
             for (var key in args) {
+                if(!args.hasOwnProperty(key)) continue;
                 if (UDEF != typeof dest["_" + key]) {
                     dest["_" + key] = args[key];
                 }

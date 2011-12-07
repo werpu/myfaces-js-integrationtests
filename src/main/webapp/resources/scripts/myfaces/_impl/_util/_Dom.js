@@ -53,11 +53,9 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
     constructor_: function() {
     },
 
-    runCss: function(item, xmlData) {
+    runCss: function(item/*, xmlData*/) {
 
-        var stylesheets = document.styleSheets,
-                finalCss = [],
-                UDEF = "undefined",
+        var  UDEF = "undefined",
                 applyStyle = this._Lang.hitch(this, function(item, style) {
                     var newSS = document.createElement("style");
 
@@ -110,19 +108,6 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
         }
     },
 
-
-    deleteScripts: function(nodeList) {
-        if (!nodeList || !nodeList.length) return;
-        var len = nodeList.length;
-        for (var cnt = 0; cnt < len; cnt++) {
-            var item = nodeList[cnt];
-            var src = item.getAttribute('src');
-            if (src && src.length > 0 && (src.indexOf("/jsf.js") != -1 || src.indexOf("/jsf-uncompressed.js") != -1)) {
-                continue;
-            }
-            this.deleteItem(item);
-        }
-    },
 
     /**
      * Run through the given Html item and execute the inline scripts
@@ -288,6 +273,7 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
         var ret = document.createElement(nodeName);
         if (attrs) {
             for (var key in attrs) {
+                if(!attrs.hasOwnProperty(key)) continue;
                 this.setAttribute(ret, key, attrs[key]);
             }
         }
@@ -440,13 +426,11 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
         }
     },
 
-    _isTable: function(item) {
-        return "table" == (item.nodeName || item.tagName).toLowerCase();
-    },
+
 
     /**
      * checks if the provided element is a subelement of a table element
-     * @param itemNodeName
+     * @param item
      */
     _isTableElement: function(item) {
         return !!this.TABLE_ELEMS[(item.nodeName || item.tagName).toLowerCase()];
@@ -477,8 +461,7 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
      * @param markup
      */
     _buildTableNodes: function(item, markup) {
-        var itemNodeName = (item.nodeName || item.tagName).toLowerCase(),
-                probe = document.createElement("div");
+        var itemNodeName = (item.nodeName || item.tagName).toLowerCase();
 
         var tmpNodeName = itemNodeName;
         var depth = 0;
@@ -502,19 +485,18 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
         return this.detach(dummyPlaceHolder.childNodes);
     },
 
-    _removeChildNodes: function(node, breakEventsOpen) {
+    _removeChildNodes: function(node /*, breakEventsOpen */) {
         if (!node) return;
         node.innerHTML = "";
     },
 
 
 
-    _removeNode: function(node, breakEventsOpen) {
+    _removeNode: function(node /*, breakEventsOpen*/) {
         if (!node) return;
         var parentNode = node.parentNode;
         if (parentNode) //if the node has a parent
             parentNode.removeChild(node);
-        return;
     },
 
 
@@ -554,7 +536,7 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
                 finalParams = params || ["item", "markup"];
 
         if (!item || !markup) {
-            _Lang.makeException(null, null,DOM, ""+caller,  _Lang.getMessage(ERR_PROV, null, DOM +"."+ caller, (!item) ? params[0] : params[1]));
+            _Lang.makeException(null, null,DOM, ""+caller,  _Lang.getMessage(ERR_PROV, null, DOM +"."+ caller, (!item) ? finalParams[0] : finalParams[1]));
             //throw Error(_Lang.getMessage(ERR_PROV, null, DOM + caller, (!item) ? params[0] : params[1]));
         }
     },
@@ -583,7 +565,7 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
      * a single node case is the 95% case
      *
      * @param item
-     * @param evalNodes
+     * @param evalNode
      */
     replaceElement: function(item, evalNode) {
         //browsers with defect garbage collection
@@ -641,6 +623,7 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
         if (fragment.querySelectorAll) {
             var query = [];
             for (var key in tagNames) {
+                if(!tagNames.hasOwnProperty(key)) continue;
                 query.push(key);
             }
             var res = [];
@@ -774,7 +757,6 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
             return;
         }
         node.setAttribute(attr, val);
-        return;
     },
 
     /**
@@ -870,7 +852,7 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
         return (1 == foundElements.length ) ? foundElements[0] : null;
     },
 
-    html5FormDetection: function(item) {
+    html5FormDetection: function(/*item*/) {
         return null;
     },
 
@@ -964,7 +946,7 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
         return true;
     },
 
-    isMultipartCandidate: function(executes) {
+    isMultipartCandidate: function(/*executes*/) {
         //implementation in the experimental part
         return false;
     },
@@ -983,11 +965,7 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
     },
 
     getDummyPlaceHolder: function() {
-        var created = false;
-        if (!this._dummyPlaceHolder) {
-            this._dummyPlaceHolder = this.createElement("div");
-            created = true;
-        }
+        this._dummyPlaceHolder = this._dummyPlaceHolder ||this.createElement("div"); 
         return this._dummyPlaceHolder;
     },
 
