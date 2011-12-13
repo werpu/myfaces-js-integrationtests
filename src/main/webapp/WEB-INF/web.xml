@@ -13,8 +13,8 @@
   limitations under the License.
 -->
 <web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
-    version="3.0">
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0">
 
 
     <context-param>
@@ -45,6 +45,17 @@
     <context-param>
         <param-name>org.apache.extras.myfaces.ImplType</param-name>
         <param-value>myfaces</param-value>
+    </context-param>
+
+    <!-- config params for the richfaces fileupload -->
+    <context-param>
+        <param-name>org.richfaces.fileUpload.maxRequestSize</param-name>
+        <param-value>100000</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>org.richfaces.fileUpload.createTempFiles</param-name>
+        <param-value>false</param-value>
     </context-param>
 
 
@@ -80,7 +91,7 @@
         <servlet-name>JSF21Simulation</servlet-name>
         <url-pattern>*.timeout</url-pattern>
     </servlet-mapping>
-     <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>StatisticsCollector</servlet-name>
         <url-pattern>*.statistics</url-pattern>
     </servlet-mapping>
