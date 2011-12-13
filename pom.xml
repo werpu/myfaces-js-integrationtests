@@ -120,12 +120,12 @@
         <dependency>
             <groupId>org.richfaces.ui</groupId>
             <artifactId>richfaces-components-ui</artifactId>
-            <version>4.1.0.20111111-CR1</version>
+            <version>4.0.0.Final<!--4.1.0.20111111-CR1--></version>
         </dependency>
         <dependency>
             <groupId>org.richfaces.core</groupId>
             <artifactId>richfaces-core-impl</artifactId>
-            <version>4.1.0.20111111-CR1</version>
+            <version>4.0.0.Final</version>
         </dependency>
 
     </dependencies>

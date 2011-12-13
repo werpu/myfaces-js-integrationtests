@@ -21,6 +21,7 @@ package extras.apache.org.jsintegration.other;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import java.io.Serializable;
 
 /**
@@ -28,13 +29,14 @@ import java.io.Serializable;
  * @version $Revision$ $Date$
  */
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class ResponseOnly implements Serializable
 {
     int cnt = 0;
 
-    public String doAction()
+    public String doTheAction()
     {
+        System.out.println("action");
         cnt++;
         return null;
     }

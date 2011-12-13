@@ -68,7 +68,11 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
      *
      */
     processResponse : function(request, context) {
+        //mfinternal handling, note, the mfinternal is only optional
+        //according to the spec
+        context._mfInternal =  context._mfInternal || {};
         var mfInternal = context._mfInternal;
+
         //the temporary data is hosted here
         mfInternal._updateElems = [];
         mfInternal._updateForms = [];
@@ -334,7 +338,13 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
             var mfInternal = context._mfInternal,
                     fuzzyFormDetection = this._Lang.hitch(this._Dom, this._Dom.fuzzyFormDetection),
                     elementId = (mfInternal) ? mfInternal["_mfSourceControlId"] : context.source.id,
-                    sourceForm = (mfInternal) ? (document.forms[mfInternal["_mfSourceFormId"]] || fuzzyFormDetection(elementId)) : fuzzyFormDetection(elementId);
+
+                    //theoretically a source of null can be given, then our form detection fails for
+                    //the source element case and hence updateviewstate is skipped for the source
+                    //form, but still render targets still can get the viewstate
+                    sourceForm = (mfInternal && mfInternal["_mfSourceFormId"] &&
+                                  document.forms[mfInternal["_mfSourceFormId"]]) ?
+                           document.forms[mfInternal["_mfSourceFormId"]] : ((elementId)? fuzzyFormDetection(elementId): null);
 
             mfInternal.appliedViewState = node.firstChild.nodeValue;
             //source form could not be determined either over the form identifer or the element

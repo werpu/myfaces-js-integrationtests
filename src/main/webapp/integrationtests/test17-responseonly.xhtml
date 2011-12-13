@@ -17,10 +17,7 @@
 -->
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:a4j="http://richfaces.org/a4j"
-      xmlns:rich="http://richfaces.org/rich">
+      xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <ui:composition template="../templates/template.xhtml">
     <ui:define name="content">
@@ -40,29 +37,61 @@
             a response of context:{} also must process
             by simply processing the response
             but ignoring the viewstate (undocumented corner
-            case which probably later can be dropped)
+            case which probably later can be dropped),
+
+            if no _mfInternal data is given we have to assume
+            that the form id itself can be determined still
+            by the given source
         </p>
 
         <script type="text/javascript">
             var oldResponse = jsf.ajax.response;
             //we are going to decorate the response for the first testcase
-            (function() {
+            function applySourceOnly() {
 
-                var newResponse = function(request, context) {
+                var newResponse = function (request, context) {
                     var newContext = {};
                     newContext.source = context.source;
                     oldResponse(request, newContext);
                 }
                 jsf.ajax.response = newResponse;
-            })();
+            }
+            ;
+            function resetResponse() {
+                jsf.ajax.response = oldResponse;
+            }
+            function applyEmpty() {
 
+                var newResponse = function (request, context) {
+                    var newContext = {};
+                    oldResponse(request, newContext);
+                }
+                jsf.ajax.response = newResponse;
+            }
+
+            var submitMe = function (evt) {
+                applySourceOnly();
+                jsf.ajax.request(document.getElementById("blabla"), evt, {execute:"blabla", render:"testForm"});
+
+            }
+            var submitEmpty = function (evt) {
+                applyEmpty();
+                jsf.ajax.request(document.getElementById("blabla"), evt, {execute:"blabla", render:"testForm"});
+            }
 
         </script>
-        <h:form id="testForm">
-            <h:commandButton id="blabla" action="test"
+        <h:form id="testForm" prependId="false">
+            <h:commandLink id="blabla" action="#{responseOnly.doTheAction}" value="press me"
+                           onclick="javascript:submitMe(event); return false;">
 
+            </h:commandLink>
+            <h:commandLink id="blabla2" action="#{responseOnly.doTheAction}" value="press me"
+                           onclick="javascript:submitEmpty(event); return false;">
+
+            </h:commandLink>
+            <h:outputText id="myVal" value="#{responseOnly.cnt}"/>
         </h:form>
-        <a4j:log/>
+
     </ui:define>
 </ui:composition>
 </html>

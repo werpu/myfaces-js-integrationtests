@@ -48,6 +48,7 @@
     </context-param>
 
     <!-- config params for the richfaces fileupload -->
+
     <context-param>
         <param-name>org.richfaces.fileUpload.maxRequestSize</param-name>
         <param-value>100000</param-value>
