@@ -65,7 +65,7 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
                     newSS.setAttribute("type", item.getAttribute("type") || "text/css");
                     document.getElementsByTagName("head")[0].appendChild(newSS);
                     //ie merrily again goes its own way
-                    if (window.attachEvent && _RT.isOpera && UDEF != typeof newSS.styleSheet && UDEF != newSS.styleSheet.cssText) newSS.styleSheet.cssText = style;
+                    if (window.attachEvent && !_RT.isOpera && UDEF != typeof newSS.styleSheet && UDEF != newSS.styleSheet.cssText) newSS.styleSheet.cssText = style;
                     else newSS.appendChild(document.createTextNode(style));
                 },
 
@@ -967,7 +967,7 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
     },
 
     getDummyPlaceHolder: function() {
-        this._dummyPlaceHolder = this._dummyPlaceHolder ||this.createElement("div"); 
+        this._dummyPlaceHolder = this._dummyPlaceHolder ||this.createElement("div");
         return this._dummyPlaceHolder;
     },
 
