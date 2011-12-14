@@ -85,7 +85,9 @@ _class("myfaces._supportive.unittest.TestGroup", Object, {
             }
             testCases[cnt].attr("statisticsEngine", this._statisticsEngine);
             testCases[cnt].attr("testGroup", this);
-
+            //we decorate the teardown function of the testcase
+            //to get a callback into our own next method to call
+            //the next testcase once the preceeding one is finished
             (function(cnt2, _t) {
                 var oldFunc = testCases[cnt2].tearDown;
                 //we decorate the teardown to trigger the next properly
