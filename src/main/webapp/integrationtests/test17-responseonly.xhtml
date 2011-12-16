@@ -81,11 +81,16 @@
 
         </script>
         <h:form id="testForm" prependId="false">
-            <h:commandLink id="blabla" action="#{responseOnly.doTheAction}" value="press me"
+            <h:commandLink id="resetme" action="#{responseOnly.resetCnt}" value="reset"
                            onclick="javascript:submitMe(event); return false;">
 
             </h:commandLink>
-            <h:commandLink id="blabla2" action="#{responseOnly.doTheAction}" value="press me"
+
+            <h:commandLink id="idgiven" action="#{responseOnly.doTheAction}" value="press me"
+                           onclick="javascript:submitMe(event); return false;">
+
+            </h:commandLink>
+            <h:commandLink id="emptymap" action="#{responseOnly.doTheAction}" value="press me"
                            onclick="javascript:submitEmpty(event); return false;">
 
             </h:commandLink>

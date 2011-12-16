@@ -67,16 +67,52 @@ testGroup.addCase(new AjaxCase({
 }));
 
 testGroup.addCase(new AjaxCase({
-    description:"Test2, source id is no set",
+    description:"Resetting testcases",
     /*we enable global processing to handle a triggered click on the issuing control*/
 
     precondition:function () {
-        $("#resultArea").html("");
+
+        return true;
+    },
+    run:function () {
+        this.ajaxRequest('resetme', null, {execute:'@this', render:'myVal', 'javax.faces.behavior.event':'action'});
+    },
+    postCondition:function () {
+        return true;
+    }
+}));
+
+testGroup.addCase(new AjaxCase({
+    description:"Test1, source id is",
+    /*we enable global processing to handle a triggered click on the issuing control*/
+
+    precondition:function () {
+        return true;
+    },
+    run:function () {
+        this.ajaxRequest('idgiven', null, {execute:'@this', render:'myVal', 'javax.faces.behavior.event':'action'});
+    },
+    postCondition:function () {
+        this.assertTrue("innerHTML of result must be 1", $("#myVal").innerHTML.indexOf("1") != -1);
+        return true;
+    }
+
+}));
+
+testGroup.addCase(new AjaxCase({
+    description:"Test3, context is an empty map",
+    /*we enable global processing to handle a triggered click on the issuing control*/
+
+    precondition:function () {
         return true;
     },
     run:function () {
         var evt = {};
         evt.type = "click";
         //this.ajaxRequest('reloader', null, {execute:'@none',render:'outputWriter','javax.faces.behavior.event':'action'});
+    },
+    postCondition:function () {
+        this.assertTrue("innerHTML of result must be 1", $("#myVal").innerHTML.indexOf("1") != -1);
+        return true;
     }
 }));
