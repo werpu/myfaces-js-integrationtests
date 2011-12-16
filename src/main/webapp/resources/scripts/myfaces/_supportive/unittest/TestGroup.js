@@ -110,7 +110,7 @@ _class("myfaces._supportive.unittest.TestGroup", Object, {
     },
 
     next: function() {
-        if (this._currentLifecyclePos == this.testCases.length) {
+        if (this._currentLifecyclePos == this.testCases.length-1) {
             try {
 
                 for (var cnt = 0; this._allTestsPassed && cnt < this.testCases.length; cnt++) {
@@ -132,9 +132,13 @@ _class("myfaces._supportive.unittest.TestGroup", Object, {
 
         var lifecyclePos = this._currentLifecyclePos;
         //we defer until the end of the execution to perform the next lifecycle
-        this._lifeCycle(lifecyclePos);
+        try {
+            this._lifeCycle(lifecyclePos);
+        } finally {
+            this._currentLifecyclePos ++;
+        }
         //we now can increment
-        this._currentLifecyclePos ++;
+
         return true;
     },
 

@@ -58,7 +58,7 @@ testGroup.addCase(new AjaxCase({
     },
     postcondition:function () {
         this.assertTrue("innerHTML of result must be 1", $("#myVal").html().indexOf("1") != -1);
-        resetResponse();
+        //resetResponse();
         return true;
     }
 
@@ -79,7 +79,7 @@ testGroup.addCase(new AjaxCase({
     },
     postcondition:function () {
         this.assertTrue("innerHTML of result must be 1", $("#myVal").html().indexOf("1") != -1);
-        resetResponse();
+        //resetResponse();
         return true;
     }
 }));
