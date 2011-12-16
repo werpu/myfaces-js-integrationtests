@@ -21,6 +21,8 @@
 
 <ui:composition template="../templates/template.xhtml">
     <ui:define name="content">
+        <h:outputScript library="scripts" name="testcases/test17-responseonly.js" target="head"/>
+
         <h2>response only handling</h2>
 
         <p>
@@ -44,56 +46,11 @@
             by the given source
         </p>
 
-        <script type="text/javascript">
-            var oldResponse = jsf.ajax.response;
-            //we are going to decorate the response for the first testcase
-            function applySourceOnly() {
-
-                var newResponse = function (request, context) {
-                    var newContext = {};
-                    newContext.source = context.source;
-                    oldResponse(request, newContext);
-                }
-                jsf.ajax.response = newResponse;
-            }
-            ;
-            function resetResponse() {
-                jsf.ajax.response = oldResponse;
-            }
-            function applyEmpty() {
-
-                var newResponse = function (request, context) {
-                    var newContext = {};
-                    oldResponse(request, newContext);
-                }
-                jsf.ajax.response = newResponse;
-            }
-
-            var submitMe = function (evt) {
-                applySourceOnly();
-                jsf.ajax.request(document.getElementById("blabla"), evt, {execute:"blabla", render:"testForm"});
-
-            }
-            var submitEmpty = function (evt) {
-                applyEmpty();
-                jsf.ajax.request(document.getElementById("blabla"), evt, {execute:"blabla", render:"testForm"});
-            }
-
-        </script>
         <h:form id="testForm" prependId="false">
-            <h:commandLink id="resetme" action="#{responseOnly.resetCnt}" value="reset"
-                           onclick="javascript:submitMe(event); return false;">
-
-            </h:commandLink>
-
-            <h:commandLink id="idgiven" action="#{responseOnly.doTheAction}" value="press me"
-                           onclick="javascript:submitMe(event); return false;">
-
-            </h:commandLink>
-            <h:commandLink id="emptymap" action="#{responseOnly.doTheAction}" value="press me"
-                           onclick="javascript:submitEmpty(event); return false;">
-
-            </h:commandLink>
+            <!-- needed for the test trigger -->
+            <h:commandLink id="resetme" action="#{responseOnly.resetCnt}" value="reset"/>
+            <h:commandLink id="idgiven" action="#{responseOnly.doTheAction}" value="press me"/>
+            <h:commandLink id="emptymap" action="#{responseOnly.doTheAction}" value="press me"/>
             <h:outputText id="myVal" value="#{responseOnly.cnt}"/>
         </h:form>
 

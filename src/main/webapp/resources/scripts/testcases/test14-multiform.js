@@ -8,8 +8,7 @@ var testGroup = new (_class("Test14Multiform",myfaces._supportive.unittest.TestG
             },
             tearDown: function() {
                 this._callSuper("tearDown");
-                this.autoForward("./finalResults.jsf")
-
+                this.autoForward("./test17-responseonly.jsf")
             }
         }))();
 
