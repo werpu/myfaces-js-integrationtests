@@ -25,7 +25,7 @@ function applyEmpty() {
 }
 
 var testGroup = new (_class("Test17ResponseOnly", myfaces._supportive.unittest.TestGroup, {
-    _description:"Response only test2",
+    _description:"Response only Test",
     constructor_:function () {
         this._callSuper("constructor_");
     },
