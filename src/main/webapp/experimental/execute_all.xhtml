@@ -7,22 +7,19 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core">
 <ui:composition template="../templates/template2.xhtml">
-
     <ui:define name="content">
         <h:form id="otherform">
             <h:inputText id="booga" value="#{executeAll.val1}"/>
             <h:commandLink id="booga1" value="press me1" action="#{executeAll.doNav1}">
-                <f:ajax render="otherform centerForm" execute="@all"/>
+                <f:ajax render="otherform :centerForm" execute="@all"/>
             </h:commandLink>
         </h:form>
-
         <h:form id="centerForm">
             <h:inputText id="booga2" value="#{executeAll.val2}"/>
             <h:commandLink id="booga3" value="press me1" action="#{executeAll.doNav2}">
-                <f:ajax render="otherform centerForm" execute="@all"/>
+                <f:ajax render=":otherform centerForm" execute="@all"/>
             </h:commandLink>
         </h:form>
-
     </ui:define>
 </ui:composition>
 </html>
