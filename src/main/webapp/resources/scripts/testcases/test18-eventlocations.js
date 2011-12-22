@@ -38,7 +38,7 @@ var testGroup = new (_class("Test17ResponseOnly", myfaces._supportive.unittest.T
     },
     tearDown:function () {
         this._callSuper("tearDown");
-        this.autoForward("./test18-eventlocations.jsf")
+        this.autoForward("./finalResults.jsf")
     }
 }))();
 
