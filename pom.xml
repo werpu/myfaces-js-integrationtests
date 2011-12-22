@@ -20,6 +20,7 @@
         <shared.resources>src/main/extra-resources/shared-deploy/webapp</shared.resources>
         <maven-war-plugin.version>2.1.1</maven-war-plugin.version>
         <myfaces-stable-api.version>2.1.7-SNAPSHOT</myfaces-stable-api.version>
+        <mojarra.version>2.1.4</mojarra.version>
     </properties>
     <name>TestScripts JEE6 Webapp</name>
     <url>http://maven.apache.org</url>
@@ -166,21 +167,65 @@
                 <dependency>
                     <groupId>com.sun.faces</groupId>
                     <artifactId>jsf-api</artifactId>
-                    <version>2.1.4</version>
+                    <version>${mojarra.version}</version>
                     <scope>compile</scope>
                 </dependency>
 
                 <dependency>
                     <groupId>com.sun.faces</groupId>
                     <artifactId>jsf-impl</artifactId>
-                    <version>2.1.4</version>
+                    <version>${mojarra.version}</version>
                     <scope>compile</scope>
                 </dependency>
-
             </dependencies>
-
-
         </profile>
+
+        <profile>
+                    <id>mojarraDebug</id>
+                    <activation>
+                        <activeByDefault>false</activeByDefault>
+                    </activation>
+
+                    <build>
+                        <plugins>
+
+                            <plugin>
+                                <groupId>org.apache.maven.plugins</groupId>
+                                <artifactId>maven-war-plugin</artifactId>
+                                <version>${maven-war-plugin.version}</version>
+                                <configuration>
+                                    <webResources>
+                                        <resource>
+                                            <directory>${shared.resources}</directory>
+                                        </resource>
+                                        <resource>
+                                            <!-- this is relative to the pom.xml directory -->
+                                            <directory>src/main/extra-resources/mojarra-debug/webapp</directory>
+
+                                        </resource>
+                                    </webResources>
+                                </configuration>
+                            </plugin>
+
+                        </plugins>
+                    </build>
+
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.sun.faces</groupId>
+                            <artifactId>jsf-api</artifactId>
+                            <version>${mojarra.version}</version>
+                            <scope>compile</scope>
+                        </dependency>
+
+                        <dependency>
+                            <groupId>com.sun.faces</groupId>
+                            <artifactId>jsf-impl</artifactId>
+                            <version>${mojarra.version}</version>
+                            <scope>compile</scope>
+                        </dependency>
+                    </dependencies>
+                </profile>
 
         <profile>
             <id>minimal</id>

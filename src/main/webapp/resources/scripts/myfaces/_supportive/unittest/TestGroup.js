@@ -94,6 +94,8 @@ _class("myfaces._supportive.unittest.TestGroup", Object, {
                 testCases[cnt2].tearDown = _t._Lang.hitch(_t, function() {
                     try {
                         oldFunc();
+                    } catch (e) {
+                        console.error(e);
                     } finally {
                         //the defer is needed so that we are out of the function
                         //to avoid a stack overflow

@@ -11,7 +11,7 @@
         <h:form id="otherform">
             <h:inputText id="booga" value="#{executeAll.val1}"/>
             <h:commandLink id="booga1" value="press me1" action="#{executeAll.doNav1}">
-                <f:ajax render="otherform :centerForm" execute="@all"/>
+                <f:ajax render="otherform :centerForm" execute="otherform :centerForm"/>
             </h:commandLink>
         </h:form>
         <h:form id="centerForm">
