@@ -7,6 +7,9 @@ function applySourceOnly() {
     var newResponse = function (request, context) {
         var newContext = {};
         newContext.source = context.source;
+        newContext.onevent = context.onevent;
+        newContext.onerror = context.onerror;
+
         oldResponse(request, newContext);
     }
     jsf.ajax.response = newResponse;
@@ -19,6 +22,10 @@ function applyEmpty() {
 
     var newResponse = function (request, context) {
         var newContext = {};
+
+        newContext.onevent = context.onevent;
+        newContext.onerror = context.onerror;
+
         oldResponse(request, newContext);
     }
     jsf.ajax.response = newResponse;
