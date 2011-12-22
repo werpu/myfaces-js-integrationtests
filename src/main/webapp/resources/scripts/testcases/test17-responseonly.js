@@ -80,9 +80,9 @@ testGroup.addCase(new AjaxCase({
         return true;
     },
     run:function () {
-        var evt = {};
-        evt.type = "click";
-        //this.ajaxRequest('reloader', null, {execute:'@none',render:'outputWriter','javax.faces.behavior.event':'action'});
+        //var evt = {};
+        //evt.type = "click";
+        this.ajaxRequest('emptymap', null, {execute:'@none',render:'outputWriter','javax.faces.behavior.event':'action'});
     },
     postcondition:function () {
         this.assertTrue("innerHTML of result must be 1", $("#myVal").html().indexOf("1") != -1);
