@@ -59,6 +59,7 @@ testGroup.addCase(new AjaxCase({
                 }
 
             } finally {
+                this.endCase();
                 this.tearDown();
             }
         }

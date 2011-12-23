@@ -33,6 +33,7 @@ testGroup.addCase(new AjaxCase({
                 var renderTargetHTML = $("#output").html();
                 this.assertTrue("render target only is allowed to have 2 entries", renderTargetHTML == "0 1 2 ");
             } finally {
+                this.endCase();
                 this.tearDown();
             }
         }

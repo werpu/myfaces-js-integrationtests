@@ -70,8 +70,12 @@ _class("myfaces._supportive.unittest.TestCase", Object, {
         return true;
     },
 
-    _tearDown: function() {
+    endCase: function() {
         this._statisticsEngine.endTestCase(this);
+    },
+
+    _tearDown: function() {
+       this.endCase();
     },
 
     tearDown: function() {
