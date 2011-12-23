@@ -35,9 +35,9 @@ import extras.apache.org.jsintegration.core.model.Group;
  * @version $Revision$ $Date$
  */
 
-@ManagedBean
+@ManagedBean(name = "statisticsVisualizer")
 @RequestScoped
-public class StatisticsVisualizer
+public class HTMLStatisticsExporter
 {
     List<Group> groupList;
 

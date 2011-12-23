@@ -21,6 +21,7 @@ package extras.apache.org.jsintegration.core;
 
 import extras.apache.org.jsintegration.core.model.Group;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.*;
 import java.util.zip.CRC32;
 
@@ -32,10 +33,10 @@ import java.util.zip.CRC32;
  *          note this class is not thread save!!! Should not be a problem
  *          under normal conditions
  */
-
+@XmlRootElement
 public class TestResults
 {
-    ArrayList<Group> testGroups = new ArrayList<Group>(100);
+    List<Group> testGroups = new ArrayList<Group>(100);
     Map<Long, Integer> _groupIdx = new HashMap<Long, Integer>();
     CRC32 crcCalc = new CRC32();
 
@@ -66,6 +67,11 @@ public class TestResults
     {
         this.testGroups.clear();
         this._groupIdx.clear();
+    }
+
+    public void setTestGroups(List<Group> groups)
+    {
+        testGroups = groups;
     }
 
     public List<Group> getTestGroups()

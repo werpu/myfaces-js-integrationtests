@@ -27,6 +27,7 @@ import java.util.*;
  * @version $Revision$ $Date$
  */
 
+
 public class Group implements Serializable
 {
     String name;

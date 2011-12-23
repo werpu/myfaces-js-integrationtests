@@ -88,6 +88,12 @@
         <servlet-name>StatisticsCollector</servlet-name>
         <servlet-class>extras.apache.org.jsintegration.core.StatisticsCollector</servlet-class>
     </servlet>
+    <servlet>
+        <description>Exports the Statistics as XML</description>
+        <display-name>StatisticsXMLExporter</display-name>
+        <servlet-name>StatisticsXMLExporter</servlet-name>
+        <servlet-class>extras.apache.org.jsintegration.core.StatisticsXMLExporter</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>JSF21Simulation</servlet-name>
         <url-pattern>*.timeout</url-pattern>
@@ -101,11 +107,18 @@
         <url-pattern>*.mockup</url-pattern>
     </servlet-mapping>
 
+
+
+
     <!-- Faces Servlet Mapping -->
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/faces/*</url-pattern>
         <url-pattern>*.jsf</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StatisticsXMLExporter</servlet-name>
+        <url-pattern>*.xmlstats</url-pattern>
     </servlet-mapping>
 
 
