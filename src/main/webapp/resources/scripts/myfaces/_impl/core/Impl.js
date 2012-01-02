@@ -177,12 +177,12 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
 
         //improve the error messages if an empty elem is passed
         if(!elem) {
-            throw _Lang.makeException(new Error(), "ArgNotSet", null, this._nameSpace, "request", _Lang.getMessage("ERR_MUST_BE_PROVIDED1","{0}: Elem id must be provided",this._nameSpace+".request", "source element id"));
+            throw _Lang.makeException(new Error(), "ArgNotSet", null, this._nameSpace, "request", _Lang.getMessage("ERR_MUST_BE_PROVIDED1","{0}: source  must be provided",this._nameSpace+".request", "source element id"));
         }
         var oldElem = elem;
         elem = _Dom.byIdOrName(elem);
         if(!elem) {
-            throw _Lang.makeException(new Error(), "Notfound", null, this._nameSpace, "request", _Lang.getMessage("ERR_PPR_UNKNOWNCID","{0}: Node with id {1} could not be found",this._nameSpace+".request", oldElem));
+            throw _Lang.makeException(new Error(), "Notfound", null, this._nameSpace, "request", _Lang.getMessage("ERR_PPR_UNKNOWNCID","{0}: Node with id {1} could not be found from source",this._nameSpace+".request", oldElem));
         }
 
         var elementId = _Dom.nodeIdOrName(elem);
