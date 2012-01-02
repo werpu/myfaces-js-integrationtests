@@ -74,9 +74,9 @@ _class("myfaces._supportive.unittest.TestGroup", Object, {
 
     setup: function() {
         //helper for myfaces jquery seems to clean up the namespace in ie
-        window.myfaces = window.myfaces ||{};
-        myfaces.config = myfaces.config ||{};
-        myfaces.config.projectStage = "Development";
+        //window.myfaces = window.myfaces ||{};
+        //myfaces.config = myfaces.config ||{};
+        //myfaces.config.projectStage = "Development";
 
 
         this._startTime = new Date();

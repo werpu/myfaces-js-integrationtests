@@ -97,6 +97,12 @@
     <h:outputScript name="jsf.js" library="javax.faces"
                     target="head" rendered="#{information.implementation == 'mojarra'}"/>
 
+    <script type="text/javascript" defer="defer">
+        myfaces = window.myfaces ||{};
+        myfaces.config = myfaces.config ||{};
+        myfaces.config.projectStage = "Development";
+        window.myfaces = myfaces;
+    </script>
 
     <h:outputScript name="testsupport.js" library="scripts" />
 </cc:implementation>
