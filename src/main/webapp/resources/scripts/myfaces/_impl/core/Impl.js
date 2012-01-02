@@ -182,7 +182,7 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
         var oldElem = elem;
         elem = _Dom.byIdOrName(elem);
         if(!elem) {
-            throw _Lang.makeException(new Error(), "ArgNotSet", null, this._nameSpace, "request", _Lang.getMessage("ERR_PPR_UNKNOWNCID","{0}: Node with id {1} could not be found",this._nameSpace+".request", oldElem));
+            throw _Lang.makeException(new Error(), "Notfound", null, this._nameSpace, "request", _Lang.getMessage("ERR_PPR_UNKNOWNCID","{0}: Node with id {1} could not be found",this._nameSpace+".request", oldElem));
         }
 
         var elementId = _Dom.nodeIdOrName(elem);
