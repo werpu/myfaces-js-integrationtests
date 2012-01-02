@@ -570,6 +570,7 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
      */
     getProjectStage : function() {
         //since impl is a singleton we only have to do it once at first access
+
         if(!this._projectStage) {
             var PRJ_STAGE = "projectStage",
                     STG_PROD = "Production",
@@ -584,11 +585,14 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
             for (var i = 0; i < scriptTags.length && !found; i++) {
                 if (scriptTags[i].src.search(/\/javax\.faces\.resource\/jsf\.js.*ln=javax\.faces/) != -1) {
                     var result = scriptTags[i].src.match(/stage=([^&;]*)/);
+                    alert("result found");
+                    alert(result);
                     found = true;
                     if (result) {
                         // we found stage=XXX
                         // return only valid values of ProjectStage
                         projectStage = (allowedProjectStages[result[1]]) ? result[1] : null;
+
                     }
                     else {
                         //we found the script, but there was no stage parameter -- Production

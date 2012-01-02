@@ -472,33 +472,62 @@ _MF_SINGLTN(_PFX_UTIL + "_Lang", Object, /** @lends myfaces._impl._util._Lang.pr
      * @param xmlContent
      * @return a map with the following structure {errorMessage: the error Message, sourceText: the text with the error}
      */
-    fetchXMLErrorMessage:function (xmlContent) {
-        if (xmlContent == null) return true;
+    fetchXMLErrorMessage:function (text, xmlContent) {
+        var _t = this;
         var findParseError = function (node) {
             if (!node || !node.childNodes) return false;
             for (var cnt = 0; cnt < node.childNodes.length; cnt++) {
                 var childNode = node.childNodes[cnt];
                 if (childNode.tagName && childNode.tagName == "parsererror") {
-                    return {
-                        errorMessage:childNode.childNodes[0],
-                        sourceText:childNode.childNodes[1].childNodes[0]
+                    var errorMessage = _t.serializeXML(childNode.childNodes[0]);
+                    //we now have to determine the row and column position
+                    var lastLine = errorMessage.split("\n");
+                    lastLine = lastLine[lastLine.length-1];
+                    var positions = lastLine.match(/[^0-9]*([0-9]+)[^0-9]*([0-9]+)[^0-9]*/);
+
+                    var ret = {
+                        errorMessage: errorMessage,
+                        sourceText: _t.serializeXML(childNode.childNodes[1].childNodes[0])
                     }
+                    if(positions) {
+                        ret.line = Math.max(0, parseInt(positions[1])-1);
+                        ret.linePos = Math.max(0, parseInt(positions[2])-1);
+                    }
+                    return ret;
                 }
             }
             return null;
         };
+        var ret = null;
         if (!xmlContent) {
-            return  {errorMessage:"Empty Response"};
-        } else if (this.exists(xmlContent, "parseError.errorCode" && xmlContent.parseError.errorCode != 0)) {
-            return  {
+            //chrome does not deliver any further data
+            ret =  (this.trim(text || "").length > 0)? {errorMessage:"Illegal response",sourceText:""} : {errorMessage:"Empty Response",sourceText:""};
+        } else if (this.exists(xmlContent, "parseError.errorCode") && xmlContent.parseError.errorCode != 0) {
+            ret =   {
                 errorMessage:xmlContent.parseError.reason,
-                line:xmlContent.parseError.line,
-                linePos:xmlContent.parseError.linePos,
+                line:Math.max(0, parseInt(xmlContent.parseError.line)-1),
+                linePos:Math.max(0,parseInt(xmlContent.parseError.linepos) -1),
                 sourceText:xmlContent.parseError.srcText
             };
         } else {
-            return findParseError(xmlContent);
+            ret = findParseError(xmlContent);
         }
+        //we have a line number we now can format the source accordingly
+        if(ret && 'undefined' != typeof ret.line) {
+            var source = ret.sourceText || "";
+            source = source.split("\n");
+            if(source.length-1 < ret.line) return ret;
+            source = source[ret.line];
+            var secondLine = [];
+            var lineLen = (ret.linePos - 2);
+            for(var cnt = 0; cnt < lineLen; cnt++) {
+                secondLine.push(" ");
+            }
+            secondLine.push("^^");
+            ret.sourceText = source;
+            ret.visualError = secondLine;
+        }
+        return ret;
     },
 
     /**
