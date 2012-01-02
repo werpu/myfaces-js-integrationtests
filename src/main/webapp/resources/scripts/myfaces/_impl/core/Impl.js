@@ -175,7 +175,16 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
             event = window.event || null;
         }
 
+        //improve the error messages if an empty elem is passed
+        if(!elem) {
+            throw _Lang.makeException(new Error(), "ArgNotSet", null, this._nameSpace, "request", _Lang.getMessage("ERR_MUST_BE_PROVIDED1","{0}: Elem id must be provided",this._nameSpace+".request", "source element id"));
+        }
+        var oldElem = elem;
         elem = _Dom.byIdOrName(elem);
+        if(!elem) {
+            throw _Lang.makeException(new Error(), "ArgNotSet", null, this._nameSpace, "request", _Lang.getMessage("ERR_PPR_UNKNOWNCID","{0}: Node with id {1} could not be found",this._nameSpace+".request", oldElem));
+        }
+
         var elementId = _Dom.nodeIdOrName(elem);
 
         /*
@@ -295,10 +304,10 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
             //in case of no form is given we retry over the issuing event
             form = _Dom.fuzzyFormDetection(_Lang.getEventTarget(event));
             if (!form) {
-                throw _Lang.makeException(null, null, this._nameSpace, "_getForm", _Lang.getMessage("ERR_FORM"));
+                throw _Lang.makeException(new Error(), null, null, this._nameSpace, "_getForm", _Lang.getMessage("ERR_FORM"));
             }
         } else if (!form) {
-            throw _Lang.makeException(null, null, this._nameSpace, "_getForm", _Lang.getMessage("ERR_FORM"));
+            throw _Lang.makeException(new Error(), null, null, this._nameSpace, "_getForm", _Lang.getMessage("ERR_FORM"));
 
         }
         return form;

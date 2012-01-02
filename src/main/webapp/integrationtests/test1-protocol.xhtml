@@ -87,6 +87,9 @@
                 <input type="button" id="cmd_error" value="Server error with error response"
                        onclick="emitPPR(this, ('undefined' == typeof event)? null: event, 'errors');"/>
 
+                <input type="button" id="cmd_error_component" value="Error: no component given"
+                       onclick="jsf.ajax.request(null, event, {}); return false"/>
+
                 <h2>Same with an iframe transport</h2>
 
                 <input type="button" id="cmd_eval2" value="eval"

@@ -87,7 +87,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
             // istead of ISO-8859-1
 
             if (!request || !_Lang.exists(request, "responseXML")) {
-                throw this.makeException(_Impl.EMPTY_RESPONSE, _Impl.EMPTY_RESPONSE, this._nameSpace, "processResponse", "");
+                throw this.makeException(new Error(), _Impl.EMPTY_RESPONSE, _Impl.EMPTY_RESPONSE, this._nameSpace, "processResponse", "");
             }
             //check for a parseError under certain browsers
 
@@ -785,6 +785,6 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
         var finalName = name || _Impl.MALFORMEDXML;
         var finalMessage = message || "";
 
-        return this._Lang.makeException(finalTitle, finalName, this._nameSpace, caller || ( (arguments.caller) ? arguments.caller.toString() : "_raiseError"), finalMessage);
+        return this._Lang.makeException(new Error(), finalTitle, finalName, this._nameSpace, caller || ( (arguments.caller) ? arguments.caller.toString() : "_raiseError"), finalMessage);
     }
 });

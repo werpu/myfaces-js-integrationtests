@@ -167,7 +167,7 @@ _MF_SINGLTN(_PFX_UTIL + "_Lang", Object, /** @lends myfaces._impl._util._Lang.pr
      */
     byId : function(/*object*/ reference) {
         if (!reference) {
-            throw this.makeException(null, null, this._nameSpace, "byId", this.getMessage("ERR_REF_OR_ID", null, "_Lang.byId", "reference"));
+            throw this.makeException(new Error(), null, null, this._nameSpace, "byId", this.getMessage("ERR_REF_OR_ID", null, "_Lang.byId", "reference"));
         }
         return (this.isString(reference)) ? document.getElementById(reference) : reference;
     },
@@ -183,7 +183,7 @@ _MF_SINGLTN(_PFX_UTIL + "_Lang", Object, /** @lends myfaces._impl._util._Lang.pr
         //		Return true if it is a String
         this._assertStr(it, "strToArray", "it");
         if (!splitter) {
-            throw this.makeException(null, null, this._nameSpace, "strToArray", this.getMessage("ERR_PARAM_STR_RE", null, "myfaces._impl._util._Lang.strToArray", "splitter"));
+            throw this.makeException(new Error(), null, null, this._nameSpace, "strToArray", this.getMessage("ERR_PARAM_STR_RE", null, "myfaces._impl._util._Lang.strToArray", "splitter"));
         }
         var retArr = it.split(splitter);
         var len = retArr.length;
@@ -194,7 +194,7 @@ _MF_SINGLTN(_PFX_UTIL + "_Lang", Object, /** @lends myfaces._impl._util._Lang.pr
     },
     _assertStr: function(it, functionName, paramName) {
         if (!this.isString(it)) {
-            throw this.makeException(null, null, this._nameSpace, arguments.caller.toString(), this.getMessage("ERR_PARAM_STR", null, "myfaces._impl._util._Lang." + functionName, paramName));
+            throw this.makeException(new Error(), null, null, this._nameSpace, arguments.caller.toString(), this.getMessage("ERR_PARAM_STR", null, "myfaces._impl._util._Lang." + functionName, paramName));
         }
     },
     /**
@@ -250,7 +250,7 @@ _MF_SINGLTN(_PFX_UTIL + "_Lang", Object, /** @lends myfaces._impl._util._Lang.pr
      **/
     mixMaps: function(dest, src, overwrite, blockFilter, whitelistFilter) {
         if (!dest || !src) {
-            throw this.makeException(null, null, this._nameSpace, "mixMaps", this.getMessage("ERR_PARAM_MIXMAPS", null, "_Lang.mixMaps"));
+            throw this.makeException(new Error(), null, null, this._nameSpace, "mixMaps", this.getMessage("ERR_PARAM_MIXMAPS", null, "_Lang.mixMaps"));
         }
         var _undef = "undefined";
         for (var key in src) {
@@ -281,7 +281,7 @@ _MF_SINGLTN(_PFX_UTIL + "_Lang", Object, /** @lends myfaces._impl._util._Lang.pr
      */
     contains : function(arr, str) {
         if (!arr || !str) {
-            throw this.makeException(null, null, this._nameSpace, "contains", this.getMessage("ERR_MUST_BE_PROVIDED", null, "_Lang.contains", "arr {array}", "str {string}"));
+            throw this.makeException(new Error(), null, null, this._nameSpace, "contains", this.getMessage("ERR_MUST_BE_PROVIDED", null, "_Lang.contains", "arr {array}", "str {string}"));
         }
         return this.arrIndexOf(arr, str) != -1;
     },
@@ -587,7 +587,7 @@ _MF_SINGLTN(_PFX_UTIL + "_Lang", Object, /** @lends myfaces._impl._util._Lang.pr
                 return applyAttr(obj, finalAttr, value, true);
             }
 
-            throw this.makeException(null, null, this._nameSpace, "contains", "property " + name + " not found");
+            throw this.makeException(new Error(), null, null, this._nameSpace, "contains", "property " + name + " not found");
         } finally {
             findAccessor = null;
             applyAttr = null;
@@ -604,13 +604,16 @@ _MF_SINGLTN(_PFX_UTIL + "_Lang", Object, /** @lends myfaces._impl._util._Lang.pr
      * @param {String} callFunc the caller function
      * @param {String} message the message for the exception
      */
-    makeException: function(title, name, callerCls, callFunc, message) {
-        var ret = new Error(message || "");
-        ret._mfInternal = {};
-        ret._mfInternal.name = name ||"clientError";
-        ret._mfInternal.title = title ||"clientError";
-        ret._mfInternal.caller = callerCls ||this._nameSpace;
-        ret._mfInternal.callFunc = callFunc ||(""+arguments.caller.toString());
-        return ret;
+    makeException: function(error ,title, name, callerCls, callFunc, message) {
+        //var error = new Error(message || "");
+        error.name = name || "clientError";
+        error.title = title || "";
+        error.message = message || "";
+        error._mfInternal = {};
+        error._mfInternal.name = name ||"clientError";
+        error._mfInternal.title = title ||"clientError";
+        error._mfInternal.caller = callerCls ||this._nameSpace;
+        error._mfInternal.callFunc = callFunc ||(""+arguments.caller.toString());
+        return error;
     }
 });
