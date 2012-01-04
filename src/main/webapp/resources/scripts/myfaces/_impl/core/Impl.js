@@ -486,12 +486,13 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
                     //we remap the function to achieve a better compressability
                     finalMessagePush = _Lang.hitch(finalMessage, finalMessage.push);
 
+            finalMessagePush((serverErrorMessage) ? _Lang.getMessage("MSG_ERROR_MESSAGE") +" "+ serverErrorMessage +"\n\n" : "");
+            finalMessagePush("--------------------------------------------------------\n");
+
             finalMessagePush((name) ? _Lang.getMessage("MSG_ERROR_NAME") +" "+name +"\n": "");
             if(name != serverErrorName) {
                 finalMessagePush((serverErrorName) ? "Server error name: "+ serverErrorName +"\n" : "");
             }
-            finalMessagePush("--------------------------------------------------------\n");
-            finalMessagePush((serverErrorMessage) ? _Lang.getMessage("MSG_ERROR_MESSAGE") +" "+ serverErrorMessage +"\n\n" : "");
 
             finalMessagePush(malFormedMessage());
             finalMessagePush("\n\n");
@@ -629,7 +630,7 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
         var len         = arguments.length;
         var _Lang       = this._Lang;
         var throwErr    = function(msgKey) {
-            throw Error(_Lang.getMessage(msgKey));
+            throw Error("jsf.util.chain: "+ _Lang.getMessage(msgKey));
         };
         /**
          * generic error condition checker which raises
