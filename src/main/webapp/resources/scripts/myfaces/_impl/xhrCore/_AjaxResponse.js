@@ -94,7 +94,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
             var xmlContent = request.responseXML;
             //ie6+ keeps the parsing response under xmlContent.parserError
             //while the rest of the world keeps it as element under the first node
-            var xmlErr = _Lang.fetchXMLErrorMessage(request.responseText || request.response, xmlContent)
+            var xmlErr = _Lang.fetchXMLErrorMessage(request.responseText || request.response, xmlContent)
             if (xmlErr) {
                 throw this._raiseError(new Error(),xmlErr.errorMessage+"\n"+xmlErr.sourceText+"\n"+xmlErr.visualError+"\n", "processResponse");
             }

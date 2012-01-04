@@ -514,7 +514,7 @@ _MF_SINGLTN(_PFX_UTIL + "_Lang", Object, /** @lends myfaces._impl._util._Lang.pr
         }
         //we have a line number we now can format the source accordingly
         if(ret && 'undefined' != typeof ret.line) {
-            var source = ret.sourceText || "";
+            var source = ret.sourceText ||"";
             source = source.split("\n");
             if(source.length-1 < ret.line) return ret;
             source = source[ret.line];
