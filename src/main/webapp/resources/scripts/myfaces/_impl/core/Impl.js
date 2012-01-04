@@ -486,15 +486,13 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
                     //we remap the function to achieve a better compressability
                     finalMessagePush = _Lang.hitch(finalMessage, finalMessage.push);
 
-            finalMessagePush((name) ? name : "");
-            if (name) {
-                finalMessagePush(": ");
+            finalMessagePush((name) ? _Lang.getMessage("MSG_ERROR_NAME") +" "+name +"\n": "");
+            if(name != serverErrorName) {
+                finalMessagePush((serverErrorName) ? "Server error name: "+ serverErrorName +"\n" : "");
             }
-            finalMessagePush((serverErrorName) ? serverErrorName : "");
-            if (serverErrorName) {
-                finalMessagePush(" ");
-            }
-            finalMessagePush((serverErrorMessage) ? serverErrorMessage : "");
+            finalMessagePush("--------------------------------------------------------\n");
+            finalMessagePush((serverErrorMessage) ? _Lang.getMessage("MSG_ERROR_MESSAGE") +" "+ serverErrorMessage +"\n\n" : "");
+
             finalMessagePush(malFormedMessage());
             finalMessagePush("\n\n");
             finalMessagePush(_Lang.getMessage("MSG_DEV_MODE"));
