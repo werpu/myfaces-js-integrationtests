@@ -21,6 +21,7 @@ package extras.apache.org.jsintegration.experimental;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import java.util.logging.Logger;
 
 /**
  * @author Werner Punz (latest modification by $Author$)
@@ -39,6 +40,9 @@ public class ExecuteAll
     }
     
     public String doNav2() {
+        Logger log = Logger.getLogger(ExecuteAll.class.getName());
+        log.info(val1);
+        log.info(val2);
         return null;
     }
     
