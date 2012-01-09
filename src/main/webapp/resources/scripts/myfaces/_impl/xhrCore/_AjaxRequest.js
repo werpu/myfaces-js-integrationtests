@@ -198,20 +198,21 @@ _MF_CLS(_PFX_XHR + "_AjaxRequest", _MF_OBJECT, /** @lends myfaces._impl.xhrCore.
         var xhr = this._xhr;
         var _Lang = this._Lang;
 
-        var errorText;
+        var errorText = "";
         this._sendEvent("COMPLETE");
         try {
             var UNKNOWN = _Lang.getMessage("UNKNOWN");
-            errorText = _Lang.getMessage("ERR_REQU_FAILED", null,
-                    (xhr.status || UNKNOWN),
-                    (xhr.statusText || UNKNOWN));
+            //status can be 0 and statusText can be ""
+            var status = ('undefined' != xhr.status  && null != xhr.status)? xhr.status : UNKNOWN;
+            var statusText = ('undefined' != xhr.statusText  && null != xhr.statusText)? xhr.statusText : UNKNOWN;
+            errorText = _Lang.getMessage("ERR_REQU_FAILED", null,status,statusText);
 
         } catch (e) {
             errorText = _Lang.getMessage("ERR_REQ_FAILED_UNKNOWN", null);
         } finally {
             var _Impl = this.attr("impl");
             _Impl.sendError(xhr, context, _Impl.HTTPERROR,
-                    _Impl.HTTPERROR, errorText);
+                    _Impl.HTTPERROR, errorText,"","myfaces._impl.xhrCore._AjaxRequest","onerror");
         }
         //_onError
     },

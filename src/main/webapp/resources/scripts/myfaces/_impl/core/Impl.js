@@ -477,6 +477,7 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
         }
          //extended error message only in dev mode
         if(jsf.getProjectStage() === "Development") {
+            eventData.serverErrorMessage = eventData.serverErrorMessage || "";
             eventData.serverErrorMessage = (caller)?  eventData.serverErrorMessage + "\nCalling class: "+caller:eventData.serverErrorMessage;
             eventData.serverErrorMessage = (callFunc)? eventData.serverErrorMessage + "\n Calling function: "+callFunc :eventData.serverErrorMessage;
         }
