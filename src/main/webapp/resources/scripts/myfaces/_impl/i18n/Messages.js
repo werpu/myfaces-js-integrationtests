@@ -134,28 +134,7 @@ _MF_CLS && _MF_CLS(_PFX_I18N+"Messages", Object,
     ERR_REQU_FAILED: "Request failed with status {0} and reason {1}",
 
     /** @constant */
-    UNKNOWN: "UNKNOWN",
-
-    /*Status code Messages pattern: HTTP_ERR_<CODE>*/
-    /** @constant */
-    //HTTP_ERR_UNKNOWN: "",
-    /** @constant */
-    //HTTP_ERR_0: "Server was not reachable or returned an empty response",
-    /** @constant */
-    //HTTP_ERR_400: "Bad Request, the request could not be understood by the server",
-    /** @constant */
-    //HTTP_ERR_401: "Unauthorized access. The request requires user authentication, or the request has been refused by the server with the given credentials",
-    /** @constant */
-    //HTTP_ERR_402: "Payment Method required",
-    /** @constant */
-    //HTTP_ERR_403: "Forbidden. The server has refused to fullfill the request.",
-    /** @constant */
-    //HTTP_ERR_404: "Notfound. The requested URI was not found, the request was terminated.",
-    /** @constant */
-    //HTTP_ERR_405: "Method Not Allowed.The method specified in the request is not allowed to be executed within the scope of the given request uri",
-    /** @constant */
-    //HTTP_ERR_406: "Not Acceptable.The method specified in the request is not allowed to be executed within the scope of the given request uri",
-
+    UNKNOWN: "UNKNOWN"
 
 
 });
