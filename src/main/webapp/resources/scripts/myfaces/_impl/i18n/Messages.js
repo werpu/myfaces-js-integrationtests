@@ -135,7 +135,5 @@ _MF_CLS && _MF_CLS(_PFX_I18N+"Messages", Object,
 
     /** @constant */
     UNKNOWN: "UNKNOWN"
-
-
 });
 
