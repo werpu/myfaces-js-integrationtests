@@ -1,18 +1,18 @@
 var AjaxCase = myfaces._supportive.unittest.JSFAjaxTestCase;
 
 var testGroup = new (_class("Test13CSSReplacementHead", myfaces._supportive.unittest.TestGroup,
-        {
-            _description:"CSS Replacement testcase",
+{
+    _description:"CSS Replacement testcase",
 
-            constructor_: function() {
-                this._callSuper("constructor_");
-            },
-            tearDown: function() {
-                this._callSuper("tearDown");
-                this.autoForward("./test14-multiform.jsf");
+    constructor_: function() {
+        this._callSuper("constructor_");
+    },
+    tearDown: function() {
+        this._callSuper("tearDown");
+        this.autoForward("./test14-multiform.jsf");
 
-            }
-        }))();
+    }
+}))();
 testGroup.addCase(new AjaxCase({
     description:"Replacement Testcase",
     defer: 2000,
@@ -20,7 +20,11 @@ testGroup.addCase(new AjaxCase({
         return true;
     },
     run: function() {
-        this.ajaxRequest('nextPage', null, {execute:'mainForm',render:'@all','javax.faces.behavior.event':'action'});
+        this.ajaxRequest('nextPage', null, {
+            execute:'mainForm',
+            render:'@all',
+            'javax.faces.behavior.event':'action'
+        });
     },
     postcondition: function() {
         this.assertTrue("div1 has no width anymore", $("#div1").width() > 120);

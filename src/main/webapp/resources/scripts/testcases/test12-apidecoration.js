@@ -3,16 +3,16 @@ var RT = myfaces._impl.core._Runtime;
 var Lang = myfaces._impl._util._Lang;
 
 var testGroup = new (_class("Test12ApiDecoration", myfaces._supportive.unittest.TestGroup,
-        {
-            _description:"Testing for decorated api calls",
-            constructor_: function() {
-                this._callSuper("constructor_");
-            },
-            tearDown: function() {
-                this._callSuper("tearDown");
-                this.autoForward("./test13-cssreplacementhead.jsf");
-            }
-        }))();
+{
+    _description:"Testing for decorated api calls",
+    constructor_: function() {
+        this._callSuper("constructor_");
+    },
+    tearDown: function() {
+        this._callSuper("tearDown");
+        this.autoForward("./test13-cssreplacementhead.jsf");
+    }
+}))();
 
 var functionCalled = {};
 
@@ -39,8 +39,12 @@ testGroup.addCase(new AjaxCase({
     },
 
     run: function() {
-        this.ajaxRequest('reloader', null, {execute:'@none',render:'outputWriter','javax.faces.behavior.event':'action'});
-        //document.getElementById("reloader").
+        this.ajaxRequest('reloader', null, {
+            execute:'@none',
+            render:'outputWriter',
+            'javax.faces.behavior.event':'action'
+        });
+    //document.getElementById("reloader").
     },
 
     postcondition: function() {

@@ -46,7 +46,11 @@ testGroup.addCase(new AjaxCase({
         return true;
     },
     run:function () {
-        this.ajaxRequest('idgiven', null, {execute:'@this', render:'myVal', 'javax.faces.behavior.event':'action'});
+        this.ajaxRequest('idgiven', null, {
+            execute:'@this', 
+            render:'myVal', 
+            'javax.faces.behavior.event':'action'
+        });
     },
     postcondition:function () {
         //condition check already in the response handler done

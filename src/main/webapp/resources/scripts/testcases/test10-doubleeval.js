@@ -1,16 +1,16 @@
 var AjaxCase = myfaces._supportive.unittest.JSFAjaxTestCase;
 
 var testGroup = new (_class("Test10DoubleEval", myfaces._supportive.unittest.TestGroup,
-        {
-            _description:"Double Eval Detection",
-            constructor_: function() {
-                this._callSuper("constructor_");
-            },
-            tearDown: function() {
-                this._callSuper("tearDown");
-                this.autoForward("./test11-scriptblocks.jsf")
-            }
-        }))();
+{
+    _description:"Double Eval Detection",
+    constructor_: function() {
+        this._callSuper("constructor_");
+    },
+    tearDown: function() {
+        this._callSuper("tearDown");
+        this.autoForward("./test11-scriptblocks.jsf")
+    }
+}))();
 
 testGroup.addCase(new AjaxCase({
     description:"Chain test",
@@ -24,8 +24,16 @@ testGroup.addCase(new AjaxCase({
         return true;
     },
     run: function() {
-        this.ajaxRequest('reloader', null, {execute:'@none',render:'outputWriter','javax.faces.behavior.event':'action'});
-        this.ajaxRequest('reloader', null, {execute:'@none',render:'outputWriter','javax.faces.behavior.event':'action'});
+        this.ajaxRequest('reloader', null, {
+            execute:'@none',
+            render:'outputWriter',
+            'javax.faces.behavior.event':'action'
+        });
+        this.ajaxRequest('reloader', null, {
+            execute:'@none',
+            render:'outputWriter',
+            'javax.faces.behavior.event':'action'
+        });
     },
     postcondition: function() {
         if (this._ajaxCnt == 2) {

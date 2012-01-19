@@ -1,17 +1,17 @@
 var AjaxCase = myfaces._supportive.unittest.JSFAjaxTestCase;
 
 var testGroup = new (_class("Test15JSF22Delay", myfaces._supportive.unittest.TestGroup,
-        {
-            _description:"Delay integration test",
-            constructor_: function() {
-                this._callSuper("constructor_");
-            },
-            tearDown: function() {
-                this._callSuper("tearDown");
-                //this.autoForward("./test10-doubleeval.jsf");
+{
+    _description:"Delay integration test",
+    constructor_: function() {
+        this._callSuper("constructor_");
+    },
+    tearDown: function() {
+        this._callSuper("tearDown");
+    //this.autoForward("./test10-doubleeval.jsf");
 
-            }
-        }))();
+    }
+}))();
 
 testGroup.addCase(new AjaxCase({
     description:"Delay Test",
@@ -24,9 +24,18 @@ testGroup.addCase(new AjaxCase({
     },
     run: function() {
         document.getElementById("testform").action = './test.timeout';
-        this.ajaxRequest(document.getElementById("delayControl"), null, {execute:"delayControl",render:"delayoutput",op:"cleardelay"});
+        this.ajaxRequest(document.getElementById("delayControl"), null, {
+            execute:"delayControl",
+            render:"delayoutput",
+            op:"cleardelay"
+        });
         for (var cnt = 0; cnt < 100; cnt++) {
-            this.ajaxRequest(document.getElementById("delayControl"), null, {execute:"delayControl",render:"delayoutput", op:"delay",delay:500});
+            this.ajaxRequest(document.getElementById("delayControl"), null, {
+                execute:"delayControl",
+                render:"delayoutput", 
+                op:"delay",
+                delay:500
+            });
         }
     },
 
@@ -54,9 +63,18 @@ testGroup.addCase(new AjaxCase({
     },
     run: function() {
         document.getElementById("testform").action = './test.timeout';
-        this.ajaxRequest(document.getElementById("delayControl"), null, {execute:"delayControl",render:"delayoutput",op:"cleardelay"});
+        this.ajaxRequest(document.getElementById("delayControl"), null, {
+            execute:"delayControl",
+            render:"delayoutput",
+            op:"cleardelay"
+        });
         for (var cnt = 0; cnt < 10; cnt++) {
-            this.ajaxRequest(document.getElementById("delayControl"), null, {execute:"delayControl",render:"delayoutput", op:"delay",delay:0});
+            this.ajaxRequest(document.getElementById("delayControl"), null, {
+                execute:"delayControl",
+                render:"delayoutput", 
+                op:"delay",
+                delay:0
+            });
         }
     },
 

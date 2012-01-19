@@ -35,13 +35,13 @@ _class("myfaces._supportive.unittest.TestCase", Object, {
 
 
     constructor_: function(args) {
-       this._Lang.applyArgs(this, args);
-       this.precondition = this._Lang.hitch(this, this.precondition);
-       this.postcondition = this._Lang.hitch(this, this.postcondition);
-       this.run = this._Lang.hitch(this, this.run);
-       this.setup = this._Lang.hitch(this, this.setup);
-       this.tearDown = this._Lang.hitch(this, this.tearDown);
-       this.attr = this._Lang.hitch(this, this.attr);
+        this._Lang.applyArgs(this, args);
+        this.precondition = this._Lang.hitch(this, this.precondition);
+        this.postcondition = this._Lang.hitch(this, this.postcondition);
+        this.run = this._Lang.hitch(this, this.run);
+        this.setup = this._Lang.hitch(this, this.setup);
+        this.tearDown = this._Lang.hitch(this, this.tearDown);
+        this.attr = this._Lang.hitch(this, this.attr);
 
     },
 
@@ -75,7 +75,7 @@ _class("myfaces._supportive.unittest.TestCase", Object, {
     },
 
     _tearDown: function() {
-       this.endCase();
+        this.endCase();
     },
 
     tearDown: function() {
@@ -94,8 +94,8 @@ _class("myfaces._supportive.unittest.TestCase", Object, {
     },
 
     fail: function(message) {
-       this._statisticsEngine.fail(this._description, message);
-       this._failed = true;
+        this._statisticsEngine.fail(this._description, message);
+        this._failed = true;
     },
 
     logInfo: function(message) {

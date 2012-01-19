@@ -8,7 +8,10 @@ function encodeAdditionalFormElements(originalFormId) {
     var targetBuf = new function () {
         var buf = [];
         this.append = function (name, value) {
-            buf.push({name:name, value:value});
+            buf.push({
+                name:name, 
+                value:value
+            });
         }
         this.getBuf = function () {
             return buf;
@@ -29,8 +32,8 @@ function encodeAdditionalFormElements(originalFormId) {
             myfaces._impl.xhrCore._AjaxUtils.encodeElement(element, targetBuf);
 
 
-            //now the value has to be encoded we use an internal function of apache myfaces
-            //here which also could be externalized
+        //now the value has to be encoded we use an internal function of apache myfaces
+        //here which also could be externalized
         }
     }
     return targetBuf;

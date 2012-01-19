@@ -74,7 +74,7 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.JSFAjaxErr
 
     },
     onError: function(evt) {
-        //handle the ajax error handling here
+    //handle the ajax error handling here
     },
 
     onSuccess: function(evt) {

@@ -1,17 +1,17 @@
 var AjaxCase = myfaces._supportive.unittest.JSFAjaxTestCase;
 
 var testGroup = new (_class("Test9SpreadSheet", myfaces._supportive.unittest.TestGroup,
-        {
-            _description:"Table Test, replacement of table elements",
-            constructor_: function() {
-                this._callSuper("constructor_");
-            },
-            tearDown: function() {
-                this._callSuper("tearDown");
-                this.autoForward("./test10-doubleeval.jsf");
+{
+    _description:"Table Test, replacement of table elements",
+    constructor_: function() {
+        this._callSuper("constructor_");
+    },
+    tearDown: function() {
+        this._callSuper("tearDown");
+        this.autoForward("./test10-doubleeval.jsf");
 
-            }
-        }))();
+    }
+}))();
 
 testGroup.addCase(new AjaxCase({
     description:"Chain test",
@@ -36,7 +36,11 @@ testGroup.addCase(new AjaxCase({
             currentField2 = currentField2.replace("#", "").replace(/\\/g, "");
             currentField1 = currentField1.replace("#", "").replace(/\\/g, "");
 
-            this.ajaxRequest(origin, null, {execute:currentField2 + " " + currentField1,render:currentOutput1 + " " + currentOutput2,'javax.faces.behavior.event':'action'});
+            this.ajaxRequest(origin, null, {
+                execute:currentField2 + " " + currentField1,
+                render:currentOutput1 + " " + currentOutput2,
+                'javax.faces.behavior.event':'action'
+            });
         }
     },
 

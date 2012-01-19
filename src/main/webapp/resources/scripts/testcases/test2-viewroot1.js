@@ -22,21 +22,28 @@ var testGroup  = new (_class("SeleniumGroup2", myfaces._supportive.unittest.Test
         document.getElementById(formName || "form1").action = target;
 
         if (arguments.length <= 4) {
-            ajaxFunc(/*String|Dom Node*/ source, /*|EVENT|*/ (window.event) ? window.event : event, /*{|OPTIONS|}*/ {op:action});
+            ajaxFunc(/*String|Dom Node*/ source, /*|EVENT|*/ (window.event) ? window.event : event, /*{|OPTIONS|}*/ {
+                op:action
+            });
         } else {
-            ajaxFunc(/*String|Dom Node*/ source, /*|EVENT|*/ (window.event) ? window.event : event, /*{|OPTIONS|}*/ {op:action, myfaces: {transportType:"multipartQueuedPost"}});
-        }
-    },
-    addStandardTestcase: function(description, origin, command, postCondition) {
-        this.addCase(new AjaxCase({
-            description: description,
-            globalProcess: false,
-            run: function() {
-                this.attr("testGroup").emitPPR(this.ajaxRequest, origin, null, command);
-            },
-            postcondition: postCondition
-        }));
+            ajaxFunc(/*String|Dom Node*/ source, /*|EVENT|*/ (window.event) ? window.event : event, /*{|OPTIONS|}*/ {
+                op:action, 
+                myfaces: {
+                    transportType:"multipartQueuedPost"
+                }
+            });
     }
+},
+addStandardTestcase: function(description, origin, command, postCondition) {
+    this.addCase(new AjaxCase({
+        description: description,
+        globalProcess: false,
+        run: function() {
+            this.attr("testGroup").emitPPR(this.ajaxRequest, origin, null, command);
+        },
+        postcondition: postCondition
+    }));
+}
 }))();
 
 

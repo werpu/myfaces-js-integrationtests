@@ -47,7 +47,11 @@ testGroup.addCase(new AjaxCase({
     /*we enable global processing to handle a triggered click on the issuing control*/
 
     run:function () {
-        this.ajaxRequest('resetme', null, {execute:'@this', render:'myVal', 'javax.faces.behavior.event':'action'});
+        this.ajaxRequest('resetme', null, {
+            execute:'@this', 
+            render:'myVal', 
+            'javax.faces.behavior.event':'action'
+        });
     }
 
 }));
@@ -61,7 +65,11 @@ testGroup.addCase(new AjaxCase({
         return true;
     },
     run:function () {
-        this.ajaxRequest('idgiven', null, {execute:'@this', render:'myVal', 'javax.faces.behavior.event':'action'});
+        this.ajaxRequest('idgiven', null, {
+            execute:'@this', 
+            render:'myVal', 
+            'javax.faces.behavior.event':'action'
+        });
     },
     postcondition:function () {
         this.assertTrue("innerHTML of result must be 1", $("#myVal").html().indexOf("1") != -1);
@@ -82,7 +90,11 @@ testGroup.addCase(new AjaxCase({
     run:function () {
         //var evt = {};
         //evt.type = "click";
-        this.ajaxRequest('emptymap', null, {execute:'@none',render:'outputWriter','javax.faces.behavior.event':'action'});
+        this.ajaxRequest('emptymap', null, {
+            execute:'@none',
+            render:'outputWriter',
+            'javax.faces.behavior.event':'action'
+        });
     },
     postcondition:function () {
         this.assertTrue("innerHTML of result must be 1", $("#myVal").html().indexOf("1") != -1);

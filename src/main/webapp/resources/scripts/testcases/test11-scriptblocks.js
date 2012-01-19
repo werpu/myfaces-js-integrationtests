@@ -1,18 +1,18 @@
 var AjaxCase = myfaces._supportive.unittest.JSFAjaxTestCase;
 
 var testGroup = new (_class ("Test11ScriptBlock", myfaces._supportive.unittest.TestGroup,
-        {
-            _description:"Script blocks in various formats",
+{
+    _description:"Script blocks in various formats",
 
-            constructor_: function() {
-                this._callSuper("constructor_");
-            },
+    constructor_: function() {
+        this._callSuper("constructor_");
+    },
 
-            tearDown: function() {
-                this._callSuper("tearDown");
-                this.autoForward("./test12-apidecoration.jsf");
-            }
-        }))();
+    tearDown: function() {
+        this._callSuper("tearDown");
+        this.autoForward("./test12-apidecoration.jsf");
+    }
+}))();
 
 testGroup.addCase(new AjaxCase({
     description:"Script Block Test",
@@ -26,7 +26,11 @@ testGroup.addCase(new AjaxCase({
 
     run: function() {
 
-        this.ajaxRequest('reloader', null, {execute:'@none',render:'outputWriter','javax.faces.behavior.event':'action'});
+        this.ajaxRequest('reloader', null, {
+            execute:'@none',
+            render:'outputWriter',
+            'javax.faces.behavior.event':'action'
+        });
     },
 
     postcondition: function() {

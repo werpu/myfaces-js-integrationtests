@@ -16,58 +16,70 @@ function assertEvent(testcase, data, eventComparator, global) {
 var AjaxCase = myfaces._supportive.unittest.JSFAjaxTestCase;
 
 var testGroup = new  (_class("Testgroup7Eventtest", myfaces._supportive.unittest.TestGroup,
-        {
-            _description:"MyFaces Event Lifecycle test",
-            constructor_: function() {
-                this._callSuper("constructor_");
-            },
-            tearDown: function() {
-                this._callSuper("tearDown");
-                this.autoForward("./test8-navcase1.jsf");
-            }
-        }))();
+{
+    _description:"MyFaces Event Lifecycle test",
+    constructor_: function() {
+        this._callSuper("constructor_");
+    },
+    tearDown: function() {
+        this._callSuper("tearDown");
+        this.autoForward("./test8-navcase1.jsf");
+    }
+}))();
 
 testGroup.addCase(
-        new AjaxCase({
-            description: "Local Phase Check",
-            globalProcess: false,
+    new AjaxCase({
+        description: "Local Phase Check",
+        globalProcess: false,
 
-            run: function() {
-                this.ajaxRequest(document.getElementById("updateTrigger"), null, {render:"updatePanel",
-                    execute:"updatePanel updateTrigger"});
-            },
-            postcondition: function() {
-                var DEFAULT_EVENTTYPES = {"begin":true,"complete": true, "success": true};
+        run: function() {
+            this.ajaxRequest(document.getElementById("updateTrigger"), null, {
+                render:"updatePanel",
+                execute:"updatePanel updateTrigger"
+            });
+        },
+        postcondition: function() {
+            var DEFAULT_EVENTTYPES = {
+                "begin":true,
+                "complete": true, 
+                "success": true
+            };
 
-                var localEvents = this.attr("processedEvents");
-                this.assertTrue("All events must have passed", localEvents.length == 3);
-                this.logInfo("Structural testing of all events processed");
-                for (var cnt = 0; cnt != localEvents.length; cnt++) {
-                    assertEvent(this, localEvents[cnt], DEFAULT_EVENTTYPES, false);
-                }
+            var localEvents = this.attr("processedEvents");
+            this.assertTrue("All events must have passed", localEvents.length == 3);
+            this.logInfo("Structural testing of all events processed");
+            for (var cnt = 0; cnt != localEvents.length; cnt++) {
+                assertEvent(this, localEvents[cnt], DEFAULT_EVENTTYPES, false);
             }
-        }));
+        }
+    }));
 testGroup.addCase(
-        new AjaxCase({
-            description: "Global Phase Check",
-            globalProcess: true,
+    new AjaxCase({
+        description: "Global Phase Check",
+        globalProcess: true,
 
-            run: function() {
-                this.ajaxRequest(document.getElementById("updateTrigger"), null, {render:"updatePanel",
-                    execute:"updatePanel updateTrigger"});
-            },
-            postcondition: function() {
-                var DEFAULT_EVENTTYPES = {"begin":true,"complete": true, "success": true};
+        run: function() {
+            this.ajaxRequest(document.getElementById("updateTrigger"), null, {
+                render:"updatePanel",
+                execute:"updatePanel updateTrigger"
+            });
+        },
+        postcondition: function() {
+            var DEFAULT_EVENTTYPES = {
+                "begin":true,
+                "complete": true, 
+                "success": true
+            };
 
-                this.logInfo("global testing");
-                var globalEvents = this.attr("processedGlobalEvents");
-                this.assertTrue("All events must have passed", globalEvents.length == 3);
-                for (var cnt = 0; cnt != globalEvents.length; cnt++) {
-                    assertEvent(this, globalEvents[cnt], DEFAULT_EVENTTYPES, true);
-                }
+            this.logInfo("global testing");
+            var globalEvents = this.attr("processedGlobalEvents");
+            this.assertTrue("All events must have passed", globalEvents.length == 3);
+            for (var cnt = 0; cnt != globalEvents.length; cnt++) {
+                assertEvent(this, globalEvents[cnt], DEFAULT_EVENTTYPES, true);
             }
-        })
-);
+        }
+    })
+    );
 setTimeout(function() {
     testGroup.start();
 }, 100);

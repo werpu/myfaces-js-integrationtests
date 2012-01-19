@@ -111,8 +111,8 @@ _class("myfaces._supportive.unittest.TestGroup", Object, {
                     }
                 });
             })(cnt, this);
-            //if we do not scope correctly in an inner function, then we run into the
-            //last oldfunc instead of the current one of the loop
+        //if we do not scope correctly in an inner function, then we run into the
+        //last oldfunc instead of the current one of the loop
         }
         this._currentLifecyclePos = 0;
     },

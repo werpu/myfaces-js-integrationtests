@@ -7,31 +7,33 @@ var AjaxErrorCase = myfaces._supportive.unittest.JSFAjaxErrorTestCase;
 var target = "./test.mockup";
 
 var testGroup = new (_class("SeleniumGroup2", myfaces._supportive.unittest.TestGroup,
-        {
-            _description:"MyFaces JSF Protocol Tests",
-            constructor_: function() {
-                this._callSuper("constructor_");
-            },
+{
+    _description:"MyFaces JSF Protocol Tests",
+    constructor_: function() {
+        this._callSuper("constructor_");
+    },
 
-            postcondition: function() {
-                //if the tests have passed forward to the next testing page
-               return true;
-            },
-            tearDown: function() {
-                this._callSuper("tearDown");
-                this.autoForward("./test2-viewroot1.jsf");
-            }
-        }))();
+    postcondition: function() {
+        //if the tests have passed forward to the next testing page
+        return true;
+    },
+    tearDown: function() {
+        this._callSuper("tearDown");
+        this.autoForward("./test2-viewroot1.jsf");
+    }
+}))();
 
 
 testGroup.emitPPR = function(ajaxFunc, source, event, action, useIframe, formName) {
     document.getElementById(formName || "form1").action = target;
 
-   // if (arguments.length <= 4) {
-        ajaxFunc(/*String|Dom Node*/ source, /*|EVENT|*/ (window.event) ? window.event : event, /*{|OPTIONS|}*/ {op:action});
-   // } else {
-   //     ajaxFunc(/*String|Dom Node*/ source, /*|EVENT|*/ (window.event) ? window.event : event, /*{|OPTIONS|}*/ {op:action, myfaces: {transportType:"multipartQueuedPost"}});
-   // }
+    // if (arguments.length <= 4) {
+    ajaxFunc(/*String|Dom Node*/ source, /*|EVENT|*/ (window.event) ? window.event : event, /*{|OPTIONS|}*/ {
+        op:action
+    });
+// } else {
+//     ajaxFunc(/*String|Dom Node*/ source, /*|EVENT|*/ (window.event) ? window.event : event, /*{|OPTIONS|}*/ {op:action, myfaces: {transportType:"multipartQueuedPost"}});
+// }
 };
 
 testGroup.addStandardTestcase = function(description, origin, command, postCondition) {
@@ -63,10 +65,10 @@ function checkForSucceed(asserter, identifier) {
 }
 
 testGroup.addStandardTestcase("Eval Ajax", "cmd_eval", "eval1",
-        function() {
-            checkForSucceed(this, "evalarea1");
-        }
-);
+    function() {
+        checkForSucceed(this, "evalarea1");
+    }
+    );
 
 //obsolete, this path is a spec error and only supported by myfaces
 /*testGroup.addStandardTestcase("Upadte Insert JSDOC Insert Path", "cmd_update_insert", "updateinsert1",
@@ -83,34 +85,34 @@ testGroup.addStandardTestcase("Eval Ajax", "cmd_eval", "eval1",
 );*/
 
 testGroup.addStandardTestcase("Update Insert Spec Insert Path", "cmd_update_insert2", "updateinsert2",
-        function() {
-            checkForSucceed(this, "evalarea2");
-            checkForSucceed(this, "evalarea3");
-            this.assertTrue("insert before must exist", !!$("#insertbefore").length);
-            this.assertTrue("insert insertAfter must exist", !!$("#insertafter").length);
-            //reset the state here as well
-            $("#insertbefore").remove();
-            $("#insertafter").remove();
-        }
-);
+    function() {
+        checkForSucceed(this, "evalarea2");
+        checkForSucceed(this, "evalarea3");
+        this.assertTrue("insert before must exist", !!$("#insertbefore").length);
+        this.assertTrue("insert insertAfter must exist", !!$("#insertafter").length);
+        //reset the state here as well
+        $("#insertbefore").remove();
+        $("#insertafter").remove();
+    }
+    );
 
 testGroup.addStandardTestcase("Delete", "cmd_delete", "delete1",
-        function() {
-            this.assertFalse("delete area must be gone", !!document.getElementById("deleteable"));
-            if (!this.attr("failed")) {
-                $("#testResults").append("<div id='deleteable'>deletearea readded by automated test</div>");
-            }
+    function() {
+        this.assertFalse("delete area must be gone", !!document.getElementById("deleteable"));
+        if (!this.attr("failed")) {
+            $("#testResults").append("<div id='deleteable'>deletearea readded by automated test</div>");
         }
-);
+    }
+    );
 
 testGroup.addStandardTestcase("Attributes change", "cmd_attributeschange", "attributes",
-        function() {
+    function() {
 
-           // var style = $("#attributeChange").css("border");
-           // this.assertTrue("border must be set and be black", style.indexOf("black") != -1);
-            $("#attributeChange").css("border", "0px solid black");
-        }
-);
+        // var style = $("#attributeChange").css("border");
+        // this.assertTrue("border must be set and be black", style.indexOf("black") != -1);
+        $("#attributeChange").css("border", "0px solid black");
+    }
+    );
 
 
 testGroup.addCase(new AjaxErrorCase({
@@ -118,7 +120,7 @@ testGroup.addCase(new AjaxErrorCase({
     globalProcess: false,
     /*postcondition of the error gets the event data*/
     run: function() {
-            this.attr("testGroup").emitPPR(this.ajaxRequest, "cmd_illegalresponse", null, "illegalResponse");
+        this.attr("testGroup").emitPPR(this.ajaxRequest, "cmd_illegalresponse", null, "illegalResponse");
     },
     postcondition: function(evt) {
         this.assertTrue("Error Type must be error",evt.type === "error");
@@ -153,20 +155,20 @@ testGroup.addCase(new AjaxErrorCase({
     globalProcess: false,
     /*postcondition of the error gets the event data*/
     run: function() {
-            this.attr("testGroup").emitPPR(this.ajaxRequest, "cmd_error", null, "errors");
+        this.attr("testGroup").emitPPR(this.ajaxRequest, "cmd_error", null, "errors");
     },
 
     _onError: function(evt) {
         //try {
-            this._onErrorCalled = true;
-            this.onError(evt);
+        this._onErrorCalled = true;
+        this.onError(evt);
 
-        //} finally {
-        //    if (!this._globalProcess && !this._manualTearDown) {
-        //        this._tearDown();
-        //        this.tearDown();
-        //    }
-        //}
+    //} finally {
+    //    if (!this._globalProcess && !this._manualTearDown) {
+    //        this._tearDown();
+    //        this.tearDown();
+    //    }
+    //}
 
     },
     onError: function(evt) {
