@@ -34,12 +34,12 @@
 }
 
 .testGroup .success_true,.testGroup .failure_false {
-    background-image: url(/javax.faces.resource/icons/famfam/accept.png.jsf);
+    background-image: url(../javax.faces.resource/icons/famfam/accept.png.jsf);
     background-repeat: no-repeat;
 }
 
 .testGroup .success_false,.testGroup .failure_true {
-    background-image: url(/javax.faces.resource/icons/famfam/error_delete.png.jsf);
+    background-image: url(../javax.faces.resource/icons/famfam/error_delete.png.jsf);
     background-repeat: no-repeat;
 }
 
