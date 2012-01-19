@@ -24,6 +24,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import java.util.LinkedList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 
 /**
  * @author Werner Punz (latest modification by $Author$)
@@ -73,8 +74,10 @@ public class TableBean
     public TableBean() {
         for (int cnt = 0; cnt < 100; cnt++) {
             entries.add(new Entry("field1" + cnt, "field2" + cnt));
-        }
+            System.out.println("hello world");
+      }  
     }
+   
 
     public List<Entry> getEntries() {
         return entries;

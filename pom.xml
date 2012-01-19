@@ -122,7 +122,8 @@
         <dependency>
             <groupId>org.richfaces.ui</groupId>
             <artifactId>richfaces-components-ui</artifactId>
-            <version>4.0.0.Final<!--4.1.0.20111111-CR1--></version>
+            <version>4.0.0.Final<!--4.1.0.20111111-CR1-->
+            </version>
         </dependency>
         <dependency>
             <groupId>org.richfaces.core</groupId>
@@ -182,51 +183,51 @@
         </profile>
 
         <profile>
-                    <id>mojarraDebug</id>
-                    <activation>
-                        <activeByDefault>false</activeByDefault>
-                    </activation>
+            <id>mojarraDebug</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
 
-                    <build>
-                        <plugins>
+            <build>
+                <plugins>
 
-                            <plugin>
-                                <groupId>org.apache.maven.plugins</groupId>
-                                <artifactId>maven-war-plugin</artifactId>
-                                <version>${maven-war-plugin.version}</version>
-                                <configuration>
-                                    <webResources>
-                                        <resource>
-                                            <directory>${shared.resources}</directory>
-                                        </resource>
-                                        <resource>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-war-plugin</artifactId>
+                        <version>${maven-war-plugin.version}</version>
+                        <configuration>
+                            <webResources>
+                                <resource>
+                                    <directory>${shared.resources}</directory>
+                                </resource>
+                                <resource>
                                             <!-- this is relative to the pom.xml directory -->
-                                            <directory>src/main/extra-resources/mojarra-debug/webapp</directory>
+                                    <directory>src/main/extra-resources/mojarra-debug/webapp</directory>
 
-                                        </resource>
-                                    </webResources>
-                                </configuration>
-                            </plugin>
+                                </resource>
+                            </webResources>
+                        </configuration>
+                    </plugin>
 
-                        </plugins>
-                    </build>
+                </plugins>
+            </build>
 
-                    <dependencies>
-                        <dependency>
-                            <groupId>com.sun.faces</groupId>
-                            <artifactId>jsf-api</artifactId>
-                            <version>${mojarra.version}</version>
-                            <scope>compile</scope>
-                        </dependency>
+            <dependencies>
+                <dependency>
+                    <groupId>com.sun.faces</groupId>
+                    <artifactId>jsf-api</artifactId>
+                    <version>${mojarra.version}</version>
+                    <scope>compile</scope>
+                </dependency>
 
-                        <dependency>
-                            <groupId>com.sun.faces</groupId>
-                            <artifactId>jsf-impl</artifactId>
-                            <version>${mojarra.version}</version>
-                            <scope>compile</scope>
-                        </dependency>
-                    </dependencies>
-                </profile>
+                <dependency>
+                    <groupId>com.sun.faces</groupId>
+                    <artifactId>jsf-impl</artifactId>
+                    <version>${mojarra.version}</version>
+                    <scope>compile</scope>
+                </dependency>
+            </dependencies>
+        </profile>
 
         <profile>
             <id>minimal</id>
@@ -563,7 +564,19 @@
 
                 </dependencies>
             </plugin>
-
+            <plugin>
+                <groupId>org.zeroturnaround</groupId>
+                <artifactId>jrebel-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>generate-rebel-xml</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 
         </plugins>
 
