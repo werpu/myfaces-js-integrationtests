@@ -3,7 +3,7 @@
 <glassfish-web-app error-url="">
   <context-root>/TestScripts</context-root>
   <class-loader delegate="false"/>
-  <property name="useBundledJsf" value="true" />
+  <property name="useBundledJsf" value="true"/>
   <property name="useMyFaces" value="true"/>
   <jsp-config>
     <property name="keepgenerated" value="true">
