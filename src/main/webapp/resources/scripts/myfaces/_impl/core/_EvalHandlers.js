@@ -117,8 +117,6 @@ if (!myfaces._impl.core._EvalHandlers) {
          * @function
          */
         _T.globalEval = function(c) {
-            //TODO add a config param which allows to evaluate global scripts even if the call
-            //is embedded in an iframe
             //We lazy init the eval type upon the browsers
             //capabilities   
             var _e = "_evalType";

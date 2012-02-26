@@ -16,6 +16,10 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
          version="3.0">
 
+    <context-param>
+            <param-name>org.apache.myfaces.WRAP_SCRIPT_CONTENT_WITH_XML_COMMENT_TAG</param-name>
+            <param-value>false</param-value>
+        </context-param>
 
     <context-param>
         <param-name>javax.faces.DEFAULT_SUFFIX</param-name>
@@ -58,6 +62,10 @@
         <param-name>org.richfaces.fileUpload.createTempFiles</param-name>
         <param-value>false</param-value>
     </context-param>
+    <filter>
+        <filter-name>CompressionFilter</filter-name>
+        <filter-class>extras.apache.org.jsintegration.experimental.compressionFilter.CompressionFilter</filter-class>
+    </filter>
 
 
     <listener>
@@ -106,8 +114,12 @@
         <servlet-name>MockupServlet</servlet-name>
         <url-pattern>*.mockup</url-pattern>
     </servlet-mapping>
-
-
+    <!--
+    <filter-mapping>
+        <filter-name>CompressionFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    -->
 
 
     <!-- Faces Servlet Mapping -->

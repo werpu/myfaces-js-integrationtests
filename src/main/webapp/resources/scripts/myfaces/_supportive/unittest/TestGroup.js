@@ -125,7 +125,7 @@ _class("myfaces._supportive.unittest.TestGroup", Object, {
                     this._allTestsPassed = this._allTestsPassed & !this.testCases[cnt].isFailed();
                 }
 
-                //TODO postcondition call only if he lifecycle has succeeded
+
                 if (this._allTestsPassed && !this.postcondition()) {
                     this.logError("Precondition failed for test group");
                     return false;

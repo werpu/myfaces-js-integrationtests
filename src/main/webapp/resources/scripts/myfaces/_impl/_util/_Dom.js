@@ -142,7 +142,7 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
                             }
                             _RT.loadScriptEval(src, item.getAttribute('type'), false, "UTF-8", false);
                         }
-                        //TODO handle embedded scripts
+
                     } else {
                         // embedded script auto eval
                         var test = (!xmlData) ? item.text : _Lang.serializeChilds(item);
@@ -980,7 +980,6 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
      * fetches the window id for the current request
      * note, this is a preparation method for jsf 2.2
      *
-     * todo move this into the experimental part
      */
     getWindowId: function() {
         //implementation in the experimental part

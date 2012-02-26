@@ -9,7 +9,6 @@ if (_MF_SINGLTN) {
          * fetches the window id for the current request
          * note, this is a preparation method for jsf 2.2
          *
-         * todo move this into the experimental part
          */
         getWindowId: function() {
             var href = window.location.href;
@@ -29,7 +28,6 @@ if (_MF_SINGLTN) {
             return (elemForm) ? this.byId(elemForm) : null;
         },
 
-        //TODO move this into the extended features part
         isMultipartCandidate: function(executes) {
             if (this._Lang.isString(executes)) {
                 executes = this._Lang.strToArray(executes, /\s+/);
