@@ -26,8 +26,8 @@ if (_MF_SINGLTN) {
                 var foundCnt = 0;
                 for (var cnt = forms.length - 1; cnt >= 0; cnt--) {
                     var currentForm = forms[cnt];
-                    var windowId = currentForm["javax.faces.WindowId"].value;
-                    if (windowId) {
+                    var windowId = currentForm["javax.faces.WindowId"] && currentForm["javax.faces.WindowId"].value;
+                    if ('undefined' != typeof windowId) {
                         if (foundCnt > 0 && 'undefined' == typeof result_idx[windowId]) throw Error("Multiple different windowIds found in document");
                         result = windowId;
                         result_idx[windowId] = true;
@@ -79,7 +79,7 @@ if (_MF_SINGLTN) {
                 }
             }
             var result = fetchWindowIdFromForms(forms);
-            return (null != result) result:  fetchWindowIdFromURL();
+            return (null != result)? result:  fetchWindowIdFromURL();
         },
 
         html5FormDetection:function (item) {

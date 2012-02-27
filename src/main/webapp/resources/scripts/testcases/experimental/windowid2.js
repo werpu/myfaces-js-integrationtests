@@ -16,7 +16,7 @@ var testGroup = new (_class("SeleniumGroup2", myfaces._supportive.unittest.TestG
     },
     tearDown:function () {
         this._callSuper("tearDown");
-        this.autoForward("./windowid2.jsf?booga=bla&windowId=10");
+        //this.autoForward("./windowid2.jsf?booga=bla&windowId=10");
     }
 
 }))();
@@ -41,6 +41,10 @@ testGroup.addCase(new (_class("Case1", TestCase, {
 
         try {
             var dom = myfaces._impl._util._Dom;
+            var result = dom.getWindowId();
+            this.assertTrue("Result should be 10", parseInt(result) == 10);
+
+
             var result = dom.getWindowId(document.getElementById("outerContainer"));
             this.assertTrue("Result should be 10", parseInt(result) == 10);
 
@@ -73,36 +77,6 @@ testGroup.addCase(new (_class("Case1", TestCase, {
     }
 }))());
 
-testGroup.addCase(new (_class("Case2", TestCase, {
-    _description:"Test for double form error",
-    _globalProcess:false,
-
-    constructor_:function () {
-        this._callSuper("constructor_");
-    },
-    run:function () {
-    },
-    postcondition:function () {
-        this._callSuper("postcondition");
-
-        document.getElementById("booga2").value = "11";
-
-        try {
-            var dom = myfaces._impl._util._Dom;
-            var result = dom.getWindowId(document.getElementById("outerContainer"));
-            this.fail("window id should have thrown an error");
-            return false;
-        } catch (e) {
-            this.assertTrue("windowid has thrown an error legally", true);
-        }
-        return true;
-    },
-
-    tearDown:function () {
-        document.getElementById("booga2").value = document.getElementById("booga").value;
-        this._callSuper("tearDown");
-    }
-}))());
 
 setTimeout(function () {
     testGroup.start();
