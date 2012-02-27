@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core">
+<ui:composition template="../templates/template2.xhtml">
+
+    <ui:define name="content">
+        <h:outputScript name="testcases/experimental/windowid.js" library="scripts" target="head"/>
+        begin form area
+        <div id="outerContainer">
+            <h:form id="centerForm">
+                <input type="hidden" id="booga" name="javax.faces.WindowId" value="10"></input>
+            </h:form>
+            <h:form id="centerForm2">
+                <input type="hidden" id="booga2" name="javax.faces.WindowId" value="10"></input>
+            </h:form>
+        </div>
+        end form area
+    </ui:define>
+</ui:composition>
+</html>
