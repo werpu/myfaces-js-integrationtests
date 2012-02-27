@@ -6,10 +6,20 @@ if (_MF_SINGLTN) {
         },
 
         /**
-         * fetches the window id for the current request
-         * note, this is a preparation method for jsf 2.2
+         * The function allows to fetch the windowid from any arbitrary elements
+         * parent or child form.
+         * If more than one unique windowid is found then an error is thrown.
+         * @param {optional} element, searches for the windowid from any given arbitrary element
+         * a search first for embedded forms is performed and then for the parent form. If no form is found at
+         * all, or the element is not given then a search on document.forms is performed and if that
+         * does not bring any result a search within the url is performed as last fallback.
+         * @throws an error in case of having more than one unique windowIds depending on the given
+         * node element
          */
         getWindowId:function (node) {
+
+            var FORM = "form";
+
             var fetchWindowIdFromForms = function (forms) {
                 var result_idx = {};
                 var result;
@@ -28,7 +38,7 @@ if (_MF_SINGLTN) {
             }
 
             var getChildForms = function (currentElement) {
-                var FORM = "form";
+
                 var targetArr = [];
                 if(!currentElement.tagName) return [];
                 else if (currentElement.tagName.toLowerCase() == FORM) {
@@ -45,30 +55,31 @@ if (_MF_SINGLTN) {
 
             var findParentForms = function(element) {
                 while(element != null) {
-                    if(element.tagName.toLowerCase() == "form") return [element];
+                    if(element.tagName.toLowerCase() == FORM) return [element];
                     element = element.parentNode;
                 }
                 return document.forms;
             }
 
-            if (!node) {
+            var fetchWindowIdFromURL = function() {
                 var href = window.location.href;
                 var windowId = "windowId";
                 var regex = new RegExp("[\\?&]" + windowId + "=([^&#\\;]*)");
                 var results = regex.exec(href);
                 //initial trial over the url and a regexp
                 if (results != null) return results[1];
-                //second trial all forms
-                return fetchWindowIdFromForms(document.forms);
-            } else {
-                //check forms
+                return null;
+            }
+            var forms = [];
+            if(node) {
                 var forms = getChildForms(node);
                 if(!forms || forms.length == 0) {
                     //We walk up the parent until we hit a form or document.body
                     forms = findParentForms(node);
                 }
-                return fetchWindowIdFromForms(forms);
             }
+            var result = fetchWindowIdFromForms(forms);
+            return (null != result) result:  fetchWindowIdFromURL();
         },
 
         html5FormDetection:function (item) {
