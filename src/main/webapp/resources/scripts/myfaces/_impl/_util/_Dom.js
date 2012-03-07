@@ -343,7 +343,7 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
 
         for (var cnt = 0; cnt < evalNodes.length; cnt++) {
             if (currentRef.nextSibling) {
-                //TODO winmobile6 has problems with this strategy
+                //Winmobile 6 has problems with this strategy, but it is not really fixable
                 currentRef = parentNode.insertBefore(evalNodes[cnt], currentRef.nextSibling);
             } else {
                 currentRef = parentNode.appendChild(evalNodes[cnt]);
@@ -512,10 +512,10 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
         if (this._isTableElement(item)) {
             evalNodes = this._buildTableNodes(item, markup);
         } else {
-            var nonIEQuirks = (!this._RT.browser.isIE || this.browser.isIE > 8);
+            var nonIEQuirks = (!this._RT.browser.isIE || this._RT.browser.isIE > 8);
             //ie8 has a special problem it still has the swallow scripts and other
             //elements bug, but it is mostly dom compliant so we have to give it a special
-            //treatment
+            //treatment, IE9 finally fixes that issue finally after 10 years
             evalNodes = (this.isDomCompliant() &&  nonIEQuirks) ?
                     this._buildNodesCompliant(markup) :
                     //ie8 or quirks mode browsers

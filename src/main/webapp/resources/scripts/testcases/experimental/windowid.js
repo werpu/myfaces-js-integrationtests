@@ -41,6 +41,11 @@ testGroup.addCase(new (_class("Case1", TestCase, {
 
         try {
             var dom = myfaces._impl._util._Dom;
+
+            var result = dom.getWindowId();
+            this.assertTrue("Result should be 10", parseInt(result) == 10);
+
+
             var result = dom.getWindowId(document.getElementById("outerContainer"));
             this.assertTrue("Result should be 10", parseInt(result) == 10);
 
@@ -52,14 +57,14 @@ testGroup.addCase(new (_class("Case1", TestCase, {
             var result = dom.getWindowId(document.getElementById("centerForm2"));
             this.assertTrue("Result should be 10", parseInt(result) == 10);
 
-            var dom = myfaces._impl._util._Dom;
+            /*var dom = myfaces._impl._util._Dom;
             var result = dom.getWindowId(document.getElementById("booga"));
             this.assertTrue("Result should be 10", parseInt(result) == 10);
 
             var dom = myfaces._impl._util._Dom;
             var result = dom.getWindowId(document.getElementById("booga2"));
             this.assertTrue("Result should be 10", parseInt(result) == 10);
-
+             */
             return true;
         } catch (e) {
             this.fail("Error thrown");
