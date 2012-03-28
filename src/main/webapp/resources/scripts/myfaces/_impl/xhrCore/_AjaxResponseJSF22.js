@@ -62,7 +62,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
     P_VIEWHEAD: "javax.faces.ViewHead",
     P_VIEWBODY: "javax.faces.ViewBody",
 
-
+    _viewStateCnt:0,
     /**
      * uses response to start Html element replacement
      *
@@ -197,27 +197,28 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
     /**
      * sets the viewstate element in a given form
      *
-     * @param theForm the form to which the element has to be set to
+     * @param theFormData the form to which the element has to be set to
      * @param context the current request context
      */
-    _setVSTForm: function(context, theForm) {
-        theForm = this._Lang.byId(theForm);
+    _setVSTForm: function(context, theFormData) {
+        var form = this._Lang.byId(theFormData.form);
         var mfInternal = context._mfInternal;
 
-        if (!theForm) return;
+        if (!theFormData) return;
 
-        var viewStateField = (theForm.elements) ? theForm.elements[this.P_VIEWSTATE] : null;//this._Dom.findFormElement(elem, this.P_VIEWSTATE);
+        var viewStateField = (form.elements) ? form.elements[this.P_VIEWSTATE] : null;
 
         if (viewStateField) {
-            this._Dom.setAttribute(viewStateField, "value", mfInternal.appliedViewState);
+            this._Dom.setAttribute(viewStateField, "value", theFormData.appliedViewState);
         } else if (!viewStateField) {
             var element = this._Dom.getDummyPlaceHolder();
-            //spec error, two elements with the same id should not be there, TODO recheck the space if the name does not suffice alone
-            element.innerHTML = ["<input type='hidden'", "id='", this.P_VIEWSTATE ,"' name='", this.P_VIEWSTATE ,"' value='" , mfInternal.appliedViewState , "' />"].join("");
+
+            element.innerHTML = ["<input type='hidden'", "id='", theFormData.id,"' name='", this.P_VIEWSTATE ,"' value='" , theFormData.appliedViewState , "' />"].join("");
             //now we go to proper dom handling after having to deal with another ie screwup
             try {
-                theForm.appendChild(element.childNodes[0]);
+                form.appendChild(element.childNodes[0]);
             } finally {
+                //squelch
                 element.innerHTML = "";
             }
         }
@@ -332,19 +333,23 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
             // may refer to an invalid document if an update of the entire body has occurred before this point.
             var mfInternal = context._mfInternal;
 
-            mfInternal.appliedViewState = node.firstChild.nodeValue;
+            //mfInternal.appliedViewState = node.firstChild.nodeValue;
 
             var rootElem = (viewRoot)? document.getElementById(viewRoot): document.body;
             var forms = this._Dom.findByTagName(rootElem, "form");
             if(forms) {
-                mfInternal._updateForms = mfInternal._updateForms.concat(forms);
+                for(var cnt = forms.length; cnt > 0; cnt --) {
+                    mfInternal._updateForms.push({
+                        form: forms[cnt],
+                        appliedViewState:node.firstChild.nodeValue,
+                        id: id
+                    });
+                }
             }
         }
         else {
             // response may contain several blocks
-            var cDataBlock = this._Dom.concatCDATABlocks(node),
-                    resultNode = null,
-                    pushOpRes = this._Lang.hitch(this, this._pushOperationResult);
+            var cDataBlock = this._Dom.concatCDATABlocks(node);
 
             switch (node.getAttribute('id')) {
                 case this.P_VIEWROOT:
@@ -353,10 +358,8 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
 
                     var parsedData = this._replaceHead(request, context, cDataBlock);
 
-                    resultNode = ('undefined' != typeof parsedData && null != parsedData) ? this._replaceBody(request, context, cDataBlock, parsedData) : this._replaceBody(request, context, cDataBlock);
-                    if (resultNode) {
-                        pushOpRes(context, resultNode);
-                    }
+                    ('undefined' != typeof parsedData && null != parsedData) ? this._replaceBody(request, context, cDataBlock, parsedData) : this._replaceBody(request, context, cDataBlock);
+
                     break;
                 case this.P_VIEWHEAD:
                     //we cannot replace the head, almost no browser allows this, some of them throw errors
@@ -366,50 +369,19 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
                     break;
                 case this.P_VIEWBODY:
                     //we assume the cdata block is our body including the tag
-                    resultNode = this._replaceBody(request, context, cDataBlock);
-                    if (resultNode) {
-                        pushOpRes(context, resultNode);
-                    }
+                    this._replaceBody(request, context, cDataBlock);
+
                     break;
 
                 default:
-                    resultNode = this.replaceHtmlItem(request, context, node.getAttribute('id'), cDataBlock);
-                    if (resultNode) {
-                        pushOpRes(context, resultNode);
-                    }
+                    this.replaceHtmlItem(request, context, node.getAttribute('id'), cDataBlock);
+
                     break;
             }
         }
 
         return true;
-    }
-    ,
-
-    _pushOperationResult: function(context, resultNode) {
-        var mfInternal = context._mfInternal;
-        var pushSubnode = this._Lang.hitch(this, function(currNode) {
-            var parentForm = this._Dom.getParent(currNode, "form");
-            //if possible we work over the ids
-            //so that elements later replaced are referenced
-            //at the latest possibility
-            if (null != parentForm) {
-                mfInternal._updateForms.push(parentForm.id || parentForm);
-            }
-            else {
-                mfInternal._updateElems.push(currNode.id || currNode);
-            }
-        });
-        var isArr = 'undefined' != typeof resultNode.length && 'undefined' == typeof resultNode.nodeType;
-        if (isArr && resultNode.length) {
-            for (var cnt = 0; cnt < resultNode.length; cnt++) {
-                pushSubnode(resultNode[cnt]);
-            }
-        } else if (!isArr) {
-            pushSubnode(resultNode);
-        }
-
-    }
-    ,
+    },
 
     /**
      * replaces a current head theoretically,
@@ -539,12 +511,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
         parser = new (_RT.getGlobalConfig("updateParser", myfaces._impl._util._HtmlStripper))();
         bodyData = parser.parse(newData, "body");
 
-        var returnedElement = this.replaceHtmlItem(request, context, placeHolder, bodyData);
-
-        if (returnedElement) {
-            this._pushOperationResult(context, returnedElement);
-        }
-        return returnedElement;
+        this.replaceHtmlItem(request, context, placeHolder, bodyData);
     }
     ,
 
@@ -584,19 +551,14 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
             //determine which path to go:
                 insertData = this._parseInsertData(request, context, node);
 
-        if (!insertData) return false;
-
-        var opNode = _Dom.byIdOrName(insertData.opId);
-        if (!opNode) {
-            throw this._raiseError(new Error(),_Lang.getMessage("ERR_PPR_INSERTBEFID_1", null, "_AjaxResponse.processInsert", insertData.opId),"processInsert");
+        if (insertData) {
+            var opNode = _Dom.byIdOrName(insertData.opId);
+            if (!opNode) {
+                throw this._raiseError(new Error(),_Lang.getMessage("ERR_PPR_INSERTBEFID_1", null, "_AjaxResponse.processInsert", insertData.opId),"processInsert");
+            }
+            //call insertBefore or insertAfter in our dom routines
+             _Dom[insertData.insertType](opNode, insertData.cDataBlock);
         }
-
-        //call insertBefore or insertAfter in our dom routines
-        var replacementFragment = _Dom[insertData.insertType](opNode, insertData.cDataBlock);
-        if (replacementFragment) {
-            this._pushOperationResult(context, replacementFragment);
-        }
-        return true;
     },
 
     /**
@@ -687,10 +649,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
             context._mfInternal._updateForms.push(parentForm);
         }
         _Dom.deleteItem(item);
-
-        return true;
-    }
-    ,
+    },
 
     processAttributes : function(request, context, node) {
         //we now route into our attributes function to bypass
@@ -709,7 +668,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
         var childNodes = node.childNodes;
 
         if (!childNodes) {
-            return false;
+            return;
         }
         for (var loop2 = 0; loop2 < childNodes.length; loop2++) {
             var attributesNode = childNodes[loop2],
@@ -744,7 +703,6 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
                     break;
             }
         }
-        return true;
     },
 
     /**
