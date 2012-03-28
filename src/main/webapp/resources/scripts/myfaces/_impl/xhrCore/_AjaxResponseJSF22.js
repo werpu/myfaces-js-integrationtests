@@ -167,21 +167,12 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
     fixViewStates : function(context) {
         var _Lang = this._Lang;
         var mfInternal = context._mfInternal;
-
-        if (null == mfInternal.appliedViewState) {
+        //we check for no updates at all
+        if(!mfInternal._updateForms || !mfInternal._updateForms.length) {
             return;
         }
 
-        //if we set our no portlet env we safely can update all forms with
-        //the new viewstate
-        if (this._RT.getLocalOrGlobalConfig(context, "no_portlet_env", false)) {
-            for (var cnt = document.forms.length - 1; cnt >= 0; cnt --) {
-                this._setVSTForm(context, document.forms[cnt]);
-            }
-            return;
-        }
-
-        // Now update the forms that were not replaced but forced to be updated, because contains child ajax tags
+      // Now update the forms that were not replaced but forced to be updated, because contains child ajax tags
         // we should only update forms with view state hidden field. If by some reason, the form was set to be
         // updated but the form was replaced, it does not have hidden view state, so later in changeTrace processing the
         // view state is updated.
@@ -323,22 +314,22 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
      */
     processUpdate : function(request, context, node) {
         var id = node.getAttribute('id');
-        if (id.indexOf(this.P_VIEWSTATE) != -1) {
+        var viewStateIdx = id.indexOf(this.P_VIEWSTATE)
+        if (viewStateIdx != -1) {
             //now we have to split between viewstate and
-            var idData = id.split("\\:");
-            var viewRoot = (idData.length > 1)? idData[0]:null;
+            var viewRootEndIdx = Math.max(0, viewStateIdx - 1);
+
+            var viewRoot = (viewRootEndIdx)? id.substr(0, viewRootEndIdx):null;
 
             //update the submitting forms viewstate to the new value
             // The source form has to be pulled out of the CURRENT document first because the context object
             // may refer to an invalid document if an update of the entire body has occurred before this point.
             var mfInternal = context._mfInternal;
 
-            //mfInternal.appliedViewState = node.firstChild.nodeValue;
-
             var rootElem = (viewRoot)? document.getElementById(viewRoot): document.body;
             var forms = this._Dom.findByTagName(rootElem, "form");
             if(forms) {
-                for(var cnt = forms.length; cnt > 0; cnt --) {
+                for(var cnt = forms.length - 1; cnt == 0; cnt --) {
                     mfInternal._updateForms.push({
                         form: forms[cnt],
                         appliedViewState:node.firstChild.nodeValue,
@@ -530,7 +521,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
                 _Dom.byIdOrName(itemIdToReplace);
 
         if (!item) {
-            throw this._raisError(_Lang.getMessage("ERR_ITEM_ID_NOTFOUND", null, "_AjaxResponse.replaceHtmlItem", (itemIdToReplace) ? itemIdToReplace.toString() : "undefined"));
+            throw this._raiseError(_Lang.getMessage("ERR_ITEM_ID_NOTFOUND", null, "_AjaxResponse.replaceHtmlItem", (itemIdToReplace) ? itemIdToReplace.toString() : "undefined"));
         }
         return _Dom.outerHTML(item, markup);
     },

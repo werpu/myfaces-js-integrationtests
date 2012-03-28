@@ -19,7 +19,7 @@
         <plexus-compiler-eclipse.version>1.6</plexus-compiler-eclipse.version>
         <shared.resources>src/main/extra-resources/shared-deploy/webapp</shared.resources>
         <maven-war-plugin.version>2.1.1</maven-war-plugin.version>
-        <myfaces-stable-api.version>2.1.7-SNAPSHOT</myfaces-stable-api.version>
+        <myfaces-stable-api.version>2.1.6</myfaces-stable-api.version>
         <mojarra.version>2.1.4</mojarra.version>
         <netbeans.hint.deploy.server>gfv3ee6</netbeans.hint.deploy.server>
     </properties>
@@ -119,16 +119,16 @@
             <artifactId>commons-lang</artifactId>
             <version>2.6</version>
         </dependency>
+
         <dependency>
             <groupId>org.richfaces.ui</groupId>
             <artifactId>richfaces-components-ui</artifactId>
-            <version>4.0.0.Final<!--4.1.0.20111111-CR1-->
-            </version>
+            <version>4.2.0.Final</version>
         </dependency>
         <dependency>
             <groupId>org.richfaces.core</groupId>
             <artifactId>richfaces-core-impl</artifactId>
-            <version>4.0.0.Final</version>
+            <version>4.2.0.Final</version>
         </dependency>
 
     </dependencies>

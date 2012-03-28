@@ -74,7 +74,7 @@
 
     <servlet>
         <servlet-name>MockupServlet</servlet-name>
-        <servlet-class>extras.apache.org.jsintegration.protocol.ResponseMockup</servlet-class>
+        <servlet-class>extras.apache.org.jsintegration.protocol.ResponseMockup22</servlet-class>
     </servlet>
 
     <!-- Faces Servlet -->
@@ -128,6 +128,11 @@
         <url-pattern>/faces/*</url-pattern>
         <url-pattern>*.jsf</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+            <servlet-name>Faces Servlet</servlet-name>
+            <url-pattern>/faces/*</url-pattern>
+            <url-pattern>*.xhtml</url-pattern>
+        </servlet-mapping>
     <servlet-mapping>
         <servlet-name>StatisticsXMLExporter</servlet-name>
         <url-pattern>*.xmlstats</url-pattern>
