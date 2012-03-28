@@ -123,7 +123,8 @@ _MF_CLS(_PFX_XHR + "_AjaxRequest", _MF_OBJECT, /** @lends myfaces._impl.xhrCore.
             this._xhr = _Lang.mixMaps(this._getTransport(), {
                 onprogress: scopeThis("onprogress"),
                 ontimeout:  scopeThis("ontimeout"),
-                onloadend:  scopeThis("ondone"),
+                //not working in chrome with xhr level2
+                // onloadend:  scopeThis("ondone"),
                 onload:     scopeThis("onsuccess"),
                 onerror:    scopeThis("onerror")
 
@@ -173,7 +174,6 @@ _MF_CLS(_PFX_XHR + "_AjaxRequest", _MF_OBJECT, /** @lends myfaces._impl.xhrCore.
 
 
     onsuccess: function(/*evt*/) {
-
         var context = this._context;
         var xhr = this._xhr;
         try {
@@ -188,6 +188,9 @@ _MF_CLS(_PFX_XHR + "_AjaxRequest", _MF_OBJECT, /** @lends myfaces._impl.xhrCore.
 
         } catch (e) {
             this._stdErrorHandler(this._xhr, this._context, e);
+        }  finally {
+            //W3C spec onloadend must be called no matter if success or not
+            this.ondone();
         }
     },
 
@@ -213,6 +216,10 @@ _MF_CLS(_PFX_XHR + "_AjaxRequest", _MF_OBJECT, /** @lends myfaces._impl.xhrCore.
             var _Impl = this.attr("impl");
             _Impl.sendError(xhr, context, _Impl.HTTPERROR,
                     _Impl.HTTPERROR, errorText,"","myfaces._impl.xhrCore._AjaxRequest","onerror");
+            //since chrome does not call properly the onloadend we have to do it manually
+            //to eliminate xhr level1 for the compile profile modern
+            //W3C spec onloadend must be called no matter if success or not
+            this.ondone();
         }
         //_onError
     },
@@ -246,10 +253,10 @@ _MF_CLS(_PFX_XHR + "_AjaxRequest", _MF_OBJECT, /** @lends myfaces._impl.xhrCore.
 
         //Chrome fails in the current builds, on our loadend, we disable the xhr
         //level2 optimisations for now
-        //if (('undefined' == typeof this._timeout || null == this._timeout) && _Rt.getXHRLvl() >= 2) {
-        //no timeout we can skip the emulation layer
-        //    return xhr;
-        //}
+        if (/*('undefined' == typeof this._timeout || null == this._timeout) &&*/ this._RT.getXHRLvl() >= 2) {
+            //no timeout we can skip the emulation layer
+            return xhr;
+        }
         return new myfaces._impl.xhrCore.engine.Xhr1({xhrObject: xhr});
     },
 

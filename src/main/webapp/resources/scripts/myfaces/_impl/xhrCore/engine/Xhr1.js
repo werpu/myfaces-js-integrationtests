@@ -135,7 +135,7 @@ _MF_CLS(_PFX_XHR + "engine.Xhr1", myfaces._impl.xhrCore.engine.BaseRequest, /** 
                         this.onerror(myevt);
                     }
                 } finally {
-                    this.onloadend(myevt);
+                   // this.onloadend(myevt);
                 }
         }
     },
