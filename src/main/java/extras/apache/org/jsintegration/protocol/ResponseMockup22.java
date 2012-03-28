@@ -20,7 +20,6 @@
 package extras.apache.org.jsintegration.protocol;
 
 import extras.apache.org.jsintegration.protocol.xmlNodes.Changes;
-import extras.apache.org.jsintegration.protocol.xmlNodes.Insert;
 import extras.apache.org.jsintegration.protocol.xmlNodes.PartialResponse;
 import extras.apache.org.jsintegration.protocol.xmlNodes.Update;
 
@@ -33,31 +32,41 @@ import java.io.PrintWriter;
 /**
  * @author Werner Punz (latest modification by $Author$)
  * @version $Revision$ $Date$
- *
- * JSF 2.2 response mockup which simulates the changed viewstate behavior
+ *          <p/>
+ *          JSF 2.2 response mockup which simulates the changed viewstate behavior
  */
 public class ResponseMockup22 extends ResponseMockup
 {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-                throws ServletException, IOException
-        {
-            response.setContentType("text/xml;charset=UTF-8");
-            PrintWriter out = response.getWriter();
-            String op = (String) request.getParameter("op");
+            throws ServletException, IOException
+    {
+        response.setContentType("text/xml;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        String op = (String) request.getParameter("op");
 
-            PartialResponse root = new PartialResponse();
-            if(op.equals("newviewstate")) {
-                Changes changes = new Changes(root);
-                changes.addChild(new Update(changes, "javax.faces.ViewState:1",
-                        "blablabla"));
-                changes.addChild(new Update(changes, "javax.faces.ViewState:2",
-                                        "blablabla2"));
-                root.addElement(changes);
-                out.println(root.toString());
-            } else {
-                super.processRequest(request, response);
-            }
+        PartialResponse root = new PartialResponse();
+        if (op.equals("newviewstate"))
+        {
+            Changes changes = new Changes(root);
+            changes.addChild(new Update(changes, "javax.faces.ViewState:1",
+                    "blablabla"));
+            root.addElement(changes);
+            out.println(root.toString());
 
         }
+        else if (op.equals("newviewstate2"))
+        {
+            Changes changes = new Changes(root);
+            changes.addChild(new Update(changes, "centerDiv:javax.faces.ViewState:2",
+                    "blebleble2"));
+            root.addElement(changes);
+            out.println(root.toString());
+
+        } else
+        {
+            super.processRequest(request, response);
+        }
+
+    }
 }

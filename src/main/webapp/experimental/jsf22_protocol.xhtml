@@ -11,7 +11,7 @@
     <ui:define name="content">
 
 
-        <script type="text/javascript" src="../resources/scripts/testcases/test1-protocol.js"></script>
+        <script type="text/javascript" src="../resources/scripts/testcases/experimental/test22-protocol.js"></script>
 
         <h2>protocol testcase1</h2>
 
@@ -40,6 +40,8 @@
             <form id="form1" action="boog.html">
                 <input type="button" id="cmd_viewstate" value="eval"
                        onclick="emitPPR(this, ('undefined' == typeof event)? null: event, 'newviewstate');"/>
+                <input type="button" id="cmd_viewstate2" value="eval"
+                       onclick="emitPPR(this, ('undefined' == typeof event)? null: event, 'newviewstate2');"/>
                 <input type="button" id="cmd_eval" value="eval"
                                        onclick="emitPPR(this, ('undefined' == typeof event)? null: event, 'eval1');"/>
                 <input type="button" id="cmd_update_insert" value="update insert"
