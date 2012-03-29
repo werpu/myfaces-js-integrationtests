@@ -33,7 +33,8 @@
         <h3>This page displays the final results of the tests</h3>
         <a href="./finalResults.xmlstats" target="_new">Results as XML</a>
         <h:panelGroup layout="block" class="testGroup groupResults">
-            <h:panelGroup layout="block" class="failedGroups" rendered="#{statisticsVisualizer.failedGroups.size() gt  0}">
+            <h:panelGroup layout="block" class="failedGroups"
+                          rendered="#{statisticsVisualizer.failedGroups.size() gt  0}">
                 <h3>Failed Groups</h3>
                 <ul>
                     <ui:repeat value="#{statisticsVisualizer.failedGroups}" var="group">
@@ -43,7 +44,8 @@
                     </ui:repeat>
                 </ul>
             </h:panelGroup>
-            <h:panelGroup layout="block" class="allSucceeded" rendered="#{statisticsVisualizer.failedGroups.size() == 0}">
+            <h:panelGroup layout="block" class="allSucceeded"
+                          rendered="#{statisticsVisualizer.failedGroups.size() == 0}">
                 <h3>All tests have passed</h3>
             </h:panelGroup>
         </h:panelGroup>
@@ -51,38 +53,52 @@
         <ui:repeat value="#{statisticsVisualizer.groupList}" var="group">
             <ul class="testGroup ">
                 <li class="groupName success_#{(group.finalResult.numberOfTestsFailed == 0)?'true':'false'}">Testgroup: #{group.name}</li>
-                <li class="url">URL: <a href="#{group.url}">#{group.url}</a></li>
-                <li class="testCasesTitle">TestCases:</li>
+                <li class="resultGroup collapsed">
+                    <ul>
+                        <li class="url">URL: <a href="#{group.url}">#{group.url}</a></li>
+                        <li class="testCasesTitle">TestCases:</li>
 
-                <ui:repeat value="#{group.testCases}" var="testCase">
-                    <ul class="testCase">
-                        <li class="testName success_#{testCase.success}">Testcase Name: #{testCase.name} Success:
-                            #{testCase.success}</li>
+                        <ui:repeat value="#{group.testCases}" var="testCase">
+                            <ul class="testCase">
+                                <li class="testName success_#{testCase.success}">Testcase Name: #{testCase.name} Success:
+                                    #{testCase.success}</li>
+                                <li>
+                                    <ol class="assertions">
+                                        <ui:repeat value="#{testCase.assertions}" var="assertion">
+                                            <li class="#{assertion.type} failure_#{assertion.failure}">#{assertion.message}</li>
+                                        </ui:repeat>
+                                    </ol>
+                                </li>
+                            </ul>
+                        </ui:repeat>
                         <li>
                             <ol class="assertions">
-                                <ui:repeat value="#{testCase.assertions}" var="assertion">
+                                <ui:repeat value="#{group.assertions}" var="assertion">
                                     <li class="#{assertion.type} failure_#{assertion.failure}">#{assertion.message}</li>
                                 </ui:repeat>
                             </ol>
                         </li>
+                        <li class="finalResultsTitle">Final Results:</li>
+                        <li class="finalResult">Number of Tests Performed: #{group.finalResult.numberOfTestsPerformed}</li>
+                        <li class="finalResult">Number of Tests Performed: #{group.finalResult.numberOfTestsSucceeded}</li>
+                        <li class="finalResult">Number of Tests Failed: #{group.finalResult.numberOfTestsFailed}</li>
+                        <li class="finalResult">Time for test in ms: #{group.finalResult.performanceTime}</li>
                     </ul>
-                </ui:repeat>
-                <li>
-                <ol class="assertions">
-                    <ui:repeat value="#{group.assertions}" var="assertion">
-                        <li class="#{assertion.type} failure_#{assertion.failure}">#{assertion.message}</li>
-                    </ui:repeat>
-                </ol>
                 </li>
-                <li class="finalResultsTitle">Final Results:</li>
-                <li class="finalResult">Number of Tests Performed: #{group.finalResult.numberOfTestsPerformed}</li>
-                <li class="finalResult">Number of Tests Performed: #{group.finalResult.numberOfTestsSucceeded}</li>
-                <li class="finalResult">Number of Tests Failed: #{group.finalResult.numberOfTestsFailed}</li>
-                <li class="finalResult">Time for test in ms: #{group.finalResult.performanceTime}</li>
-
             </ul>
         </ui:repeat>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $(".testGroup .groupName").click(function(){
+                   $(".resultGroup",this.parentNode).toggle(500);
+                });
+            });
+
+
+        </script>
 
     </ui:define>
+
+
 </ui:composition>
 </html>

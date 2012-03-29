@@ -13,6 +13,11 @@
     font-weight: 600;
 }
 
+.testGroup li.groupName:hover {
+    cursor:pointer;
+    background-color: #e4d9ff;
+}
+
 .testGroup .testCasesTitle {
     font-weight: bold;
     margin-top: 5px;
@@ -52,4 +57,17 @@
 
 .testGroup .assertions {
     padding-left: 20px;
+}
+
+.resultGroup  {
+    padding-left: 0px;
+}
+.resultGroup > ul {
+    margin-left: 0px;
+    padding-left: 0px;
+}
+
+
+.testGroup .resultGroup.collapsed {
+    display: none;
 }
