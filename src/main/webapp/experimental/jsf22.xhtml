@@ -11,6 +11,8 @@
     <ui:define name="content">
         <h2>myfaces queuing and pps tests</h2>
 
+
+
         <script type="text/javascript">
             /**
              helpper function to encapsule the recurring parts
@@ -128,7 +130,7 @@
 
                         <h:panelGroup id="parpanel1">
                             <h:inputText id="ppsControl3"
-                                         onkeyup="emitPPR(this, event, {render:'ppsoutput2', execute:'parpanel1', op:'pps2', myfaces:{pps:true}},'./test.timeout'); return true;"
+                                         onkeyup="emitPPR(this, event, {render:'ppsoutput2', execute:'ppsControl3', op:'pps2', myfaces:{pps:true}},'./test.timeout'); return true;"
                                          value="input for pps"/>
 
                             <h:panelGroup id="parpanel2">

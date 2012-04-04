@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+        >
+<ui:composition template="../templates/template.xhtml">
+
+    <ui:define name="content">
+        <h2>Richfaces control</h2>
+
+
+        <h:form id="boogaform" prependId="false">
+            <script type="text/javascript">
+                var x = new String("a")
+            </script>
+            <script type="text/javascript">
+                (1 == 3) ? 'd' : 'e';
+            </script>
+            <h:commandLink id="booga" value="link">
+                <f:ajax render="@form"/>
+            </h:commandLink>
+            <h:commandLink id="booga2" value="link2">
+                            <f:ajax render="@form"/>
+                        </h:commandLink>
+            <rich:tooltip for="booga2" value="tooltip"/>
+            <div>
+                <div><span>
+            <script type="text/javascript"><!--
+            var tooltip2 = new RichFaces.ui.Tooltip("booga", {"ajax":{"incId":"1"}, "target":"booga", "offset":[10, 10]
+            });
+            //--></script>
+        </span></div>
+            </div>
+            <script><!--
+            (1 == 2) ? 'a' : 'b';
+            //--></script>
+
+            <script>
+            <!--
+            (!window.myfaces) ? window.myfaces = {} : null;(!myfaces.core) ? myfaces.core = {} : null;(!myfaces.core.config) ? myfaces.core.config = {} : null;myfaces.core.config.autoScroll = true;
+            //-->
+            </script>
+        </h:form>
+    </ui:define>
+</ui:composition>
+</html>

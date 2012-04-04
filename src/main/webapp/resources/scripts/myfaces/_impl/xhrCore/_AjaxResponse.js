@@ -490,6 +490,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
 
         //var oldTags = _Dom.findByTagNames(document.getElementsByTagName("head")[0], {"script": true});
         //_Dom.deleteScripts(oldTags);
+
         _Dom.runScripts(newHead, true);
 
         return doc;
