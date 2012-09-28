@@ -45,7 +45,6 @@ if (!myfaces._impl.xhrCore._AjaxResponseJSF22) {
         /*partial response types*/
         var RESP_PARTIAL = "partial-response";
         var RESP_TYPE_ERROR = "error";
-        var RESP_TYPE_REDIRECT = "redirect";
         var RESP_TYPE_CHANGES = "changes";
 
         /*partial commands*/
@@ -108,7 +107,7 @@ if (!myfaces._impl.xhrCore._AjaxResponseJSF22) {
                 var xmlContent = request.responseXML;
                 //ie6+ keeps the parsing response under xmlContent.parserError
                 //while the rest of the world keeps it as element under the first node
-                var xmlErr = _Lang.fetchXMLErrorMessage(request.responseText || request.response, xmlContent)
+                var xmlErr = _Lang.fetchXMLErrorMessage(request.responseText || request.response, xmlContent);
                 if (xmlErr) {
                     throw _raiseError(new Error(), xmlErr.errorMessage + "\n" + xmlErr.sourceText + "\n" + xmlErr.visualError + "\n", "processResponse");
                 }
@@ -144,16 +143,16 @@ if (!myfaces._impl.xhrCore._AjaxResponseJSF22) {
                     //we might add this one as custom option in update and
                     //insert!
                     if (tagName == CMD_ERROR) {
-                        processError(request, context, childNode);
+                        _processError(request, context, childNode);
                     } else if (tagName == CMD_REDIRECT) {
-                        processRedirect(request, context, childNode);
+                        _processRedirect(request, context, childNode);
                     } else if (tagName == CMD_CHANGES) {
-                        processChanges(request, context, childNode);
+                        _processChanges(request, context, childNode);
                     }
                 }
 
                 //fixup missing viewStates due to spec deficiencies
-                fixViewStates(context);
+                _fixViewStates(context);
 
                 //spec jsdoc, the success event must be sent from response
                 _Impl.sendEvent(request, context, _Impl["SUCCESS"]);
@@ -170,7 +169,7 @@ if (!myfaces._impl.xhrCore._AjaxResponseJSF22) {
          *
          * @param context
          */
-        var fixViewStates = function (context) {
+        var _fixViewStates = function (context) {
             var mfInternal = context._mfInternal;
             //we check for no updates at all
             if (!mfInternal._updateForms || !mfInternal._updateForms.length) {
@@ -197,7 +196,7 @@ if (!myfaces._impl.xhrCore._AjaxResponseJSF22) {
          */
         var _setVSTForm = function (context, theFormData) {
             var form = _Lang.byId(theFormData.form);
-            var mfInternal = context._mfInternal;
+
 
             if (!theFormData) return;
 
@@ -226,7 +225,7 @@ if (!myfaces._impl.xhrCore._AjaxResponseJSF22) {
          * @param context the contect object
          * @param node the node in the xml hosting the error message
          */
-        var processError = function (request, context, node) {
+        var _processError = function (request, context, node) {
             /**
              * <error>
              *      <error-name>String</error-name>
@@ -236,7 +235,7 @@ if (!myfaces._impl.xhrCore._AjaxResponseJSF22) {
             var errorName = node.firstChild.textContent || "",
                     errorMessage = node.childNodes[1].firstChild.data || "";
 
-            _getImpl().sendError(request, context, _getImpl().SERVER_ERROR, errorName, errorMessage, "myfaces._impl.xhrCore._AjaxResponse", "processError");
+            _getImpl().sendError(request, context, _getImpl().SERVER_ERROR, errorName, errorMessage, "myfaces._impl.xhrCore._AjaxResponse", "_processError");
         };
 
         var _getImpl = function () {
@@ -249,13 +248,13 @@ if (!myfaces._impl.xhrCore._AjaxResponseJSF22) {
          * @param context the context
          * @param node the node hosting the redirect data
          */
-        var processRedirect = function (request, context, node) {
+        var _processRedirect = function (request, context, node) {
             /**
              * <redirect url="url to redirect" />
              */
             var redirectUrl = node.getAttribute("url");
             if (!redirectUrl) {
-                throw _raiseError(new Error(), _Lang.getMessage("ERR_RED_URL", null, "_AjaxResponse.processRedirect"), "processRedirect");
+                throw _raiseError(new Error(), _Lang.getMessage("ERR_RED_URL", null, "_AjaxResponse.processRedirect"), "_processRedirect");
             }
             redirectUrl = _Lang.trim(redirectUrl);
             if (redirectUrl == "") {
@@ -274,7 +273,7 @@ if (!myfaces._impl.xhrCore._AjaxResponseJSF22) {
          * @param context the context map
          * @param node the changes node to be processed
          */
-        var processChanges = function (request, context, node) {
+        var _processChanges = function (request, context, node) {
             var changes = node.childNodes;
             //note we need to trace the changes which could affect our insert update or delete
             //se that we can realign our ViewStates afterwards
@@ -285,24 +284,24 @@ if (!myfaces._impl.xhrCore._AjaxResponseJSF22) {
                 switch (changes[i].tagName) {
 
                     case CMD_UPDATE:
-                        processUpdate(request, context, changes[i]);
+                        _processUpdate(request, context, changes[i]);
                         break;
                     case CMD_EVAL:
                         _Lang.globalEval(changes[i].firstChild.data);
                         break;
                     case CMD_INSERT:
-                        processInsert(request, context, changes[i]);
+                        _processInsert(request, context, changes[i]);
                         break;
                     case CMD_DELETE:
-                        processDelete(request, context, changes[i]);
+                        _processDelete(request, context, changes[i]);
                         break;
                     case CMD_ATTRIBUTES:
-                        processAttributes(request, context, changes[i]);
+                        _processAttributes(request, context, changes[i]);
                         break;
                     case CMD_EXTENSION:
                         break;
                     default:
-                        throw _raiseError(new Error(), "_AjaxResponse.processChanges: Illegal Command Issued", "processChanges");
+                        throw _raiseError(new Error(), "_AjaxResponse.processChanges: Illegal Command Issued", "_processChanges");
                 }
             }
 
@@ -316,7 +315,7 @@ if (!myfaces._impl.xhrCore._AjaxResponseJSF22) {
          * @param context the context map
          * @param node the changes node to be processed
          */
-        var processUpdate = function (request, context, node) {
+        var _processUpdate = function (request, context, node) {
             var id = node.getAttribute('id');
             var viewStateIdx = id.indexOf(P_VIEWSTATE);
             if (viewStateIdx != -1) {
@@ -369,7 +368,7 @@ if (!myfaces._impl.xhrCore._AjaxResponseJSF22) {
                         break;
 
                     default:
-                        replaceHtmlItem(request, context, node.getAttribute('id'), cDataBlock);
+                        _replaceHtmlItem(request, context, node.getAttribute('id'), cDataBlock);
 
                         break;
                 }
@@ -499,7 +498,7 @@ if (!myfaces._impl.xhrCore._AjaxResponseJSF22) {
             parser = new (_RT.getGlobalConfig("updateParser", myfaces._impl._util._HtmlStripper))();
             bodyData = parser.parse(newData, "body");
 
-            replaceHtmlItem(request, context, placeHolder, bodyData);
+            _replaceHtmlItem(request, context, placeHolder, bodyData);
         };
 
         /**
@@ -510,7 +509,7 @@ if (!myfaces._impl.xhrCore._AjaxResponseJSF22) {
          * @param {Object} itemIdToReplace (String|Node) - ID of the element to replace
          * @param {String} markup - the new tag
          */
-        var replaceHtmlItem = function (request, context, itemIdToReplace, markup) {
+        var _replaceHtmlItem = function (request, context, itemIdToReplace, markup) {
             var item = (!_Lang.isString(itemIdToReplace)) ? itemIdToReplace :
                     _Dom.byIdOrName(itemIdToReplace);
 
@@ -529,14 +528,14 @@ if (!myfaces._impl.xhrCore._AjaxResponseJSF22) {
          * @return true upon successful completion, false otherwise
          *
          **/
-        var processInsert = function (request, context, node) {
+        var _processInsert = function (request, context, node) {
             /*remapping global namespaces for speed and readability reasons*/
             var insertData = _parseInsertData(request, context, node);
 
             if (insertData) {
                 var opNode = _Dom.byIdOrName(insertData.opId);
                 if (!opNode) {
-                    throw _raiseError(new Error(), _Lang.getMessage("ERR_PPR_INSERTBEFID_1", null, "_AjaxResponse.processInsert", insertData.opId), "processInsert");
+                    throw _raiseError(new Error(), _Lang.getMessage("ERR_PPR_INSERTBEFID_1", null, "_AjaxResponse.processInsert", insertData.opId), "_processInsert");
                 }
                 //call insertBefore or insertAfter in our dom routines
                 _Dom[insertData.insertType](opNode, insertData.cDataBlock);
@@ -609,17 +608,17 @@ if (!myfaces._impl.xhrCore._AjaxResponseJSF22) {
             return ret;
         };
 
-        var processDelete = function (request, context, node) {
+        var _processDelete = function (request, context, node) {
 
             var deleteId = node.getAttribute('id');
 
             if (!deleteId) {
-                throw _raiseError(new Error(), _Lang.getMessage("ERR_PPR_UNKNOWNCID", null, "_AjaxResponse.processDelete", ""), "processDelete");
+                throw _raiseError(new Error(), _Lang.getMessage("ERR_PPR_UNKNOWNCID", null, "_AjaxResponse.processDelete", ""), "_processDelete");
             }
 
             var item = _Dom.byIdOrName(deleteId);
             if (!item) {
-                throw _raiseError(new Error(), _Lang.getMessage("ERR_PPR_UNKNOWNCID", null, "_AjaxResponse.processDelete", deleteId), "processDelete");
+                throw _raiseError(new Error(), _Lang.getMessage("ERR_PPR_UNKNOWNCID", null, "_AjaxResponse.processDelete", deleteId), "_processDelete");
             }
 
             var parentForm = _Dom.getParent(item, "form");
@@ -629,19 +628,17 @@ if (!myfaces._impl.xhrCore._AjaxResponseJSF22) {
             _Dom.deleteItem(item);
         };
 
-        var processAttributes = function (request, context, node) {
+        var _processAttributes = function (request, context, node) {
             //we now route into our attributes function to bypass
             //IE quirks mode incompatibilities to the biggest possible extent
             //most browsers just have to do a setAttributes but IE
             //behaves as usual not like the official standard
             //myfaces._impl._util._Dom.setAttribute(domNode, attribute, value;
 
-            var _Lang = _Lang,
-            //<attributes id="id of element"> <attribute name="attribute name" value="attribute value" />* </attributes>
-                    elemId = node.getAttribute('id');
+            var elemId = node.getAttribute('id');
 
             if (!elemId) {
-                throw _raiseError(new Error(), "Error in attributes, id not in xml markup", "processAttributes");
+                throw _raiseError(new Error(), "Error in attributes, id not in xml markup", "_processAttributes");
             }
             var childNodes = node.childNodes;
 
@@ -666,10 +663,10 @@ if (!myfaces._impl.xhrCore._AjaxResponseJSF22) {
 
                 switch (elemId) {
                     case P_VIEWROOT:
-                        throw  _raiseError(new Error(), _Lang.getMessage("ERR_NO_VIEWROOTATTR", null, "_AjaxResponse.processAttributes"), "processAttributes");
+                        throw  _raiseError(new Error(), _Lang.getMessage("ERR_NO_VIEWROOTATTR", null, "_AjaxResponse.processAttributes"), "_processAttributes");
 
                     case P_VIEWHEAD:
-                        throw  _raiseError(new Error(), _Lang.getMessage("ERR_NO_HEADATTR", null, "_AjaxResponse.processAttributes"), "processAttributes");
+                        throw  _raiseError(new Error(), _Lang.getMessage("ERR_NO_HEADATTR", null, "_AjaxResponse.processAttributes"), "_processAttributes");
 
                     case P_VIEWBODY:
                         var element = document.getElementsByTagName("body")[0];

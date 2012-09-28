@@ -538,47 +538,10 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
         oldBody.innerHTML = "";
         oldBody.appendChild(placeHolder);
 
-        var bodyData, doc = null, parser;
-
-        //we have to work around an xml parsing bug in Webkit
-        //see https://issues.apache.org/jira/browse/MYFACES-3061
-        if (!isWebkit) {
-            doc = (arguments.length > 3) ? arguments[3] : _Lang.parseXML(newData);
-        }
-
-        if (!isWebkit && _Lang.isXMLParseError(doc)) {
-            doc = _Lang.parseXML(newData.replace(/<!\-\-[\s\n]*<!\-\-/g, "<!--").replace(/\/\/-->[\s\n]*\/\/-->/g, "//-->"));
-        }
-
-        if (isWebkit || _Lang.isXMLParseError(doc)) {
-            //the standard xml parser failed we retry with the stripper
-
-            parser = new (_RT.getGlobalConfig("updateParser", myfaces._impl._util._HtmlStripper))();
-
-            bodyData = parser.parse(newData, "body");
-        } else {
-            //parser worked we go on
-            var newBodyData = doc.getElementsByTagName("body")[0];
-
-            //speedwise we serialize back into the code
-            //for code reduction, speedwise we will take a small hit
-            //there which we will clean up in the future, but for now
-            //this is ok, I guess, since replace body only is a small subcase
-            //bodyData = _Lang.serializeChilds(newBodyData);
-            var browser = _RT.browser;
-            if (!browser.isIEMobile || browser.isIEMobile >= 7) {
-                //TODO check what is failing there
-                for (var cnt = 0; cnt < newBodyData.attributes.length; cnt++) {
-                    var value = newBodyData.attributes[cnt].value;
-                    if (value)
-                        _Dom.setAttribute(oldBody, newBodyData.attributes[cnt].name, value);
-                }
-            }
-        }
         //we cannot serialize here, due to escape problems
         //we must parse, this is somewhat unsafe but should be safe enough
-        parser = new (_RT.getGlobalConfig("updateParser", myfaces._impl._util._HtmlStripper))();
-        bodyData = parser.parse(newData, "body");
+        var parser = new (_RT.getGlobalConfig("updateParser", myfaces._impl._util._HtmlStripper))();
+        var bodyData = parser.parse(newData, "body");
 
         var returnedElement = this.replaceHtmlItem(request, context, placeHolder, bodyData);
 
