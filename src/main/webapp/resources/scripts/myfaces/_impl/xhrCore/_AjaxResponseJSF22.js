@@ -37,7 +37,7 @@
  * then the viewstate updates all forms in the page.
  * The render targets are of no usage regarding the viewstate determination anymore
  */
-_MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhrCore._AjaxResponse.prototype */ {
+_MF_SINGLTN(_PFX_XHR + "_AjaxResponseJSF22", _MF_OBJECT, /** @lends myfaces._impl.xhrCore._AjaxResponseJSF22.prototype */ {
 
     /*partial response types*/
     RESP_PARTIAL : "partial-response",
@@ -319,19 +319,19 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
             //now we have to split between viewstate and
             var viewRootEndIdx = Math.max(0, viewStateIdx - 1);
 
-            var viewRoot = (viewRootEndIdx)? id.substr(0, viewRootEndIdx):null;
+            var viewRoot = (viewRootEndIdx)? id.substr(0, viewRootEndIdx) : null;
 
             //update the submitting forms viewstate to the new value
             // The source form has to be pulled out of the CURRENT document first because the context object
             // may refer to an invalid document if an update of the entire body has occurred before this point.
             var mfInternal = context._mfInternal;
 
-            var rootElem = (viewRoot)? document.getElementById(viewRoot): document.body;
+            var rootElem = (viewRoot)? document.getElementById(viewRoot) : document.body;
             var forms = this._Dom.findByTagName(rootElem, "form");
             if(forms) {
                 for(var cnt = forms.length - 1; cnt == 0; cnt --) {
                     mfInternal._updateForms.push({
-                        form: forms[cnt],
+                        form: forms[cnt].id,
                         appliedViewState:node.firstChild.nodeValue,
                         id: id
                     });
