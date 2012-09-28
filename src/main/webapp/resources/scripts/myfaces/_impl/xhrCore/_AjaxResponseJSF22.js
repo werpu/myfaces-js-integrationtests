@@ -13,60 +13,60 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-if (!myfaces._impl.xhrCore._AjaxResponseJSF22) {
-    /**
-     * @class
-     * @name _AjaxResponse
-     * @memberOf myfaces._impl.xhrCore
-     * @extends myfaces._impl.core.Object
-     * @description
-     * This singleton is responsible for handling the standardized xml ajax response
-     * Note: since the semantic processing can be handled about 90% in a functional
-     * style we make this class stateless. Every state information is stored
-     * temporarily in the context.
-     *
-     * The singleton approach also improves performance
-     * due to less object gc compared to the old instance approach.
-     *
-     * This is a preparation to the JSF 2.2 specification, which implements the latest spec
-     * proposals in the area,
-     * the new viestate syntax is
-     * &lt;<update id="<naming container id>:javax.faces.ViewState"> ... </update>
-     *
-     * with the naming container id being the update viewroot, if none is present
-     * then the viewstate updates all forms in the page.
-     * The render targets are of no usage regarding the viewstate determination anymore
-     *
-     * We use a classical javascript private method pattern here to improve compressability over
-     * our singleton approach, this makes sense since only one of our methods is exposed
-     */
+/**
+ * @class
+ * @name _AjaxResponse
+ * @memberOf myfaces._impl.xhrCore
+ * @extends myfaces._impl.core.Object
+ * @description
+ * This singleton is responsible for handling the standardized xml ajax response
+ * Note: since the semantic processing can be handled about 90% in a functional
+ * style we make this class stateless. Every state information is stored
+ * temporarily in the context.
+ *
+ * The singleton approach also improves performance
+ * due to less object gc compared to the old instance approach.
+ *
+ * This is a preparation to the JSF 2.2 specification, which implements the latest spec
+ * proposals in the area,
+ * the new viestate syntax is
+ * &lt;<update id="<naming container id>:javax.faces.ViewState"> ... </update>
+ *
+ * with the naming container id being the update viewroot, if none is present
+ * then the viewstate updates all forms in the page.
+ * The render targets are of no usage regarding the viewstate determination anymore
+ *
+ * We use a classical javascript private method pattern here to improve compressability over
+ * our old singleton approach, this makes sense since only one of our methods is exposed
+ */
+if (!myfaces._impl.core._Runtime.fetchNamespace(_PFX_XHR + "_AjaxResponseJSF22")) {
 
-    myfaces._impl.xhrCore._AjaxResponseJSF22 = function () {
+    myfaces._impl.core._Runtime.reserveNamespace(_PFX_XHR + "_AjaxResponseJSF22", new function () {
+        /** @lends myfaces._impl.xhrCore._AjaxResponseJSF22.prototype */
         /*partial response types*/
-        var RESP_PARTIAL = "partial-response";
-        var RESP_TYPE_ERROR = "error";
-        var RESP_TYPE_CHANGES = "changes";
+        var RESP_PARTIAL = "partial-response",
+                RESP_TYPE_ERROR = "error",
+                RESP_TYPE_CHANGES = "changes";
 
         /*partial commands*/
-        var CMD_CHANGES = "changes";
-        var CMD_UPDATE = "update";
-        var CMD_DELETE = "delete";
-        var CMD_INSERT = "insert";
-        var CMD_EVAL = "eval";
-        var CMD_ERROR = "error";
-        var CMD_ATTRIBUTES = "attributes";
-        var CMD_EXTENSION = "extension";
-        var CMD_REDIRECT = "redirect";
+        var CMD_CHANGES = "changes",
+                CMD_UPDATE = "update",
+                CMD_DELETE = "delete",
+                CMD_INSERT = "insert",
+                CMD_EVAL = "eval",
+                CMD_ERROR = "error",
+                CMD_ATTRIBUTES = "attributes",
+                CMD_EXTENSION = "extension",
+                CMD_REDIRECT = "redirect";
 
         /*other constants*/
-        var P_VIEWSTATE = "javax.faces.ViewState";
-        var P_VIEWROOT = "javax.faces.ViewRoot";
-        var P_VIEWHEAD = "javax.faces.ViewHead";
-        var P_VIEWBODY = "javax.faces.ViewBody";
-
-        var _RT = myfaces._impl.core._Runtime;
-        var _Lang = myfaces._impl._util._Lang;
-        var _Dom = myfaces._impl._util._Dom;
+        var P_VIEWSTATE = "javax.faces.ViewState",
+                P_VIEWROOT = "javax.faces.ViewRoot",
+                P_VIEWHEAD = "javax.faces.ViewHead",
+                P_VIEWBODY = "javax.faces.ViewBody",
+                _RT = myfaces._impl.core._Runtime,
+                _Lang = myfaces._impl._util._Lang,
+                _Dom = myfaces._impl._util._Dom;
 
         /**
          * uses response to start Html element replacement
@@ -196,7 +196,6 @@ if (!myfaces._impl.xhrCore._AjaxResponseJSF22) {
          */
         var _setVSTForm = function (context, theFormData) {
             var form = _Lang.byId(theFormData.form);
-
 
             if (!theFormData) return;
 
@@ -445,7 +444,7 @@ if (!myfaces._impl.xhrCore._AjaxResponseJSF22) {
          * @param {String} newData the markup which replaces the old dom node!
          * @param {Node} parsedData (optional) preparsed XML representation data of the current document
          */
-        var _replaceBody = function (request, context, newData /*varargs*/) {
+        var _replaceBody = function (request, context, newData /*varargs parsedData*/) {
             var oldBody = document.getElementsByTagName("body")[0],
                     placeHolder = document.createElement("div"),
                     isWebkit = _RT.browser.isWebKit;
@@ -689,14 +688,14 @@ if (!myfaces._impl.xhrCore._AjaxResponseJSF22) {
          * @param name the name of the error (optional)
          */
         var _raiseError = function (error, message, caller, title, name) {
-            var _Impl = _getImpl();
-            var finalTitle = title || _Impl.MALFORMEDXML;
-            var finalName = name || _Impl.MALFORMEDXML;
-            var finalMessage = message || "";
+            var _Impl = _getImpl(),
+                    finalTitle = title || _Impl.MALFORMEDXML,
+                    finalName = name || _Impl.MALFORMEDXML,
+                    finalMessage = message || "";
 
-            return _Lang.makeException(error, finalTitle, finalName,  "myfaces._impl.xhrCore._AjaxResponse", caller || ( (arguments.caller) ? arguments.caller.toString() : "_raiseError"), finalMessage);
+            return _Lang.makeException(error, finalTitle, finalName, "myfaces._impl.xhrCore._AjaxResponse", caller || ( (arguments.caller) ? arguments.caller.toString() : "_raiseError"), finalMessage);
         };
 
-    };
+    });
 
 }
