@@ -568,30 +568,22 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
      * @return {Char} the separator char for the given script tags
      */
     getSeparatorChar:function () {
-        if (this.separatorchar) {
+        if (this._separator) {
             return this.separatorchar;
         }
         var SEPARATOR_CHAR = "separatorchar",
                 found = false,
                 getConfig = myfaces._impl.core._Runtime.getGlobalConfig,
-                scriptTags = document.getElementsByTagName("script"),
-                separator = null;
+                scriptTags = document.getElementsByTagName("script");
         for (var i = 0; i < scriptTags.length && !found; i++) {
-            if (scriptTags[i].src.search(/\/javax\.faces\.resource\/jsf\.js.*ln=javax\.faces/) != -1) {
+            if (scriptTags[i].src.search(/\/javax\.faces\.resource.*\/jsf\.js.*separator/) != -1) {
                 found = true;
                 var result = scriptTags[i].src.match(/separator=([^&;]*)/);
-                if (result) {
-                    separator = result[1];
-
-                }
-                else {
-                    //we found the script, but there was no stage parameter -- Production
-                    //(we also add an override here for testing purposes, the default, however is Production)
-                    separator = getConfig(SEPARATOR_CHAR, ":");
-                }
+                this._separator = decodeURIComponent(result[1]);
             }
         }
-        return separator || ":";
+        this._separator = getConfig(SEPARATOR_CHAR,this._separator || ":");
+        return this._separator;
     },
 
     /**
@@ -633,7 +625,7 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
                 }
             }
             /* we could not find anything valid --> return the default value */
-            this._projectStage = projectStage || getConfig(PRJ_STAGE, STG_PROD);
+            this._projectStage = getConfig(PRJ_STAGE, projectStage || STG_PROD);
         }
         return this._projectStage;
     },
