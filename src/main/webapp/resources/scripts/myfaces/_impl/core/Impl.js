@@ -320,13 +320,13 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
                 _Lang = this._Lang,
                 _Dom = this._Dom;
 
-        var transportAutoSelection = getConfig(context, "transportAutoSelection", false);
+        var transportAutoSelection = getConfig(context, "transportAutoSelection", true);
         var isMultipart = (transportAutoSelection && _Dom.getAttribute(form, "enctype") == "multipart/form-data") ?
                 _Dom.isMultipartCandidate(passThrgh[this.P_EXECUTE]) :
                 false;
 
         /**
-         * multiple transports upcoming jsf 2.1 feature currently allowed
+         * multiple transports upcoming jsf 2.2 feature currently allowed
          * default (no value) xhrQueuedPost
          *
          * xhrQueuedPost

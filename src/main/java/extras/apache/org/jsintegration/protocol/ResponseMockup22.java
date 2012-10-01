@@ -19,6 +19,8 @@
 
 package extras.apache.org.jsintegration.protocol;
 
+import com.google.common.base.Charsets;
+import com.google.common.io.CharStreams;
 import extras.apache.org.jsintegration.protocol.xmlNodes.Changes;
 import extras.apache.org.jsintegration.protocol.xmlNodes.PartialResponse;
 import extras.apache.org.jsintegration.protocol.xmlNodes.Update;
@@ -26,8 +28,12 @@ import extras.apache.org.jsintegration.protocol.xmlNodes.Update;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.Collection;
 
 /**
  * @author Werner Punz (latest modification by $Author$)
@@ -44,6 +50,11 @@ public class ResponseMockup22 extends ResponseMockup
         response.setContentType("text/xml;charset=UTF-8");
         PrintWriter out = response.getWriter();
         String op = (String) request.getParameter("op");
+        if(op == null) {
+            Part opPart = request.getPart("op");
+            opPart.getInputStream();
+            op = CharStreams.toString(new InputStreamReader(opPart.getInputStream(), Charsets.UTF_8));
+        }
 
         PartialResponse root = new PartialResponse();
         if (op.equals("newviewstate"))
@@ -54,12 +65,20 @@ public class ResponseMockup22 extends ResponseMockup
             root.addElement(changes);
             out.println(root.toString());
 
-        }
-        else if (op.equals("newviewstate2"))
+        } else if (op.equals("newviewstate2"))
         {
             Changes changes = new Changes(root);
             changes.addChild(new Update(changes, "form2:javax.faces.ViewState",
                     "update2"));
+            root.addElement(changes);
+            out.println(root.toString());
+
+        } else if (op.equals("fileUpload"))
+        {
+            Collection<Part> parts = request.getParts();
+            request.getPart("fileUpload").write(File.createTempFile("prefix", "tmp").getAbsolutePath());
+            Changes changes = new Changes(root);
+            changes.addChild(new Update(changes,"result","Fileupload successful"));
             root.addElement(changes);
             out.println(root.toString());
 
