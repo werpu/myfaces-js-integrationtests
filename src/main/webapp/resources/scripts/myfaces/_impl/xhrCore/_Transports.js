@@ -80,19 +80,6 @@ _MF_SINGLTN(_PFX_XHR + "_Transports", _MF_OBJECT,
     },
 
     /**
-     * Queued multipart post request over an iframe
-     *
-     * @param {Node} source the source of this call
-     * @param {Node} sourceForm the html form which is the source of this call
-     * @param {Object} context (Map) the internal pass through context
-     * @param {Object} passThrgh (Map) values to be passed through
-     */
-    multipartQueuedPost: function(source, sourceForm, context, passThrgh) {
-        this._q.enqueue(
-                new (this._getMultipartReqClass(context))(this._getArguments(source, sourceForm, context, passThrgh)));
-    },
-
-    /**
      * creates the arguments map and
      * fetches the config params in a proper way in to
      * deal with them in a flat way (from the nested context way)
