@@ -44,9 +44,7 @@ if (!myfaces._impl.core._Runtime.fetchNamespace(_PFX_XHR + "_AjaxResponseJSF22")
     myfaces._impl.core._Runtime.reserveNamespace(_PFX_XHR + "_AjaxResponseJSF22", new function () {
         /** @lends myfaces._impl.xhrCore._AjaxResponseJSF22.prototype */
         /*partial response types*/
-        var RESP_PARTIAL = "partial-response",
-                RESP_TYPE_ERROR = "error",
-                RESP_TYPE_CHANGES = "changes";
+        var RESP_PARTIAL = "partial-response";
 
         /*partial commands*/
         var CMD_CHANGES = "changes",
@@ -61,6 +59,8 @@ if (!myfaces._impl.core._Runtime.fetchNamespace(_PFX_XHR + "_AjaxResponseJSF22")
 
         /*other constants*/
         var P_VIEWSTATE = "javax.faces.ViewState",
+        //client window handler for the client id
+                P_CLIENTWINDOW = "javax.faces.clientWindow",
                 P_VIEWROOT = "javax.faces.ViewRoot",
                 P_VIEWHEAD = "javax.faces.ViewHead",
                 P_VIEWBODY = "javax.faces.ViewBody",
@@ -88,8 +88,9 @@ if (!myfaces._impl.core._Runtime.fetchNamespace(_PFX_XHR + "_AjaxResponseJSF22")
 
             //the temporary data is hosted here
             mfInternal._updateElems = [];
-            mfInternal._updateForms = [];
-            mfInternal.appliedViewState = null;
+            mfInternal._viewStateForms = [];
+            mfInternal._clientWindowForms = [];
+            //mfInternal.newValue = null;
 
             try {
 
@@ -100,7 +101,7 @@ if (!myfaces._impl.core._Runtime.fetchNamespace(_PFX_XHR + "_AjaxResponseJSF22")
                 // istead of ISO-8859-1
 
                 if (!request || !_Lang.exists(request, "responseXML")) {
-                    throw makeException(new Error(), _Impl.EMPTY_RESPONSE, _Impl.EMPTY_RESPONSE, _nameSpace, "processResponse", "");
+                    throw _Lang.makeException(new Error(), _getImpl().EMPTY_RESPONSE, _getImpl().EMPTY_RESPONSE, _nameSpace, "processResponse", "");
                 }
                 //check for a parseError under certain browsers
 
@@ -155,12 +156,13 @@ if (!myfaces._impl.core._Runtime.fetchNamespace(_PFX_XHR + "_AjaxResponseJSF22")
                 _fixViewStates(context);
 
                 //spec jsdoc, the success event must be sent from response
-                _Impl.sendEvent(request, context, _Impl["SUCCESS"]);
+                _getImpl().sendEvent(request, context, _getImpl()["SUCCESS"]);
 
             } finally {
                 delete mfInternal._updateElems;
-                delete mfInternal._updateForms;
-                delete mfInternal.appliedViewState;
+                delete mfInternal._viewStateForms;
+                delete mfInternal._clientWindowForms;
+                //delete mfInternal.newValue;
             }
         };
 
@@ -171,10 +173,7 @@ if (!myfaces._impl.core._Runtime.fetchNamespace(_PFX_XHR + "_AjaxResponseJSF22")
          */
         var _fixViewStates = function (context) {
             var mfInternal = context._mfInternal;
-            //we check for no updates at all
-            if (!mfInternal._updateForms || !mfInternal._updateForms.length) {
-                return;
-            }
+
 
             // Now update the forms that were not replaced but forced to be updated, because contains child ajax tags
             // we should only update forms with view state hidden field. If by some reason, the form was set to be
@@ -182,10 +181,16 @@ if (!myfaces._impl.core._Runtime.fetchNamespace(_PFX_XHR + "_AjaxResponseJSF22")
             // view state is updated.
 
             //set the viewstates of all outer forms parents of our updated elements
-
-            _Lang.arrForEach(mfInternal._updateForms, function (elem) {
-                _setVSTForm(context, elem);
-            }, 0, this);
+            if (mfInternal._viewStateForms && mfInternal._viewStateForms.length) {
+                _Lang.arrForEach(mfInternal._viewStateForms, function (elem) {
+                    _setVSTForm(context, elem);
+                }, 0, this);
+            }
+            if(mfInternal._clientWindowForms && mfInternal._clientWindowForms.length) {
+                _Lang.arrForEach(mfInternal._viewStateForms, function (elem) {
+                    _setClientWindowIdForm(context, elem);
+                }, 0, this);
+            }
         };
 
         /**
@@ -199,14 +204,15 @@ if (!myfaces._impl.core._Runtime.fetchNamespace(_PFX_XHR + "_AjaxResponseJSF22")
 
             if (!theFormData) return;
 
+            //TODO fix this over from the 1.1 impl
             var viewStateField = (form.elements) ? form.elements[P_VIEWSTATE] : null;
 
             if (viewStateField) {
-                _Dom.setAttribute(viewStateField, "value", theFormData.appliedViewState);
+                _Dom.setAttribute(viewStateField, "value", theFormData.newValue);
             } else if (!viewStateField) {
                 var element = _Dom.getDummyPlaceHolder();
 
-                element.innerHTML = ["<input type='hidden'", "id='", theFormData.id, "' name='", P_VIEWSTATE , "' value='" , theFormData.appliedViewState , "' />"].join("");
+                element.innerHTML = ["<input type='hidden'", "id='", theFormData.id, "' name='", P_VIEWSTATE , "' value='" , theFormData.newValue , "' />"].join("");
                 //now we go to proper dom handling after having to deal with another ie screwup
                 try {
                     form.appendChild(element.childNodes[0]);
@@ -216,6 +222,38 @@ if (!myfaces._impl.core._Runtime.fetchNamespace(_PFX_XHR + "_AjaxResponseJSF22")
                 }
             }
         };
+
+        /**
+         * sets the viewstate element in a given form
+         *
+         * @param theFormData the form to which the element has to be set to
+         * @param context the current request context
+         */
+        var _setClientWindowIdForm = function (context, theFormData) {
+            var form = _Lang.byId(theFormData.form);
+
+            if (!theFormData) return;
+
+            //TODO fix this over from the 1.1 impl
+            var viewStateField = (form.elements) ? form.elements[P_VIEWSTATE] : null;
+
+            if (viewStateField) {
+                _Dom.setAttribute(viewStateField, "value", theFormData.newValue);
+            } else if (!viewStateField) {
+                var element = _Dom.getDummyPlaceHolder();
+
+                element.innerHTML = ["<input type='hidden'", "id='", theFormData.id, "' name='", P_VIEWSTATE , "' value='" , theFormData.newValue , "' />"].join("");
+                //now we go to proper dom handling after having to deal with another ie screwup
+                try {
+                    form.appendChild(element.childNodes[0]);
+                } finally {
+                    //squelch
+                    element.innerHTML = "";
+                }
+            }
+        };
+
+
 
         /**
          * processes an incoming error from the response
@@ -317,28 +355,45 @@ if (!myfaces._impl.core._Runtime.fetchNamespace(_PFX_XHR + "_AjaxResponseJSF22")
         var _processUpdate = function (request, context, node) {
             var id = node.getAttribute('id');
             var viewStateIdx = id.indexOf(P_VIEWSTATE);
-            if (viewStateIdx != -1) {
-                //now we have to split between viewstate and
-                var viewRootEndIdx = Math.max(0, viewStateIdx - 1);
+            var clientWindowIdx = id.indexOf(P_CLIENTWINDOW);
+            var mfInternal = context._mfInternal;
+
+            /**
+             * applies either the viewstate or the clientWindowId
+             * to the correct forms
+             *
+             * @param idx the idx identifier to search for, it is either P_VIEWSTATE or P_CLIENTIDs idx position
+             * @param target target array receiving the results for further procession
+             */
+            var applyViewStWindowId = function(idx, target) {
+                var viewRootEndIdx = Math.max(0, idx - 1);
 
                 var viewRoot = (viewRootEndIdx) ? id.substr(0, viewRootEndIdx) : null;
 
                 //update the submitting forms viewstate to the new value
                 // The source form has to be pulled out of the CURRENT document first because the context object
                 // may refer to an invalid document if an update of the entire body has occurred before this point.
-                var mfInternal = context._mfInternal;
+
 
                 var rootElem = (viewRoot) ? document.getElementById(viewRoot) : document.body;
                 var forms = _Dom.findByTagName(rootElem, "form");
                 if (forms) {
-                    for (var cnt = forms.length - 1; cnt == 0; cnt--) {
-                        mfInternal._updateForms.push({
+                    for (var cnt = forms.length - 1; cnt >= 0; cnt--) {
+                        target.push({
                             form:forms[cnt].id,
-                            appliedViewState:node.firstChild.nodeValue,
+                            newValue:node.firstChild.nodeValue,
                             id:id
                         });
                     }
                 }
+            }
+
+
+            if (viewStateIdx != -1) {
+                applyViewStWindowId(viewStateIdx, mfInternal._viewStateForms);
+
+            } else if (clientWindowIdx != -1) {
+                applyViewStWindowId(clientWindowIdx, mfInternal._clientWindowForms);
             }
             else {
                 // response may contain several blocks
@@ -622,7 +677,7 @@ if (!myfaces._impl.core._Runtime.fetchNamespace(_PFX_XHR + "_AjaxResponseJSF22")
 
             var parentForm = _Dom.getParent(item, "form");
             if (null != parentForm) {
-                context._mfInternal._updateForms.push(parentForm);
+                context._mfInternal._viewStateForms.push(parentForm);
             }
             _Dom.deleteItem(item);
         };
@@ -693,7 +748,7 @@ if (!myfaces._impl.core._Runtime.fetchNamespace(_PFX_XHR + "_AjaxResponseJSF22")
                     finalName = name || _Impl.MALFORMEDXML,
                     finalMessage = message || "";
 
-            return _Lang.makeException(error, finalTitle, finalName, "myfaces._impl.xhrCore._AjaxResponse", caller || ( (arguments.caller) ? arguments.caller.toString() : "_raiseError"), finalMessage);
+            return _Lang.makeException(error, finalTitle, finalName, "myfaces._impl.xhrCore._AjaxResponse", caller || ( (arguments.callee.caller) ? arguments.callee.caller.toString() : "_raiseError"), finalMessage);
         };
 
     });

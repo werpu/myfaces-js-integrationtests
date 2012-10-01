@@ -49,8 +49,8 @@ public class ResponseMockup22 extends ResponseMockup
         if (op.equals("newviewstate"))
         {
             Changes changes = new Changes(root);
-            changes.addChild(new Update(changes, "javax.faces.ViewState:1",
-                    "blablabla"));
+            changes.addChild(new Update(changes, "javax.faces.ViewState",
+                    "update1"));
             root.addElement(changes);
             out.println(root.toString());
 
@@ -58,8 +58,8 @@ public class ResponseMockup22 extends ResponseMockup
         else if (op.equals("newviewstate2"))
         {
             Changes changes = new Changes(root);
-            changes.addChild(new Update(changes, "centerDiv:javax.faces.ViewState:2",
-                    "blebleble2"));
+            changes.addChild(new Update(changes, "form2:javax.faces.ViewState",
+                    "update2"));
             root.addElement(changes);
             out.println(root.toString());
 

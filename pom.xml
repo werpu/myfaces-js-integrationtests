@@ -44,6 +44,7 @@
             <url>http://archiva.openqa.org/repository/thirdparty/</url>
         </repository>
 
+
         <repository>
             <id>jboss-public-repository-group</id>
             <name>JBoss Public Maven Repository Group</name>
