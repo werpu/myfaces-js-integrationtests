@@ -60,7 +60,7 @@ if (!myfaces._impl.core._Runtime.fetchNamespace(_PFX_XHR + "_AjaxResponseJSF22")
         /*other constants*/
         var P_VIEWSTATE = "javax.faces.ViewState",
         //client window handler for the client id
-                P_CLIENTWINDOW = "javax.faces.clientWindow",
+                P_CLIENTWINDOW = "javax.faces.ClientWindow",
                 P_VIEWROOT = "javax.faces.ViewRoot",
                 P_VIEWHEAD = "javax.faces.ViewHead",
                 P_VIEWBODY = "javax.faces.ViewBody",
@@ -183,12 +183,12 @@ if (!myfaces._impl.core._Runtime.fetchNamespace(_PFX_XHR + "_AjaxResponseJSF22")
             //set the viewstates of all outer forms parents of our updated elements
             if (mfInternal._viewStateForms && mfInternal._viewStateForms.length) {
                 _Lang.arrForEach(mfInternal._viewStateForms, function (elem) {
-                    _setVSTForm(context, elem);
+                    _updateFormField(P_VIEWSTATE, context, elem);
                 }, 0, this);
             }
             if(mfInternal._clientWindowForms && mfInternal._clientWindowForms.length) {
-                _Lang.arrForEach(mfInternal._viewStateForms, function (elem) {
-                    _setClientWindowIdForm(context, elem);
+                _Lang.arrForEach(mfInternal._clientWindowForms, function (elem) {
+                    _updateFormField(P_CLIENTWINDOW,context, elem);
                 }, 0, this);
             }
         };
@@ -196,53 +196,23 @@ if (!myfaces._impl.core._Runtime.fetchNamespace(_PFX_XHR + "_AjaxResponseJSF22")
         /**
          * sets the viewstate element in a given form
          *
+         * @param the fieldIdentifier to update either, P_VIEWSTATE or P_CLIENTWINDOW
          * @param theFormData the form to which the element has to be set to
          * @param context the current request context
          */
-        var _setVSTForm = function (context, theFormData) {
+        var _updateFormField = function (fieldIdentifier,context, theFormData) {
             var form = _Lang.byId(theFormData.form);
 
             if (!theFormData) return;
 
-            //TODO fix this over from the 1.1 impl
-            var viewStateField = (form.elements) ? form.elements[P_VIEWSTATE] : null;
+            var fieldToUpdate = (form.elements) ? form.elements[fieldIdentifier] : null;
 
-            if (viewStateField) {
-                _Dom.setAttribute(viewStateField, "value", theFormData.newValue);
-            } else if (!viewStateField) {
+            if (fieldToUpdate) {
+                _Dom.setAttribute(fieldToUpdate, "value", theFormData.newValue);
+            } else if (!fieldToUpdate) {
                 var element = _Dom.getDummyPlaceHolder();
 
-                element.innerHTML = ["<input type='hidden'", "id='", theFormData.id, "' name='", P_VIEWSTATE , "' value='" , theFormData.newValue , "' />"].join("");
-                //now we go to proper dom handling after having to deal with another ie screwup
-                try {
-                    form.appendChild(element.childNodes[0]);
-                } finally {
-                    //squelch
-                    element.innerHTML = "";
-                }
-            }
-        };
-
-        /**
-         * sets the viewstate element in a given form
-         *
-         * @param theFormData the form to which the element has to be set to
-         * @param context the current request context
-         */
-        var _setClientWindowIdForm = function (context, theFormData) {
-            var form = _Lang.byId(theFormData.form);
-
-            if (!theFormData) return;
-
-            //TODO fix this over from the 1.1 impl
-            var viewStateField = (form.elements) ? form.elements[P_VIEWSTATE] : null;
-
-            if (viewStateField) {
-                _Dom.setAttribute(viewStateField, "value", theFormData.newValue);
-            } else if (!viewStateField) {
-                var element = _Dom.getDummyPlaceHolder();
-
-                element.innerHTML = ["<input type='hidden'", "id='", theFormData.id, "' name='", P_VIEWSTATE , "' value='" , theFormData.newValue , "' />"].join("");
+                element.innerHTML = ["<input type='hidden'", "id='", theFormData.id, "' name='", fieldIdentifier , "' value='" , theFormData.newValue , "' />"].join("");
                 //now we go to proper dom handling after having to deal with another ie screwup
                 try {
                     form.appendChild(element.childNodes[0]);

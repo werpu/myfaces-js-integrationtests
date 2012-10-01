@@ -735,6 +735,49 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
             this.sendError(request, context,
                     mfInternal.title || this.CLIENT_ERROR, mfInternal.name || exception.name, finalMsg.join("\n"), mfInternal.caller, mfInternal.callFunc);
         }
+    },
+
+    /**
+     * @return the client window id of the current window, if one is given
+     */
+    getClientWindow: function(node) {
+        var FORM = "form";
+           var WIN_ID = "javax.faces.ClientWindow";
+
+           var fetchWindowIdFromForms = function (forms) {
+               var result_idx = {};
+               var result;
+               var foundCnt = 0;
+               for (var cnt = forms.length - 1; cnt >= 0; cnt--) {
+                   var UDEF = 'undefined';
+                   var currentForm = forms[cnt];
+                   var windowId = currentForm[WIN_ID] && currentForm[WIN_ID].value;
+                   if (windowId) {
+                       if (foundCnt > 0 && UDEF == typeof result_idx[windowId]) throw Error("Multiple different windowIds found in document");
+                       result = windowId;
+                       result_idx[windowId] = true;
+                       foundCnt++;
+                   }
+               }
+               return result;
+           }
+
+           var fetchWindowIdFromURL = function () {
+               var href = window.location.href;
+               var windowId = "windowId";
+               var regex = new RegExp("[\\?&]" + windowId + "=([^&#\\;]*)");
+               var results = regex.exec(href);
+               //initial trial over the url and a regexp
+               if (results != null) return results[1];
+               return null;
+           }
+
+           //byId ($)
+           var finalNode = (node) ? this._Dom.byId(node): document.body;
+
+           var forms = this._Dom.findByTagName(finalNode,"form");
+           var result = fetchWindowIdFromForms(forms);
+           return (null != result) ? result : fetchWindowIdFromURL();
     }
 });
 

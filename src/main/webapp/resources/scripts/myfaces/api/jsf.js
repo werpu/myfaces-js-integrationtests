@@ -100,6 +100,17 @@ if (!window.jsf) {
             return impl.getViewState(formElement);
         };
 
+        /**
+         * returns the window identifier for the given node / window
+         * @param {optional String | DomNode} node the node for which the client identifier has to be determined
+         * @return the window identifier or null if none is found
+         */
+        this.getClientWindow = function(node) {
+            /*we are not allowed to add the impl on a global scope so we have to inline the code*/
+            var impl = myfaces._impl.core._Runtime.getGlobalConfig("jsfAjaxImpl", myfaces._impl.core.Impl);
+            return impl.getClientWindow(node);
+        }
+
         //private helper functions
         function getSeparatorChar() {
             var impl = myfaces._impl.core._Runtime.getGlobalConfig("jsfAjaxImpl", myfaces._impl.core.Impl);
