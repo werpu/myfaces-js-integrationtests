@@ -49,7 +49,7 @@ if (!window.jsf) {
          * </ul>
 		 * @constant
          */
-        this.specversion = 200000;
+        this.specversion = 220000;
         /**
          * Implementation version as specified within the jsf specification.
          * <p />
@@ -58,7 +58,13 @@ if (!window.jsf) {
          *
 		 * @constant
          */
-        this.implversion = 6;
+        this.implversion = 0;
+
+        /**
+         * SeparatorChar as defined by UINamingContainer.getNamingContainerSeparatorChar()
+         * @type {Char}
+         */
+        this.separatorchar = getSeparatorChar();
 
         /**
          * This method is responsible for the return of a given project stage as defined
@@ -93,6 +99,13 @@ if (!window.jsf) {
             var impl = myfaces._impl.core._Runtime.getGlobalConfig("jsfAjaxImpl", myfaces._impl.core.Impl);
             return impl.getViewState(formElement);
         };
+
+        //private helper functions
+        function getSeparatorChar() {
+            var impl = myfaces._impl.core._Runtime.getGlobalConfig("jsfAjaxImpl", myfaces._impl.core.Impl);
+            return impl.getSeparatorChar();
+        }
+
     };
 	//jsdoc helper to avoid warnings, we map later 
 	window.jsf = jsf;
