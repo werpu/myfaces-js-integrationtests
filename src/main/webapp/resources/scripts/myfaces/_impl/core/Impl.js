@@ -77,7 +77,7 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
 
     /*blockfilter for the passthrough filtering, the attributes given here
      * will not be transmitted from the options into the passthrough*/
-    _BLOCKFILTER:{onerror:1, onevent:1, render:1, execute:1, myfaces:1},
+    _BLOCKFILTER:{onerror:1, onevent:1, render:1, execute:1, myfaces:1,delay:1},
 
     /**
      * collect and encode data for a given form element (must be of type form)
@@ -151,13 +151,13 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
 
         /*preparations for jsf 2.2 windowid handling*/
         //pass the window id into the options if not set already
-        if (!options.windowId) {
-            var windowId = _Dom.getWindowId();
+        /*if (!options.windowId) {
+            var windowId = this.getClientWindow();
             (windowId) ? options[WINDOW_ID] = windowId : null;
         } else {
             options[WINDOW_ID] = options.windowId;
             delete options.windowId;
-        }
+        }*/
 
         /**
          * we cross reference statically hence the mapping here
@@ -271,11 +271,11 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
         //delay handling is an experimental feature which will most likely
         //make it into jsf 2.2
         /* jsf2.2 only: options.delay || */
-        var delayTimeout = this._RT.getLocalOrGlobalConfig(context, "delay", false);
+        var delayTimeout = options.delay || this._RT.getLocalOrGlobalConfig(context, "delay", false);
         if (delayTimeout) {
             this._delayTimeout = setTimeout(_Lang.hitch(this, function () {
                 this._transport[transportType](elem, form, context, passThrgh);
-            }), delayTimeout);
+            }), parseInt(delayTimeout));
         } else {
             this._transport[transportType](elem, form, context, passThrgh);
         }

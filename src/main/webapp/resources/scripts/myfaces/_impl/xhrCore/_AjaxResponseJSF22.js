@@ -347,12 +347,13 @@ if (!myfaces._impl.core._Runtime.fetchNamespace(_PFX_XHR + "_AjaxResponseJSF22")
 
                 var rootElem = (viewRoot) ? document.getElementById(viewRoot) : document.body;
                 var forms = _Dom.findByTagName(rootElem, "form");
+
                 if (forms) {
                     for (var cnt = forms.length - 1; cnt >= 0; cnt--) {
                         target.push({
                             form:forms[cnt].id,
                             newValue:node.firstChild.nodeValue,
-                            id:id
+                            id:id +jsf.separatorchar + cnt
                         });
                     }
                 }
