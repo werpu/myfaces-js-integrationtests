@@ -54,6 +54,7 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
     P_EXECUTE:"javax.faces.partial.execute",
     P_RENDER:"javax.faces.partial.render",
     P_EVT:"javax.faces.partial.event",
+    P_WINDOW_ID: "javax.faces.ClientWindow",
 
     /* message types */
     ERROR:"error",
@@ -140,7 +141,7 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
          **/
         var _Lang = this._Lang,
                 _Dom = this._Dom,
-                WINDOW_ID = "javax.faces.windowId";
+                WINDOW_ID = "javax.faces.ClientWindow";
         /*assert if the onerror is set and once if it is set it must be of type function*/
         _Lang.assertType(options.onerror, "function");
         /*assert if the onevent is set and once if it is set it must be of type function*/
@@ -148,16 +149,6 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
 
         //options not set we define a default one with nothing
         options = options || {};
-
-        /*preparations for jsf 2.2 windowid handling*/
-        //pass the window id into the options if not set already
-        /*if (!options.windowId) {
-            var windowId = this.getClientWindow();
-            (windowId) ? options[WINDOW_ID] = windowId : null;
-        } else {
-            options[WINDOW_ID] = options.windowId;
-            delete options.windowId;
-        }*/
 
         /**
          * we cross reference statically hence the mapping here
@@ -214,6 +205,11 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
                 _Lang.byId(options.myfaces.form) :
                 this._getForm(elem, event);
 
+
+        /*preparations for jsf 2.2 windowid handling*/
+        var windowId = this.getClientWindow(form);
+        (windowId) ? passThrgh[this.P_WINDOW_ID] = windowId : null;
+
         /**
          * binding contract the javax.faces.source must be set
          */
@@ -268,8 +264,6 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
         //wont hurt but for the sake of compatibility we are going to add it
         passThrgh[form.id] = form.id;
 
-        //delay handling is an experimental feature which will most likely
-        //make it into jsf 2.2
         /* jsf2.2 only: options.delay || */
         var delayTimeout = options.delay || this._RT.getLocalOrGlobalConfig(context, "delay", false);
         if (delayTimeout) {
@@ -742,7 +736,7 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
      */
     getClientWindow: function(node) {
         var FORM = "form";
-           var WIN_ID = "javax.faces.ClientWindow";
+           var WIN_ID = this.P_WINDOW_ID;
 
            var fetchWindowIdFromForms = function (forms) {
                var result_idx = {};

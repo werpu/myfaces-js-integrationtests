@@ -80,7 +80,7 @@
                 <h:panelGroup>
                     <h:panelGroup>An input at a rate of 500s, try typing fast and see the delay in action</h:panelGroup>
                     <h:inputText id="delayControl"
-                                 onkeyup="emitPPR(this, event, {render:'delayoutput', execute:'delayControl', op:'delay', myfaces:{delay: 500}},'./test.timeout'); return true;"/>
+                                 onkeyup="emitPPR(this, event, {render:'delayoutput', execute:'delayControl', op:'delay', delay: 500},'./test.timeout'); return true;"/>
 
                     <h:panelGroup id="delayoutput">
                         <h:outputFormat value="number of requests will be triggered"/>
