@@ -90,7 +90,7 @@ public class ResponseMockup22 extends ResponseMockup
             String windowId = request.getParameter("javax.faces.ClientWindow");
 
             Changes changes = new Changes(root);
-            if(windowId != null)
+            if (windowId != null)
                 changes.addChild(new Update(changes, "result", "<div id='result'>Window Id is sent</div>"));
             else
                 changes.addChild(new Update(changes, "result", "<div id='result'>Window Id is not sent</div>"));
