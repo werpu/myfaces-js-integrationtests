@@ -54,7 +54,7 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
     P_EXECUTE:"javax.faces.partial.execute",
     P_RENDER:"javax.faces.partial.render",
     P_EVT:"javax.faces.partial.event",
-    P_WINDOW_ID: "javax.faces.ClientWindow",
+    P_WINDOW_ID:"javax.faces.ClientWindow",
 
     /* message types */
     ERROR:"error",
@@ -78,7 +78,7 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
 
     /*blockfilter for the passthrough filtering, the attributes given here
      * will not be transmitted from the options into the passthrough*/
-    _BLOCKFILTER:{onerror:1, onevent:1, render:1, execute:1, myfaces:1,delay:1},
+    _BLOCKFILTER:{onerror:1, onevent:1, render:1, execute:1, myfaces:1, delay:1},
 
     /**
      * collect and encode data for a given form element (must be of type form)
@@ -140,8 +140,7 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
          *all the time
          **/
         var _Lang = this._Lang,
-                _Dom = this._Dom,
-                WINDOW_ID = "javax.faces.ClientWindow";
+                _Dom = this._Dom;
         /*assert if the onerror is set and once if it is set it must be of type function*/
         _Lang.assertType(options.onerror, "function");
         /*assert if the onevent is set and once if it is set it must be of type function*/
@@ -174,6 +173,8 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
         /*
          * We make a copy of our options because
          * we should not touch the incoming params!
+         * this copy is also the pass through parameters
+         * which are sent down our request
          */
         var passThrgh = _Lang.mixMaps({}, options, true, this._BLOCKFILTER);
 
@@ -204,7 +205,6 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
         var form = (options.myfaces && options.myfaces.form) ?
                 _Lang.byId(options.myfaces.form) :
                 this._getForm(elem, event);
-
 
         /*preparations for jsf 2.2 windowid handling*/
         var windowId = this.getClientWindow(form);
@@ -267,7 +267,7 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
         /* jsf2.2 only: options.delay || */
         var delayTimeout = options.delay || this._RT.getLocalOrGlobalConfig(context, "delay", false);
         if (delayTimeout) {
-            if(this._delayTimeout) {
+            if (this._delayTimeout) {
                 clearTimeout(this._delayTimeout);
             }
             this._delayTimeout = setTimeout(_Lang.hitch(this, function () {
@@ -563,7 +563,7 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
     /**
      * fetches the separator char from the given script tags
      *
-     * @return {Char} the separator char for the given script tags
+     * @return {char} the separator char for the given script tags
      */
     getSeparatorChar:function () {
         if (this._separator) {
@@ -580,7 +580,7 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
                 this._separator = decodeURIComponent(result[1]);
             }
         }
-        this._separator = getConfig(SEPARATOR_CHAR,this._separator || ":");
+        this._separator = getConfig(SEPARATOR_CHAR, this._separator || ":");
         return this._separator;
     },
 
@@ -738,44 +738,42 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
     /**
      * @return the client window id of the current window, if one is given
      */
-    getClientWindow: function(node) {
-        var FORM = "form";
-           var WIN_ID = this.P_WINDOW_ID;
+    getClientWindow:function (node) {
+        var fetchWindowIdFromForms = this._Lang.hitch(this, function (forms) {
+            var result_idx = {};
+            var result;
+            var foundCnt = 0;
+            for (var cnt = forms.length - 1; cnt >= 0; cnt--) {
 
-           var fetchWindowIdFromForms = function (forms) {
-               var result_idx = {};
-               var result;
-               var foundCnt = 0;
-               for (var cnt = forms.length - 1; cnt >= 0; cnt--) {
-                   var UDEF = 'undefined';
-                   var currentForm = forms[cnt];
-                   var windowId = currentForm[WIN_ID] && currentForm[WIN_ID].value;
-                   if (windowId) {
-                       if (foundCnt > 0 && UDEF == typeof result_idx[windowId]) throw Error("Multiple different windowIds found in document");
-                       result = windowId;
-                       result_idx[windowId] = true;
-                       foundCnt++;
-                   }
-               }
-               return result;
-           }
+                var currentForm = forms[cnt];
+                var winIdElement = this._Dom.getNamedElementFromForm(currentForm, this.P_WINDOW_ID);
+                var windowId = (winIdElement) ? winIdElement.value : null;
 
-           var fetchWindowIdFromURL = function () {
-               var href = window.location.href;
-               var windowId = "windowId";
-               var regex = new RegExp("[\\?&]" + windowId + "=([^&#\\;]*)");
-               var results = regex.exec(href);
-               //initial trial over the url and a regexp
-               if (results != null) return results[1];
-               return null;
-           }
+                if (windowId) {
+                    if (foundCnt > 0 && "undefined" == typeof result_idx[windowId]) throw Error("Multiple different windowIds found in document");
+                    result = windowId;
+                    result_idx[windowId] = true;
+                    foundCnt++;
+                }
+            }
+            return result;
+        });
 
-           //byId ($)
-           var finalNode = (node) ? this._Dom.byId(node): document.body;
+        var fetchWindowIdFromURL = function () {
+            var href = window.location.href, windowId = "windowId";
+            var regex = new RegExp("[\\?&]" + windowId + "=([^&#\\;]*)");
+            var results = regex.exec(href);
+            //initial trial over the url and a regexp
+            if (results != null) return results[1];
+            return null;
+        };
 
-           var forms = this._Dom.findByTagName(finalNode,"form");
-           var result = fetchWindowIdFromForms(forms);
-           return (null != result) ? result : fetchWindowIdFromURL();
+        //byId ($)
+        var finalNode = (node) ? this._Dom.byId(node) : document.body;
+
+        var forms = this._Dom.findByTagName(finalNode, "form");
+        var result = fetchWindowIdFromForms(forms);
+        return (null != result) ? result : fetchWindowIdFromURL();
     }
 });
 
