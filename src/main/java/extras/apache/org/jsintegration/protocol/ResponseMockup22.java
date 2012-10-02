@@ -50,7 +50,8 @@ public class ResponseMockup22 extends ResponseMockup
         response.setContentType("text/xml;charset=UTF-8");
         PrintWriter out = response.getWriter();
         String op = (String) request.getParameter("op");
-        if(op == null) {
+        if (op == null)
+        {
             Part opPart = request.getPart("op");
             opPart.getInputStream();
             op = CharStreams.toString(new InputStreamReader(opPart.getInputStream(), Charsets.UTF_8));
@@ -80,10 +81,21 @@ public class ResponseMockup22 extends ResponseMockup
             request.getPart("fileUpload").write(File.createTempFile("prefix", "tmp").getAbsolutePath());
 
             Changes changes = new Changes(root);
-            changes.addChild(new Update(changes,"result","<div id='result'>Fileupload successful</div>"));
+            changes.addChild(new Update(changes, "result", "<div id='result'>Fileupload successful</div>"));
             root.addElement(changes);
             out.println(root.toString());
 
+        } else if (op.toLowerCase().equals("windowid"))
+        {
+            String windowId = request.getParameter("javax.faces.ClientWindow");
+
+            Changes changes = new Changes(root);
+            if(windowId != null)
+                changes.addChild(new Update(changes, "result", "<div id='result'>Window Id is sent</div>"));
+            else
+                changes.addChild(new Update(changes, "result", "<div id='result'>Window Id is not sent</div>"));
+            root.addElement(changes);
+            out.println(root.toString());
         } else
         {
             super.processRequest(request, response);
