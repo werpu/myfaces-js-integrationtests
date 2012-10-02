@@ -267,8 +267,12 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
         /* jsf2.2 only: options.delay || */
         var delayTimeout = options.delay || this._RT.getLocalOrGlobalConfig(context, "delay", false);
         if (delayTimeout) {
+            if(this._delayTimeout) {
+                clearTimeout(this._delayTimeout);
+            }
             this._delayTimeout = setTimeout(_Lang.hitch(this, function () {
                 this._transport[transportType](elem, form, context, passThrgh);
+                this._delayTimeout = null;
             }), parseInt(delayTimeout));
         } else {
             this._transport[transportType](elem, form, context, passThrgh);

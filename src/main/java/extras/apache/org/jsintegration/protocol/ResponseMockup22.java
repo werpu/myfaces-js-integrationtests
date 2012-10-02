@@ -76,9 +76,11 @@ public class ResponseMockup22 extends ResponseMockup
         } else if (op.equals("fileUpload"))
         {
             Collection<Part> parts = request.getParts();
+
             request.getPart("fileUpload").write(File.createTempFile("prefix", "tmp").getAbsolutePath());
+
             Changes changes = new Changes(root);
-            changes.addChild(new Update(changes,"result","Fileupload successful"));
+            changes.addChild(new Update(changes,"result","<div id='result'>Fileupload successful</div>"));
             root.addElement(changes);
             out.println(root.toString());
 
