@@ -102,13 +102,13 @@ if (!window.jsf) {
 
         /**
          * returns the window identifier for the given node / window
-         * @param {optional String | DomNode} node the node for which the client identifier has to be determined
+         * @param {optional String | DomNode}  the node for which the client identifier has to be determined
          * @return the window identifier or null if none is found
          */
-        this.getClientWindow = function(node) {
+        this.getClientWindow = function() {
             /*we are not allowed to add the impl on a global scope so we have to inline the code*/
             var impl = myfaces._impl.core._Runtime.getGlobalConfig("jsfAjaxImpl", myfaces._impl.core.Impl);
-            return impl.getClientWindow(node);
+            return (arguments.length)? impl.getClientWindow(arguments[0]) : impl.getClientWindow();
         }
 
         //private helper functions
@@ -218,7 +218,7 @@ if (!jsf.util) {
          *
          * @param {DomNode} source, the callee object
          * @param {Event} event, the event object of the callee event triggering this function
-         *
+         * @param {optional} functions to be chained, if any of those return false the chain is broken
          */
         this.chain = function(source, event) {
             var impl = myfaces._impl.core._Runtime.getGlobalConfig("jsfAjaxImpl", myfaces._impl.core.Impl);

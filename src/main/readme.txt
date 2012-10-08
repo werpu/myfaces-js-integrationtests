@@ -12,27 +12,6 @@ We have to make a distinction between structural config params
 which hold the system via weak binding together and runtime config
 params which influence the runtime behavior
 
-
-Structural params
-
-  -  jsfAjaxImpl points to the ajax implementation which has to implement the full api default is
-            myfaces._impl.core.Impl
-
-  -  transport points to the desired transport gateway default value is  myfaces._impl.xhrCore._Transports
-
-  -  responseHandler is the response handler responsible for providing the response
-        the default value is: myfaces._impl.xhrCore._AjaxResponse
-
-  -  eventListenerQueue: The weak binding to the event listener queue singleton defaults to myfaces._impl._util._ListenerQueue
-
-
-  -  updateParser: binding to the parsing engine, default value is myfaces._impl._util._HtmlStripper
-
-
-  -  defaultErrorOutput points to the default error output which is alert per default but could be set to console.error
-    for instance. The syntax must be defaultErrorOutput(<errorMessage>)
-
-
 Runtime config params
 
   - delay: an integer value specifying a possible delay in the implementation
@@ -52,6 +31,24 @@ Runtime config params
   - alarmThreshold: currently not used should be a threshold for internal error handling
 
 
+Structural params
+
+  -  jsfAjaxImpl points to the ajax implementation which has to implement the full api default is
+            myfaces._impl.core.Impl
+
+  -  transport points to the desired transport gateway default value is  myfaces._impl.xhrCore._Transports
+
+  -  responseHandler is the response handler responsible for providing the response
+        the default value is: myfaces._impl.xhrCore._AjaxResponse
+
+  -  eventListenerQueue: The weak binding to the event listener queue singleton defaults to myfaces._impl._util._ListenerQueue
+
+
+  -  updateParser: binding to the parsing engine, default value is myfaces._impl._util._HtmlStripper
+
+
+  -  defaultErrorOutput points to the default error output which is alert per default but could be set to console.error
+    for instance. The syntax must be defaultErrorOutput(<errorMessage>)
 
 
 

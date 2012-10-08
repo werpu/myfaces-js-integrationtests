@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jstl/fmt">
+<ui:composition template="../templates/template.xhtml">
+    <ui:define name="content">
+
+        <script type="text/javascript" src="../resources/scripts/testcases/test19-windowid.js"></script>
+
+
+        <script type="text/javascript">
+
+
+            var target = "./test.mockup";
+            /**
+             * ppr emitting function
+             */
+            function emitPPR(source, event, action, formName) {
+                var Lang = myfaces._impl._util._Lang;
+
+                document.getElementById(formName || "centerForm").action = target;
+                jsf.ajax.request(/*String|Dom Node*/ source, /*|EVENT|*/ (window.event) ? window.event :
+                        event, /*{|OPTIONS|}*/ {execute:"centerForm", op:action});
+            }
+
+        </script>
+        <h:form id="centerForm" prependId="false">
+            <input type="hidden" name="javax.faces.ClientWindow" value="booga"/>
+            <input id="input1" type="button" onclick="emitPPR(this, event, 'windowId', 'centerForm');"
+                   value="press me for ajax submit"></input>
+
+            <div id="result"></div>
+        </h:form>
+
+        <h:form id="form2" prependId="false">
+            <input id="input2" type="button" onclick="emitPPR(this, event, 'windowId', 'form2');"
+                   value="No windowId in form"></input>
+
+            <h:link value="On to the next test" outcome="test20-windowid2">
+                <f:param name="windowId" value="booga2"/>
+            </h:link>
+        </h:form>
+   </ui:define>
+</ui:composition>
+</html>
