@@ -5,7 +5,7 @@ var target = "./test.mockup";
 
 var testGroup = new (_class("SeparatorGroup", myfaces._supportive.unittest.TestGroup,
         {
-            _description:"Testing for a Separator char",
+            _description:"Testing for a Separator char with a predefined separator",
             constructor_:function () {
                 this._callSuper("constructor_");
             },
