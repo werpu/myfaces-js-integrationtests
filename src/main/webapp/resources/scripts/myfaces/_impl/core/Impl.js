@@ -606,8 +606,6 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
             for (var i = 0; i < scriptTags.length && !found; i++) {
                 if (scriptTags[i].src.search(/\/javax\.faces\.resource\/jsf\.js.*ln=javax\.faces/) != -1) {
                     var result = scriptTags[i].src.match(/stage=([^&;]*)/);
-                    //alert("result found");
-                    //alert(result);
                     found = true;
                     if (result) {
                         // we found stage=XXX

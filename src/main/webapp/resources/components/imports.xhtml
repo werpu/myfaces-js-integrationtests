@@ -97,7 +97,7 @@
                         rendered="#{information.implementation == 'myfaces'}"/>
 
 
-        <h:outputScript name="myfaces/api/jsf.js?separator=%3A" library="scripts" target="head"
+        <h:outputScript name="myfaces/api/jsf.js?#{separatorBean.separator}" library="scripts" target="head"
                         rendered="#{information.implementation == 'myfaces'}"/>
 
 

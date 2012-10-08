@@ -16,9 +16,8 @@ var testGroup = new (_class("WindowIdGroup", myfaces._supportive.unittest.TestGr
             },
             tearDown:function () {
                 this._callSuper("tearDown");
-                //no auto forward for now
-                //TODO autoforward to the next testpage
-                this.autoForward("./finalResults.jsf")
+
+                this.autoForward("./test21-separator.jsf");
             }
         }))();
 
