@@ -141,12 +141,13 @@ public class FileUploadServletRequest extends FileUploadServletRequestBase
 
     }
 
-    public String getRequestParameter(String name)
+    @Override
+    public String getParameter(String name)
     {
         if (isMultipartRequest())
         {
             String[] ret = getParameterMap().get(name);
-            if (ret.length > 0) return ret[0];
+            if (ret != null && ret.length > 0) return ret[0];
             return null;
         } else
         {

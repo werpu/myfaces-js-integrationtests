@@ -120,6 +120,11 @@
             <artifactId>commons-lang</artifactId>
             <version>2.6</version>
         </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava-io</artifactId>
+            <version>r03</version>
+        </dependency>
 
         <dependency>
             <groupId>org.richfaces.ui</groupId>
@@ -131,6 +136,7 @@
             <artifactId>richfaces-core-impl</artifactId>
             <version>4.2.0.Final</version>
         </dependency>
+
     </dependencies>
 
 

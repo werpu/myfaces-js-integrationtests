@@ -53,7 +53,7 @@ public class FileUploadRenderer extends Renderer
         try
         {
             Part part = ((HttpServletRequest)facesContext.getExternalContext().getRequest()).getPart(uiComponent.getClientId());
-            ((UIInput)uiComponent).setSubmittedValue(part);
+            //((UIInput)uiComponent).setSubmittedValue(part);
         }
         catch (IOException e)
         {
