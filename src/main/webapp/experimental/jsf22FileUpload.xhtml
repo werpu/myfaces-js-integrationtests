@@ -5,32 +5,36 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+        >
 <ui:composition template="../templates/template.xhtml">
+
     <ui:define name="content">
         <script type="text/javascript">
 
 
-                    var target = "./test.mockup";
-                    /**
-                     * ppr emitting function
-                     */
-                    function emitPPR(source, event, action, formName) {
-                        var Lang = myfaces._impl._util._Lang;
+            var target = "./test.mockup";
+            /**
+             * ppr emitting function
+             */
+            function emitPPR(source, event, action, formName) {
+                var Lang = myfaces._impl._util._Lang;
 
-                        document.getElementById(formName || "centerForm").action = target;
-                        jsf.ajax.request(/*String|Dom Node*/ source, /*|EVENT|*/ (window.event) ? window.event :
-                                event, /*{|OPTIONS|}*/ {execute:"centerForm" ,op:action});
-                    }
+                document.getElementById(formName || "centerForm").action = target;
+                jsf.ajax.request(/*String|Dom Node*/ source, /*|EVENT|*/ (window.event) ? window.event :
+                        event, /*{|OPTIONS|}*/ {execute:"centerForm", op:action});
+            }
 
-                </script>
+        </script>
 
         <h:form id="centerForm" enctype="multipart/form-data">
             <input type="file" id="fileUpload" name="fileUpload"/>
             <input type="button"
-                   onclick="emitPPR(this, event , 'fileUpload');" />
-            <input type="submit" />
+                   onclick="emitPPR(this, event , 'fileUpload');"/>
+            <input type="submit"/>
+
             <div id="result"></div>
+
         </h:form>
     </ui:define>
 </ui:composition>

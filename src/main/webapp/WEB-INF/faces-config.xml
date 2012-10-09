@@ -77,6 +77,11 @@
         <faces-context-factory>navigationTest.OptimizedFacesContextFactory</faces-context-factory>
     </factory>
     -->
+    <component>
+        <component-type>at.irian.FileUpload</component-type>
+        <component-class>extras.apache.org.jsintegration.fileUpload.FileUploadComponent</component-class>
+    </component>
+
 
     <navigation-rule>
         <from-view-id>/*</from-view-id>

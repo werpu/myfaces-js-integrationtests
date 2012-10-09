@@ -40,20 +40,30 @@ public class FileUploadFilter implements Filter
     @Override
     public void init(FilterConfig filterConfig) throws ServletException
     {
-        //To change body of implemented methods use File | Settings | File Templates.
+
     }
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException
     {
-        FileUploadServletRequest request = new FileUploadServletRequest((HttpServletRequest)servletRequest);
+        //portlets do not work, we have to live with what we have
+        if (servletRequest instanceof HttpServletRequest &&
+                isMultipartRequest((HttpServletRequest) servletRequest))
+        {
+            FileUploadServletRequest request = new FileUploadServletRequest((HttpServletRequest) servletRequest);
+            servletRequest = request;
+        }
+        filterChain.doFilter(servletRequest, servletResponse);
+    }
 
-        filterChain.doFilter(request, servletResponse);
+    private final boolean isMultipartRequest(HttpServletRequest servletRequest) throws IOException, ServletException
+    {
+        return ((HttpServletRequest) servletRequest).getParts() != null && ((HttpServletRequest) servletRequest).getParts().size() > 0;
     }
 
     @Override
     public void destroy()
     {
-        //To change body of implemented methods use File | Settings | File Templates.
+
     }
 }

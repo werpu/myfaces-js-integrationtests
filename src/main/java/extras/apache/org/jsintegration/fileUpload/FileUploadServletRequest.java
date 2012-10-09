@@ -37,10 +37,18 @@ import java.util.Map;
 /**
  * @author Werner Punz (latest modification by $Author$)
  * @version $Revision$ $Date$
+ *
+ * We map all small entries into request parameters to keep
+ * the compatibility to existing frameworks
+ * the big files must be fetched over the servlet parts api as expected
  */
 
 public class FileUploadServletRequest extends FileUploadServletRequestBase
 {
+    private static final String CONTENT_DISPOSITION = "content-disposition";
+    private static final String FORM_DATA = "form-data";
+    private static final String FILENAME = "filename";
+    private static final int BUFFER_SIZE = 4096;
     Map<String, String[]> parameterMap = new HashMap<String, String[]>();
 
     public FileUploadServletRequest(HttpServletRequest delegate)
@@ -52,12 +60,13 @@ public class FileUploadServletRequest extends FileUploadServletRequestBase
             {
                 for (Part part : getParts())
                 {
-                    //only parts which are small will become new parameter values
-                    if (part.getHeader("content-disposition").contains("form-data") && !part.getHeader
-                            ("content-disposition").contains("filename"))
+                    //only parts which are not files will become new parameter values, we can identify
+                    //TODO refine this a little bit more to check for filename =
+                    if (part.getHeader(CONTENT_DISPOSITION).contains(FORM_DATA) && !part.getHeader
+                            (CONTENT_DISPOSITION).contains(FILENAME))
                     {
                         InputStream istr = part.getInputStream();
-                        String res = convertStreamToString(istr);
+                        String res = readString(istr);
                         String[] values = parameterMap.get(part.getName());
                         if (values == null)
                         {
@@ -76,11 +85,11 @@ public class FileUploadServletRequest extends FileUploadServletRequestBase
             }
             catch (IOException e)
             {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                e.printStackTrace();
             }
             catch (ServletException e)
             {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                e.printStackTrace();
             }
         }
     }
@@ -103,39 +112,33 @@ public class FileUploadServletRequest extends FileUploadServletRequestBase
         }
     }
 
-    public String convertStreamToString(InputStream is)
+    public String readString(InputStream is)
             throws IOException
     {
-        //
-        // To convert the InputStream to String we use the
-        // Reader.read(char[] buffer) method. We iterate until the
-        // Reader return -1 which means there's no more data to
-        // read. We use the StringWriter class to produce the string.
-        //
-        if (is != null)
-        {
-            Writer writer = new StringWriter();
-
-            char[] buffer = new char[1024];
-            try
-            {
-                Reader reader = new BufferedReader(
-                        new InputStreamReader(is, "UTF-8"));
-                int n;
-                while ((n = reader.read(buffer)) != -1)
-                {
-                    writer.write(buffer, 0, n);
-                }
-            }
-            finally
-            {
-                is.close();
-            }
-            return writer.toString();
-        } else
-        {
+        if(is == null) {
             return "";
         }
+
+        Writer writer = new StringWriter();
+
+        char[] buffer = new char[BUFFER_SIZE];
+        try
+        {
+            String encoding = this.getCharacterEncoding();
+            encoding = (encoding == null) ? "UTF-8" : encoding;
+            Reader reader = new BufferedReader(new InputStreamReader(is, encoding));
+            int noBytes;
+            while ((noBytes = reader.read(buffer)) != -1)
+            {
+                writer.write(buffer, 0, noBytes);
+            }
+        }
+        finally
+        {
+            is.close();
+        }
+        return writer.toString();
+
     }
 
     public String getRequestParameter(String name)
