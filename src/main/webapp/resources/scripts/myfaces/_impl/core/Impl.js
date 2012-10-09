@@ -328,7 +328,7 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
 
         var transportAutoSelection = getConfig(context, "transportAutoSelection", true);
         var isMultipart = (transportAutoSelection && _Dom.getAttribute(form, "enctype") == "multipart/form-data") ?
-                _Dom.isMultipartCandidate(passThrgh[this.P_EXECUTE]) :
+                _Dom.isMultipartCandidate((!getConfig(context, "pps",false))? form : passThrgh[this.P_EXECUTE]) :
                 false;
 
         /**
