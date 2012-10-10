@@ -19,36 +19,44 @@
 
 package extras.apache.org.jsintegration.fileUpload;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-import javax.servlet.http.Part;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Serializable;
 
 /**
  * @author Werner Punz (latest modification by $Author$)
  * @version $Revision$ $Date$
  */
 
-@ManagedBean
-@RequestScoped
-public class FileUploadListener
+public class FileUploadModel  implements Serializable
 {
-    Part model = null;
+    String partName;
+    String fileName;
 
-    public Part getModel()
+    public FileUploadModel(String partName)
     {
-        return model;
+        this.partName = partName;
     }
 
-    public void setModel(Part model)
+    public String getFileName()
     {
-        this.model = model;
+        return fileName;
     }
 
-
-
-    public String fileUploadAction()
+    public void setFileName(String fileName)
     {
-        System.out.println(model.getName());
-        return null;
+        this.fileName = fileName;
+    }
+
+    public InputStream getInputStream() throws IOException {
+        return ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest())
+                .getInputStream();
+    }
+
+    public String getContentType() {
+        return ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest())
+                        .getContentType();
     }
 }

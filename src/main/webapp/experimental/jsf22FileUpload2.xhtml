@@ -30,7 +30,7 @@
         </script>
 
         <h:form id="centerForm" enctype="multipart/form-data">
-            <js22:fileUpload id="blarg"></js22:fileUpload>
+            <js22:fileUpload value="#{fileUploadListener.model}" id="blarg"></js22:fileUpload>
             <h:commandLink action="#{fileUploadListener.fileUploadAction}" value="press me for file upload">
                 <f:ajax render="blarg" execute="@this blarg"/>
             </h:commandLink>

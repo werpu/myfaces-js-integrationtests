@@ -19,36 +19,14 @@
 
 package extras.apache.org.jsintegration.fileUpload;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-import javax.servlet.http.Part;
-
 /**
  * @author Werner Punz (latest modification by $Author$)
  * @version $Revision$ $Date$
  */
 
-@ManagedBean
-@RequestScoped
-public class FileUploadListener
+public class StringUtils
 {
-    Part model = null;
-
-    public Part getModel()
-    {
-        return model;
-    }
-
-    public void setModel(Part model)
-    {
-        this.model = model;
-    }
-
-
-
-    public String fileUploadAction()
-    {
-        System.out.println(model.getName());
-        return null;
+    public static final boolean isBlank(String in) {
+        return in == null || in.trim().equals("");
     }
 }
