@@ -70,6 +70,8 @@ public class FileUploadRenderer extends Renderer
     private static final String ROLE = "role";
     private static final String TABINDEX = "tabindex";
     private static final String TITLE = "title";
+    private static final String MAXLENGTH = "maxlength";
+    private static final String SIZE = "size";
 
     @Override
     public void decode(FacesContext facesContext, UIComponent uiComponent)
@@ -111,7 +113,9 @@ public class FileUploadRenderer extends Renderer
         }
         renderHTMLAttribute(writer, LABEL, component.getLabel());
         renderHTMLAttribute(writer, LANG, component.getLang());
-        //TODO maxLength
+        if(component.getMaxLength() > 0) {
+                    writer.writeAttribute(MAXLENGTH, String.valueOf(component.getMaxLength()), null);
+                }
         renderHTMLAttribute(writer, ONBLUR, component.getOnblur());
         renderHTMLAttribute(writer, ONCHANGE, component.getOnchange());
         renderHTMLAttribute(writer, ONCLICK, component.getOnclick());
@@ -135,7 +139,10 @@ public class FileUploadRenderer extends Renderer
         }
 
         renderHTMLAttribute(writer, ROLE, component.getRole());
-        //TODO size???
+        if(component.getSize() > 0) {
+            writer.writeAttribute(SIZE, String.valueOf(component.getSize()), null);
+        }
+
         renderHTMLAttribute(writer, STYLE, component.getStyle());
         renderHTMLAttribute(writer, CLASS, component.getStyleClass());
 

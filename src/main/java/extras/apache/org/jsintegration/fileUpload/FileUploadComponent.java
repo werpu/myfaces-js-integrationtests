@@ -292,7 +292,7 @@ public class FileUploadComponent extends UIInput implements ClientBehaviorHolder
 
     public int getSize()
     {
-        return (Integer) getStateHelper().eval(PropertyKeys.size, 0);
+        return (Integer) getStateHelper().eval(PropertyKeys.size, -1);
     }
 
     public void setStyle(String param)
