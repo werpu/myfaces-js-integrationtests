@@ -18,7 +18,7 @@ var testGroup = new (_class("WindowIdGroup", myfaces._supportive.unittest.TestGr
                 this._callSuper("tearDown");
                 //no auto forward for now
                 //TODO autoforward to the next testpage
-                this.autoForward("./test20-windowid2.jsf?windowId=booga2");
+                this.autoForward("./test20-windowid2.jsf?jfwid=booga2");
             }
         }))();
 
