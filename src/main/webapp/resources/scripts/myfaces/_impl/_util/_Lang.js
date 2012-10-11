@@ -672,7 +672,6 @@ _MF_SINGLTN(_PFX_UTIL + "_Lang", Object, /** @lends myfaces._impl._util._Lang.pr
         error.name = name || "clientError";
         error.title = title || "";
         error.message = message || "";
-        //does not work unfortunately
         error._mfInternal = {};
         error._mfInternal.name = name || "clientError";
         error._mfInternal.title = title || "clientError";
