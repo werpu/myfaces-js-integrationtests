@@ -761,7 +761,7 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
         });
 
         var fetchWindowIdFromURL = function () {
-            var href = window.location.href, windowId = "windowId";
+            var href = window.location.href, windowId = "jfwid";
             var regex = new RegExp("[\\?&]" + windowId + "=([^&#\\;]*)");
             var results = regex.exec(href);
             //initial trial over the url and a regexp
