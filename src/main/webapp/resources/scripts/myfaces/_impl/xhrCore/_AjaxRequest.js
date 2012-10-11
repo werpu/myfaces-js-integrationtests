@@ -125,7 +125,9 @@ _MF_CLS(_PFX_XHR + "_AjaxRequest", _MF_OBJECT, /** @lends myfaces._impl.xhrCore.
                 onprogress: scopeThis("onprogress"),
                 ontimeout:  scopeThis("ontimeout"),
 				//remove for xhr level2 support (chrome has problems with it)
-                onloadend:  scopeThis("ondone"),
+                //for chrome we have to emulate the onloadend by calling it explicitely
+                //and leave the onload out
+                //onloadend:  scopeThis("ondone"),
                 onload:     scopeThis("onsuccess"),
                 onerror:    scopeThis("onerror")
 
@@ -175,7 +177,7 @@ _MF_CLS(_PFX_XHR + "_AjaxRequest", _MF_OBJECT, /** @lends myfaces._impl.xhrCore.
 
 
     ondone: function() {
-        this._requestDone();
+       this._requestDone();
     },
 
 
@@ -195,12 +197,12 @@ _MF_CLS(_PFX_XHR + "_AjaxRequest", _MF_OBJECT, /** @lends myfaces._impl.xhrCore.
 
         } catch (e) {
             this._stdErrorHandler(this._xhr, this._context, e);
-        }
+
 		//add for xhr level2 support
-		//}  finally {
+		}  finally {
             //W3C spec onloadend must be called no matter if success or not
-        //    this.ondone();
-        //}
+            this.ondone();
+        }
     },
 
     onerror: function(/*evt*/) {
@@ -222,14 +224,17 @@ _MF_CLS(_PFX_XHR + "_AjaxRequest", _MF_OBJECT, /** @lends myfaces._impl.xhrCore.
         } catch (e) {
             errorText = _Lang.getMessage("ERR_REQ_FAILED_UNKNOWN", null);
         } finally {
+            try {
             var _Impl = this.attr("impl");
             _Impl.sendError(xhr, context, _Impl.HTTPERROR,
                     _Impl.HTTPERROR, errorText,"","myfaces._impl.xhrCore._AjaxRequest","onerror");
-            //add for xhr level2 support
-			//since chrome does not call properly the onloadend we have to do it manually
-            //to eliminate xhr level1 for the compile profile modern
-            //W3C spec onloadend must be called no matter if success or not
-            //this.ondone();
+            } finally {
+                //add for xhr level2 support
+			    //since chrome does not call properly the onloadend we have to do it manually
+                //to eliminate xhr level1 for the compile profile modern
+                //W3C spec onloadend must be called no matter if success or not
+                this.ondone();
+            }
         }
         //_onError
     },
@@ -264,10 +269,10 @@ _MF_CLS(_PFX_XHR + "_AjaxRequest", _MF_OBJECT, /** @lends myfaces._impl.xhrCore.
         //add for xhr level2 support
 		//Chrome fails in the current builds, on our loadend, we disable the xhr
         //level2 optimisations for now
-        //if (/*('undefined' == typeof this._timeout || null == this._timeout) &&*/ this._RT.getXHRLvl() >= 2) {
-        //no timeout we can skip the emulation layer
-        //    return xhr;
-        //}
+        if (/*('undefined' == typeof this._timeout || null == this._timeout) &&*/ this._RT.getXHRLvl() >= 2) {
+            //no timeout we can skip the emulation layer
+            return xhr;
+        }
         return new myfaces._impl.xhrCore.engine.Xhr1({xhrObject: xhr});
     },
 

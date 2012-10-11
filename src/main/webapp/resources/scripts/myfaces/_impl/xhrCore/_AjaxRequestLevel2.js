@@ -36,8 +36,8 @@ _MF_CLS(_PFX_XHR+"_AjaxRequestLevel2", myfaces._impl.xhrCore._AjaxRequest, {
         } else {
             //for speed reasons we only need encodesubmittablefields
             //in the pps case
-            ret = new FormData(this._sourceForm);
-            this._AJAXUTIL.encodeSubmittableFields(ret, this._xhr, this._context, this._source,
+            //ret = new FormData(this._sourceForm);
+            ret = this._AJAXUTIL.encodeSubmittableFields(ret, this._xhr, this._context, this._source,
                     this._sourceForm, this._partialIdsArray);
         }
         return ret;
@@ -51,5 +51,8 @@ _MF_CLS(_PFX_XHR+"_AjaxRequestLevel2", myfaces._impl.xhrCore._AjaxRequest, {
     _getTransport: function() {
         return new XMLHttpRequest();
     }
+
+
+
 
 });
