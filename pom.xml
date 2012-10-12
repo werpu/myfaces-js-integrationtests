@@ -101,16 +101,6 @@
         </dependency>
 
         <dependency>
-            <groupId>de.odysseus.juel</groupId>
-            <artifactId>juel-api</artifactId>
-            <version>${juel.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>de.odysseus.juel</groupId>
-            <artifactId>juel-impl</artifactId>
-            <version>${juel.version}</version>
-        </dependency>
-        <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
             <version>1.7.2</version>
@@ -120,13 +110,17 @@
             <artifactId>commons-lang</artifactId>
             <version>2.6</version>
         </dependency>
-        <!--
+
+
+
+
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava-io</artifactId>
             <version>r03</version>
         </dependency>
-        -->
+
+
         <dependency>
             <groupId>org.richfaces.ui</groupId>
             <artifactId>richfaces-components-ui</artifactId>
@@ -208,7 +202,7 @@
                                     <directory>${shared.resources}</directory>
                                 </resource>
                                 <resource>
-                                            <!-- this is relative to the pom.xml directory -->
+                                    <!-- this is relative to the pom.xml directory -->
                                     <directory>src/main/extra-resources/mojarra-debug/webapp</directory>
 
                                 </resource>
@@ -511,7 +505,15 @@
 
 
     <build>
-
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.tomcat.maven</groupId>
+                    <artifactId>tomcat7-maven-plugin</artifactId>
+                    <version>2.0</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
 
         <plugins>
             <plugin>
@@ -585,7 +587,7 @@
                     </execution>
                 </executions>
             </plugin>
-            
+
 
         </plugins>
 

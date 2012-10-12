@@ -56,9 +56,16 @@ public class FileUploadFilter implements Filter
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
-    private final boolean isMultipartRequest(HttpServletRequest servletRequest) throws IOException, ServletException
+    private final boolean isMultipartRequest(HttpServletRequest servletRequest) throws IOException
     {
-        return ((HttpServletRequest) servletRequest).getParts() != null && ((HttpServletRequest) servletRequest).getParts().size() > 0;
+        try
+        {
+            return ((HttpServletRequest) servletRequest).getParts() != null && ((HttpServletRequest) servletRequest).getParts().size() > 0;
+        }
+        catch (ServletException ex)
+        {
+            return false;
+        }
     }
 
     @Override
