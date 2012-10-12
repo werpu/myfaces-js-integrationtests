@@ -75,6 +75,7 @@ _MF_SINGLTN(_PFX_XHR + "_Transports", _MF_OBJECT,
      * @param {Object} passThrgh (Map) values to be passed through
      **/
     xhrQueuedPost : function(source, sourceForm, context, passThrgh) {
+        context._mfInternal.xhrOp = "xhrQueuedPost";
         this._q.enqueue(
                 new (this._getAjaxReqClass(context))(this._getArguments(source, sourceForm, context, passThrgh)));
     },
