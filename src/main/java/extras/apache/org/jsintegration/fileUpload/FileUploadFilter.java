@@ -46,26 +46,29 @@ public class FileUploadFilter implements Filter
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException
     {
-        //portlets do not work, we have to live with what we have
-        if (servletRequest instanceof HttpServletRequest &&
-                isMultipartRequest((HttpServletRequest) servletRequest))
+        //we have to check for parameters first because richfaces and other libraries
+        //use their own request filters
+        //TODO Portlet request handling
+
+        if (
+                servletRequest instanceof HttpServletRequest &&
+                        isMultipartRequest((HttpServletRequest) servletRequest))
         {
             FileUploadServletRequest request = new FileUploadServletRequest((HttpServletRequest) servletRequest);
-            servletRequest = request;
+
+            if (request.getParameter("javax.faces.request") != null || ((HttpServletRequest) request)
+                    .getHeader("Faces-Request") != null)
+            {
+                servletRequest = request;
+            }
         }
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
     private final boolean isMultipartRequest(HttpServletRequest servletRequest) throws IOException
     {
-        try
-        {
-            return ((HttpServletRequest) servletRequest).getParts() != null && ((HttpServletRequest) servletRequest).getParts().size() > 0;
-        }
-        catch (ServletException ex)
-        {
-            return false;
-        }
+        return servletRequest.getHeader("Content-Type") != null && servletRequest.getHeader("Content-Type").contains
+            ("multipart/form-data");
     }
 
     @Override

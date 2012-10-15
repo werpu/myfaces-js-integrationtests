@@ -21,6 +21,7 @@ package extras.apache.org.jsintegration.fileUpload;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.Part;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -37,18 +38,21 @@ import java.util.Map;
 /**
  * @author Werner Punz (latest modification by $Author$)
  * @version $Revision$ $Date$
- *
- * We map all small entries into request parameters to keep
- * the compatibility to existing frameworks
- * the big files must be fetched over the servlet parts api as expected
+ *          <p/>
+ *          We map all small entries into request parameters to keep
+ *          the compatibility to existing frameworks
+ *          the big files must be fetched over the servlet parts api as expected
  */
 
-public class FileUploadServletRequest extends FileUploadServletRequestBase
+public class FileUploadServletRequest extends HttpServletRequestWrapper
 {
     private static final String CONTENT_DISPOSITION = "content-disposition";
     private static final String FORM_DATA = "form-data";
     private static final String FILENAME = "filename";
+    private static final String CONTENT_TYPE = "Content-Type";
+    private static final String MULTIPART_FORM_DATA = "multipart/form-data";
     private static final int BUFFER_SIZE = 4096;
+
     Map<String, String[]> parameterMap = new HashMap<String, String[]>();
 
     public FileUploadServletRequest(HttpServletRequest delegate)
@@ -115,7 +119,8 @@ public class FileUploadServletRequest extends FileUploadServletRequestBase
     public String readString(InputStream is)
             throws IOException
     {
-        if(is == null) {
+        if (is == null)
+        {
             return "";
         }
 
@@ -157,18 +162,7 @@ public class FileUploadServletRequest extends FileUploadServletRequestBase
 
     private boolean isMultipartRequest()
     {
-        try
-        {
-            return super.getParts() != null && super.getParts().size() > 0;
-        }
-        catch (IOException e)
-        {
-            return false;
-        }
-        catch (ServletException e)
-        {
-            return false;
-        }
-
+        return this.getHeader(CONTENT_TYPE) != null && this.getHeader(CONTENT_TYPE).contains
+                (MULTIPART_FORM_DATA);
     }
 }
