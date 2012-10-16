@@ -126,6 +126,6 @@ if (_MF_SINGLTN) {
                 }
             }
             return false;
-        },
+        }
     });
 }
