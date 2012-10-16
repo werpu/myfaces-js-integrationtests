@@ -287,7 +287,7 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
         var ret = document.createElement(nodeName);
         if (attrs) {
             for (var key in attrs) {
-                if(!attrs.hasOwnProperty(key)) continue;
+                if(!attrs.«hasOwnProperty(key)) continue;
                 this.setAttribute(ret, key, attrs[key]);
             }
         }
