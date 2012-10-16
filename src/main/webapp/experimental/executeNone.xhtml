@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+        >
+<ui:composition template="../templates/template.xhtml">
+
+    <ui:define name="content">
+        <h:form id="centerForm" prependId="true">
+            execute="@none" - this button should not alter the state of checkmark<br/>
+            <h:commandLink actionListener="#{executeNone.actionFired}" value="Execute '@none'">
+                <f:ajax render="fired" execute="@none"/>
+            </h:commandLink><br/>
+
+            <br/>
+
+            execute="@this" - this button should alter the state of checkmark<br/>
+            <h:commandLink actionListener="#{executeNone.actionFired}" value="Execute '@this'">
+                <f:ajax render="fired" execute="@this"/>
+            </h:commandLink><br/>
+
+            <br/>
+            output: <h:selectBooleanCheckbox id="fired" value="#{executeNone.fired}"/>
+        </h:form>
+    </ui:define>
+</ui:composition>
+</html>

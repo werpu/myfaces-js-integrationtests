@@ -111,8 +111,16 @@
             <version>2.6</version>
         </dependency>
 
-
-
+        <dependency>
+            <groupId>de.odysseus.juel</groupId>
+            <artifactId>juel-api</artifactId>
+            <version>${juel.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.odysseus.juel</groupId>
+            <artifactId>juel-impl</artifactId>
+            <version>${juel.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>com.google.guava</groupId>
