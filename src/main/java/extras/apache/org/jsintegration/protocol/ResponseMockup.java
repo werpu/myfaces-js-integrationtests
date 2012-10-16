@@ -4,13 +4,26 @@
  */
 package extras.apache.org.jsintegration.protocol;
 
-import extras.apache.org.jsintegration.protocol.xmlNodes.*;
+import extras.apache.org.jsintegration.protocol.xmlNodes.Attribute;
+import extras.apache.org.jsintegration.protocol.xmlNodes.Attributes;
+import extras.apache.org.jsintegration.protocol.xmlNodes.Changes;
+import extras.apache.org.jsintegration.protocol.xmlNodes.Delete;
+import extras.apache.org.jsintegration.protocol.xmlNodes.ErrorResponse;
+import extras.apache.org.jsintegration.protocol.xmlNodes.Eval;
+import extras.apache.org.jsintegration.protocol.xmlNodes.Insert;
+import extras.apache.org.jsintegration.protocol.xmlNodes.Insert2;
+import extras.apache.org.jsintegration.protocol.xmlNodes.PartialResponse;
+import extras.apache.org.jsintegration.protocol.xmlNodes.Update;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * @author werpu
@@ -335,6 +348,17 @@ public class ResponseMockup extends HttpServlet
                         "<tbody><tr><td colspan='2'>second body added</td></tr></tbody>",
                         null,
                         "tbody1"));
+                root.addElement(changes);
+                out.println(root.toString());
+            } else if (op.trim().toLowerCase().equals("executenone"))
+            {
+                boolean execute = request.getParameter("javax.faces.partial.execute") != null;
+                boolean render = request.getParameter("javax.faces.partial.render") != null;
+
+                Changes changes = new Changes(root);
+                changes.addChild(new Update(changes, "result",(!execute && !render) ?  "<div " +
+                        "id='result'>success</div>" :  "<div " +
+                                                "id='result'>fail</div>"));
                 root.addElement(changes);
                 out.println(root.toString());
             }
