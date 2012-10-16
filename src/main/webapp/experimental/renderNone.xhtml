@@ -21,8 +21,7 @@
       xmlns:f="http://java.sun.com/jsf/core"
         >
 
-<ui:composition template="../templates/template.xhtml">
-    <ui:define name="content">
+<h:body>
         <h:form id="form">
             execute="@none" - this button should not alter the state of checkmark<br/>
             <h:commandButton actionListener="#{executeNone.setFired(not executeNone.fired)}" value="Execute '@none'">
@@ -39,6 +38,5 @@
             <br/>
             output: <h:selectBooleanCheckbox id="fired" value="#{executeNone.fired}"/>
         </h:form>
-    </ui:define>
-</ui:composition>
+</h:body>
 </html>
