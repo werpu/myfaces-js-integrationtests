@@ -13,7 +13,7 @@ var testGroup = new (_class("Test 18 Event Locations", myfaces._supportive.unitt
     },
     tearDown:function () {
         this._callSuper("tearDown");
-        this.autoForward("./test19-windowid.jsf")
+        this.autoForward("./test19-execute.jsf");
     }
 }))();
 
