@@ -46,7 +46,7 @@
 
     <servlet>
         <servlet-name>MockupServlet</servlet-name>
-        <servlet-class>extras.apache.org.jsintegration.protocol.ResponseMockup</servlet-class>
+        <servlet-class>extras.apache.org.jsintegration.protocol.ResponseMockup22</servlet-class>
     </servlet>
 
     <!-- Faces Servlet -->
