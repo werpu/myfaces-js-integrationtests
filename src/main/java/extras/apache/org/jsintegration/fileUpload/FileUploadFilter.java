@@ -56,11 +56,11 @@ public class FileUploadFilter implements Filter
         {
             FileUploadServletRequest request = new FileUploadServletRequest((HttpServletRequest) servletRequest);
 
-            if (request.getParameter("javax.faces.request") != null || ((HttpServletRequest) request)
-                    .getHeader("Faces-Request") != null)
-            {
-                servletRequest = request;
-            }
+            //if (request.getParameter("javax.faces.request") != null || ((HttpServletRequest) request)
+            //        .getHeader("Faces-Request") != null)
+            //{
+            servletRequest = request;
+            //}
         }
         filterChain.doFilter(servletRequest, servletResponse);
     }
@@ -68,7 +68,7 @@ public class FileUploadFilter implements Filter
     private final boolean isMultipartRequest(HttpServletRequest servletRequest) throws IOException
     {
         return servletRequest.getHeader("Content-Type") != null && servletRequest.getHeader("Content-Type").contains
-            ("multipart/form-data");
+                ("multipart/form-data");
     }
 
     @Override

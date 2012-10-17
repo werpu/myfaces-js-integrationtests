@@ -54,10 +54,21 @@ public class FileUploadServletRequest extends HttpServletRequestWrapper
     private static final int BUFFER_SIZE = 4096;
 
     Map<String, String[]> parameterMap = new HashMap<String, String[]>();
+    boolean initialized = false;
 
     public FileUploadServletRequest(HttpServletRequest delegate)
     {
         super(delegate);
+        initializeParameterMap();
+    }
+
+    private void initializeParameterMap()
+    {
+        if (initialized)
+        {
+            return;
+        }
+        initialized = true;
         if (isMultipartRequest())
         {
             try
@@ -101,6 +112,7 @@ public class FileUploadServletRequest extends HttpServletRequestWrapper
     @Override
     public Map<String, String[]> getParameterMap()
     {
+
         return isMultipartRequest() ? Collections.unmodifiableMap(parameterMap) : super.getParameterMap();
     }
 

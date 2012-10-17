@@ -17,9 +17,9 @@
          version="3.0">
 
     <context-param>
-            <param-name>org.apache.myfaces.WRAP_SCRIPT_CONTENT_WITH_XML_COMMENT_TAG</param-name>
-            <param-value>false</param-value>
-        </context-param>
+        <param-name>org.apache.myfaces.WRAP_SCRIPT_CONTENT_WITH_XML_COMMENT_TAG</param-name>
+        <param-value>false</param-value>
+    </context-param>
     <context-param>
         <param-name>javax.faces.FACELETS_LIBRARIES</param-name>
         <param-value>/WEB-INF/examples-taglib.xml</param-value>
@@ -79,6 +79,12 @@
     <servlet>
         <servlet-name>MockupServlet</servlet-name>
         <servlet-class>extras.apache.org.jsintegration.protocol.ResponseMockup22</servlet-class>
+        <multipart-config>
+            <location>/tmp</location>
+            <max-file-size>20848820</max-file-size>
+            <max-request-size>418018841</max-request-size>
+            <file-size-threshold>1048576</file-size-threshold>
+        </multipart-config>
     </servlet>
 
     <!-- Faces Servlet -->
@@ -89,12 +95,19 @@
          <multipart-config>true</multipart-config>
          <load-on-startup>1</load-on-startup>
         -->
+        <multipart-config>
+            <location>/tmp</location>
+            <max-file-size>20848820</max-file-size>
+            <max-request-size>418018841</max-request-size>
+            <file-size-threshold>1048576</file-size-threshold>
+        </multipart-config>
     </servlet>
 
     <servlet>
         <servlet-name>JSF21Simulation</servlet-name>
         <servlet-class>extras.apache.org.jsintegration.protocol.JSF21Simulation</servlet-class>
         <load-on-startup>1</load-on-startup>
+
     </servlet>
     <servlet>
         <servlet-name>StatisticsCollector</servlet-name>
@@ -133,10 +146,10 @@
         <url-pattern>*.jsf</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-            <servlet-name>Faces Servlet</servlet-name>
-            <url-pattern>/faces/*</url-pattern>
-            <url-pattern>*.xhtml</url-pattern>
-        </servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>/faces/*</url-pattern>
+        <url-pattern>*.xhtml</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>StatisticsXMLExporter</servlet-name>
         <url-pattern>*.xmlstats</url-pattern>
