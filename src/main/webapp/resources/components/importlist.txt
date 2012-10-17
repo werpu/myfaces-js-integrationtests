@@ -1,0 +1,85 @@
+Full profile, minimal profile:
+
+myfaces/_impl/core/_EvalHandlers.js
+myfaces/_impl/core/_Runtime.js
+* myfaces/_impl/core/_RuntimeQuirks.js
+myfaces/_impl/core/_StartImpl.js
+myfaces/_impl/i18n/Messages.js
+
+...additional i18n files here
+
+myfaces/_impl/_util/_Lang.js
+
+* myfaces/_impl/_util/_LangQuirks.js
+
+myfaces/_impl/core/Object.js
+myfaces/_impl/_util/_Queue.js
+myfaces/_impl/_util/_ListenerQueue.js
+myfaces/_impl/_util/_Dom.js
+* myfaces/_impl/_util/_DomQuirks.js
+
+*** myfaces/_impl/_util/_DomExperimental.js
+
+myfaces/_impl/_util/_HtmlStripper.js
+myfaces/_impl/xhrCore/engine/XhrConst.js
+myfaces/_impl/xhrCore/engine/FormData.js
+
+myfaces/_impl/xhrCore/engine/BaseRequest.js
+
+now not in order:
+
+** myfaces/_impl/xhrCore/engine/Xhr1.js
+** myfaces/_impl/xhrCore/engine/IFRame.js
+
+myfaces/_impl/xhrCore/_AjaxUtils.js
+myfaces/_impl/xhrCore/_AjaxRequestQueue.js
+
+
+in order:
+myfaces/_impl/xhrCore/_AjaxRequest.js
+myfaces/_impl/xhrCore/_ExtAjaxRequest.js
+myfaces/_impl/xhrCore/_AjaxRequestLevel2.js
+myfaces/_impl/xhrCore/_IFrameRequest.js
+
+*** myfaces/_impl/xhrCore/_PartialSubmitUtils.js
+
+myfaces/_impl/xhrCore/_AjaxResponse.js
+
+myfaces/_impl/xhrCore/_Transports.js
+*** myfaces/_impl/xhrCore/_ExtTransport.js
+
+myfaces/_impl/core/Impl.js
+
+myfaces/_impl/core/_EndImpl.js
+
+myfaces/api/jsf.js
+
+legend:
+... comment
+
+leave out for minimal modern:
+*, **, ***
+
+leave out for modern
+*, **
+
+
+*** Experimental stuff which is part of full
+
+Additional packages to include
+legacy:
+
+ * myfaces/_impl/core/_RuntimeQuirks.js
+ * myfaces/_impl/_util/_LangQuirks.js
+ * myfaces/_impl/_util/_DomQuirks.js
+ ** myfaces/_impl/xhrCore/engine/Xhr1.js
+ ** myfaces/_impl/xhrCore/engine/IFRame.js
+
+i18n:
+ all i18n classes
+
+experimental:
+ *** myfaces/_impl/_util/_DomExperimental.js
+ *** myfaces/_impl/xhrCore/_ExtTransport.js
+ *** myfaces/_impl/xhrCore/_ExtTransport.js
+
