@@ -66,15 +66,17 @@
         <param-name>org.richfaces.fileUpload.createTempFiles</param-name>
         <param-value>false</param-value>
     </context-param>
-    <filter>
-        <filter-name>CompressionFilter</filter-name>
-        <filter-class>extras.apache.org.jsintegration.experimental.compressionFilter.CompressionFilter</filter-class>
-    </filter>
+
 
 
     <listener>
         <listener-class>org.apache.myfaces.webapp.StartupServletContextListener</listener-class>
     </listener>
+<!--
+    @WebServlet(name = "TestServlet", urlPatterns = {"/TestServlet"})
+    @MultipartConfig(location = "/tmp", fileSizeThreshold = 1024 * 1024, maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 5 * 5)
+-->
+
 
     <servlet>
         <servlet-name>MockupServlet</servlet-name>
@@ -84,6 +86,7 @@
             <max-file-size>20848820</max-file-size>
             <max-request-size>418018841</max-request-size>
             <file-size-threshold>1048576</file-size-threshold>
+
         </multipart-config>
     </servlet>
 
@@ -131,12 +134,6 @@
         <servlet-name>MockupServlet</servlet-name>
         <url-pattern>*.mockup</url-pattern>
     </servlet-mapping>
-    <!--
-    <filter-mapping>
-        <filter-name>CompressionFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
-    -->
 
 
     <!-- Faces Servlet Mapping -->

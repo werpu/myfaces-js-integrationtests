@@ -32,8 +32,10 @@ import java.io.IOException;
 /**
  * @author Werner Punz (latest modification by $Author$)
  * @version $Revision$ $Date$
+ * enable for jetty to bypass a bug in their fileupload implementation
+ *
  */
-@WebFilter(filterName = "fileUploadFilter", urlPatterns = {"*"})
+//@WebFilter(filterName = "fileUploadFilter", urlPatterns = {"*"})
 public class FileUploadFilter implements Filter
 {
 
@@ -46,21 +48,12 @@ public class FileUploadFilter implements Filter
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException
     {
-        //we have to check for parameters first because richfaces and other libraries
-        //use their own request filters
-        //TODO Portlet request handling
-
         if (
                 servletRequest instanceof HttpServletRequest &&
                         isMultipartRequest((HttpServletRequest) servletRequest))
         {
             FileUploadServletRequest request = new FileUploadServletRequest((HttpServletRequest) servletRequest);
-
-            //if (request.getParameter("javax.faces.request") != null || ((HttpServletRequest) request)
-            //        .getHeader("Faces-Request") != null)
-            //{
             servletRequest = request;
-            //}
         }
         filterChain.doFilter(servletRequest, servletResponse);
     }
