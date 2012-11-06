@@ -122,7 +122,8 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
             finalScripts = [],
             execScrpt = function(item) {
                 var tagName = item.tagName;
-                if (tagName && _Lang.equalsIgnoreCase(tagName, "script")) {
+                var type = item.type || "";
+                if (tagName && _Lang.equalsIgnoreCase(tagName, "script") && !_Lang.equalsIgnoreCase(type,"text/template")) {
                     var src = item.getAttribute('src');
                     if ('undefined' != typeof src
                             && null != src
