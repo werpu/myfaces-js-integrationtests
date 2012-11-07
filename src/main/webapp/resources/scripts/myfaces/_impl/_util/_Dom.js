@@ -123,7 +123,15 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
             execScrpt = function(item) {
                 var tagName = item.tagName;
                 var type = item.type || "";
-                if (tagName && _Lang.equalsIgnoreCase(tagName, "script") && !_Lang.equalsIgnoreCase(type,"text/template")) {
+                //script type javascript has to be handled by eval, other types
+                //must be handled by the browser
+                if (tagName && _Lang.equalsIgnoreCase(tagName, "script") &&
+                        (type === "" ||
+                        _Lang.equalsIgnoreCase(type,"text/javascript") ||
+                        _Lang.equalsIgnoreCase(type,"javascript") ||
+                        _Lang.equalsIgnoreCase(type,"text/ecmascript") ||
+                        _Lang.equalsIgnoreCase(type,"ecmascript"))) {
+
                     var src = item.getAttribute('src');
                     if ('undefined' != typeof src
                             && null != src
