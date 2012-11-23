@@ -122,7 +122,7 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
             finalScripts = [],
             execScrpt = function(item) {
                 var tagName = item.tagName;
-                var type = item.type || "";
+                var type = item.type || "";
                 //script type javascript has to be handled by eval, other types
                 //must be handled by the browser
                 if (tagName && _Lang.equalsIgnoreCase(tagName, "script") &&
