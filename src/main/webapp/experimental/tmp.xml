@@ -1,16 +1,45 @@
-<h:form id="firstForm" prependId="false">
-    <h:panelGroup layout="block" id="renderTarget1"/>
-    <h:inputText id="first_input" value="#{multiFormBean.inputText1}"/>
-    <h:commandButton action="#{multiFormBean.doSubmit1}" value="submit1"
-                     onclick="javascript:jsf.ajax.request(this, event, {execute:'firstForm', render:'renderTarget1 renderTarget2'}); return false;">
-
-    </h:commandButton>
-</h:form>
-<h:form id="secondForm" prependId="false">
-<h:panelGroup layout="block" id="renderTarget2"/>
-<h:inputText id="second_input" value="#{multiFormBean.inputText2}"/>
-<h:commandButton action="#{multiFormBean.doSubmit2}" value="submit2"
-                 onclick="javascript:jsf.ajax.request(this, event, {execute:'firstForm', render:'renderTarget1 renderTarget2'}); return false;">
-
-</h:commandButton>
-</h:form>
+<booga>
+    <script type="text/javascript" src="/javax.faces.resource/myfaces/_impl/core/_EvalHandlers.js.jsf?ln=scripts"></script>
+    <script type="text/javascript" src="/javax.faces.resource/myfaces/_impl/core/_Runtime.js.jsf?ln=scripts"></script>
+    <script type="text/javascript" src="/javax.faces.resource/myfaces/_impl/core/_StartImpl.js.jsf?ln=scripts"></script>
+    <script type="text/javascript" src="/javax.faces.resource/myfaces/_impl/i18n/Messages.js.jsf?ln=scripts"></script>
+    <script type="text/javascript" src="/javax.faces.resource/myfaces/_impl/_util/_Lang.js.jsf?ln=scripts"></script>
+    <script type="text/javascript" src="/javax.faces.resource/myfaces/_impl/core/Object.js.jsf?ln=scripts"></script>
+    <script type="text/javascript" src="/javax.faces.resource/myfaces/_impl/_util/_Queue.js.jsf?ln=scripts"></script>
+    <script type="text/javascript" src="/javax.faces.resource/myfaces/_impl/_util/_ListenerQueue.js.jsf?ln=scripts"></script>
+    <script type="text/javascript" src="/javax.faces.resource/myfaces/_impl/_util/_Dom.js.jsf?ln=scripts"></script>
+    <script type="text/javascript" src="/javax.faces.resource/myfaces/_impl/_util/_DomQuirks.js.jsf?ln=scripts"></script>
+    <script type="text/javascript" src="/javax.faces.resource/myfaces/_impl/_util/_HtmlStripper.js.jsf?ln=scripts"></script>
+    <script type="text/javascript" src="/javax.faces.resource/myfaces/_impl/xhrCore/engine/XhrConst.js.jsf?ln=scripts"></script>
+    <script type="text/javascript" src="/javax.faces.resource/myfaces/_impl/xhrCore/engine/FormData.js.jsf?ln=scripts"></script>
+    <script type="text/javascript" src="/javax.faces.resource/myfaces/_impl/xhrCore/engine/BaseRequest.js.jsf?ln=scripts"></script>
+    <script type="text/javascript" src="/javax.faces.resource/myfaces/_impl/xhrCore/engine/Xhr1.js.jsf?ln=scripts"></script>
+    <script type="text/javascript" src="/javax.faces.resource/myfaces/_impl/xhrCore/engine/IFrame.js.jsf?ln=scripts"></script>
+    <script type="text/javascript" src="/javax.faces.resource/myfaces/_impl/xhrCore/_AjaxUtils.js.jsf?ln=scripts"></script>
+    <script type="text/javascript" src="/javax.faces.resource/myfaces/_impl/xhrCore/_AjaxRequestQueue.js.jsf?ln=scripts"></script>
+    <script type="text/javascript" src="/javax.faces.resource/myfaces/_impl/xhrCore/_AjaxRequest.js.jsf?ln=scripts"></script>
+    <script type="text/javascript" src="/javax.faces.resource/myfaces/_impl/xhrCore/_ExtAjaxRequest.js.jsf?ln=scripts"></script>
+    <script type="text/javascript" src="/javax.faces.resource/myfaces/_impl/xhrCore/_AjaxRequestLevel2.js.jsf?ln=scripts"></script>
+    <script type="text/javascript" src="/javax.faces.resource/myfaces/_impl/xhrCore/_AjaxResponse.js.jsf?ln=scripts"></script>
+    <script type="text/javascript" src="/javax.faces.resource/myfaces/_impl/xhrCore/_AjaxResponseJSF22.js.jsf?ln=scripts"></script>
+    <script type="text/javascript" src="/javax.faces.resource/myfaces/_impl/xhrCore/_Transports.js.jsf?ln=scripts"></script>
+    <script type="text/javascript" src="/javax.faces.resource/myfaces/_impl/xhrCore/_ExtTransport.js.jsf?ln=scripts"></script>
+    <script type="text/javascript" src="/javax.faces.resource/myfaces/_impl/core/_RuntimeQuirks.js.jsf?ln=scripts"></script>
+    <script type="text/javascript" src="/javax.faces.resource/myfaces/_impl/i18n/Messages_de.js.jsf?ln=scripts"></script>
+    <script type="text/javascript" src="/javax.faces.resource/myfaces/_impl/i18n/Messages_nl.js.jsf?ln=scripts"></script>
+    <script type="text/javascript" src="/javax.faces.resource/myfaces/_impl/_util/_LangQuirks.js.jsf?ln=scripts"></script>
+    <script type="text/javascript" src="/javax.faces.resource/myfaces/_impl/_util/_DomExperimental.js.jsf?ln=scripts"></script>
+    <script type="text/javascript" src="/javax.faces.resource/myfaces/_impl/xhrCore/_IFrameRequest.js.jsf?ln=scripts"></script>
+    <script type="text/javascript" src="/javax.faces.resource/myfaces/_impl/xhrCore/_PartialSubmitUtils.js.jsf?ln=scripts"></script>
+    <script type="text/javascript" src="/javax.faces.resource/myfaces/_impl/_util/_UnitTest.js.jsf?ln=scripts"></script>
+    <script type="text/javascript" src="/javax.faces.resource/myfaces/_impl/_util/_Logging.js.jsf?ln=scripts"></script>
+    <script type="text/javascript" src="/javax.faces.resource/myfaces/_supportive/unittest/JSON.js.jsf?ln=scripts"></script>
+    <script type="text/javascript" src="/javax.faces.resource/myfaces/_supportive/unittest/StatisticsEngine.js.jsf?ln=scripts"></script>
+    <script type="text/javascript" src="/javax.faces.resource/myfaces/_supportive/unittest/AjaxStatisticsEngine.js.jsf?ln=scripts"></script>
+    <script type="text/javascript" src="/javax.faces.resource/myfaces/_supportive/unittest/TestCase.js.jsf?ln=scripts"></script>
+    <script type="text/javascript" src="/javax.faces.resource/myfaces/_supportive/unittest/TestGroup.js.jsf?ln=scripts"></script>
+    <script type="text/javascript" src="/javax.faces.resource/myfaces/_supportive/unittest/JSFAjaxTestCase.js.jsf?ln=scripts"></script>
+    <script type="text/javascript" src="/javax.faces.resource/myfaces/_supportive/unittest/JSFAjaxErrorTestCase.js.jsf?ln=scripts"></script>
+    <script type="text/javascript" src="/javax.faces.resource/jsf.js.jsf?ln=javax.faces"></script>
+</head><body>
+</booga>
