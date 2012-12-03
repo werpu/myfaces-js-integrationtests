@@ -228,7 +228,8 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
             } else {
                 passThrgh[this.P_CLIENTWINDOW] = jsf.getClientWindow(form);
             }
-        } else {
+        } /*  spec proposal
+        else {
             var formElem = _Dom.getNamedElementFromForm(form, this.P_CLIENTWINDOW);
             if (formElem) {
                 context._mfInternal._clientWindow = "undefined";
@@ -236,6 +237,7 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
                 passThrgh[this.P_CLIENTWINDOW] = "undefined";
             }
         }
+        */
 
         /**
          * binding contract the javax.faces.source must be set
