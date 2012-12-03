@@ -193,8 +193,12 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
             onerror:options.onerror,
 
             //TODO move the myfaces part into the _mfInternal part
-            myfaces:options.myfaces
+            myfaces:options.myfaces,
+            _mfInternal: {}
         };
+        //additional meta information to speed things up, note internal non jsf
+        //pass through options are stored under _mfInternal in the context
+        var mfInternal = context._mfInternal;
 
         /**
          * fetch the parent form
@@ -206,6 +210,8 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
         var form = (options.myfaces && options.myfaces.form) ?
                 _Lang.byId(options.myfaces.form) :
                 this._getForm(elem, event);
+
+
 
         /**
         * JSF2.2 client window must be part of the issuing form so it is encoded
@@ -220,7 +226,9 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
             if(formElem) {
                 //we let the encoding do the
                 //job so that we do not get double values
-                formElem.value = clientWindow;
+                context._mfInternal._clientWindow = jsf.getClientWindow(form);
+                //context._mfInternal._alteredClientWindowId = formElem.id;
+                //formElem.value = clientWindow;
             } else {
                 passThrgh[this.P_CLIENTWINDOW] = jsf.getClientWindow(form);
             }
@@ -265,10 +273,6 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
          */
         var transportType = this._getTransportType(context, passThrgh, form);
 
-        //additional meta information to speed things up, note internal non jsf
-        //pass through options are stored under _mfInternal in the context
-        context._mfInternal = {};
-        var mfInternal = context._mfInternal;
 
         mfInternal["_mfSourceFormId"] = form.id;
         mfInternal["_mfSourceControlId"] = elementId;

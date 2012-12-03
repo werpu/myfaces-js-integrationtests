@@ -68,15 +68,13 @@
     </context-param>
 
 
-
     <listener>
         <listener-class>org.apache.myfaces.webapp.StartupServletContextListener</listener-class>
     </listener>
-<!--
-    @WebServlet(name = "TestServlet", urlPatterns = {"/TestServlet"})
-    @MultipartConfig(location = "/tmp", fileSizeThreshold = 1024 * 1024, maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 5 * 5)
--->
-
+    <!--
+        @WebServlet(name = "TestServlet", urlPatterns = {"/TestServlet"})
+        @MultipartConfig(location = "/tmp", fileSizeThreshold = 1024 * 1024, maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 5 * 5)
+    -->
 
     <servlet>
         <servlet-name>MockupServlet</servlet-name>
