@@ -581,22 +581,15 @@ if (_MF_SINGLTN) {
                 //it should not make any difference layoutwise since we are on display none anyway.
                 this.insertFirst(evalDiv);
 
-                    //we remap it into a real boolean value
-                    if (this.isDomCompliant()) {
-                        this._outerHTMLCompliant(evalDiv, markup);
-                    } else {
-                        //will not be called placeholder for quirks class
-                        this._outerHTMLNonCompliant(evalDiv, markup);
-                    }
-
                 //we remap it into a real boolean value
-                if (window.Range
-                        && typeof Range.prototype.createContextualFragment == 'function') {
+                if (this.isDomCompliant()) {
                     this._outerHTMLCompliant(evalDiv, markup);
                 } else {
                     //will not be called placeholder for quirks class
                     this._outerHTMLNonCompliant(evalDiv, markup);
                 }
+
+
             }
 
             return  !myfaces.config._autoeval;
