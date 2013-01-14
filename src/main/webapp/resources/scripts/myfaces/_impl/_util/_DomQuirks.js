@@ -596,7 +596,8 @@ if (_MF_SINGLTN) {
         },
 
         getNamedElementFromForm:function (form, elementName) {
-            if(this._RT.browser.isIE < 8) {
+			var browser = this._RT.browser;
+            if(browser.isIE && browser.isIE < 8) {
                 if(!form.elements) return null;
                 for(var cnt = 0, l = form.elements.length; cnt < l; cnt ++) {
                     var element = form.elements[cnt];
