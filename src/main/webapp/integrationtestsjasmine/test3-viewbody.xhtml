@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html
-        PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <!--
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -21,33 +21,20 @@
       xmlns:components="http://java.sun.com/jsf/composite/components">
 <ui:composition template="../templates/template.xhtml">
     <ui:define name="content">
-
-        <components:jasmineTest testRunner="./test2-viewroot.js"/>
+        <components:jasmineTest testRunner="./test3-viewbody.js" />
 
         <div id="centerDiv">
-            <h1>ViewRoot testcase2</h1>
-
-            <h2>This test tests the javax.faces.ViewRoot update part of the protocol
-                with embedded scripts included</h2>
-
+            <h1>ViewBody testcase</h1>
+            <h2>This testcase tests the body replacement via javax.faces.ViewBody</h2>
 
             <div id="testResults">
-                <h3>After triggering this test the entier page should be replaced by the test result</h3>
+                <h3>After triggering this test the entire page should be replaced by the test result</h3>
             </div>
-
-
-            <h:form id="form1" prependId="false">
+           <h:form id="form1" prependId="false">
                 <input type="button" id="cmd_body1" value="replace the entire body"
-                       onclick="emitPPR(this, ('undefined' == typeof event)? null: event, 'body');"/>
+                       onclick="emitPPR(this, ('undefined' != typeof event)? event: null, 'body2');"/>
             </h:form>
-
-            <h:form id="form1_iframe" prependId="false">
-                <input type="button" id="cmd_body1_iframe" value="replace the entire body"
-                       onclick="emitPPR(this, ('undefined' == typeof event)? null: event, 'body',true);"/>
-            </h:form>
-
         </div>
-
     </ui:define>
 </ui:composition>
 </html>

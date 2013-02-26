@@ -1,4 +1,8 @@
 
+afterEach(function() {
+    window.location.href = "./test2-viewroot.jsf";
+});
+
 describe("Testsuite testing the protocol", function () {
     it("It should run an Eval Ajax command", function () {
         runs(function () {
@@ -93,5 +97,7 @@ describe("Testsuite testing the protocol", function () {
             expect(myfaces.testcases.ajaxEvents["error"] && myfaces.testcases.ajaxEvents["success"]).toBeTruthy();
         });
     });
+
+
 });
 

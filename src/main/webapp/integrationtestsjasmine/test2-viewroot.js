@@ -12,6 +12,9 @@ $.fn.outerHTML = function(){
 
 }
 
+afterEach(function() {
+    window.location.href = "./test3-viewbody.jsf";
+});
 describe("Full root replacement via protocol view root", function () {
     it("Should run the ajax and replace the viewroot", function () {
         var htmlReporter = $("#HTMLReporter").outerHTML();

@@ -95,10 +95,6 @@
             //}
             xhr.send(data);
         }
-
-
-
-
     }
 
     // export public
