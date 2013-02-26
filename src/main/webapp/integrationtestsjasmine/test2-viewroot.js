@@ -13,7 +13,7 @@ $.fn.outerHTML = function(){
 }
 
 afterEach(function() {
-    window.location.href = "./test3-viewbody.jsf";
+    myfaces.testcases.forward("./test3-viewbody.jsf");
 });
 describe("Full root replacement via protocol view root", function () {
     it("Should run the ajax and replace the viewroot", function () {

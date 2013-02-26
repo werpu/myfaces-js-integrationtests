@@ -39,3 +39,9 @@ var emitPPR = function (source, event, action, formName) {
         op: action
     });
 };
+
+myfaces.testcases.forward = function (href) {
+    if (window.location.href.indexOf("autoTest=true") != -1) {
+        window.location.href = href + "?autoTest=true";
+    }
+}

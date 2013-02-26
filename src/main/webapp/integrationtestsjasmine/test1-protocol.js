@@ -1,6 +1,6 @@
 
 afterEach(function() {
-    window.location.href = "./test2-viewroot.jsf";
+    myfaces.testcases.forward("./test2-viewroot.jsf");
 });
 
 describe("Testsuite testing the protocol", function () {

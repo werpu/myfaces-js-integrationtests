@@ -1,10 +1,8 @@
-afterEach(function() {
-    if(window.location.href.indexOf("autoTest=true") != "-1") {
-        window.location.href = "./test5-viewroot2.jsf?autoTest=true";
-    }
+afterEach(function () {
+    myfaces.testcases.forward("./test5-viewroot2.jsf");
 });
-describe("Chain function suite", function(){
-    it("Should process jsf.util.chain properly", function() {
+describe("Chain function suite", function () {
+    it("Should process jsf.util.chain properly", function () {
         //testfunc1 til 4 are defined in the html page
         jsf.util.chain(document.getElementById("chaincall"), null, testFunc1, testFunc2, testFunc3, testFunc4);
         expect($("body").html().indexOf("test1 succeeded test2 succeededtest3 succeeded")).not.toBe(-1);

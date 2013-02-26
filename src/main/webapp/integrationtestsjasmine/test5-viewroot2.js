@@ -1,5 +1,5 @@
 afterEach(function() {
-    window.location.href = "./finalResults.jsf";
+    myfaces.testcases.forward("./finalResults.jsf");
 });
 describe("Viewroot with execute @all and render @all", function () {
     var timedOut = false;
