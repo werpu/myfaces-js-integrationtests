@@ -19,6 +19,8 @@
 
 package extras.apache.org.jsintegration.core.model2;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -66,9 +68,19 @@ public class Results
         return this.statistics.getOrigin();
     }
 
+    public List<Suite> getSuitesAsList() {
+        List<Suite> retVal = new ArrayList<Suite>(suites.size());
+        for(Map.Entry<String, Suite> entry: suites.entrySet()) {
+            retVal.add(entry.getValue());
+        }
+        return retVal;
+    }
+
     @Override
     public int hashCode()
     {
         return statistics.origin.hashCode();
     }
+
+
 }

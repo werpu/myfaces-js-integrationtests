@@ -21,6 +21,8 @@ package extras.apache.org.jsintegration.core.model2;
 
 import java.util.Collections;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -32,14 +34,14 @@ import java.util.Set;
 
 public class TestResults2
 {
-    Set<Results> results = Collections.synchronizedSet(new LinkedHashSet<Results>());
+    List<Results> results = Collections.synchronizedList(new LinkedList<Results>());
 
-    public Set<Results> getResults()
+    public List<Results> getResults()
     {
         return results;
     }
 
-    public void setResults(Set<Results> results)
+    public void setResults(List<Results> results)
     {
         this.results = results;
     }

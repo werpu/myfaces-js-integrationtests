@@ -72,7 +72,22 @@ public class StatisticsCollector2 extends HttpServlet
         Gson gson = new Gson();
         Results results = gson.fromJson(group, Results.class);
         TestResults2 testResultsContainer = getGroupsContainer(request);
-        testResultsContainer.getResults().add(results);
+        //testResultsContainer.getResults().add(results);
+        int pos = -1;
+        int finalPos = -1;
+        for(Results iteratedResults: testResultsContainer.getResults()) {
+            pos++;
+            if(iteratedResults.hashCode() == results.hashCode()) {
+                finalPos = pos;
+                break;
+            }
+        }
+        if(finalPos > -1) {
+            testResultsContainer.getResults().remove(finalPos);
+            testResultsContainer.getResults().add(finalPos, results);
+        } else {
+            testResultsContainer.getResults().add(results);
+        }
     }
 
     private TestResults2 getGroupsContainer(HttpServletRequest request)
