@@ -19,6 +19,9 @@
 
 package extras.apache.org.jsintegration.core;
 
+import com.google.gson.Gson;
+import extras.apache.org.jsintegration.core.model2.Results;
+import extras.apache.org.jsintegration.core.model2.TestResults2;
 import org.apache.commons.lang.StringEscapeUtils;
 
 import javax.servlet.ServletException;
@@ -35,10 +38,10 @@ import java.io.PrintWriter;
 
 public class StatisticsCollector2 extends HttpServlet
 {
-    private static final String PARAM_SENDSTATS_MARKER = "sendstats";
-    private static final String PARAM_TEST_GROUP = "testGroup";
-    private static final String PARAM_RESET_ALL = "resetAll";
-    public static final String TEST_RESULTS = "testResults";
+    private static final String PARAM_SENDSTATS_MARKER  = "sendstats";
+    private static final String PARAM_TEST_GROUP        = "testGroup";
+    private static final String PARAM_RESET_ALL         = "resetAll";
+    public static final String TEST_RESULTS             = "testResults";
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws
@@ -49,7 +52,7 @@ public class StatisticsCollector2 extends HttpServlet
         String resetAll = request.getParameter(PARAM_RESET_ALL);
         if (resetAll != null)
         {
-            getGroupsContainer(request).clear();
+            getGroupsContainer(request).getResults().clear();
         }
         if (reqParam != null)
         {
@@ -65,14 +68,19 @@ public class StatisticsCollector2 extends HttpServlet
         out.write(group);
         out.flush();
         out.close();
+
+        Gson gson = new Gson();
+        Results results = gson.fromJson(group, Results.class);
+        TestResults2 testResultsContainer = getGroupsContainer(request);
+        testResultsContainer.getResults().add(results);
     }
 
-    private TestResults getGroupsContainer(HttpServletRequest request)
+    private TestResults2 getGroupsContainer(HttpServletRequest request)
     {
-        TestResults ret = (TestResults) request.getSession().getAttribute(TEST_RESULTS);
+        TestResults2 ret = (TestResults2) request.getSession().getAttribute(TEST_RESULTS);
         if (ret == null)
         {
-            ret = new TestResults();
+            ret = new TestResults2();
             request.getSession().setAttribute(TEST_RESULTS, ret);
         }
         return ret;

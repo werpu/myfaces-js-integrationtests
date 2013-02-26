@@ -30,6 +30,20 @@ public class Statistics
     int numberOfFails;
     int numberOfPassed;
     int executionTime;
+    String origin;
+
+    public Statistics()
+    {
+    }
+
+    public Statistics(int numberOfTests, int numberOfFails, int numberOfPassed, int executionTime, String origin)
+    {
+        this.numberOfTests = numberOfTests;
+        this.numberOfFails = numberOfFails;
+        this.numberOfPassed = numberOfPassed;
+        this.executionTime = executionTime;
+        this.origin = origin;
+    }
 
     public int getNumberOfTests()
     {
@@ -69,5 +83,15 @@ public class Statistics
     public void setExecutionTime(int executionTime)
     {
         this.executionTime = executionTime;
+    }
+
+    public String getOrigin()
+    {
+        return origin;
+    }
+
+    public void setOrigin(String origin)
+    {
+        this.origin = origin;
     }
 }

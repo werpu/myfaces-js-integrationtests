@@ -29,6 +29,16 @@ public class Spec
     String description;
     boolean failed;
 
+    public Spec()
+    {
+    }
+
+    public Spec(String description, boolean failed)
+    {
+        this.description = description;
+        this.failed = failed;
+    }
+
     public String getDescription()
     {
         return description;

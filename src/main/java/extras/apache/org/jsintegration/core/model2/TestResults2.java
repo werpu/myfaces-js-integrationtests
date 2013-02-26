@@ -19,57 +19,28 @@
 
 package extras.apache.org.jsintegration.core.model2;
 
-import java.util.List;
+import java.util.Collections;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 /**
+ * Set of all results which keeps the order of insertion
+ *
  * @author Werner Punz (latest modification by $Author$)
  * @version $Revision$ $Date$
  */
 
-public class Suite
+public class TestResults2
 {
-    String description;
-    boolean failed;
-    List<Spec> specs;
+    Set<Results> results = Collections.synchronizedSet(new LinkedHashSet<Results>());
 
-    public Suite()
+    public Set<Results> getResults()
     {
+        return results;
     }
 
-    public Suite(String description, boolean failed, List<Spec> specs)
+    public void setResults(Set<Results> results)
     {
-        this.description = description;
-        this.failed = failed;
-        this.specs = specs;
-    }
-
-    public String getDescription()
-    {
-        return description;
-    }
-
-    public void setDescription(String description)
-    {
-        this.description = description;
-    }
-
-    public boolean isFailed()
-    {
-        return failed;
-    }
-
-    public void setFailed(boolean failed)
-    {
-        this.failed = failed;
-    }
-
-    public List<Spec> getSpecs()
-    {
-        return specs;
-    }
-
-    public void setSpecs(List<Spec> specs)
-    {
-        this.specs = specs;
+        this.results = results;
     }
 }

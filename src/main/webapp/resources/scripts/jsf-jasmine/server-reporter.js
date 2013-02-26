@@ -48,7 +48,7 @@
         //since we do not use it
         reportSpec: function(spec) {
             var suite = spec.suite;
-            this.results.suites = results.suites || {};
+            this.results.suites = this.results.suites || {};
             var resultsSuite = this.results.suites[suite.id+""];
             if(!resultsSuite) {
                 resultsSuite = this.results.suites[suite.id+""] = {};
@@ -70,6 +70,7 @@
         },
         summarize: function() {
             var statistics = this.results.statistics = {};
+            statistics.origin = window.location.href;
             statistics.numberOfTests = this.resultsCnt;
             statistics.numberOfFails = this.failedCnt;
             statistics.numberOfPassed = this.passedCnt;

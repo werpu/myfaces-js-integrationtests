@@ -32,6 +32,16 @@ public class Results
     Map<String, Suite> suites;
     Statistics statistics;
 
+    public Results()
+    {
+    }
+
+    public Results(Map<String, Suite> suites, Statistics statistics)
+    {
+        this.suites = suites;
+        this.statistics = statistics;
+    }
+
     public Map<String, Suite> getSuites()
     {
         return suites;
@@ -50,5 +60,15 @@ public class Results
     public void setStatistics(Statistics statistics)
     {
         this.statistics = statistics;
+    }
+
+    public String getOrigin() {
+        return this.statistics.getOrigin();
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return statistics.origin.hashCode();
     }
 }
