@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html
-     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+        PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <!--
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core" xmlns:component="http://java.sun.com/jsf/composite/components">
 <ui:composition template="../templates/template.xhtml">
     <ui:define name="header">
         <script type="text/javascript">
@@ -29,7 +29,7 @@
             var myvar = 1 < 2;
             var myvar2 = true && true;
 
-            setTimeout(function() {
+            setTimeout(function () {
                 if (!window.cnt) {
                     window.cnt = 1;
                 }
@@ -39,11 +39,11 @@
         </script>
     </ui:define>
     <ui:define name="content">
-        <h:outputScript library="scripts" name="testcases/test5-viewroot2.js" target="head"/>
-
+        <component:jasmineTest testRunner="test5-viewroot2.js" />
 
         TODO this test is broken because it loads the testcases script as well again!
         <h1>ViewRoot Replacement 2</h1>
+
         <h2>
             This test replaces javax.faces.ViewRoot with embedded scripts in the head
             and a CDATA enclosure to test the proper escaping of the content

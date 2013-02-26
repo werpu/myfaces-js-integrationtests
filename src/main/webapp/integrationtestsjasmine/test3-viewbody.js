@@ -13,7 +13,7 @@ $.fn.outerHTML = function(){
 }
 
 afterEach(function() {
-    window.location.href = "./finalResults.jsf";
+    window.location.href = "./test4-chain.jsf";
 });
 describe("Full body replacement via protocol view bpdy", function () {
     it("Should run the ajax and replace the body", function () {

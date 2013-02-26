@@ -1,3 +1,8 @@
+afterEach(function() {
+    if(window.location.href.indexOf("autoTest=true") != "-1") {
+        window.location.href = "./test5-viewroot2.jsf?autoTest=true";
+    }
+});
 describe("Chain function suite", function(){
     it("Should process jsf.util.chain properly", function() {
         //testfunc1 til 4 are defined in the html page
