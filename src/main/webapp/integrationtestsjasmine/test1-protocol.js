@@ -1,16 +1,19 @@
 
 afterEach(function() {
-    myfaces.testcases.forward("./test2-viewroot.jsf");
+    myfaces.testcases.redirect("./test2-viewroot.jsf");
 });
 
 describe("Testsuite testing the protocol", function () {
+    beforeEach(function(){
+        myfaces.testcases.ajaxCnt = 0;
+    });
     it("It should run an Eval Ajax command", function () {
         runs(function () {
             emitPPR("cmd_eval", null, "eval1")
         });
 
         waitsFor(function () {
-            return myfaces.testcases.ajaxFinished;
+            return !!myfaces.testcases.ajaxCnt;
         }, "Server timeout", 10000);
 
         runs(function () {
@@ -24,7 +27,7 @@ describe("Testsuite testing the protocol", function () {
             emitPPR("cmd_update_insert2", null, "updateinsert2");
         });
         waitsFor(function () {
-            return myfaces.testcases.ajaxFinished;
+            return !!myfaces.testcases.ajaxCnt;
         }, "Server timeout", 10000);
         runs(function () {
             var innerText = $("#evalarea2").html();
@@ -32,10 +35,12 @@ describe("Testsuite testing the protocol", function () {
             innerText = $("#evalarea3").html();
             expect(innerText.toLowerCase().indexOf("succeed")).not.toBe(-1);
             //insert before must exist
-            expect(!!$("#insertbefore").length).toBe(true);
-            expect(!!$("#insertafter").length).toBe(true);
-            $("#insertbefore").remove();
-            $("#insertafter").remove();
+            var insertBefore = $("#insertbefore");
+            var insertAfter = $("#insertafter");
+            expect(!!insertBefore.length).toBe(true);
+            expect(!!insertAfter.length).toBe(true);
+            insertBefore.remove();
+            insertAfter.remove();
         });
     });
 
@@ -44,7 +49,7 @@ describe("Testsuite testing the protocol", function () {
             emitPPR("cmd_delete", null, "delete1");
         });
         waitsFor(function () {
-            return myfaces.testcases.ajaxFinished;
+            return !!myfaces.testcases.ajaxCnt;
         }, "Server timeout", 10000);
         runs(function () {
             var deleteGone = !!document.getElementById("deleteable");
@@ -60,12 +65,13 @@ describe("Testsuite testing the protocol", function () {
             emitPPR("cmd_attributeschange", null, "attributes");
         });
         waitsFor(function () {
-            return myfaces.testcases.ajaxFinished;
+            return !!myfaces.testcases.ajaxCnt;
         }, "Server timeout", 10000);
         runs(function () {
-            var style = $("#attributeChange").css("border-bottom-width");
+            var attributeChange = $("#attributeChange");
+            var style = attributeChange.css("border-bottom-width");
             expect(style.indexOf("1px")).not.toBe(-1);
-            $("#attributeChange").css("border", "0px solid black");
+            attributeChange.css("border", "0px solid black");
         });
     });
 
@@ -74,7 +80,7 @@ describe("Testsuite testing the protocol", function () {
             emitPPR("cmd_illegalresponse", null, "illegalResponse");
         });
         waitsFor(function () {
-            return myfaces.testcases.ajaxFinished;
+            return !!myfaces.testcases.ajaxCnt;
         }, "Server timeout", 10000);
         runs(function () {
             expect(myfaces.testcases.ajaxEvent.type === "error").toBe(true);
@@ -90,7 +96,7 @@ describe("Testsuite testing the protocol", function () {
             emitPPR("cmd_error", null, "errors");
         });
         waitsFor(function () {
-            return myfaces.testcases.ajaxFinished;
+            return !!myfaces.testcases.ajaxCnt;
         }, "Server timeout", 10000);
         runs(function() {
             //onerror and oncomplete must have been called in this case

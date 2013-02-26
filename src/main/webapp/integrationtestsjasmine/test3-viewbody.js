@@ -13,16 +13,16 @@ $.fn.outerHTML = function(){
 }
 
 afterEach(function() {
-    myfaces.testcases.forward("./test4-chain.jsf");
+    myfaces.testcases.redirect("./test4-chain.jsf");
 });
-describe("Full body replacement via protocol view bpdy", function () {
+describe("Full body replacement via protocol view body", function () {
     it("Should run the ajax and replace the body", function () {
         var htmlReporter = $("#HTMLReporter").outerHTML();
         runs(function () {
             emitPPR("form1", null, "body2");
         });
         waitsFor(function () {
-            return myfaces.testcases.ajaxFinished;
+            return !!myfaces.testcases.ajaxCnt;
         }, "Server timeout", 10000);
         runs(function(){
             var div = document.createElement("div");

@@ -25,19 +25,20 @@
         },
         reportSpecStarting: function (spec) {
             //called once a spec is reported
-            console.debug("reportSpecStarting");
-            this.reportSpec(spec);
+            //console.debug("reportSpecStarting");
+
         },
         reportSpecResults: function (spec) {
-            console.debug("reportSpecResults");
+            //console.debug("reportSpecResults");
+            this.reportSpec(spec);
         },
         reportSuiteResults: function (suite) {
             //called for the suite results last of suite
-            console.debug("reportSuiteResults");
+            //console.debug("reportSuiteResults");
         },
         reportRunnerResults: function (runner) {
             //last called for a detailed summary last of entire lifecycle
-            console.debug("reportRunnerResults");
+            //console.debug("reportRunnerResults");
             this.endTime = (new Date()).getTime();
             this.summarize(runner);
             this.sendTestResults();

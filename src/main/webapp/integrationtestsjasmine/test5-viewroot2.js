@@ -1,5 +1,5 @@
 afterEach(function() {
-    myfaces.testcases.forward("./finalResults.jsf");
+    myfaces.testcases.redirect("./finalResults.jsf");
 });
 describe("Viewroot with execute @all and render @all", function () {
     var timedOut = false;
@@ -9,7 +9,7 @@ describe("Viewroot with execute @all and render @all", function () {
         });
 
         waitsFor(function () {
-            return myfaces.testcases.ajaxFinished;
+            return !!myfaces.testcases.ajaxCnt;
         }, "server timeout", 10000);
 
         setTimeout(function () {
@@ -19,7 +19,8 @@ describe("Viewroot with execute @all and render @all", function () {
         //now we wait 3000 ms so that the embedded script now is executed
         waitsFor(function () {
             return timedOut;
-        }, "no timeout", 10000);
+        }, "no timeout cannot happen", 10000);
+
         runs(function () {
             expect($("body").html().indexOf("refresh successul2")).not.toBe(-1);
         });
