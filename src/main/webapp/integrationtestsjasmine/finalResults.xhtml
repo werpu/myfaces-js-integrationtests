@@ -75,12 +75,10 @@
                     </li>
 
                 </ui:repeat>
-
-                    <li class="finalResultsTitle">Final Results:</li>
-                    <li class="finalResult">Number of Specs Performed: #{result.statistics.numberOfTests}</li>
-                    <li class="finalResult">Number of Specs Failed: #{result.statistics.numberOfFails}</li>
-                    <li class="finalResult">Time for test in ms: #{result.statistics.executionTime}</li>
-
+                <li class="finalResultsTitle">Final Results:</li>
+                <li class="finalResult">Number of Specs Performed: #{result.statistics.numberOfTests}</li>
+                <li class="finalResult">Number of Specs Failed: #{result.statistics.numberOfFails}</li>
+                <li class="finalResult">Time for test in ms: #{result.statistics.executionTime}</li>
             </ul>
         </ui:repeat>
         <script type="text/javascript">
@@ -89,12 +87,7 @@
                     $(".resultGroup", this.parentNode).toggle(500);
                 });
             });
-
-
         </script>
-
     </ui:define>
-
-
 </ui:composition>
 </html>
