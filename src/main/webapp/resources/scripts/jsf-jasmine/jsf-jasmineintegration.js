@@ -32,8 +32,9 @@ jsf.ajax.addOnError(function (evt) {
 
 /**
  * helper function be be moved out in the long run
+ * TODO namespace this
  */
-var emitPPR = function (source, event, action, formName) {
+emitPPR = function (source, event, action, formName) {
     document.getElementById(formName || "form1").action = target;
     jsf.ajax.request(/*String|Dom Node*/ source, /*|EVENT|*/ (window.event) ? window.event : event, /*{|OPTIONS|}*/ {
         op: action
