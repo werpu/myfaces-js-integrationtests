@@ -1,5 +1,5 @@
 afterEach(function () {
-    myfaces.testcases.redirect("./finalResults.jsf");
+    myfaces.testcases.redirect("./test7-eventtest.jsf");
 });
 describe("Basic DOM Table Operation Tests utilizing the JSF protocol", function () {
 

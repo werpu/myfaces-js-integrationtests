@@ -32,6 +32,9 @@ function expectations(expectFunc, data) {
     expectFunc(!!data.source.id).toBeTruthy();
 }
 
+afterEach(function () {
+    myfaces.testcases.redirect("./finalResults.jsf");
+});
 describe("Event handler phases test", function () {
     beforeEach(function () {
         myfaces.testcases.ajaxCnt = 0;
@@ -52,7 +55,7 @@ describe("Event handler phases test", function () {
         runs(function () {
             expect(localEvents.length).toBe(3);
             for (var pos = 0; pos < localEvents.length; pos++) {
-               expectations(expect, localEvents[pos]);
+                expectations(expect, localEvents[pos]);
             }
         });
     });
