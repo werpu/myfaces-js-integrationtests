@@ -5,6 +5,10 @@ afterEach(function() {
 
 describe("Testsuite testing the protocol", function () {
     beforeEach(function(){
+        //we reset the ajax counter before each spec
+        //because every spec has only one ajax request
+        //and needs the counter to detect the end of the
+        //ajax cycle
         myfaces.testcases.ajaxCnt = 0;
     });
     it("It should run an Eval Ajax command", function () {
@@ -83,9 +87,9 @@ describe("Testsuite testing the protocol", function () {
             return !!myfaces.testcases.ajaxCnt;
         }, "Server timeout", 10000);
         runs(function () {
-            expect(myfaces.testcases.ajaxEvent.type === "error").toBe(true);
-            expect(myfaces.testcases.ajaxEvent.status === "malformedXML").toBe(true);
-            expect(myfaces.testcases.ajaxEvent.responseCode == 200).toBe(true);
+            expect(myfaces.testcases.ajaxEvent.type === "error").toBeTruthy();
+            expect(myfaces.testcases.ajaxEvent.status === "malformedXML").toBeTruthy();
+            expect(myfaces.testcases.ajaxEvent.responseCode == 200).toBeTruthy();
             expect(myfaces.testcases.ajaxEvent.source.id == "cmd_illegalresponse").toBeTruthy();
         });
 

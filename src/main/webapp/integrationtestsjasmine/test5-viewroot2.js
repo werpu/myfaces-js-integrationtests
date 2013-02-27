@@ -1,5 +1,5 @@
 afterEach(function() {
-    myfaces.testcases.redirect("./finalResults.jsf");
+    myfaces.testcases.redirect("./test6-tablebasic.jsf");
 });
 describe("Viewroot with execute @all and render @all", function () {
     var timedOut = false;
