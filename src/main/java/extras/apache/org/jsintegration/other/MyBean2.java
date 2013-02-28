@@ -70,7 +70,7 @@ public class MyBean2 implements Serializable {
 
 
     public String doSearch() {
-        System.out.println("searching"+searchTerm);
+        //System.out.println("searching"+searchTerm);
         results = search(searchTerm);
         return null;
     }

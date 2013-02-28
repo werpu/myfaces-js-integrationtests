@@ -36,7 +36,7 @@ public class ResponseOnly implements Serializable
 
     public String doTheAction()
     {
-        System.out.println("action");
+        //System.out.println("action");
         cnt++;
         return null;
     }

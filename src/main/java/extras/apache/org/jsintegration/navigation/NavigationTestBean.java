@@ -39,7 +39,7 @@ public class NavigationTestBean
     String zipCode;
 
     public String getFirstName() {
-        System.out.println(FacesContext.getCurrentInstance().getViewRoot().getViewId());
+        //System.out.println(FacesContext.getCurrentInstance().getViewRoot().getViewId());
         return firstName;
     }
 
