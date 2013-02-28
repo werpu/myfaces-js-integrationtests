@@ -1,5 +1,5 @@
 afterEach(function () {
-    myfaces.testcases.redirect("./finalResults.jsf");
+    myfaces.testcases.redirect("./test10-doubleeval.jsf");
 });
 describe("Spreadsheet test for the replacement of table elements", function () {
     it("Runs the spreadsheet test", function () {
