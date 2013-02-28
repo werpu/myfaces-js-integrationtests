@@ -48,7 +48,6 @@ public class MyBean2 implements Serializable {
     static int refresh=1;
 
     public MyBean2() {
-       System.out.println("Generate bean myBean2 scope view");
     }
 
     public String getHelloWorld() {

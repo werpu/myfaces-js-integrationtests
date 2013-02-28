@@ -123,12 +123,10 @@ public class TableBean implements Serializable
     }
 
     public String doTableSubmit() {
-        System.out.println("submit executed"+input1+" "+input2);
         return null;
     }
 
     public String doTableSubmit2() {
-        System.out.println("Submit 2 executed"+lineInput1+lineInput2);
         return null;
     }
 }
