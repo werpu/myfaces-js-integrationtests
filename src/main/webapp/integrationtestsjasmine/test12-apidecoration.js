@@ -4,7 +4,7 @@ beforeEach(function () {
     spyOn(jsf,"getViewState").andCallThrough();
 });
 afterEach(function () {
-    myfaces.testcases.redirect("./finalResults.jsf");
+    myfaces.testcases.redirect("./test13-cssreplacementhead.jsf");
 });
 describe("Test for decoratable calls within our jsf lifecycle", function () {
     it("checks whether all functions are properly called", function () {

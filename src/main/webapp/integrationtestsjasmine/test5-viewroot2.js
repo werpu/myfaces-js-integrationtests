@@ -1,10 +1,17 @@
+//jasmine seems to prevent the double execution of tests so we can safely
+//reload it in viewroot replacing tests
 afterEach(function() {
     myfaces.testcases.redirect("./test6-tablebasic.jsf");
 });
 describe("Viewroot with execute @all and render @all", function () {
     var timedOut = false;
+
+
     it("Needs to have the root replaced", function () {
+        var htmlReporter = $("#HTMLReporter");
         runs(function () {
+
+            htmlReporter.detach();
             jsf.ajax.request("allKeyword", null, {render: "@all",execute: "@all"});
         });
 
@@ -22,6 +29,7 @@ describe("Viewroot with execute @all and render @all", function () {
         }, "no timeout cannot happen", 10000);
 
         runs(function () {
+            htmlReporter.appendTo("body");
             expect($("body").html().indexOf("refresh successul2")).not.toBe(-1);
         });
     })

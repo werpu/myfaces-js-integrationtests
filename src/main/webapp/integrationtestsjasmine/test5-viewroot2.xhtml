@@ -23,7 +23,7 @@
     <ui:define name="header">
         <script type="text/javascript">
             // <![CDATA[
-            //w try to deliberately break the xml which should
+            //we try to deliberately break the xml which should
             //be prevented by the cdata block
             var myvar = 1 > 2;
             var myvar = 1 < 2;
@@ -41,7 +41,6 @@
     <ui:define name="content">
         <component:jasmineTest testRunner="test5-viewroot2.js" />
 
-        TODO this test is broken because it loads the testcases script as well again!
         <h1>ViewRoot Replacement 2</h1>
 
         <h2>

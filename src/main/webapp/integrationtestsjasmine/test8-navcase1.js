@@ -3,7 +3,9 @@ afterEach(function () {
 });
 describe("Partial Page Rendering Nav Case", function () {
     it("Nav Case Test", function () {
+        var htmlReporter = $("#HTMLReporter");
         runs(function () {
+            htmlReporter.detach();
             $("#firstName").val("Werner");
             $("#lastName").val("Tester");
             $("#city").val("Linz");
@@ -21,6 +23,7 @@ describe("Partial Page Rendering Nav Case", function () {
         // to be executed via a timeout
         waits(1000);
         runs(function(){
+            htmlReporter.appendTo("body");
             expect($("span#firstName").html().indexOf("Werner")).not.toBe(-1);
             expect($("span#lastName").html().indexOf("Tester")).not.toBe(-1);
             expect( $("body").html().indexOf("script executed")).not.toBe(-1);

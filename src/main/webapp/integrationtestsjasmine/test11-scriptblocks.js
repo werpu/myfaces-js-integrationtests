@@ -1,5 +1,5 @@
 afterEach(function () {
-    myfaces.testcases.redirect("./finalResults.jsf");
+    myfaces.testcases.redirect("./test12-apidecoration.jsf");
 });
 describe("Script blocks in various formats", function () {
     it("Performs a script bloc test", function () {
