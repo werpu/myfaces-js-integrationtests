@@ -1,5 +1,5 @@
 afterEach(function () {
-    myfaces.testcases.redirect("./finalResults.jsf");
+    myfaces.testcases.redirect("./test14-multiform.jsf");
 });
 describe("CSS Head replacement test", function () {
     it("replaces the head and checks whether the css has been replaced", function () {
