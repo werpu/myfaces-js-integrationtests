@@ -33,7 +33,7 @@ function expectations(expectFunc, data) {
 }
 
 afterEach(function () {
-    myfaces.testcases.redirect("./finalResults.jsf");
+    myfaces.testcases.redirect("./test8-navcase.jsf");
 });
 describe("Event handler phases test", function () {
     beforeEach(function () {
