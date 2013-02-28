@@ -63,10 +63,7 @@
         <param-name>org.richfaces.fileUpload.createTempFiles</param-name>
         <param-value>false</param-value>
     </context-param>
-    <filter>
-        <filter-name>CompressionFilter</filter-name>
-        <filter-class>extras.apache.org.jsintegration.experimental.compressionFilter.CompressionFilter</filter-class>
-    </filter>
+
 
 
     <listener>
@@ -136,12 +133,9 @@
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/faces/*</url-pattern>
         <url-pattern>*.jsf</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>Faces Servlet</servlet-name>
-        <url-pattern>/faces/*</url-pattern>
         <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
+
     <servlet-mapping>
         <servlet-name>StatisticsXMLExporter</servlet-name>
         <url-pattern>*.xmlstats</url-pattern>

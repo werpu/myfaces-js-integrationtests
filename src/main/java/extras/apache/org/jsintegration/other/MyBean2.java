@@ -94,7 +94,6 @@ public class MyBean2 implements Serializable {
 
 
     private void readObject(ObjectInputStream ois) throws Exception {
-        System.out.println("deserialising bean");
         ois.defaultReadObject();
     }
 
