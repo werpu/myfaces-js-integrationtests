@@ -206,7 +206,6 @@ public class ResponseMockup extends HttpServlet
             } else if (op.trim().toLowerCase().equals("serversideresponsewriter"))
             {
                 DeferredScriptMockup scriptMockup = new DeferredScriptMockup();
-                System.out.println(scriptMockup.testScriptMockup());
                 Changes changes = new Changes(root);
                 changes.addChild(new Eval(changes, "alert('the output is on the server console');"));
                 root.addElement(changes);

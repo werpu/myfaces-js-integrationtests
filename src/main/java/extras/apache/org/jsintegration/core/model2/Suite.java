@@ -17,43 +17,59 @@
  * under the License.
  */
 
-package extras.apache.org.jsintegration.other;
+package extras.apache.org.jsintegration.core.model2;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
-import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author Werner Punz (latest modification by $Author$)
  * @version $Revision$ $Date$
  */
-@ManagedBean
-@SessionScoped
-public class ResponseOnly implements Serializable
+
+public class Suite
 {
-    int cnt = 0;
+    String description;
+    boolean failed;
+    List<Spec> specs;
 
-    public String doTheAction()
+    public Suite()
     {
-        //System.out.println("action");
-        cnt++;
-        return null;
     }
 
-    public String resetCnt()
+    public Suite(String description, boolean failed, List<Spec> specs)
     {
-        cnt = 0;
-        return null;
+        this.description = description;
+        this.failed = failed;
+        this.specs = specs;
     }
 
-    public int getCnt()
+    public String getDescription()
     {
-        return cnt;
+        return description;
     }
 
-    public void setCnt(int cnt)
+    public void setDescription(String description)
     {
-        this.cnt = cnt;
+        this.description = description;
+    }
+
+    public boolean isFailed()
+    {
+        return failed;
+    }
+
+    public void setFailed(boolean failed)
+    {
+        this.failed = failed;
+    }
+
+    public List<Spec> getSpecs()
+    {
+        return specs;
+    }
+
+    public void setSpecs(List<Spec> specs)
+    {
+        this.specs = specs;
     }
 }

@@ -17,43 +17,32 @@
  * under the License.
  */
 
-package extras.apache.org.jsintegration.other;
+package extras.apache.org.jsintegration.core.model2;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
-import java.io.Serializable;
+import java.util.Collections;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
 
 /**
+ * Set of all results which keeps the order of insertion
+ *
  * @author Werner Punz (latest modification by $Author$)
  * @version $Revision$ $Date$
  */
-@ManagedBean
-@SessionScoped
-public class ResponseOnly implements Serializable
+
+public class TestResults2
 {
-    int cnt = 0;
+    List<Results> results = Collections.synchronizedList(new LinkedList<Results>());
 
-    public String doTheAction()
+    public List<Results> getResults()
     {
-        //System.out.println("action");
-        cnt++;
-        return null;
+        return results;
     }
 
-    public String resetCnt()
+    public void setResults(List<Results> results)
     {
-        cnt = 0;
-        return null;
-    }
-
-    public int getCnt()
-    {
-        return cnt;
-    }
-
-    public void setCnt(int cnt)
-    {
-        this.cnt = cnt;
+        this.results = results;
     }
 }

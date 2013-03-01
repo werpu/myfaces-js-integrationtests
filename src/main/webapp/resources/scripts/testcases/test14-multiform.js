@@ -23,9 +23,9 @@ testGroup.addCase(new AjaxCase({
 
     setup: function() {
         this._timer = setInterval(this._Lang.hitch(this, function() {
-            $("#first_input").val(Math.random());
-            $("#second_input").val(Math.random());
-        }), 10);
+                    $("#first_input").val(Math.random());
+                    $("#second_input").val(Math.random());
+                }), 10);
     },
     precondition: function() {
         this._ajaxCnt = 1;

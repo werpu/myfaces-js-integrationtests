@@ -11,4 +11,5 @@ groovy-bin/*
 *.*~
 .project
 .classpath
+atlassian-ide-plugin.xml
 

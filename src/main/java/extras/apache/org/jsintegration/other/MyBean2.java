@@ -48,7 +48,6 @@ public class MyBean2 implements Serializable {
     static int refresh=1;
 
     public MyBean2() {
-       System.out.println("Generate bean myBean2 scope view");
     }
 
     public String getHelloWorld() {
@@ -71,7 +70,7 @@ public class MyBean2 implements Serializable {
 
 
     public String doSearch() {
-        System.out.println("searching"+searchTerm);
+        //System.out.println("searching"+searchTerm);
         results = search(searchTerm);
         return null;
     }
@@ -95,7 +94,6 @@ public class MyBean2 implements Serializable {
 
 
     private void readObject(ObjectInputStream ois) throws Exception {
-        System.out.println("deserialising bean");
         ois.defaultReadObject();
     }
 

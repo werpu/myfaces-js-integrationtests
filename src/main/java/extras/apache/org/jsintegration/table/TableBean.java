@@ -22,9 +22,11 @@ package extras.apache.org.jsintegration.table;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.bean.ViewScoped;
 
 /**
  * @author Werner Punz (latest modification by $Author$)
@@ -32,8 +34,8 @@ import javax.annotation.PostConstruct;
  */
 
 @ManagedBean
-@SessionScoped
-public class TableBean
+@ViewScoped
+public class TableBean implements Serializable
 {
     List<Entry> entries = new LinkedList<Entry>();
 
@@ -44,7 +46,7 @@ public class TableBean
     String lineInput2;
 
 
-   public class Entry {
+   public class Entry implements  Serializable{
         String field1;
         String field2;
 
@@ -74,8 +76,7 @@ public class TableBean
     public TableBean() {
         for (int cnt = 0; cnt < 100; cnt++) {
             entries.add(new Entry("field1" + cnt, "field2" + cnt));
-            System.out.println("hello world");
-      }  
+      }
     }
    
 
@@ -122,12 +123,10 @@ public class TableBean
     }
 
     public String doTableSubmit() {
-        System.out.println("submit executed"+input1+" "+input2);
         return null;
     }
 
     public String doTableSubmit2() {
-        System.out.println("Submit 2 executed"+lineInput1+lineInput2);
         return null;
     }
 }
