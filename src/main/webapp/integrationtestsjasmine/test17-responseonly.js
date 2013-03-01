@@ -1,3 +1,4 @@
+
 var oldResponse = jsf.ajax.response;
 //we are going to decorate the response for the first testcase
 function applySourceOnly() {
@@ -29,7 +30,7 @@ function applyEmpty() {
 }
 
 afterEach(function () {
-    myfaces.testcases.redirect("./finalResults.jsf");
+    myfaces.testcases.redirect("./test18-eventlocations.jsf");
 });
 describe("Various response tests giving the codebase something to chew on in the reponse part", function () {
     beforeEach(function () {
