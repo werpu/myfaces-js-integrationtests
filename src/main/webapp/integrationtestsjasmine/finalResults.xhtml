@@ -53,13 +53,14 @@
         </h:panelGroup>
 
         <ui:repeat value="#{statisticsVisualizer2.results}" var="result">
+
             <ul class="testGroup ">
                 <ui:repeat value="#{result.suitesAsList}" var="suite">
 
-                    <li class="groupName success_#{(!suite.failed)?'true':'false'}">Suite: #{suite.description}</li>
+                    <li class="groupName success_#{(!suite.failed)?'true':'false'}">Suite: #{suite.description}<br />  #{result.origin}</li>
                     <li class="resultGroup collapsed">
                         <ul>
-                            <li class="url">URL: <a href="#{result.origin}">#{result.origin}</a></li>
+                            <li class="url">Link: <a href="#{result.origin}">#{result.origin}</a></li>
                             <li class="testCasesTitle">Specs:</li>
 
                             <ui:repeat value="#{suite.specs}" var="spec">

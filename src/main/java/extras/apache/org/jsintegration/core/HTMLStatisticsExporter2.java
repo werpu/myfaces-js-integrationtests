@@ -81,7 +81,7 @@ public class HTMLStatisticsExporter2
     private List<Results> getResultsContainer()
     {
         Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
-        TestResults2 results = (TestResults2) sessionMap.get(StatisticsCollector.TEST_RESULTS);
+        TestResults2 results = (TestResults2) sessionMap.get(StatisticsCollector2.TEST_RESULTS);
         if (results == null)
         {
             results = new TestResults2();
