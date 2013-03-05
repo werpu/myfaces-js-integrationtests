@@ -1,5 +1,7 @@
 afterEach(function () {
-    myfaces.testcases.redirect("./test7-eventtest.jsf");
+    setTimeout(function(){
+        myfaces.testcases.redirect("./test7-eventtest.jsf");
+    }, 1000);
 });
 describe("Basic DOM Table Operation Tests utilizing the JSF protocol", function () {
 

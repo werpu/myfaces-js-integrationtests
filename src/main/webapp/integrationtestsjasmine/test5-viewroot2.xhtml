@@ -34,7 +34,7 @@
                     window.cnt = 1;
                 }
                 document.body.innerHTML = document.body.innerHTML + "refresh successul" + (window.cnt++);
-            }, 2000);
+            }, 500);
             // ]]>
         </script>
     </ui:define>
@@ -44,6 +44,7 @@
         <h1>ViewRoot Replacement 2</h1>
 
         <h2>
+            //TODO not working because of recursive include
             This test replaces javax.faces.ViewRoot with embedded scripts in the head
             and a CDATA enclosure to test the proper escaping of the content
         </h2>

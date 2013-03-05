@@ -1,5 +1,7 @@
 afterEach(function () {
-    myfaces.testcases.redirect("./test17-responseonly.jsf");
+    setTimeout(function () {
+        myfaces.testcases.redirect("./test17-responseonly.jsf");
+    }, 1000);
 });
 var timer = null;
 describe("Multi form situation", function () {

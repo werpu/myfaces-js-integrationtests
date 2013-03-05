@@ -1,5 +1,7 @@
-afterEach(function() {
-    myfaces.testcases.redirect("./test4-chain.jsf");
+afterEach(function () {
+    setTimeout(function () {
+        myfaces.testcases.redirect("./test4-chain.jsf");
+    }, 1000);
 });
 describe("Full body replacement via protocol view body", function () {
     it("Should run the ajax and replace the body", function () {
@@ -11,7 +13,7 @@ describe("Full body replacement via protocol view body", function () {
         waitsFor(function () {
             return !!myfaces.testcases.ajaxCnt;
         }, "Server timeout", 10000);
-        runs(function(){
+        runs(function () {
             htmlReporter.appendTo("body");
             var html = $("body").html();
             expect(html.indexOf("testResults59")).not.toBe(-1);

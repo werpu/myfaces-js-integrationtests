@@ -1,4 +1,4 @@
-var localEvents = [];
+;var localEvents = [];
 var globalEvents = [];
 var DEFAULT_EVENTTYPES = {
     "begin": true,
@@ -33,7 +33,9 @@ function expectations(expectFunc, data) {
 }
 
 afterEach(function () {
-    myfaces.testcases.redirect("./test8-navcase1.jsf");
+    setTimeout(function () {
+        myfaces.testcases.redirect("./test8-navcase1.jsf");
+    }, 1000);
 });
 describe("Event handler phases test", function () {
     beforeEach(function () {

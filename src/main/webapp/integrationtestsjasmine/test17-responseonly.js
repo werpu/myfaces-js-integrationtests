@@ -30,7 +30,9 @@ function applyEmpty() {
 }
 
 afterEach(function () {
-    myfaces.testcases.redirect("./test18-eventlocations.jsf");
+    setTimeout(function () {
+        myfaces.testcases.redirect("./test18-eventlocations.jsf");
+    }, 1000);
 });
 describe("Various response tests giving the codebase something to chew on in the reponse part", function () {
     beforeEach(function () {

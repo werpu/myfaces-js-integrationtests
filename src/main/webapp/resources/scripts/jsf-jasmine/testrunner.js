@@ -27,7 +27,7 @@
         if (currentWindowOnload) {
             currentWindowOnload();
         }
-        document.querySelector('.version').innerHTML = jasmineEnv.versionString();
+        $('.version').html(jasmineEnv.versionString());
         execJasmine();
     };
     function execJasmine() {

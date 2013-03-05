@@ -21,7 +21,9 @@ jsf.ajax.response = function (request, context) {
 };
 
 afterEach(function () {
-    myfaces.testcases.redirect("./finalResults.jsf");
+    setTimeout(function () {
+        myfaces.testcases.redirect("./test19-execute.jsf");
+    }, 1000);
 });
 describe("event location test, success must be called in response function", function () {
     it("runs the ajax cycle and checks for the proper event location of the success event", function () {
