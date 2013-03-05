@@ -75,6 +75,7 @@ public class StatisticsCollector2 extends HttpServlet
         //testResultsContainer.getResults().add(results);
         int pos = -1;
         int finalPos = -1;
+        System.out.println("TestURL:"+results.getOrigin());
         for(Results iteratedResults: testResultsContainer.getResults()) {
             pos++;
             if(iteratedResults.hashCode() == results.hashCode()) {
