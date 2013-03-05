@@ -1,5 +1,7 @@
 afterEach(function () {
-    myfaces.testcases.redirect("./test9-spreadsheet.jsf");
+    setTimeout(function () {
+        myfaces.testcases.redirect("./test9-spreadsheet.jsf");
+    }, 1000);
 });
 describe("Partial Page Rendering Nav Case", function () {
     it("Nav Case Test", function () {

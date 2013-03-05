@@ -1,6 +1,8 @@
 
 afterEach(function() {
-    myfaces.testcases.redirect("./test2-viewroot.jsf");
+    setTimeout(function(){
+        myfaces.testcases.redirect("./test2-viewroot.jsf");
+    }, 1000);
 });
 
 describe("Testsuite testing the protocol", function () {

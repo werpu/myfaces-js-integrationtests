@@ -1,5 +1,7 @@
 afterEach(function () {
-    myfaces.testcases.redirect("./test11-scriptblocks.jsf");
+    setTimeout(function () {
+        myfaces.testcases.redirect("./test11-scriptblocks.jsf");
+    }, 1000);
 });
 describe("Regression test for double eval on a single script element", function () {
     it("Runs the double eval test", function () {
