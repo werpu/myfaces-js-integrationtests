@@ -1,4 +1,9 @@
 var Dom = myfaces._impl._util._Dom;
+afterEach(function(){
+    setTimeout(function(){
+        myfaces.testcases.redirect("./test2-inheritancetesting.jsf");
+    }, 1000);
+});
 describe("Various dom util tests", function () {
     it("five divs under level1 (including it)", function () {
         var results = Dom.findByTagName(Dom.byId("level1"), "div", true);

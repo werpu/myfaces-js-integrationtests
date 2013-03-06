@@ -53,6 +53,11 @@ _RT.extendClass("my.child3", childInstance3, {
 
 var childInstance3 = new my.child3("hello2", "hello3");
 
+afterEach(function(){
+    setTimeout(function(){
+        myfaces.testcases.redirect("./finalResults.jsf");
+    }, 1000);
+});
 describe("various inheritance patterns to be tested", function(){
     it("Child inheritance", function(){
        expect(childInstance instanceof my.child).toBeTruthy();
