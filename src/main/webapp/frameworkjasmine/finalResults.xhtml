@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="../templates/template.xhtml">
+    <ui:define name="header">
+
+        <style type="text/css">
+            @import "../styles/style_result.css";
+        </style>
+    </ui:define>
+    <ui:define name="controls">
+    </ui:define>
+    <ui:define name="content">
+        <h2>protocol testcase1</h2>
+
+        <h3>This page displays the final results of the tests</h3>
+
+        <h:panelGroup layout="block" class="testGroup groupResults">
+            <h:panelGroup layout="block" class="failedGroups"
+                          rendered="#{statisticsVisualizer2.failedResults.size() gt  0}">
+                <h3>Failed Groups</h3>
+                <ul>
+                    <ui:repeat value="#{statisticsVisualizer2.failedResults}" var="result">
+                        <ui:repeat value="#{result.suitesAsList}" var="suite">
+                            <li class="groupName success_false"><a
+                                    href="#{result.origin}">Testgroup: #{suite.description}</a>
+                            </li>
+                        </ui:repeat>
+                    </ui:repeat>
+                </ul>
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="allSucceeded"
+                          rendered="#{statisticsVisualizer2.failedResults.size() == 0}">
+                <h3>All tests have passed</h3>
+            </h:panelGroup>
+        </h:panelGroup>
+
+        <ui:repeat value="#{statisticsVisualizer2.results}" var="result">
+
+            <ul class="testGroup ">
+                <ui:repeat value="#{result.suitesAsList}" var="suite">
+
+                    <li class="groupName success_#{(!suite.failed)?'true':'false'}">Suite: #{suite.description}<br />  #{result.origin}</li>
+                    <li class="resultGroup collapsed">
+                        <ul>
+                            <li class="url">Link: <a href="#{result.origin}">#{result.origin}</a></li>
+                            <li class="testCasesTitle">Specs:</li>
+
+                            <ui:repeat value="#{suite.specs}" var="spec">
+                                <ul class="testCase">
+                                    <li class="testName success_#{!spec.failed}">Spec Name: #{spec.description} Success:
+                                        #{!spec.failed}</li>
+                                    <li>
+
+                                    </li>
+                                </ul>
+                            </ui:repeat>
+                        </ul>
+                    </li>
+
+                </ui:repeat>
+                <li class="finalResultsTitle">Final Results:</li>
+                <li class="finalResult">Number of Specs Performed: #{result.statistics.numberOfTests}</li>
+                <li class="finalResult">Number of Specs Failed: #{result.statistics.numberOfFails}</li>
+                <li class="finalResult">Time for test in ms: #{result.statistics.executionTime}</li>
+            </ul>
+        </ui:repeat>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $(".testGroup .groupName").click(function () {
+                    $(".resultGroup", this.parentNode).toggle(500);
+                });
+            });
+        </script>
+    </ui:define>
+</ui:composition>
+</html>
