@@ -1,6 +1,6 @@
 afterEach(function () {
     setTimeout(function () {
-        myfaces.testcases.redirect("finalResults.jsf");
+        myfaces.testcases.redirect("test22-separator.jsf");
     }, 1000);
 });
 describe("Window id tests part 2", function () {
