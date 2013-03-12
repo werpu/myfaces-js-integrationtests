@@ -26,7 +26,7 @@ testGroup.addCase(new TestCase({
         this._separatorChar = jsf.separatorchar;
     },
     postcondition:function () {
-        this.assertTrue("WindowId found", this._separatorChar == ":");
+        this.assertTrue("separator char found found", this._separatorChar == ":");
     }
 }));
 

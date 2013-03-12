@@ -43,8 +43,12 @@ emitPPR = function (source, event, action, formName) {
     });
 };
 
-myfaces.testcases.redirect = function (href) {
+myfaces.testcases.redirect = function (href,/*optional*/ appendix) {
     if (window.location.href.indexOf("autoTest=true") != -1) {
-        window.location.href = href + "?autoTest=true";
+        var finalAppendix = appendix || "";
+        if(finalAppendix != "") {
+            finalAppendix = "&"+finalAppendix;
+        }
+        window.location.href = href + "?autoTest=true"+finalAppendix;
     }
 };
