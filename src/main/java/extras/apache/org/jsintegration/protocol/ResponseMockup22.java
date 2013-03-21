@@ -26,7 +26,6 @@ import extras.apache.org.jsintegration.protocol.xmlNodes.PartialResponse;
 import extras.apache.org.jsintegration.protocol.xmlNodes.Update;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
@@ -95,6 +94,16 @@ public class ResponseMockup22 extends ResponseMockup
                 changes.addChild(new Update(changes, "result", "<div id='result'>Window Id is sent</div>"));
             else
                 changes.addChild(new Update(changes, "result", "<div id='result'>Window Id is not sent</div>"));
+            root.addElement(changes);
+            out.println(root.toString());
+        } else if (op.toLowerCase().equals("resetvalues"))
+        {
+            String resetValues = request.getParameter("javax.faces.partial.resetValues");
+            Changes changes = new Changes(root);
+            if (resetValues != null && resetValues.equals("true"))
+            {
+                changes.addChild(new Update(changes, "result", "<div id='result'>success</div>"));
+            }
             root.addElement(changes);
             out.println(root.toString());
         } else

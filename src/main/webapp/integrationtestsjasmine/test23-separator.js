@@ -1,6 +1,6 @@
 afterEach(function () {
     setTimeout(function () {
-        myfaces.testcases.redirect("finalResults.jsf");
+        myfaces.testcases.redirect("test24-resetvalues.jsf");
     }, 1000);
 });
 describe("jsf.separator api test 2", function () {
