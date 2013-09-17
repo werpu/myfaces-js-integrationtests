@@ -7,7 +7,7 @@
     <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
     <properties>
-        <myfaces-version>2.2.0-SNAPSHOT</myfaces-version>
+        <myfaces-version>2.1.12</myfaces-version>
 
         <java.source.version>1.5</java.source.version>
         <maven-compiler-plugin.version>2.0.2</maven-compiler-plugin.version>
@@ -30,6 +30,7 @@
     <url>http://maven.apache.org</url>
 
     <repositories>
+        <!--
         <repository>
             <id>maven2-repository.dev.java.net</id>
             <url>http://download.java.net/maven/2</url>
@@ -62,7 +63,7 @@
                 <updatePolicy>never</updatePolicy>
             </snapshots>
         </repository>
-
+        -->
         <repository>
             <id>prime-repo</id>
             <name>Prime Repo</name>
@@ -112,7 +113,7 @@
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
-            <version>1.7.2</version>
+            <version>2.2.4</version>
         </dependency>
         <dependency>
             <groupId>commons-lang</groupId>
@@ -558,7 +559,7 @@
             <plugin>
                 <groupId>org.zeroturnaround</groupId>
                 <artifactId>jrebel-maven-plugin</artifactId>
-                <version>1.1.1</version>
+                <version>1.1.5</version>
                 <executions>
                     <execution>
                         <id>generate-rebel-xml</id>

@@ -1,6 +1,6 @@
-afterEach(function(){
-    setTimeout(function(){
-        myfaces.testcases.redirect("test21-windowid2.jsf","jfwid=booga2");
+afterEach(function () {
+    setTimeout(function () {
+        myfaces.testcases.redirect("test21-windowid2.jsf", "jfwid=booga2");
     }, 1000);
 });
 describe("Window id tests", function () {

@@ -29,7 +29,7 @@
 
     <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
-        <param-value>Development</param-value>
+        <param-value>Production</param-value>
     </context-param>
 
 
@@ -57,7 +57,7 @@
 
     <servlet>
         <servlet-name>MockupServlet</servlet-name>
-        <servlet-class>extras.apache.org.jsintegration.protocol.ResponseMockup22</servlet-class>
+        <servlet-class>extras.apache.org.jsintegration.protocol.ResponseMockup</servlet-class>
     </servlet>
 
     <!-- Faces Servlet -->

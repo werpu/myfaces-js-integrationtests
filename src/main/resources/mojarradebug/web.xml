@@ -13,8 +13,8 @@
   limitations under the License.
 -->
 <web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
-         version="3.0">
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+    version="3.0">
 
 
     <context-param>
@@ -32,10 +32,6 @@
         <param-value>Development</param-value>
     </context-param>
 
-    <context-param>
-        <param-name>javax.faces.FACELETS_LIBRARIES</param-name>
-        <param-value>/WEB-INF/examples-taglib.xml</param-value>
-    </context-param>
 
     <context-param>
         <param-name>org.apache.myfaces.AUTO_SCROLL</param-name>
@@ -76,7 +72,7 @@
         <servlet-name>JSF21Simulation</servlet-name>
         <url-pattern>*.timeout</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
+     <servlet-mapping>
         <servlet-name>StatisticsCollector</servlet-name>
         <url-pattern>*.statistics</url-pattern>
     </servlet-mapping>
