@@ -96,8 +96,6 @@
                 <updatePolicy>never</updatePolicy>
             </snapshots>
         </pluginRepository>
-
-
     </pluginRepositories>
 
 
