@@ -197,7 +197,7 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
                //error would be raised as well
                console.error(e.message || e.description || e);
             } else {
-                if(jsf.ajax.getProjectStage() === "Development") {
+                if(jsf.getProjectStage() === "Development") {
                     alert("Error in evaluated javascript:"+ (e.message || e.description || e));
                 }
             }
