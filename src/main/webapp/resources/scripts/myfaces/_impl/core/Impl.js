@@ -260,10 +260,14 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
         if(options.resetValues === true) {
             passThrgh[this.P_RESET_VALUES] = true;
         }
-
+        /*execute handling according to section 14.2.3 in the jsf spec the
+         if nothing is issued equals @this must be the execute and @none the render
+         in the jsf.ajax.request call
+         aka jsf.ajax.request(source, event) === jsf.ajax.request(source, event, {execute:"@this", render:"@none"}
+        */
         if (options.execute) {
             /*the options must be a blank delimited list of strings*/
-            /*compliance with Mojarra which automatically adds @this to an execute
+            /* compliance with Mojarra which automatically adds @this to an execute
              * the spec rev 2.0a however states, if none is issued nothing at all should be sent down
              */
             options.execute = (options.execute.indexOf("@this") == -1) ? options.execute : options.execute;
