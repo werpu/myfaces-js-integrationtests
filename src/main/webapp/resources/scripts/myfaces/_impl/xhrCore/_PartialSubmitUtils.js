@@ -64,6 +64,10 @@ _MF_SINGLTN(_PFX_XHR + "_PartialSubmitUtils", myfaces._impl.xhrCore._AjaxUtils, 
         var _Impl = this.attr("impl");
         var _Dom = this._Dom;
 
+        //jsf 2.3 prefix the namespace in encode if attached as prefix to the viewstate
+        var viewState = this._Dom.findViewStateElement(node);
+        var prefix = viewState.id.substr(0, viewState.id.indexof(_Impl.P_VIEWSTATE));
+
         var partialIdsFilter = function(curNode) {
             if (curNode.nodeType != 1) return false;
             if (submitAll && node != curNode) return true;
@@ -89,10 +93,10 @@ _MF_SINGLTN(_PFX_XHR + "_PartialSubmitUtils", myfaces._impl.xhrCore._AjaxUtils, 
 
                 if (subNodes && subNodes.length) {
                     for (var cnt2 = 0; cnt2 < subNodes.length; cnt2++) {
-                        this.encodeElement(subNodes[cnt2], targetBuf);
+                        this.encodeElement(subNodes[cnt2], prefix, targetBuf);
                     }
                 } else {
-                    this.encodeElement(nodes[cnt], targetBuf);
+                    this.encodeElement(nodes[cnt], prefix, targetBuf);
                 }
             }
         }

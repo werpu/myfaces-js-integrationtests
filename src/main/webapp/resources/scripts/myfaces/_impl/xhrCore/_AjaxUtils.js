@@ -41,10 +41,14 @@ _MF_SINGLTN(_PFX_XHR+"_AjaxUtils", _MF_OBJECT,
             if (partialIds ) {
                 this.encodePartialSubmit(parentItem, false, partialIds, targetBuf);
             } else {
+
+                var viewState = this._Dom.findViewStateElement(node);
+                var prefix = viewState.id.substr(0, viewState.id.indexof(_Impl.P_VIEWSTATE));
+
                 // add all nodes
                 var eLen = parentItem.elements.length;
                 for (var e = 0; e < eLen; e++) {
-                    this.encodeElement(parentItem.elements[e], targetBuf);
+                    this.encodeElement(parentItem.elements[e], prefix, targetBuf);
                 } // end of for (formElements)
             }
 
@@ -69,13 +73,15 @@ _MF_SINGLTN(_PFX_XHR+"_AjaxUtils", _MF_OBJECT,
      * @param {Node} element - to be encoded
      * @param {} targetBuf - a target array buffer receiving the encoded strings
      */
-    encodeElement : function(element, targetBuf) {
+    encodeElement : function(element, prefix, targetBuf) {
 
         //browser behavior no element name no encoding (normal submit fails in that case)
         //https://issues.apache.org/jira/browse/MYFACES-2847
         if (!element.name) {
             return;
         }
+
+        prefix = prefix || "";
 
         var _RT = this._RT;
         var name = element.name;
@@ -110,7 +116,7 @@ _MF_SINGLTN(_PFX_XHR+"_AjaxUtils", _MF_OBJECT,
                         //var subBuf = [];
                         if (element.options[u].selected) {
                             var elementOption = element.options[u];
-                            targetBuf.append(name, (elementOption.getAttribute("value") != null) ?
+                            targetBuf.append(prefix+name, (elementOption.getAttribute("value") != null) ?
                                     elementOption.value : elementOption.text);
                         }
                     }
@@ -126,9 +132,9 @@ _MF_SINGLTN(_PFX_XHR+"_AjaxUtils", _MF_OBJECT,
                     && ((elemType != "checkbox" && elemType != "radio") || element.checked)) {
                 if ('undefined' != typeof element.files && element.files != null && _RT.getXHRLvl() >= 2 && element.files.length) {
                     //xhr level2
-                    targetBuf.append(name, element.files[0]);
+                    targetBuf.append(prefix+name, element.files[0]);
                 } else {
-                    targetBuf.append(name, element.value);
+                    targetBuf.append(prefix+name, element.value);
                 }
             }
 
