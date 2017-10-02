@@ -22,19 +22,15 @@ package extras.apache.org.jsintegration.core;
 import extras.apache.org.jsintegration.core.model2.Results;
 import extras.apache.org.jsintegration.core.model2.Suite;
 import extras.apache.org.jsintegration.core.model2.TestResults2;
-import org.richfaces.component.ListType;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Werner Punz (latest modification by $Author$)

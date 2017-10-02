@@ -9,7 +9,12 @@ groovy-bin/*
 *.class
 *.jar
 *.*~
+node_modules/*
 .project
 .classpath
 atlassian-ide-plugin.xml
+node_modules
+resources/scripts/myfaces_ts/ts/**/*.js
+resources/scripts/myfaces_ts/js/**/*.js
+resources/scripts/myfaces_ts/ts_test/**/*.js
 
