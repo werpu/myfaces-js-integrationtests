@@ -79,6 +79,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
         mfInternal._updateForms = [];
         mfInternal.appliedViewState = null;
         mfInternal.appliedClientWindow = null;
+        mfInternal.namingModeId = null;
 
         try {
             var _Impl = this.attr("impl"), _Lang = this._Lang;
@@ -113,6 +114,19 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
                     }
                 }
             }
+
+
+            /**
+             * jsf 2.3 naming mode partial response,
+             * we either viewstate all forms (non id mode)
+             * or the forms under the viewroot defined by id
+             *
+             * @type {string} ... the naming mode id is set or an empty string
+             * definitely not a null value to avoid type confusions later on
+             */
+            mfInternal.namingModeId = (partials.id || "");
+
+
 
             var childNodesLength = partials.childNodes.length;
 
@@ -156,6 +170,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
             delete mfInternal._updateForms;
             delete mfInternal.appliedViewState;
             delete mfInternal.appliedClientWindow;
+            delete mfInternal.namingModeId;
         }
     },
 
@@ -172,43 +187,23 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
             return;
         }
 
-        //if we set our no portlet env we safely can update all forms with
-        //the new viewstate
-        if (this._RT.getLocalOrGlobalConfig(context, "no_portlet_env", false)) {
-            for (var cnt = document.forms.length - 1; cnt >= 0; cnt--) {
-                this._setVSTCWForm(context, document.forms[cnt], mfInternal.appliedViewState, this.P_VIEWSTATE);
-            }
-            return;
-        }
+        /**
+         * JSF 2.3 we set all the viewstates under a given declared viewRoot or all forms
+         * if none is given
+         */
+        this._updateJSFClientArtifacts(context, this._getViewRoot(context), mfInternal.appliedViewState, this.P_VIEWSTATE);
+    },
 
-        var updatedForm = this._getUpdatedForm(context, mfInternal._updateForms);
-        if (updatedForm != null) {
-            var baseViewStateField = this._Dom.getNamedElementFromForm(updatedForm, this.P_VIEWSTATE);
-            var viewStateId = baseViewStateField.id;
-            var viewStatePrefix = viewStateId.substring(0,
-                viewStateId.indexOf(this.P_VIEWSTATE)+this.P_VIEWSTATE.length);
-            var viewStateFields = document.getElementsByName(this.P_VIEWSTATE);
-            for (var cnt = viewStateFields.length - 1; cnt >= 0; cnt--) {
-                if (viewStateFields[cnt].id.startsWith(viewStatePrefix)) {
-                    this._setVSTCWForm(context, viewStateFields[cnt].form, mfInternal.appliedViewState, this.P_VIEWSTATE);
-                }
-            }
-        }else{
-            // Now update the forms that were not replaced but forced to be updated, because contains child ajax tags
-            // we should only update forms with view state hidden field. If by some reason, the form was set to be
-            // updated but the form was replaced, it does not have hidden view state, so later in changeTrace processing the
-            // view state is updated.
-
-            //set the viewstates of all outer forms parents of our updated elements
-            _Lang.arrForEach(mfInternal._updateForms, function (elem) {
-                this._setVSTCWForm(context, elem, mfInternal.appliedViewState, this.P_VIEWSTATE);
-            }, 0, this);
-
-            //set the viewstate of all forms within our updated elements
-            _Lang.arrForEach(mfInternal._updateElems, function (elem) {
-                this._setVSTCWInnerForms(context, elem, mfInternal.appliedViewState, this.P_VIEWSTATE);
-            }, 0, this);
-        }
+    /**
+     * returns a given viewRoot from the context data
+     * @param context the context data
+     * @returns {Node} a given viewRoot node if viewroot data is given otherwise the body element as viewRoot
+     * @private
+     */
+    _getViewRoot: function(context) {
+        return ("" === context.mfInternal.namingModeId) ?
+            document.getElementsByTagName("body")[0]:
+            document.getElementsByTagName(context.mfInternal.namingModeId)[0]
     },
 
     fixClientWindows:function (context, theForm) {
@@ -218,79 +213,43 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
         if (null == mfInternal.appliedClientWindow) {
             return;
         }
-        //if we set our no portlet env we safely can update all forms with
-        //the new viewstate
-        if (this._RT.getLocalOrGlobalConfig(context, "no_portlet_env", false)) {
-            for (var cnt = document.forms.length - 1; cnt >= 0; cnt--) {
-                this._setVSTCWForm(context, document.forms[cnt], mfInternal.appliedClientWindow, this.P_CLIENTWINDOW);
-            }
-            return;
-        }
 
-        var updatedForm = this._getUpdatedForm(context, mfInternal._updateForms);
-        if (updatedForm != null) {
-            var baseCWField = this._Dom.getNamedElementFromForm(updatedForm, this.P_CLIENTWINDOW);
-            var cwId = baseCWField.id;
-            var cwPrefix = cwId.substring(0,
-                cwId.indexOf(this.P_CLIENTWINDOW)+this.P_CLIENTWINDOW.length);
-            var cwFields = document.getElementsByName(this.P_CLIENTWINDOW);
-            for (var cnt = cwFields.length - 1; cnt >= 0; cnt--) {
-                if (cwFields[cnt].id.startsWith(cwPrefix)) {
-                    this._setVSTCWForm(context, cwFields[cnt].form, mfInternal.appliedClientWindow, this.P_CLIENTWINDOW);
-                }
-            }
-        } else{
-            //set the client window of all outer form of updated elements
+        /**
+         * JSF 2.3 we set all the viewstates under a given declared viewRoot or all forms
+         * if none is given
+         */
+        this._updateJSFClientArtifacts(context, this._getViewRoot(context), mfInternal.appliedViewState, this.P_CLIENTWINDOW);
 
-            _Lang.arrForEach(mfInternal._updateForms, function (elem) {
-                this._setVSTCWForm(context, elem, mfInternal.appliedClientWindow, this.P_CLIENTWINDOW);
-            }, 0, this);
-
-            //set the client window of all forms within our updated elements
-            _Lang.arrForEach(mfInternal._updateElems, function (elem) {
-                this._setVSTCWInnerForms(context, elem, mfInternal.appliedClientWindow, this.P_CLIENTWINDOW);
-            }, 0, this);
-        }
     },
 
-
-    _getUpdatedForm:function(context, updateForms) {
-        if (updateForms != null) {
-            for (var i = 0; i < updateForms.length; i++) {
-                var elem = this._Lang.byId(updateForms[i]);
-                if (!elem){
-                    continue;
-                }else{
-                    return elem;
-                }
-            }
-        }
-    },
 
     /**
-     * sets the viewstate element in a given form
+     * sets the a jsf artifact element with a given identifier to a new value or adds this element
      *
-     * @param theForm the form to which the element has to be set to
+     * @param theForm {Node} the form to which the element has to be set to
      * @param context the current request context
      */
-    _setVSTCWForm:function (context, theForm, value, identifier) {
-        if (typeof theForm === 'string' || theForm instanceof String) {
-            theForm = this._Lang.byId(theForm);
-        }
-        var mfInternal = context._mfInternal;
+    _applyJSFArtifactValueToForm:function (context, theForm, value, identifier) {
 
         if (!theForm) return;
 
+        var mfInternal = context._mfInternal;
+        var prefix = mfInternal.namingModeId;
+        if(prefix != "") {
+            prefix = prefix + jsf.separatorchar;
+        }
+
         //in IE7 looking up form elements with complex names (such as 'javax.faces.ViewState') fails in certain cases
         //iterate through the form elements to find the element, instead
-        var fieldToApply = this._Dom.getNamedElementFromForm(theForm, identifier);
+        var fieldToApply = this._Dom.getNamedElementFromForm(theForm, prefix+identifier);
 
         if (fieldToApply) {
             this._Dom.setAttribute(fieldToApply, "value", value);
         } else if (!fieldToApply) {
             var element = this._Dom.getDummyPlaceHolder();
             //spec error, two elements with the same id should not be there, TODO recheck the space if the name does not suffice alone
-            element.innerHTML = ["<input type='hidden'", "id='", identifier+jsf.separatorchar+Math.random() , "' name='", identifier , "' value='" , value , "' />"].join("");
+            var postFix = jsf.separatorchar + Math.random();
+            element.innerHTML = ["<input type='hidden'", "id='", (prefix + identifier + postFix) , "' name='", prefix+identifier , "' value='" , value , "' />"].join("");
             //now we go to proper dom handling after having to deal with another ie screwup
             try {
                 theForm.appendChild(element.childNodes[0]);
@@ -300,18 +259,26 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
         }
     },
 
-    _setVSTCWInnerForms:function (context, elem, value, identifier) {
+    /**
+     * updates/inserts the jsf client artifacts under a given viewroot element
+     *
+     * @param context the client context holding all request context data and some internal data
+     * @param elem the root to start with, must be a dom node not an identifier
+     * @param value the new value
+     * @param identifier the identifier for the client artifact aka javax.faces.ViewState, ClientWindowId etc...
+     *
+     * @private
+     */
+    _updateJSFClientArtifacts:function (context, elem, value, identifier) {
 
-        var _Lang = this._Lang, _Dom = this._Dom;
-        elem = _Dom.byIdOrName(elem);
-        //elem not found for whatever reason
+       //elem not found for whatever reason
         //https://issues.apache.org/jira/browse/MYFACES-3544
         if (!elem) return;
 
         var replacedForms = _Dom.findByTagName(elem, "form", false);
 
         var applyVST = _Lang.hitch(this, function (elem) {
-            this._setVSTCWForm(context, elem, value, identifier);
+            this._applyJSFArtifactValueToForm(context, elem, value, identifier);
         });
 
         try {
