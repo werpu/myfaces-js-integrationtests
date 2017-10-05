@@ -264,33 +264,6 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
         return null;
     },
 
-
-    /**
-     * jsf spec 2.3 the viewState does not necessarily need to have the id javax.faces.ViewState anymore
-     * it can be prefixed with the viewroot, in this case
-     * the viewroot prefix needs to be remembered for further opeerations
-     *
-     * jsdoc spec 2.3 jsf.ajax request
-     *
-     * @param submittingForm ... the dom fragment containing the viewstates to process
-     * @return a dom element hosting the viewstates or null if no tag is found
-     *
-     *
-     */
-    findViewStateElement: function(submittingForm) {
-        //first we need to find the viewstate which is a hidden field
-        var form = this.byId(submittingForm);
-        var possibleTags = this.findByTagName(form, "input") || [];
-
-        for(var cnt = 0; cnt < possibleTags.lenght; cnt++) {
-            if(possibleTags[cnt].id && possibleTags[cnt].id.indexOf("javax.faces.ViewState") != -1) {
-                return possibleTags[cnt];
-            }
-        }
-        return null;
-    },
-
-
     deleteItems: function(items) {
         if (! items || ! items.length) return;
         for (var cnt = 0; cnt < items.length; cnt++) {
