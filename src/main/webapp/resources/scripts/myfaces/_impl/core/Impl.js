@@ -24,64 +24,63 @@
 _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.prototype */ {
 
     //third option myfaces._impl.xhrCoreAjax which will be the new core impl for now
-    _transport      : myfaces._impl.core._Runtime.getGlobalConfig("transport", myfaces._impl.xhrCore._Transports),
+    _transport:myfaces._impl.core._Runtime.getGlobalConfig("transport", myfaces._impl.xhrCore._Transports),
 
     /**
      * external event listener queue!
      */
-    _evtListeners   : new (myfaces._impl.core._Runtime.getGlobalConfig("eventListenerQueue", myfaces._impl._util._ListenerQueue))(),
+    _evtListeners:new (myfaces._impl.core._Runtime.getGlobalConfig("eventListenerQueue", myfaces._impl._util._ListenerQueue))(),
 
     /**
      * external error listener queue!
      */
-    _errListeners   : new (myfaces._impl.core._Runtime.getGlobalConfig("errorListenerQueue", myfaces._impl._util._ListenerQueue))(),
+    _errListeners:new (myfaces._impl.core._Runtime.getGlobalConfig("errorListenerQueue", myfaces._impl._util._ListenerQueue))(),
 
     /*CONSTANTS*/
 
     /*internal identifiers for options*/
-    IDENT_ALL:  "@all",
-    IDENT_NONE: "@none",
-    IDENT_THIS: "@this",
-    IDENT_FORM: "@form",
+    IDENT_ALL:"@all",
+    IDENT_NONE:"@none",
+    IDENT_THIS:"@this",
+    IDENT_FORM:"@form",
 
     /*
      * [STATIC] constants
      */
 
-    P_PARTIAL_SOURCE:   "javax.faces.source",
-    P_VIEWSTATE:        "javax.faces.ViewState",
-    P_AJAX:             "javax.faces.partial.ajax",
-    P_EXECUTE:          "javax.faces.partial.execute",
-    P_RENDER:           "javax.faces.partial.render",
-    P_EVT:              "javax.faces.partial.event",
+    P_PARTIAL_SOURCE:"javax.faces.source",
+    P_VIEWSTATE:"javax.faces.ViewState",
+    P_CLIENTWINDOW:"javax.faces.ClientWindow",
+    P_AJAX:"javax.faces.partial.ajax",
+    P_EXECUTE:"javax.faces.partial.execute",
+    P_RENDER:"javax.faces.partial.render",
+    P_EVT:"javax.faces.partial.event",
+    P_WINDOW_ID:"javax.faces.ClientWindow",
+    P_RESET_VALUES:"javax.faces.partial.resetValues",
 
     /* message types */
-    ERROR: "error",
-    EVENT: "event",
+    ERROR:"error",
+    EVENT:"event",
 
     /* event emitting stages */
-    BEGIN:      "begin",
-    COMPLETE:   "complete",
-    SUCCESS:    "success",
+    BEGIN:"begin",
+    COMPLETE:"complete",
+    SUCCESS:"success",
 
     /*ajax errors spec 14.4.2*/
-    HTTPERROR:      "httpError",
-    EMPTY_RESPONSE: "emptyResponse",
-    MALFORMEDXML:   "malformedXML",
-    SERVER_ERROR:   "serverError",
-    CLIENT_ERROR:   "clientError",
-    TIMEOUT_EVENT:  "timeout",
-
+    HTTPERROR:"httpError",
+    EMPTY_RESPONSE:"emptyResponse",
+    MALFORMEDXML:"malformedXML",
+    SERVER_ERROR:"serverError",
+    CLIENT_ERROR:"clientError",
+    TIMEOUT_EVENT:"timeout",
 
     /*error reporting threshold*/
-    _threshold: "ERROR",
+    _threshold:"ERROR",
 
     /*blockfilter for the passthrough filtering, the attributes given here
      * will not be transmitted from the options into the passthrough*/
-    _BLOCKFILTER: {onerror: 1, onevent: 1, render: 1, execute: 1, myfaces: 1},
-
-    _separator: null,
-
+    _BLOCKFILTER:{onerror:1, onevent:1, render:1, execute:1, myfaces:1, delay:1, resetValues:1},
 
     /**
      * collect and encode data for a given form element (must be of type form)
@@ -91,7 +90,7 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
      * @throws Error in case of the given element not being of type form!
      * https://issues.apache.org/jira/browse/MYFACES-2110
      */
-    getViewState : function(form) {
+    getViewState:function (form) {
         /**
          *  typecheck assert!, we opt for strong typing here
          *  because it makes it easier to detect bugs
@@ -101,8 +100,8 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
         }
 
         if (!form
-                || !form.nodeName
-                || form.nodeName.toLowerCase() != "form") {
+            || !form.nodeName
+            || form.nodeName.toLowerCase() != "form") {
             throw new Error(this._Lang.getMessage("ERR_VIEWSTATE"));
         }
 
@@ -133,8 +132,8 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
      * a) transformArguments out of the function
      * b) passThrough handling with a map copy with a filter map block map
      */
-    request : function(elem, event, options) {
-        if(this._delayTimeout) {
+    request:function (elem, event, options) {
+        if (this._delayTimeout) {
             clearTimeout(this._delayTimeout);
             delete this._delayTimeout;
         }
@@ -143,8 +142,7 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
          *all the time
          **/
         var _Lang = this._Lang,
-                _Dom = this._Dom,
-                WINDOW_ID = "javax.faces.windowId";
+            _Dom = this._Dom;
         /*assert if the onerror is set and once if it is set it must be of type function*/
         _Lang.assertType(options.onerror, "function");
         /*assert if the onevent is set and once if it is set it must be of type function*/
@@ -152,16 +150,6 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
 
         //options not set we define a default one with nothing
         options = options || {};
-
-        /*preparations for jsf 2.2 windowid handling*/
-        //pass the window id into the options if not set already
-        if (!options.windowId) {
-            var windowId = _Dom.getWindowId();
-            (windowId) ? options[WINDOW_ID] = windowId : null;
-        } else {
-            options[WINDOW_ID] = options.windowId;
-            delete options.windowId;
-        }
 
         /**
          * we cross reference statically hence the mapping here
@@ -173,13 +161,13 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
         }
 
         //improve the error messages if an empty elem is passed
-        if(!elem) {
-            throw _Lang.makeException(new Error(), "ArgNotSet", null, this._nameSpace, "request", _Lang.getMessage("ERR_MUST_BE_PROVIDED1","{0}: source  must be provided","jsf.ajax.request", "source element id"));
+        if (!elem) {
+            throw _Lang.makeException(new Error(), "ArgNotSet", null, this._nameSpace, "request", _Lang.getMessage("ERR_MUST_BE_PROVIDED1", "{0}: source  must be provided", "jsf.ajax.request", "source element id"));
         }
         var oldElem = elem;
         elem = _Dom.byIdOrName(elem);
-        if(!elem) {
-            throw _Lang.makeException(new Error(), "Notfound", null, this._nameSpace, "request", _Lang.getMessage("ERR_PPR_UNKNOWNCID","{0}: Node with id {1} could not be found from source",this._nameSpace+".request", oldElem));
+        if (!elem) {
+            throw _Lang.makeException(new Error(), "Notfound", null, this._nameSpace, "request", _Lang.getMessage("ERR_PPR_UNKNOWNCID", "{0}: Node with id {1} could not be found from source", this._nameSpace + ".request", oldElem));
         }
 
         var elementId = _Dom.nodeIdOrName(elem);
@@ -187,6 +175,8 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
         /*
          * We make a copy of our options because
          * we should not touch the incoming params!
+         * this copy is also the pass through parameters
+         * which are sent down our request
          */
         var passThrgh = _Lang.mixMaps({}, options, true, this._BLOCKFILTER);
 
@@ -199,13 +189,17 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
          * onevent and onerror
          */
         var context = {
-            source: elem,
-            onevent: options.onevent,
-            onerror: options.onerror,
+            source:elem,
+            onevent:options.onevent,
+            onerror:options.onerror,
 
             //TODO move the myfaces part into the _mfInternal part
-            myfaces: options.myfaces
+            myfaces:options.myfaces,
+            _mfInternal:{}
         };
+        //additional meta information to speed things up, note internal non jsf
+        //pass through options are stored under _mfInternal in the context
+        var mfInternal = context._mfInternal;
 
         /**
          * fetch the parent form
@@ -215,8 +209,36 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
          * with detached objects
          */
         var form = (options.myfaces && options.myfaces.form) ?
-                _Lang.byId(options.myfaces.form) :
-                this._getForm(elem, event);
+            _Lang.byId(options.myfaces.form) :
+            this._getForm(elem, event);
+
+        /**
+         * JSF2.2 client window must be part of the issuing form so it is encoded
+         * automatically in the request
+         */
+            //we set the client window before encoding by a call to jsf.getClientWindow
+        var clientWindow = jsf.getClientWindow(form);
+        //in case someone decorates the getClientWindow we reset the value from
+        //what we are getting
+        if ('undefined' != typeof clientWindow && null != clientWindow) {
+            var formElem = _Dom.getNamedElementFromForm(form, this.P_CLIENTWINDOW);
+            if (formElem) {
+                //we store the value for later processing during the ajax phase
+                //job so that we do not get double values
+                context._mfInternal._clientWindow = jsf.getClientWindow(form);
+            } else {
+                passThrgh[this.P_CLIENTWINDOW] = jsf.getClientWindow(form);
+            }
+        } /*  spec proposal
+        else {
+            var formElem = _Dom.getNamedElementFromForm(form, this.P_CLIENTWINDOW);
+            if (formElem) {
+                context._mfInternal._clientWindow = "undefined";
+            } else {
+                passThrgh[this.P_CLIENTWINDOW] = "undefined";
+            }
+        }
+        */
 
         /**
          * binding contract the javax.faces.source must be set
@@ -228,14 +250,24 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
          */
         passThrgh[this.P_AJAX] = true;
 
+        /**
+         * if resetValues is set to true
+         * then we have to set javax.faces.resetValues as well
+         * as pass through parameter
+         * the value has to be explicitly true, according to
+         * the specs jsdoc
+         */
+        if(options.resetValues === true) {
+            passThrgh[this.P_RESET_VALUES] = true;
+        }
+
         if (options.execute) {
             /*the options must be a blank delimited list of strings*/
             /*compliance with Mojarra which automatically adds @this to an execute
              * the spec rev 2.0a however states, if none is issued nothing at all should be sent down
              */
-            if(options.execute.indexOf("@this") == -1) {
-                options.execute = options.execute + " @this";
-            }
+            options.execute = (options.execute.indexOf("@this") == -1) ? options.execute : options.execute;
+
             this._transformList(passThrgh, this.P_EXECUTE, options.execute, form, elementId);
         } else {
             passThrgh[this.P_EXECUTE] = elementId;
@@ -259,11 +291,6 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
          */
         var transportType = this._getTransportType(context, passThrgh, form);
 
-        //additional meta information to speed things up, note internal non jsf
-        //pass through options are stored under _mfInternal in the context
-        context._mfInternal = {};
-        var mfInternal = context._mfInternal;
-
         mfInternal["_mfSourceFormId"] = form.id;
         mfInternal["_mfSourceControlId"] = elementId;
         mfInternal["_mfTransportType"] = transportType;
@@ -275,14 +302,16 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
         //wont hurt but for the sake of compatibility we are going to add it
         passThrgh[form.id] = form.id;
 
-        //delay handling is an experimental feature which will most likely
-        //make it into jsf 2.2
         /* jsf2.2 only: options.delay || */
-        var delayTimeout = this._RT.getLocalOrGlobalConfig(context, "delay", false);
+        var delayTimeout = options.delay || this._RT.getLocalOrGlobalConfig(context, "delay", false);
         if (delayTimeout) {
-            this._delayTimeout = setTimeout(_Lang.hitch(this, function() {
+            if (this._delayTimeout) {
+                clearTimeout(this._delayTimeout);
+            }
+            this._delayTimeout = setTimeout(_Lang.hitch(this, function () {
                 this._transport[transportType](elem, form, context, passThrgh);
-            }), delayTimeout);
+                this._delayTimeout = null;
+            }), parseInt(delayTimeout));
         } else {
             this._transport[transportType](elem, form, context, passThrgh);
         }
@@ -295,7 +324,7 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
      * @param elem
      * @param event
      */
-    _getForm: function(elem, event) {
+    _getForm:function (elem, event) {
         var _Dom = this._Dom;
         var _Lang = this._Lang;
         var form = _Dom.fuzzyFormDetection(elem);
@@ -321,7 +350,7 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
      * @param passThrgh  pass through values
      * @param form the form which issues the request
      */
-    _getTransportType: function(context, passThrgh, form) {
+    _getTransportType:function (context, passThrgh, form) {
         /**
          * if execute or render exist
          * we have to pass them down as a blank delimited string representation
@@ -330,16 +359,28 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
             //for now we turn off the transport auto selection, to enable 2.0 backwards compatibility
             //on protocol level, the file upload only can be turned on if the auto selection is set to true
         var getConfig = this._RT.getLocalOrGlobalConfig,
-                _Lang = this._Lang,
-                _Dom = this._Dom;
+            _Lang = this._Lang,
+            _Dom = this._Dom;
 
-        var transportAutoSelection = getConfig(context, "transportAutoSelection", false);
-        var isMultipart = (transportAutoSelection && _Dom.getAttribute(form, "enctype") == "multipart/form-data") ?
-                _Dom.isMultipartCandidate(passThrgh[this.P_EXECUTE]) :
-                false;
-
+        var transportAutoSelection = getConfig(context, "transportAutoSelection", true);
+        /*var isMultipart = (transportAutoSelection && _Dom.getAttribute(form, "enctype") == "multipart/form-data") ?
+         _Dom.isMultipartCandidate((!getConfig(context, "pps",false))? form : passThrgh[this.P_EXECUTE]) :
+         false;
+         **/
+        if (!transportAutoSelection) {
+            return getConfig(context, "transportType", "xhrQueuedPost");
+        }
+        var multiPartCandidate = _Dom.isMultipartCandidate((!getConfig(context, "pps", false)) ?
+            form : passThrgh[this.P_EXECUTE]);
+        var multipartForm = (_Dom.getAttribute(form, "enctype") || "").toLowerCase() == "multipart/form-data";
+        //spec section jsdoc, if we have a multipart candidate in our execute (aka fileupload)
+        //and the form is not multipart then we have to raise an error
+        if (multiPartCandidate && !multipartForm) {
+            throw _Lang.makeException(new Error(), null, null, this._nameSpace, "_getTransportType", _Lang.getMessage("ERR_NO_MULTIPART_FORM", "No Multipart form", form.id));
+        }
+        var isMultipart = multiPartCandidate && multipartForm;
         /**
-         * multiple transports upcoming jsf 2.1 feature currently allowed
+         * multiple transports upcoming jsf 2.2 feature currently allowed
          * default (no value) xhrQueuedPost
          *
          * xhrQueuedPost
@@ -351,8 +392,8 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
          *
          */
         var transportType = (!isMultipart) ?
-                getConfig(context, "transportType", "xhrQueuedPost") :
-                getConfig(context, "transportType", "multipartQueuedPost");
+            getConfig(context, "transportType", "xhrQueuedPost") :
+            getConfig(context, "transportType", "multipartQueuedPost");
         if (!this._transport[transportType]) {
             //throw new Error("Transport type " + transportType + " does not exist");
             throw new Error(_Lang.getMessage("ERR_TRANSPORT", null, transportType));
@@ -373,26 +414,26 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
      * @param form
      * @param elementId
      */
-    _transformList: function(passThrgh, target, srcStr, form, elementId) {
+    _transformList:function (passThrgh, target, srcStr, form, elementId) {
         var _Lang = this._Lang;
         //this is probably the fastest transformation method
         //it uses an array and an index to position all elements correctly
         //the offset variable is there to prevent 0 which results in a javascript
         //false
-        srcStr = _Lang.trim(srcStr);
+        srcStr = this._Lang.trim(srcStr);
         var offset = 1,
-                vals = (srcStr) ? srcStr.split(/\s+/) : [],
-                idIdx = (vals.length) ? _Lang.arrToMap(vals, offset) : {},
+            vals = (srcStr) ? srcStr.split(/\s+/) : [],
+            idIdx = (vals.length) ? _Lang.arrToMap(vals, offset) : {},
 
             //helpers to improve speed and compression
-                none = idIdx[this.IDENT_NONE],
-                all = idIdx[this.IDENT_ALL],
-                theThis = idIdx[this.IDENT_THIS],
-                theForm = idIdx[this.IDENT_FORM];
+            none = idIdx[this.IDENT_NONE],
+            all = idIdx[this.IDENT_ALL],
+            theThis = idIdx[this.IDENT_THIS],
+            theForm = idIdx[this.IDENT_FORM];
 
         if (none) {
             //in case of none nothing is returned
-            if('undefined' != typeof passThrgh.target) {
+            if ('undefined' != typeof passThrgh.target) {
                 delete passThrgh.target;
             }
             return passThrgh;
@@ -418,17 +459,15 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
         return passThrgh;
     },
 
-    addOnError : function(/*function*/errorListener) {
+    addOnError:function (/*function*/errorListener) {
         /*error handling already done in the assert of the queue*/
         this._errListeners.enqueue(errorListener);
     },
 
-    addOnEvent : function(/*function*/eventListener) {
+    addOnEvent:function (/*function*/eventListener) {
         /*error handling already done in the assert of the queue*/
         this._evtListeners.enqueue(eventListener);
     },
-
-
 
     /**
      * implementation triggering the error chain
@@ -436,8 +475,8 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
      * @param {Object} request the request object which comes from the xhr cycle
      * @param {Object} context (Map) the context object being pushed over the xhr cycle keeping additional metadata
      * @param {String} name the error name
-     * @param {String} serverErrorName the server error name in case of a server error
-     * @param {String} serverErrorMessage the server error message in case of a server error
+     * @param {String} errorName the server error name in case of a server error
+     * @param {String} errorMessage the server error message in case of a server error
      * @param {String} caller optional caller reference for extended error messages
      * @param {String} callFunc optional caller Function reference for extended error messages
      *
@@ -450,13 +489,13 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
      *
      *
      */
-    sendError : function sendError(/*Object*/request, /*Object*/ context, /*String*/ name, /*String*/ serverErrorName, /*String*/ serverErrorMessage, caller, callFunc) {
+    sendError:function sendError(/*Object*/request, /*Object*/ context, /*String*/ name, /*String*/ errorName, /*String*/ errorMessage, caller, callFunc) {
         var _Lang = myfaces._impl._util._Lang;
         var UNKNOWN = _Lang.getMessage("UNKNOWN");
 
         var eventData = {};
-        //we keep this in a closure because we might reuse it for our serverErrorMessage
-        var malFormedMessage = function() {
+        //we keep this in a closure because we might reuse it for our errorMessage
+        var malFormedMessage = function () {
             return (name && name === myfaces._impl.core.Impl.MALFORMEDXML) ? _Lang.getMessage("ERR_MALFORMEDXML") : "";
         };
 
@@ -465,10 +504,8 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
         eventData.type = this.ERROR;
 
         eventData.status = name || UNKNOWN;
-        eventData.serverErrorName = serverErrorName || UNKNOWN;
-        eventData.serverErrorMessage = serverErrorMessage || UNKNOWN;
-
-
+        eventData.errorName = errorName || UNKNOWN;
+        eventData.errorMessage = errorMessage || UNKNOWN;
 
         try {
             eventData.source = context.source || UNKNOWN;
@@ -478,11 +515,11 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
         } catch (e) {
             // silently ignore: user can find out by examining the event data
         }
-         //extended error message only in dev mode
-        if(jsf.getProjectStage() === "Development") {
-            eventData.serverErrorMessage = eventData.serverErrorMessage || "";
-            eventData.serverErrorMessage = (caller)?  eventData.serverErrorMessage + "\nCalling class: "+caller:eventData.serverErrorMessage;
-            eventData.serverErrorMessage = (callFunc)? eventData.serverErrorMessage + "\n Calling function: "+callFunc :eventData.serverErrorMessage;
+        //extended error message only in dev mode
+        if (jsf.getProjectStage() === "Development") {
+            eventData.errorMessage = eventData.errorMessage || "";
+            eventData.errorMessage = (caller) ? eventData.errorMessage + "\nCalling class: " + caller : eventData.errorMessage;
+            eventData.errorMessage = (callFunc) ? eventData.errorMessage + "\n Calling function: " + callFunc : eventData.errorMessage;
         }
 
         /**/
@@ -495,20 +532,19 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
 
         if (jsf.getProjectStage() === "Development" && this._errListeners.length() == 0 && !context["onerror"]) {
             var DIVIDER = "--------------------------------------------------------",
-                    defaultErrorOutput = myfaces._impl.core._Runtime.getGlobalConfig("defaultErrorOutput", alert),
-                    finalMessage = [],
-                    //we remap the function to achieve a better compressability
-                    pushMsg = _Lang.hitch(finalMessage, finalMessage.push);
+                defaultErrorOutput = myfaces._impl.core._Runtime.getGlobalConfig("defaultErrorOutput", alert),
+                finalMessage = [],
+                //we remap the function to achieve a better compressability
+                pushMsg = _Lang.hitch(finalMessage, finalMessage.push);
 
-            (serverErrorMessage) ? pushMsg(_Lang.getMessage("MSG_ERROR_MESSAGE") +" "+ serverErrorMessage +"\n") : null;
-            
+            (errorMessage) ? pushMsg(_Lang.getMessage("MSG_ERROR_MESSAGE") + " " + errorMessage + "\n") : null;
+
             pushMsg(DIVIDER);
 
-            (caller)? pushMsg("Calling class:"+ caller): null;
-            (callFunc)? pushMsg("Calling function:"+ callFunc): null;
-            (name) ? pushMsg(_Lang.getMessage("MSG_ERROR_NAME") +" "+name ): null;
-            (serverErrorName && name != serverErrorName) ? pushMsg("Server error name: "+ serverErrorName ) : null;
-
+            (caller) ? pushMsg("Calling class:" + caller) : null;
+            (callFunc) ? pushMsg("Calling function:" + callFunc) : null;
+            (name) ? pushMsg(_Lang.getMessage("MSG_ERROR_NAME") + " " + name) : null;
+            (errorName && name != errorName) ? pushMsg("Server error name: " + errorName) : null;
 
             pushMsg(malFormedMessage());
             pushMsg(DIVIDER);
@@ -520,7 +556,7 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
     /**
      * sends an event
      */
-    sendEvent : function sendEvent(/*Object*/request, /*Object*/ context, /*event name*/ name) {
+    sendEvent:function sendEvent(/*Object*/request, /*Object*/ context, /*event name*/ name) {
         var _Lang = myfaces._impl._util._Lang;
         var eventData = {};
         var UNKNOWN = _Lang.getMessage("UNKNOWN");
@@ -534,7 +570,7 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
 
             try {
                 //we bypass a problem with ie here, ie throws an exception if no status is given on the xhr object instead of just passing a value
-                var getValue = function(value, key) {
+                var getValue = function (value, key) {
                     try {
                         return value[key]
                     } catch (e) {
@@ -549,7 +585,7 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
             } catch (e) {
                 var impl = myfaces._impl.core._Runtime.getGlobalConfig("jsfAjaxImpl", myfaces._impl.core.Impl);
                 impl.sendError(request, context, this.CLIENT_ERROR, "ErrorRetrievingResponse",
-                        _Lang.getMessage("ERR_CONSTRUCT", e.toString()));
+                    _Lang.getMessage("ERR_CONSTRUCT", e.toString()));
 
                 //client errors are not swallowed
                 throw e;
@@ -567,15 +603,38 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
         this._evtListeners.broadcastEvent(eventData);
     },
 
-
     /**
      * Spec. 13.3.3
      * Examining the response markup and updating the DOM tree
      * @param {XMLHttpRequest} request - the ajax request
      * @param {Object} context - the ajax context
      */
-    response : function(request, context) {
+    response:function (request, context) {
         this._RT.getLocalOrGlobalConfig(context, "responseHandler", myfaces._impl.xhrCore._AjaxResponse).processResponse(request, context);
+    },
+
+    /**
+     * fetches the separator char from the given script tags
+     *
+     * @return {char} the separator char for the given script tags
+     */
+    getSeparatorChar:function () {
+        if (this._separator) {
+            return this.separatorchar;
+        }
+        var SEPARATOR_CHAR = "separatorchar",
+            found = false,
+            getConfig = myfaces._impl.core._Runtime.getGlobalConfig,
+            scriptTags = document.getElementsByTagName("script");
+        for (var i = 0; i < scriptTags.length && !found; i++) {
+            if (scriptTags[i].src.search(/\/javax\.faces\.resource.*\/jsf\.js.*separator/) != -1) {
+                found = true;
+                var result = scriptTags[i].src.match(/separator=([^&;]*)/);
+                this._separator = decodeURIComponent(result[1]);
+            }
+        }
+        this._separator = getConfig(SEPARATOR_CHAR, this._separator || ":");
+        return this._separator;
     },
 
     /**
@@ -583,25 +642,23 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
      * it cannot be cached and must be delivered over the server
      * The value for it comes from the request parameter of the jsf.js script called "stage".
      */
-    getProjectStage : function() {
+    getProjectStage:function () {
         //since impl is a singleton we only have to do it once at first access
 
-        if(!this._projectStage) {
+        if (!this._projectStage) {
             var PRJ_STAGE = "projectStage",
-                    STG_PROD = "Production",
+                STG_PROD = "Production",
 
-                    scriptTags = document.getElementsByTagName("script"),
-                    getConfig = myfaces._impl.core._Runtime.getGlobalConfig,
-                    projectStage = null,
-                    found = false,
-                    allowedProjectStages = {STG_PROD:1,"Development":1, "SystemTest":1,"UnitTest":1};
+                scriptTags = document.getElementsByTagName("script"),
+                getConfig = myfaces._impl.core._Runtime.getGlobalConfig,
+                projectStage = null,
+                found = false,
+                allowedProjectStages = {STG_PROD:1, "Development":1, "SystemTest":1, "UnitTest":1};
 
             /* run through all script tags and try to find the one that includes jsf.js */
             for (var i = 0; i < scriptTags.length && !found; i++) {
                 if (scriptTags[i].src.search(/\/javax\.faces\.resource\/jsf\.js.*ln=javax\.faces/) != -1) {
                     var result = scriptTags[i].src.match(/stage=([^&;]*)/);
-                    //alert("result found");
-                    //alert(result);
                     found = true;
                     if (result) {
                         // we found stage=XXX
@@ -617,7 +674,7 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
                 }
             }
             /* we could not find anything valid --> return the default value */
-            this._projectStage = projectStage || getConfig(PRJ_STAGE, STG_PROD);
+            this._projectStage = getConfig(PRJ_STAGE, projectStage || STG_PROD);
         }
         return this._projectStage;
     },
@@ -642,11 +699,11 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
      *   it says it is optional, after asking, it meant that event must be passed down
      *   but can be undefined
      */
-    chain : function(source, event) {
-        var len         = arguments.length;
-        var _Lang       = this._Lang;
-        var throwErr    = function(msgKey) {
-            throw Error("jsf.util.chain: "+ _Lang.getMessage(msgKey));
+    chain:function (source, event) {
+        var len = arguments.length;
+        var _Lang = this._Lang;
+        var throwErr = function (msgKey) {
+            throw Error("jsf.util.chain: " + _Lang.getMessage(msgKey));
         };
         /**
          * generic error condition checker which raises
@@ -654,12 +711,12 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
          * @param assertion
          * @param message
          */
-        var errorCondition = function(assertion, message) {
-            if(assertion === true) throwErr(message);
+        var errorCondition = function (assertion, message) {
+            if (assertion === true) throwErr(message);
         };
-        var FUNC    = 'function';
-        var ISSTR   = _Lang.isString;
-        
+        var FUNC = 'function';
+        var ISSTR = _Lang.isString;
+
         //the spec is contradicting here, it on one hand defines event, and on the other
         //it says it is optional, I have cleared this up now
         //the spec meant the param must be passed down, but can be 'undefined'
@@ -714,45 +771,60 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
      * @param context the context affected by this error
      * @param exception the exception being thrown
      */
-    stdErrorHandler: function(request, context, exception) {
-            //newer browsers do not allow to hold additional values on native objects like exceptions
-            //we hence capsule it into the request, which is gced automatically
-            //on ie as well, since the stdErrorHandler usually is called between requests
-            //this is a valid approach
-            if (this._threshold == "ERROR") {
-                var mfInternal = exception._mfInternal || {};
+    stdErrorHandler:function (request, context, exception) {
+        //newer browsers do not allow to hold additional values on native objects like exceptions
+        //we hence capsule it into the request, which is gced automatically
+        //on ie as well, since the stdErrorHandler usually is called between requests
+        //this is a valid approach
+        if (this._threshold == "ERROR") {
+            var mfInternal = exception._mfInternal || {};
 
-                var finalMsg = [];
-                finalMsg.push(exception.message);
-                this.sendError(request, context,
-                        mfInternal.title || this.CLIENT_ERROR, mfInternal.name || exception.name, finalMsg.join("\n"), mfInternal.caller, mfInternal.callFunc);
-            }
+            var finalMsg = [];
+            finalMsg.push(exception.message);
+            this.sendError(request, context,
+                mfInternal.title || this.CLIENT_ERROR, mfInternal.name || exception.name, finalMsg.join("\n"), mfInternal.caller, mfInternal.callFunc);
+        }
     },
 
     /**
-     * fetches the separator char from the given script tags
-     *
-     * @return {char} the separator char for the given script tags
+     * @return the client window id of the current window, if one is given
      */
-    getSeparatorChar: function() {
+    getClientWindow:function (node) {
+        var fetchWindowIdFromForms = this._Lang.hitch(this, function (forms) {
+            var result_idx = {};
+            var result;
+            var foundCnt = 0;
+            for (var cnt = forms.length - 1; cnt >= 0; cnt--) {
 
-        if(this._separator) {
-            return this._separator;
-        }
+                var currentForm = forms[cnt];
+                var winIdElement = this._Dom.getNamedElementFromForm(currentForm, this.P_WINDOW_ID);
+                var windowId = (winIdElement) ? winIdElement.value : null;
 
-        var scriptTags = document.getElementsByTagName("script");
-        var found = false;
-
-        for (var i = 0; i < scriptTags.length && !found; i++) {
-            if (scriptTags[i].src.search(/\/javax\.faces\.resource.*\/jsf\.js.*separator/) != -1) {
-                found = true;
-                var result = scriptTags[i].src.match(/separator=([^&;]*)/);
-                this.separator = decodeURIComponent(result[1]);
+                if (windowId) {
+                    if (foundCnt > 0 && "undefined" == typeof result_idx[windowId]) throw Error("Multiple different windowIds found in document");
+                    result = windowId;
+                    result_idx[windowId] = true;
+                    foundCnt++;
+                }
             }
-        }
+            return result;
+        });
 
-        this.separator = this.separator || ":";
-        return this.separator;
+        var fetchWindowIdFromURL = function () {
+            var href = window.location.href, windowId = "jfwid";
+            var regex = new RegExp("[\\?&]" + windowId + "=([^&#\\;]*)");
+            var results = regex.exec(href);
+            //initial trial over the url and a regexp
+            if (results != null) return results[1];
+            return null;
+        };
+
+        //byId ($)
+        var finalNode = (node) ? this._Dom.byId(node) : document.body;
+
+        var forms = this._Dom.findByTagName(finalNode, "form");
+        var result = fetchWindowIdFromForms(forms);
+        return (null != result) ? result : fetchWindowIdFromURL();
     }
 });
 

@@ -8,7 +8,7 @@
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
+ * distributed under the License is distributed on an "AS IS" BASIS,©
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -122,12 +122,16 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
             finalScripts = [],
             execScrpt = function(item) {
                 var tagName = item.tagName;
-                var itemType = item.type || "";
-                if(tagName && _Lang.equalsIgnoreCase(tagName, "script") &&
-                        (itemType === "" || _Lang.equalsIgnoreCase(itemType,"text/javascript") ||
-                         _Lang.equalsIgnoreCase(itemType,"javascript") ||
-                         _Lang.equalsIgnoreCase(itemType,"text/ecmascript") ||
-                         _Lang.equalsIgnoreCase(itemType,"ecmascript"))) {
+                var type = item.type || "";
+                //script type javascript has to be handled by eval, other types
+                //must be handled by the browser
+                if (tagName && _Lang.equalsIgnoreCase(tagName, "script") &&
+                        (type === "" ||
+                        _Lang.equalsIgnoreCase(type,"text/javascript") ||
+                        _Lang.equalsIgnoreCase(type,"javascript") ||
+                        _Lang.equalsIgnoreCase(type,"text/ecmascript") ||
+                        _Lang.equalsIgnoreCase(type,"ecmascript"))) {
+
                     var src = item.getAttribute('src');
                     if ('undefined' != typeof src
                             && null != src
@@ -184,18 +188,14 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
                 _RT.globalEval(finalScripts.join("\n"));
             }
         } catch (e) {
-            if(window.console && window.console.error) {
-               //not sure if we
-               //should use our standard
-               //error mechanisms here
-               //because in the head appendix
-               //method only a console
-               //error would be raised as well
-               console.error(e.message||e.description);
-            } else {
-                if(jsf.ajax.getProjectStage() === "Development") {
-                    alert("Error in evaluated javascript:"+ (e.message||e.description));
-                }
+            //we are now in accordance with the rest of the system of showing errors only in development mode
+            //the default error output is alert we always can override it with
+            //window.myfaces = window.myfaces || {};
+            //myfaces.config =  myfaces.config || {};
+            //myfaces.config.defaultErrorOutput = console.error;
+            if(jsf.getProjectStage() === "Development") {
+                var defaultErrorOutput = myfaces._impl.core._Runtime.getGlobalConfig("defaultErrorOutput", alert);
+                defaultErrorOutput("Error in evaluated javascript:"+ (e.message || e.description || e));
             }
         } finally {
             //the usual ie6 fix code
@@ -253,7 +253,7 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
                 elementId = elem.name;
 
                 //last check for uniqueness
-                if (this.getElementsByName(elementId).length > 1) {
+                if (document.getElementsByName(elementId).length > 1) {
                     //no unique element name so we need to perform
                     //a return null to let the caller deal with this issue
                     return null;
@@ -652,6 +652,35 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
         }
     },
 
+    isFunctionNative: function(func) {
+        return /^\s*function[^{]+{\s*\[native code\]\s*}\s*$/.test(String(func));
+    },
+
+    detectAttributes: function(element) {
+        //test if 'hasAttribute' method is present and its native code is intact
+        //for example, Prototype can add its own implementation if missing
+        if (element.hasAttribute && this.isFunctionNative(element.hasAttribute)) {
+            return function(name) {
+                return element.hasAttribute(name);
+            }
+        } else {
+            try {
+                //when accessing .getAttribute method without arguments does not throw an error then the method is not available
+                element.getAttribute;
+
+                var html = element.outerHTML;
+                var startTag = html.match(/^<[^>]*>/)[0];
+                return function(name) {
+                    return startTag.indexOf(name + '=') > -1;
+                }
+            } catch (ex) {
+                return function(name) {
+                    return element.getAttribute(name);
+                }
+            }
+        }
+    },
+
     /**
      * detaches a set of nodes from their parent elements
      * in a browser independend manner
@@ -943,12 +972,6 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
         return ret;
     },
 
-    //TODO this function is incorrect
-    //find by name only works
-    //on certain elements
-    //since we are going to move to a
-    //new codebase anyway I do not fix this anymore
-    //it is unused by the jsf spec impl anyway
     findByName : function(fragment, name) {
         this._assertStdParams(fragment, name, "findByName", ["fragment", "name"]);
 
@@ -1231,8 +1254,26 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
         return true;
     },
 
-    isMultipartCandidate: function(/*executes*/) {
-        //implementation in the experimental part
+    /**
+     * jsf2.2
+     * checks if there is a fileupload element within
+     * the executes list
+     *
+     * @param executes the executes list
+     * @return {Boolean} true if there is a fileupload element
+     */
+    isMultipartCandidate:function (executes) {
+        if (this._Lang.isString(executes)) {
+            executes = this._Lang.strToArray(executes, /\s+/);
+        }
+
+        for (var cnt = 0, len = executes.length; cnt < len ; cnt ++) {
+            var element = this.byId(executes[cnt]);
+            var inputs = this.findByTagName(element, "input", true);
+            for (var cnt2 = 0, len2 = inputs.length; cnt2 < len2 ; cnt2++) {
+                if (this.getAttribute(inputs[cnt2], "type") == "file") return true;
+            }
+        }
         return false;
     },
 
@@ -1254,14 +1295,8 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
         return this._dummyPlaceHolder;
     },
 
-    /**
-     * fetches the window id for the current request
-     * note, this is a preparation method for jsf 2.2
-     *
-     */
-    getWindowId: function() {
-        //implementation in the experimental part
-        return null;
+    getNamedElementFromForm: function(form, elementId) {
+        return form[elementId];
     }
 });
 
