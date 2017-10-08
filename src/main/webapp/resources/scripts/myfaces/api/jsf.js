@@ -60,6 +60,13 @@ if (!window.jsf) {
          */
         this.implversion = 6;
 
+
+        /**
+         * the separator char
+         * @type {string}
+         */
+        this.separatorchar = ":";
+
         /**
          * This method is responsible for the return of a given project stage as defined
          * by the jsf specification.
@@ -93,6 +100,14 @@ if (!window.jsf) {
             var impl = myfaces._impl.core._Runtime.getGlobalConfig("jsfAjaxImpl", myfaces._impl.core.Impl);
             return impl.getViewState(formElement);
         };
+
+        var _t = this;
+
+        (function getSeparatorChar() {
+            var _impl = myfaces._impl.core._Runtime.getGlobalConfig("jsfAjaxImpl", myfaces._impl.core.Impl);
+            _t.separatorchar = _impl.getSeparatorChar();
+            debugger;
+        })();
     };
 	//jsdoc helper to avoid warnings, we map later 
 	window.jsf = jsf;

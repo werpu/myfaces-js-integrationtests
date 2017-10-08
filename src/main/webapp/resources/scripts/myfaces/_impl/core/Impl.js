@@ -80,6 +80,7 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
      * will not be transmitted from the options into the passthrough*/
     _BLOCKFILTER: {onerror: 1, onevent: 1, render: 1, execute: 1, myfaces: 1},
 
+    _separator: null,
 
 
     /**
@@ -726,6 +727,32 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
                 this.sendError(request, context,
                         mfInternal.title || this.CLIENT_ERROR, mfInternal.name || exception.name, finalMsg.join("\n"), mfInternal.caller, mfInternal.callFunc);
             }
+    },
+
+    /**
+     * fetches the separator char from the given script tags
+     *
+     * @return {char} the separator char for the given script tags
+     */
+    getSeparatorChar: function() {
+
+        if(this._separator) {
+            return this._separator;
+        }
+
+        var scriptTags = document.getElementsByTagName("script");
+        var found = false;
+
+        for (var i = 0; i < scriptTags.length && !found; i++) {
+            if (scriptTags[i].src.search(/\/javax\.faces\.resource.*\/jsf\.js.*separator/) != -1) {
+                found = true;
+                var result = scriptTags[i].src.match(/separator=([^&;]*)/);
+                this.separator = decodeURIComponent(result[1]);
+            }
+        }
+
+        this.separator = this.separator || ":";
+        return this.separator;
     }
 });
 

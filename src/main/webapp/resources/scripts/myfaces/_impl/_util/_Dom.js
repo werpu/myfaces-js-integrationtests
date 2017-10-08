@@ -943,6 +943,12 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
         return ret;
     },
 
+    //TODO this function is incorrect
+    //find by name only works
+    //on certain elements
+    //since we are going to move to a
+    //new codebase anyway I do not fix this anymore
+    //it is unused by the jsf spec impl anyway
     findByName : function(fragment, name) {
         this._assertStdParams(fragment, name, "findByName", ["fragment", "name"]);
 
