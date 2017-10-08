@@ -201,9 +201,10 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
      * @private
      */
     _getViewRoot: function(context) {
-        return ("" === context.mfInternal.namingModeId) ?
+        return ("" === context._mfInternal.namingModeId) ?
             document.getElementsByTagName("body")[0]:
-            document.getElementsByTagName(context.mfInternal.namingModeId)[0]
+            document.getElementsByTagName(context._mfInternal.namingModeId)[0];
+
     },
 
     fixClientWindows:function (context, theForm) {
@@ -236,19 +237,19 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
         var mfInternal = context._mfInternal;
         var prefix = mfInternal.namingModeId;
         if(prefix != "") {
-            prefix = prefix + jsf.separatorchar;
+            prefix = prefix + jsf.separatorchar || ":";
         }
 
         //in IE7 looking up form elements with complex names (such as 'javax.faces.ViewState') fails in certain cases
         //iterate through the form elements to find the element, instead
-        var fieldToApply = this._Dom.getNamedElementFromForm(theForm, prefix+identifier);
+        var fieldToApply = this._Dom.byIdOrName(theForm, prefix+identifier);
 
         if (fieldToApply) {
             this._Dom.setAttribute(fieldToApply, "value", value);
         } else if (!fieldToApply) {
             var element = this._Dom.getDummyPlaceHolder();
             //spec error, two elements with the same id should not be there, TODO recheck the space if the name does not suffice alone
-            var postFix = jsf.separatorchar + Math.random();
+            var postFix = (jsf.separatorchar || ":") + Math.random();
             element.innerHTML = ["<input type='hidden'", "id='", (prefix + identifier + postFix) , "' name='", prefix+identifier , "' value='" , value , "' />"].join("");
             //now we go to proper dom handling after having to deal with another ie screwup
             try {
