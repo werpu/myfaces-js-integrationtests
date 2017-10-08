@@ -32,29 +32,29 @@
 _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhrCore._AjaxResponse.prototype */ {
 
     /*partial response types*/
-    RESP_PARTIAL:"partial-response",
-    RESP_TYPE_ERROR:"error",
-    RESP_TYPE_REDIRECT:"redirect",
-    RESP_TYPE_CHANGES:"changes",
+    RESP_PARTIAL: "partial-response",
+    RESP_TYPE_ERROR: "error",
+    RESP_TYPE_REDIRECT: "redirect",
+    RESP_TYPE_CHANGES: "changes",
 
     /*partial commands*/
-    CMD_CHANGES:"changes",
-    CMD_UPDATE:"update",
-    CMD_DELETE:"delete",
-    CMD_INSERT:"insert",
-    CMD_EVAL:"eval",
-    CMD_ERROR:"error",
-    CMD_ATTRIBUTES:"attributes",
-    CMD_EXTENSION:"extension",
-    CMD_REDIRECT:"redirect",
+    CMD_CHANGES: "changes",
+    CMD_UPDATE: "update",
+    CMD_DELETE: "delete",
+    CMD_INSERT: "insert",
+    CMD_EVAL: "eval",
+    CMD_ERROR: "error",
+    CMD_ATTRIBUTES: "attributes",
+    CMD_EXTENSION: "extension",
+    CMD_REDIRECT: "redirect",
 
     /*other constants*/
-    P_VIEWSTATE:"javax.faces.ViewState",
+    P_VIEWSTATE: "javax.faces.ViewState",
     P_CLIENTWINDOW: "javax.faces.ClientWindow",
-    P_VIEWROOT:"javax.faces.ViewRoot",
-    P_VIEWHEAD:"javax.faces.ViewHead",
-    P_VIEWBODY:"javax.faces.ViewBody",
-    P_RESOURCE:"javax.faces.Resource",
+    P_VIEWROOT: "javax.faces.ViewRoot",
+    P_VIEWHEAD: "javax.faces.ViewHead",
+    P_VIEWBODY: "javax.faces.ViewBody",
+    P_RESOURCE: "javax.faces.Resource",
 
     /**
      * uses response to start Html element replacement
@@ -68,7 +68,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
      * and if the CDATA block contains a body section the document body must be replaced!
      *
      */
-    processResponse:function (request, context) {
+    processResponse: function (request, context) {
         //mfinternal handling, note, the mfinternal is only optional
         //according to the spec
         context._mfInternal = context._mfInternal || {};
@@ -127,7 +127,6 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
             mfInternal.namingModeId = (partials.id || "");
 
 
-
             var childNodesLength = partials.childNodes.length;
 
             for (var loop = 0; loop < childNodesLength; loop++) {
@@ -155,16 +154,22 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
             }
 
             //fixup missing viewStates due to spec deficiencies
-            if(mfInternal.appliedViewState) {
+            if (mfInternal.appliedViewState) {
                 this.fixViewStates(context);
             }
-            if(mfInternal.appliedClientWindow) {
+            if (mfInternal.appliedClientWindow) {
                 this.fixClientWindows(context);
             }
 
             //spec jsdoc, the success event must be sent from response
             _Impl.sendEvent(request, context, _Impl["SUCCESS"]);
+        } catch (e) {
 
+            if (window.console && window.console.error) {
+                //any error should be logged
+                console.error(e);
+            }
+            throw e;
         } finally {
             delete mfInternal._updateElems;
             delete mfInternal._updateForms;
@@ -179,7 +184,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
      *
      * @param context
      */
-    fixViewStates:function (context) {
+    fixViewStates: function (context) {
         var _Lang = this._Lang;
         var mfInternal = context._mfInternal;
 
@@ -191,23 +196,11 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
          * JSF 2.3 we set all the viewstates under a given declared viewRoot or all forms
          * if none is given
          */
-        this._updateJSFClientArtifacts(context, this._getViewRoot(context), mfInternal.appliedViewState, this.P_VIEWSTATE);
+        this._updateJSFClientArtifacts(context,  mfInternal.appliedViewState, this.P_VIEWSTATE);
     },
 
-    /**
-     * returns a given viewRoot from the context data
-     * @param context the context data
-     * @returns {Node} a given viewRoot node if viewroot data is given otherwise the body element as viewRoot
-     * @private
-     */
-    _getViewRoot: function(context) {
-        return ("" === context._mfInternal.namingModeId) ?
-            document.getElementsByTagName("body")[0]:
-            document.getElementsByTagName(context._mfInternal.namingModeId)[0];
 
-    },
-
-    fixClientWindows:function (context, theForm) {
+    fixClientWindows: function (context, theForm) {
         var _Lang = this._Lang;
         var mfInternal = context._mfInternal;
 
@@ -219,7 +212,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
          * JSF 2.3 we set all the viewstates under a given declared viewRoot or all forms
          * if none is given
          */
-        this._updateJSFClientArtifacts(context, this._getViewRoot(context), mfInternal.appliedViewState, this.P_CLIENTWINDOW);
+        this._updateJSFClientArtifacts(context, mfInternal.appliedViewState, this.P_CLIENTWINDOW);
 
     },
 
@@ -230,22 +223,18 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
      * @param theForm {Node} the form to which the element has to be set to
      * @param context the current request context
      */
-    _applyJSFArtifactValueToForm:function (context, theForm, value, identifier) {
+    _applyJSFArtifactValueToForm: function (context, theForm, value, identifier) {
 
         if (!theForm) return;
 
-        var mfInternal = context._mfInternal;
-        var prefix = mfInternal.namingModeId;
-        if(prefix != "") {
-            prefix = prefix + jsf.separatorchar;
-        }
+        var prefix = this._getPrefix(context);
 
         //in IE7 looking up form elements with complex names (such as 'javax.faces.ViewState') fails in certain cases
         //iterate through the form elements to find the element, instead
         var fieldsFound = [];
 
         var elements = theForm.elements;
-        for (var i = 0, l = elements.length;  i < l; i++) {
+        for (var i = 0, l = elements.length; i < l; i++) {
             var e = elements[i];
             if (e.name.indexOf(identifier) != -1) {
                 fieldsFound.push(e);
@@ -260,7 +249,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
             var element = this._Dom.getDummyPlaceHolder();
             //spec error, two elements with the same id should not be there, TODO recheck the space if the name does not suffice alone
             var postFix = (jsf.separatorchar) + Math.random();
-            element.innerHTML = ["<input type='hidden'", "id='", (prefix + identifier + postFix) , "' name='", prefix+identifier , "' value='" , value , "' />"].join("");
+            element.innerHTML = ["<input type='hidden'", "id='", (theForm.id + jsf.separatorchar + identifier + postFix), "' name='", prefix + identifier, "' value='", value, "' />"].join("");
             //now we go to proper dom handling after having to deal with another ie screwup
             try {
                 theForm.appendChild(element.childNodes[0]);
@@ -280,23 +269,61 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
      *
      * @private
      */
-    _updateJSFClientArtifacts:function (context, elem, value, identifier) {
+    _updateJSFClientArtifacts: function (context, value, identifier) {
 
-       //elem not found for whatever reason
+        //elem not found for whatever reason
         //https://issues.apache.org/jira/browse/MYFACES-3544
-        if (!elem) return;
 
-        var replacedForms = _Dom.findByTagName(elem, "form", false);
+        var prefix = this._getPrefix(context);
 
-        var applyVST = _Lang.hitch(this, function (elem) {
-            this._applyJSFArtifactValueToForm(context, elem, value, identifier);
-        });
-
-        try {
-            _Lang.arrForEach(replacedForms, applyVST, 0, this);
-        } finally {
-            applyVST = null;
+        //do we still need the issuing form update? I guess it is needed.
+        var sourceForm = (context._mfInternal._mfSourceFormId) ? this._Dom.byId(context._mfInternal._mfSourceFormId) : null;
+        if (sourceForm) {
+            sourceForm = this._Dom.byId(sourceForm);
+            if (sourceForm) {
+                //some cases where the source form cannot be updated
+                //because it is gone
+                this._applyJSFArtifactValueToForm(context, sourceForm, value, identifier);
+            }
         }
+
+        //We update all elements under viewroot
+        //this clearly violates the jsf 2.3 jsdocs
+        //however I think that the jsdocs were sloppily updated
+        //because just updating the render targets under one viewroot and the issuing form
+        //again would leave broken viewstates
+        var viewRoot = this._getViewRoot(context);
+        var forms = viewRoot.getElementsByTagName("form") || [];
+
+        _Lang.arrForEach(forms, _Lang.hitch(this, function (elem) {
+            //update all forms which start with prefix (all render and execute targets
+            if (elem.id && elem.id.indexOf(prefix) == 0) {
+                this._applyJSFArtifactValueToForm(context, elem, value, identifier);
+            }
+        }));
+    },
+
+    _getViewRoot: function (context) {
+        var prefix = this._getPrefix(context);
+        if (prefix == "") {
+            return document.getElementsByTagName("body")[0];
+        }
+        prefix = prefix.substr(0, prefix.length() - 1);
+        var viewRoot = document.getElementById(prefix);
+        if (viewRoot) {
+            return viewRoot;
+        }
+        return document.getElementsByTagName("body")[0];
+    },
+
+
+    _getPrefix: function (context) {
+        var mfInternal = context._mfInternal;
+        var prefix = mfInternal.namingModeId;
+        if (prefix != "") {
+            prefix = prefix + jsf.separatorchar;
+        }
+        return prefix;
     },
 
     /**
@@ -306,7 +333,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
      * @param context the contect object
      * @param node the node in the xml hosting the error message
      */
-    processError:function (request, context, node) {
+    processError: function (request, context, node) {
         /**
          * <error>
          *      <error-name>String</error-name>
@@ -317,7 +344,8 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
             errorMessage = node.childNodes[1].firstChild.data || "";
 
         this.attr("impl").sendError(request, context, this.attr("impl").SERVER_ERROR, errorName, errorMessage, "myfaces._impl.xhrCore._AjaxResponse", "processError");
-    },
+    }
+    ,
 
     /**
      * processes an incoming xml redirect directive from the ajax response
@@ -325,7 +353,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
      * @param context the context
      * @param node the node hosting the redirect data
      */
-    processRedirect:function (request, context, node) {
+    processRedirect: function (request, context, node) {
         /**
          * <redirect url="url to redirect" />
          */
@@ -340,7 +368,8 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
         }
         window.location = redirectUrl;
         return true;
-    },
+    }
+    ,
 
     /**
      * main entry point for processing the changes
@@ -351,7 +380,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
      * @param context the context map
      * @param node the changes node to be processed
      */
-    processChanges:function (request, context, node) {
+    processChanges: function (request, context, node) {
         var changes = node.childNodes;
         var _Lang = this._Lang;
         //note we need to trace the changes which could affect our insert update or delete
@@ -385,7 +414,8 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
         }
 
         return true;
-    },
+    }
+    ,
 
     /**
      * First sub-step process a pending update tag
@@ -394,45 +424,19 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
      * @param context the context map
      * @param node the changes node to be processed
      */
-    processUpdate:function (request, context, node) {
-        if ( (node.getAttribute('id').indexOf(this.P_VIEWSTATE) != -1) || (node.getAttribute('id').indexOf(this.P_CLIENTWINDOW) != -1) ) {
-            //update the submitting forms viewstate to the new value
-            // The source form has to be pulled out of the CURRENT document first because the context object
-            // may refer to an invalid document if an update of the entire body has occurred before this point.
-            var mfInternal = context._mfInternal,
-                fuzzyFormDetection = this._Lang.hitch(this._Dom, this._Dom.fuzzyFormDetection);
-            var elemId = (mfInternal._mfSourceControlId) ? mfInternal._mfSourceControlId :
-                ((context.source) ? context.source.id : null);
-
-            //theoretically a source of null can be given, then our form detection fails for
-            //the source element case and hence updateviewstate is skipped for the source
-            //form, but still render targets still can get the viewstate
-            var sourceForm = (mfInternal && mfInternal["_mfSourceFormId"] &&
-                document.forms[mfInternal["_mfSourceFormId"]]) ?
-                document.forms[mfInternal["_mfSourceFormId"]] : ((elemId) ? fuzzyFormDetection(elemId) : null);
-
-            if(node.getAttribute('id').indexOf(this.P_VIEWSTATE) != -1) {
+    processUpdate: function (request, context, node) {
+        var mfInternal = context._mfInternal;
+        if ((node.getAttribute('id').indexOf(this.P_VIEWSTATE) != -1) || (node.getAttribute('id').indexOf(this.P_CLIENTWINDOW) != -1)) {
+            if (node.getAttribute('id').indexOf(this.P_VIEWSTATE) != -1) {
                 mfInternal.appliedViewState = this._Dom.concatCDATABlocks(node);//node.firstChild.nodeValue;
-            } else if(node.getAttribute('id').indexOf(this.P_CLIENTWINDOW) != -1) {
+            } else if (node.getAttribute('id').indexOf(this.P_CLIENTWINDOW) != -1) {
                 mfInternal.appliedClientWindow = node.firstChild.nodeValue;
             }
-            //source form could not be determined either over the form identifer or the element
-            //we now skip this phase and just add everything we need for the fixup code
-
-            if (!sourceForm) {
-                //no source form found is not an error because
-                //we might be able to recover one way or the other
-                return true;
-            }
-
-            mfInternal._updateForms.push(sourceForm.id);
-
         }
         else {
             // response may contain several blocks
             var cDataBlock = this._Dom.concatCDATABlocks(node),
-                resultNode = null,
-                pushOpRes = this._Lang.hitch(this, this._pushOperationResult);
+                resultNode = null;
 
             switch (node.getAttribute('id')) {
                 case this.P_VIEWROOT:
@@ -441,10 +445,8 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
 
                     var parsedData = this._replaceHead(request, context, cDataBlock);
 
-                    resultNode = ('undefined' != typeof parsedData && null != parsedData) ? this._replaceBody(request, context, cDataBlock, parsedData) : this._replaceBody(request, context, cDataBlock);
-                    if (resultNode) {
-                        pushOpRes(context, resultNode);
-                    }
+                    ('undefined' != typeof parsedData && null != parsedData) ? this._replaceBody(request, context, cDataBlock, parsedData) : this._replaceBody(request, context, cDataBlock);
+
                     break;
                 case this.P_VIEWHEAD:
                     //we cannot replace the head, almost no browser allows this, some of them throw errors
@@ -454,51 +456,25 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
                     break;
                 case this.P_VIEWBODY:
                     //we assume the cdata block is our body including the tag
-                    resultNode = this._replaceBody(request, context, cDataBlock);
-                    if (resultNode) {
-                        pushOpRes(context, resultNode);
-                    }
+                    this._replaceBody(request, context, cDataBlock);
+
                     break;
                 case this.P_RESOURCE:
 
-                    this._addResourceToHead(request,context,cDataBlock);
+                    this._addResourceToHead(request, context, cDataBlock);
                     break;
                 default:
-                    resultNode = this.replaceHtmlItem(request, context, node.getAttribute('id'), cDataBlock);
-                    if (resultNode) {
-                        pushOpRes(context, resultNode);
-                    }
+
+                    this.replaceHtmlItem(request, context, node.getAttribute('id'), cDataBlock);
+
                     break;
             }
         }
 
         return true;
-    },
+    }
+    ,
 
-    _pushOperationResult:function (context, resultNode) {
-        var mfInternal = context._mfInternal;
-        var pushSubnode = this._Lang.hitch(this, function (currNode) {
-            var parentForm = this._Dom.getParent(currNode, "form");
-            //if possible we work over the ids
-            //so that elements later replaced are referenced
-            //at the latest possibility
-            if (null != parentForm) {
-                mfInternal._updateForms.push(parentForm.id || parentForm);
-            }
-            else {
-                mfInternal._updateElems.push(currNode.id || currNode);
-            }
-        });
-        var isArr = 'undefined' != typeof resultNode.length && 'undefined' == typeof resultNode.nodeType;
-        if (isArr && resultNode.length) {
-            for (var cnt = 0; cnt < resultNode.length; cnt++) {
-                pushSubnode(resultNode[cnt]);
-            }
-        } else if (!isArr) {
-            pushSubnode(resultNode);
-        }
-
-    },
 
     /**
      * replaces a current head theoretically,
@@ -511,7 +487,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
      *
      * @return an xml representation of the page for further processing if possible
      */
-    _replaceHead:function (request, context, newData) {
+    _replaceHead: function (request, context, newData) {
 
         var _Lang = this._Lang,
             _Dom = this._Dom,
@@ -548,7 +524,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
             newHead = doc.getElementsByTagName("head")[0];
         }
 
-        var oldTags = _Dom.findByTagNames(document.getElementsByTagName("head")[0], {"link":true, "style":true});
+        var oldTags = _Dom.findByTagNames(document.getElementsByTagName("head")[0], {"link": true, "style": true});
         _Dom.runCss(newHead, true);
         _Dom.deleteItems(oldTags);
 
@@ -557,16 +533,16 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
         _Dom.runScripts(newHead, true);
 
         return doc;
-    },
+    }
+    ,
 
-    _addResourceToHead:function (request, context, newData) {
+    _addResourceToHead: function (request, context, newData) {
         var lastHeadChildTag = document.getElementsByTagName("head")[0].lastChild;
 
-        var replacementFragment = this._Dom.insertAfter(lastHeadChildTag, newData);
-        if (replacementFragment) {
-            this._pushOperationResult(context, replacementFragment);
-        }
-    },
+        this._Dom.insertAfter(lastHeadChildTag, newData);
+
+    }
+    ,
 
     /**
      * special method to handle the body dom manipulation,
@@ -579,7 +555,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
      * @param {String} newData the markup which replaces the old dom node!
      * @param {Node} parsedData (optional) preparsed XML representation data of the current document
      */
-    _replaceBody:function (request, context, newData /*varargs*/) {
+    _replaceBody: function (request, context, newData /*varargs*/) {
         var _RT = this._RT,
             _Dom = this._Dom,
             _Lang = this._Lang,
@@ -638,11 +614,9 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
 
         var returnedElement = this.replaceHtmlItem(request, context, placeHolder, bodyData);
 
-        if (returnedElement) {
-            this._pushOperationResult(context, returnedElement);
-        }
         return returnedElement;
-    },
+    }
+    ,
 
     /**
      * Replaces HTML elements through others and handle errors if the occur in the replacement part
@@ -652,7 +626,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
      * @param {Object} itemIdToReplace (String|Node) - ID of the element to replace
      * @param {String} markup - the new tag
      */
-    replaceHtmlItem:function (request, context, itemIdToReplace, markup) {
+    replaceHtmlItem: function (request, context, itemIdToReplace, markup) {
         var _Lang = this._Lang, _Dom = this._Dom;
 
         var item = (!_Lang.isString(itemIdToReplace)) ? itemIdToReplace :
@@ -662,7 +636,8 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
             throw this._raiseError(new Error(), _Lang.getMessage("ERR_ITEM_ID_NOTFOUND", null, "_AjaxResponse.replaceHtmlItem", (itemIdToReplace) ? itemIdToReplace.toString() : "undefined"), "replaceHtmlItem");
         }
         return _Dom.outerHTML(item, markup, this._RT.getLocalOrGlobalConfig(context, "preserveFocus", false));
-    },
+    }
+    ,
 
     /**
      * xml insert command handler
@@ -673,7 +648,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
      * @return true upon successful completion, false otherwise
      *
      **/
-    processInsert:function (request, context, node) {
+    processInsert: function (request, context, node) {
         /*remapping global namespaces for speed and readability reasons*/
         var _Dom = this._Dom,
             _Lang = this._Lang,
@@ -688,12 +663,11 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
         }
 
         //call insertBefore or insertAfter in our dom routines
-        var replacementFragment = _Dom[insertData.insertType](opNode, insertData.cDataBlock);
-        if (replacementFragment) {
-            this._pushOperationResult(context, replacementFragment);
-        }
+        _Dom[insertData.insertType](opNode, insertData.cDataBlock);
+
         return true;
-    },
+    }
+    ,
 
     /**
      * determines the corner data from the insert tag parsing process
@@ -712,7 +686,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
      * TODO we have to find a mechanism to replace the direct sendError calls with a javascript exception
      * which we then can use for cleaner error code handling
      */
-    _parseInsertData:function (request, context, node) {
+    _parseInsertData: function (request, context, node) {
         var _Lang = this._Lang,
             _Dom = this._Dom,
             concatCDATA = _Dom.concatCDATABlocks,
@@ -761,9 +735,10 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
         }
         ret.opId = _Lang.trim(ret.opId);
         return ret;
-    },
+    }
+    ,
 
-    processDelete:function (request, context, node) {
+    processDelete: function (request, context, node) {
 
         var _Lang = this._Lang,
             _Dom = this._Dom,
@@ -785,9 +760,10 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
         _Dom.deleteItem(item);
 
         return true;
-    },
+    }
+    ,
 
-    processAttributes:function (request, context, node) {
+    processAttributes: function (request, context, node) {
         //we now route into our attributes function to bypass
         //IE quirks mode incompatibilities to the biggest possible extent
         //most browsers just have to do a setAttributes but IE
@@ -840,7 +816,8 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
             }
         }
         return true;
-    },
+    }
+    ,
 
     /**
      * internal helper which raises an error in the
@@ -850,7 +827,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
      * @param title the title of the error (optional)
      * @param name the name of the error (optional)
      */
-    _raiseError:function (error, message, caller, title, name) {
+    _raiseError: function (error, message, caller, title, name) {
         var _Impl = this.attr("impl");
         var finalTitle = title || _Impl.MALFORMEDXML;
         var finalName = name || _Impl.MALFORMEDXML;
@@ -858,4 +835,5 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
 
         return this._Lang.makeException(error, finalTitle, finalName, this._nameSpace, caller || ( (arguments.caller) ? arguments.caller.toString() : "_raiseError"), finalMessage);
     }
-});
+})
+;
