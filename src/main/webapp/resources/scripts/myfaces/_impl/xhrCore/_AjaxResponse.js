@@ -81,6 +81,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
         mfInternal.appliedClientWindow = null;
         mfInternal.namingModeId = null;
 
+
         try {
             var _Impl = this.attr("impl"), _Lang = this._Lang;
             // TODO:
@@ -247,9 +248,10 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
             });
         } else {
             var element = this._Dom.getDummyPlaceHolder();
-            //spec error, two elements with the same id should not be there, TODO recheck the space if the name does not suffice alone
-            var postFix = (jsf.separatorchar) + Math.random();
-            element.innerHTML = ["<input type='hidden'", "id='", (theForm.id + jsf.separatorchar + identifier + postFix), "' name='", prefix + identifier, "' value='", value, "' />"].join("");
+
+            //per JSF 2.3 spec the identifier of the element must be unique in the dom tree
+            //otherwise we will break the html spec here
+            element.innerHTML = ["<input type='hidden'", "id='", this._fetchUniqueId(prefix, identifier), "' name='", prefix + identifier, "' value='", value, "' />"].join("");
             //now we go to proper dom handling after having to deal with another ie screwup
             try {
                 theForm.appendChild(element.childNodes[0]);
@@ -257,6 +259,16 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
                 element.innerHTML = "";
             }
         }
+    },
+
+    _fetchUniqueId: function(prefix, identifier) {
+        var cnt = 0;
+        var retVal = prefix + identifier + jsf.separatorchar+cnt;
+        while(this._Dom.byId(retVal) != null) {
+            cnt++;
+            prefix + identifier + jsf.separatorchar+cnt;
+        }
+        return retVal;
     },
 
     /**
@@ -293,13 +305,13 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
         //because just updating the render targets under one viewroot and the issuing form
         //again would leave broken viewstates
         var viewRoot = this._getViewRoot(context);
-        var forms = viewRoot.getElementsByTagName("form") || [];
+        var forms = this._Dom.findByTagNames(viewRoot, {"form": 1}) || [];
 
-        _Lang.arrForEach(forms, _Lang.hitch(this, function (elem) {
+        this._Lang.arrForEach(forms, this._Lang.hitch(this, function (elem) {
             //update all forms which start with prefix (all render and execute targets
-            if (elem.id && elem.id.indexOf(prefix) == 0) {
-                this._applyJSFArtifactValueToForm(context, elem, value, identifier);
-            }
+
+            this._applyJSFArtifactValueToForm(context, elem, value, identifier);
+
         }));
     },
 
@@ -308,7 +320,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
         if (prefix == "") {
             return document.getElementsByTagName("body")[0];
         }
-        prefix = prefix.substr(0, prefix.length() - 1);
+        prefix = prefix.substr(0, prefix.length - 1);
         var viewRoot = document.getElementById(prefix);
         if (viewRoot) {
             return viewRoot;
@@ -835,5 +847,4 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
 
         return this._Lang.makeException(error, finalTitle, finalName, this._nameSpace, caller || ( (arguments.caller) ? arguments.caller.toString() : "_raiseError"), finalMessage);
     }
-})
-;
+});
