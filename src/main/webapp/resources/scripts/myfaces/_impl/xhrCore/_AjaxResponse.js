@@ -227,7 +227,8 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
     _applyJSFArtifactValueToForm: function (context, theForm, value, identifier) {
 
         if (!theForm) return;
-
+        var _Lang = this._Lang;
+        var _Dom = this._Dom;
         var prefix = this._getPrefix(context);
 
         //in IE7 looking up form elements with complex names (such as 'javax.faces.ViewState') fails in certain cases
@@ -243,8 +244,8 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
         }
 
         if (fieldsFound.length) {
-            this._Lang.arrForEach(fieldsFound, function (fieldFound) {
-                this._Dom.setAttribute(fieldFound, "value", value);
+            _Lang.arrForEach(fieldsFound, function (fieldFound) {
+                _Dom.setAttribute(fieldFound, "value", value);
             });
         } else {
             var element = this._Dom.getDummyPlaceHolder();

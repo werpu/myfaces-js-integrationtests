@@ -14,7 +14,6 @@ node_modules/*
 .classpath
 atlassian-ide-plugin.xml
 node_modules
-resources/scripts/myfaces_ts/ts/**/*.js
-resources/scripts/myfaces_ts/js/**/*.js
-resources/scripts/myfaces_ts/ts_test/**/*.js
+src/main/webapp/resources/scripts/myfaces_ts/**/*.js
+src/main/webapp/resources/scripts/myfaces_ts/ts_test/**/*.js
 
