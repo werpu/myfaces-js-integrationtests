@@ -197,10 +197,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
          * JSF 2.3 we set all the viewstates under a given declared viewRoot or all forms
          * if none is given
          */
-
-            this._updateJSFClientArtifacts(context,  mfInternal.appliedViewState, this.P_VIEWSTATE);
-
-
+        this._updateJSFClientArtifacts(context,  mfInternal.appliedViewState, this.P_VIEWSTATE);
     },
 
 
@@ -386,8 +383,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
             errorMessage = node.childNodes[1].firstChild.data || "";
 
         this.attr("impl").sendError(request, context, this.attr("impl").SERVER_ERROR, errorName, errorMessage, "myfaces._impl.xhrCore._AjaxResponse", "processError");
-    }
-    ,
+    },
 
     /**
      * processes an incoming xml redirect directive from the ajax response
@@ -450,14 +446,16 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
                     break;
                 case this.CMD_EXTENSION:
                     break;
+                case undefined:
+                    // ignoring white spaces
+                    break;
                 default:
                     throw this._raiseError(new Error(), "_AjaxResponse.processChanges: Illegal Command Issued", "processChanges");
             }
         }
 
         return true;
-    }
-    ,
+    },
 
     /**
      * First sub-step process a pending update tag
@@ -705,8 +703,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
             this._pushOperationResult(context, returnedElement);
         }
         return returnedElement;
-    }
-    ,
+    },
 
     /**
      * Replaces HTML elements through others and handle errors if the occur in the replacement part
@@ -849,8 +846,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
         _Dom.deleteItem(item);
 
         return true;
-    }
-    ,
+    },
 
     processAttributes: function (request, context, node) {
         //we now route into our attributes function to bypass
@@ -905,8 +901,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
             }
         }
         return true;
-    }
-    ,
+    },
 
     /**
      * internal helper which raises an error in the
