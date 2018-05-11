@@ -8,15 +8,15 @@
     <version>1.0-SNAPSHOT</version>
     <properties>
         <myfaces-version>2.1.10</myfaces-version>
-        <java.source.version>1.5</java.source.version>
-        <maven-compiler-plugin.version>2.0.2</maven-compiler-plugin.version>
+        <java.source.version>1.8</java.source.version>
+        <maven-compiler-plugin.version>LATEST</maven-compiler-plugin.version>
 
         <jetty-maven-plugin.version>8.0.0.M3</jetty-maven-plugin.version>
         <webapp.name>TestScripts</webapp.name>
-        <java.version>1.7</java.version>
+        <java.version>1.8</java.version>
         <plexus-compiler-eclipse.version>1.6</plexus-compiler-eclipse.version>
         <shared.resources>src/main/extra-resources/shared-deploy/webapp</shared.resources>
-        <maven-war-plugin.version>2.1.1</maven-war-plugin.version>
+        <maven-war-plugin.version>LATEST</maven-war-plugin.version>
         <myfaces-stable-api.version>2.1.6</myfaces-stable-api.version>
         <mojarra.version>2.1.19</mojarra.version>
         <netbeans.hint.deploy.server>gfv3ee6</netbeans.hint.deploy.server>
