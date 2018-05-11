@@ -38,7 +38,7 @@ jsf.ajax.addOnError(function (evt) {
  */
 emitPPR = function (source, event, action, formName) {
     document.getElementById(formName || "form1").action = target;
-    jsf.ajax.request(/*String|Dom Node*/ source, /*|EVENT|*/ (window.event) ? window.event : event, /*{|OPTIONS|}*/ {
+    return jsfAjaxRequestPromise(/*String|Dom Node*/ source, /*|EVENT|*/ (window.event) ? window.event : event, /*{|OPTIONS|}*/ {
         op: action
     });
 };
@@ -47,4 +47,36 @@ myfaces.testcases.redirect = function (href) {
     if (window.location.href.indexOf("autoTest=true") != -1) {
         window.location.href = href + "?autoTest=true";
     }
+};
+
+
+window.jsfAjaxRequestPromise = function(element, event, options) {
+    return new Promise(function(resolve, reject) {
+        var finalArgs = [];
+        finalArgs.push(element);
+        finalArgs.push(event);
+        if (options) {
+            finalArgs.push(options);
+        } else {
+            finalArgs.push({});
+        }
+        var oldOnError = finalArgs[2]["onerror"];
+        finalArgs[2]["onerror"] = function (evt) {
+            reject();
+            if (oldOnError) {
+                oldOnError(evt);
+            }
+        };
+        var oldOnEvent = finalArgs[2]["onevent"];
+        finalArgs[2]["onevent"] = function (evt) {
+            if (evt.status.toLowerCase() === "success")
+                resolve(evt);
+            if (oldOnEvent) {
+                oldOnEvent(evt);
+            }
+        };
+
+
+        jsf.ajax.request.apply(jsf.ajax.request, finalArgs)
+    });
 };

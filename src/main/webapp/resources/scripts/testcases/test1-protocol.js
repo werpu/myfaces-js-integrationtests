@@ -1,6 +1,6 @@
 //preassumption jquery exists and is already loaded, we can use it as query engine
 
-
+debugger;
 var TestCase = myfaces._supportive.unittest.TestCase;
 var AjaxCase = myfaces._supportive.unittest.JSFAjaxTestCase;
 var AjaxErrorCase = myfaces._supportive.unittest.JSFAjaxErrorTestCase;

@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="IntegrationJSTest:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="TestScripts.war">
+      <element id="artifact" artifact-name="IntegrationJSTest:war exploded" />
+    </root>
+  </artifact>
+</component>
