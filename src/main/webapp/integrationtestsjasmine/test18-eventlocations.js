@@ -26,20 +26,17 @@ afterEach(function () {
     }, 1000);
 });
 describe("event location test, success must be called in response function", function () {
-    it("runs the ajax cycle and checks for the proper event location of the success event", function () {
-        runs(function () {
-            jsf.ajax.request('idgiven', null, {
-                execute: '@this',
-                render: 'myVal',
-                'javax.faces.behavior.event': 'action'
-            });
-        });
-        waitsFor(function () {
-            return !!myfaces.testcases.ajaxCnt;
-        }, "timeout", 10000);
-        runs(function () {
+    it("runs the ajax cycle and checks for the proper event location of the success event", function (done) {
 
-            expect(assertSuccessPosition).toBeTruthy();
-        })
-    })
-})
+        jsfAjaxRequestPromise('idgiven', null, {
+            execute: '@this',
+            render: 'myVal',
+            'javax.faces.behavior.event': 'action'
+        }).finally(function () {
+            setTimeout(function () {
+                expect(assertSuccessPosition).toBeTruthy();
+                done();
+            }, 500);
+        });
+    });
+});

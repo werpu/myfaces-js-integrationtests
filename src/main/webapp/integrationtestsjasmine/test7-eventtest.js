@@ -43,41 +43,39 @@ describe("Event handler phases test", function () {
         localEvents = [];
         globalEvents = [];
     });
-    it("Checks the local events", function () {
-        runs(function () {
-            jsf.ajax.request(document.getElementById("updateTrigger"), null, {
-                render: "updatePanel",
-                execute: "updatePanel updateTrigger",
-                onevent: localEventHandler
-            });
+    it("Checks the local events", function (done) {
+
+        jsfAjaxRequestPromise(document.getElementById("updateTrigger"), null, {
+            render: "updatePanel",
+            execute: "updatePanel updateTrigger",
+            onevent: localEventHandler
+        }).then(function () {
+            setTimeout(function () {
+                expect(localEvents.length).toBe(3);
+                for (var pos = 0; pos < localEvents.length; pos++) {
+                    expectations(expect, localEvents[pos]);
+                }
+                done();
+            }, 500);
         });
-        waitsFor(function () {
-            return !!myfaces.testcases.ajaxCnt;
-        }, "timeout", 10000);
-        runs(function () {
-            expect(localEvents.length).toBe(3);
-            for (var pos = 0; pos < localEvents.length; pos++) {
-                expectations(expect, localEvents[pos]);
-            }
-        });
+
     });
 
-    it("Checks the global events", function () {
-        runs(function () {
-            jsf.ajax.addOnEvent(globalEventHandler);
-            jsf.ajax.request(document.getElementById("updateTrigger"), null, {
-                render: "updatePanel",
-                execute: "updatePanel updateTrigger"
-            });
+    it("Checks the global events", function (done) {
+
+        jsf.ajax.addOnEvent(globalEventHandler);
+        jsfAjaxRequestPromise(document.getElementById("updateTrigger"), null, {
+            render: "updatePanel",
+            execute: "updatePanel updateTrigger"
+        }).then(function () {
+            setTimeout(function () {
+                expect(globalEvents.length).toBe(3);
+                for (var pos = 0; pos < globalEvents.length; pos++) {
+                    expectations(expect, globalEvents[pos]);
+                }
+                done();
+            }, 500);
         });
-        waitsFor(function () {
-            return !!myfaces.testcases.ajaxCnt;
-        }, "timeout", 10000);
-        runs(function () {
-            expect(globalEvents.length).toBe(3);
-            for (var pos = 0; pos < globalEvents.length; pos++) {
-                expectations(expect, globalEvents[pos]);
-            }
-        });
+
     });
 });

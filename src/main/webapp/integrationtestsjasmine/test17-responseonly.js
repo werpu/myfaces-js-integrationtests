@@ -1,5 +1,5 @@
-
 var oldResponse = jsf.ajax.response;
+
 //we are going to decorate the response for the first testcase
 function applySourceOnly() {
 
@@ -13,9 +13,11 @@ function applySourceOnly() {
     }
     jsf.ajax.response = newResponse;
 };
+
 function resetResponse() {
     jsf.ajax.response = oldResponse;
 }
+
 function applyEmpty() {
 
     var newResponse = function (request, context) {
@@ -38,48 +40,51 @@ describe("Various response tests giving the codebase something to chew on in the
     beforeEach(function () {
         myfaces.testcases.ajaxCnt = 0;
     });
-    it("handles a normal reset case", function () {
-        runs(function () {
-            jsf.ajax.request('resetme', null, {
-                execute: '@this',
-                render: 'myVal',
-                'javax.faces.behavior.event': 'action'
-            });
-            waitsFor(function () {
-                return !!myfaces.testcases.ajaxCnt;
-            });
+    it("handles a normal reset case", function (done) {
+
+        jsfAjaxRequestPromise('resetme', null, {
+            execute: '@this',
+            render: 'myVal',
+            'javax.faces.behavior.event': 'action'
+        }).then(function () {
+            done();
+        }).catch(function (val) {
+            fail();
         });
+
+
     });
-    it("minimalistic context, source id is given", function () {
-        runs(function () {
-            applySourceOnly();
-            jsf.ajax.request('idgiven', null, {
-                execute: '@this',
-                render: 'myVal',
-                'javax.faces.behavior.event': 'action'
-            });
+    it("minimalistic context, source id is given", function (done) {
+
+        applySourceOnly();
+        jsfAjaxRequestPromise('idgiven', null, {
+            execute: '@this',
+            render: 'myVal',
+            'javax.faces.behavior.event': 'action'
+        }).then(function () {
+            setTimeout(function () {
+                expect($("#myVal").html().indexOf("1") != -1).toBeTruthy(); //"innerHTML of result must be 1",
+                done();
+            }, 500);
+        }).catch(function (val) {
+            fail();
         });
-        waitsFor(function () {
-            return !!myfaces.testcases.ajaxCnt;
-        });
-        runs(function () {
-            expect($("#myVal").html().indexOf("1") != -1).toBeTruthy(); //"innerHTML of result must be 1",
-        });
+
     });
-    it("runs on an empty context map", function () {
-        runs(function () {
-            applyEmpty();
-            jsf.ajax.request('emptymap', null, {
-                execute: '@none',
-                render: 'outputWriter',
-                'javax.faces.behavior.event': 'action'
-            });
+    it("runs on an empty context map", function (done) {
+        applyEmpty();
+        jsfAjaxRequestPromise('emptymap', null, {
+            execute: '@none',
+            render: 'outputWriter',
+            'javax.faces.behavior.event': 'action'
+        }).then(function () {
+            setTimeout(function () {
+                expect($("#myVal").html().indexOf("1") != -1).toBeTruthy(); //"innerHTML of result must be 1",
+            }, 500);
+            done();
+        }).catch(function (val) {
+            fail();
         });
-        waitsFor(function () {
-            return !!myfaces.testcases.ajaxCnt;
-        });
-        runs(function () {
-            expect($("#myVal").html().indexOf("1") != -1).toBeTruthy(); //"innerHTML of result must be 1",
-        });
+
     });
 });

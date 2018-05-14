@@ -9,6 +9,7 @@ groovy-bin/*
 *.class
 *.jar
 *.*~
+.idea
 node_modules/*
 .project
 .classpath

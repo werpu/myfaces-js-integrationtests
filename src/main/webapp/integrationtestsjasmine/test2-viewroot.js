@@ -4,18 +4,15 @@ afterEach(function () {
     }, 1000);
 });
 describe("Full root replacement via protocol view root", function () {
-    it("Should run the ajax and replace the viewroot", function () {
-        var htmlReporter = $("#HTMLReporter");
-        runs(function () {
-            htmlReporter.detach();
-            emitPPR("form1", null, "body");
-        });
-        waitsFor(function () {
-            return !!myfaces.testcases.ajaxCnt;
-        }, "Server timeout", 10000);
-        runs(function () {
-            htmlReporter.appendTo("body");
-            expect($("#scriptreceiver").html().indexOf("hello from embedded script")).not.toBe(-1);
+    it("Should run the ajax and replace the viewroot", function (done) {
+        var htmlReporter = $(".jasmine_html-reporter");
+        htmlReporter.detach();
+        emitPPR("form1", null, "body").then(function () {
+            setTimeout(function () {
+                htmlReporter.appendTo("body");
+                expect($("#scriptreceiver").html().indexOf("hello from embedded script")).not.toBe(-1);
+                done();
+            }, 500);
         });
     });
 });
