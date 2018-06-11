@@ -369,7 +369,9 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
                 //cannot rely on the naming container being prefixed
 
                 //This atm is not bad, because we safely can assume
-                //that if new viewroot is rendered
+                //that if no viewroot can be found we are under
+                //one single viewroot and can omit the prefix check
+                //(aka fallback into the old behavior)
 
 
                 if(updateForm.indexOf(viewRootId) != 0) {
