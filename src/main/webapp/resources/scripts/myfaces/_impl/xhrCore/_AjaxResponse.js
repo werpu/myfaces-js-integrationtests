@@ -240,9 +240,10 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
         for (var i = 0, l = elements.length; i < l; i++) {
             var e = elements[i];
             //https://issues.apache.org/jira/browse/MYFACES-4230
-            //ie11 has a devation from the standard behavior, we have to remap the null/undefined name
+            //ie11 has a deviation from the standard behavior, we have to remap the null/undefined name
             //to an empty string
             var eName = e.name || "";
+            var eIdentifier = e.id || "";
             if (eName.indexOf(identifier) != -1) {
                 fieldsFound.push(e);
             }
@@ -258,7 +259,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
             //per JSF 2.3 spec the identifier of the element must be unique in the dom tree
             //otherwise we will break the html spec here
             element.innerHTML = ["<input type='hidden'", "id='", this._fetchUniqueId(prefix, identifier), "' name='", identifier, "' value='", value, "' />"].join("");
-            //now we go to proper dom handling after having to deal with another ie screwup
+            //now we go to proper dom handling after having to deal with another ie screw-up
             try {
                 theForm.appendChild(element.childNodes[0]);
             } finally {
@@ -304,6 +305,16 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
                 this._applyJSFArtifactValueToForm(context, sourceForm, value, identifier);
             }
         }
+        //issuing forms
+        var executeForms = [];
+        if(context._mfInternal._mfExecuteForms) {
+            this._Lang.arrForEach(context._mfInternal._mfExecuteForms, function(strFormId) {
+                var executeForm = this._Dom.byId(strFormId);
+                if(executeForm) {
+                    executeForms.push(executeForm);
+                }
+            });
+        }
 
 
         var viewRoot = this._getViewRoot(context);
@@ -312,6 +323,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
         //since the spec thanks to the over intrusive portlet api still is broken
         //we need our old fallback hack for proper handling without having
         //to deal with multiple render targets.
+
         if(this._RT.getLocalOrGlobalConfig(context, "no_portlet_env", false)) {
 
             //We update all elements under viewroot
@@ -330,14 +342,39 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
             }));
         } else {
 
-            //follow the spec 2.3 path 1:1 we update the forms hosting the render targets which start
-            //with the viewroot
+
+            var inputs = this._Dom.findByTagName(document.body, "input");
+
+
+
+            //jsf spec 2.3 and earlier all issuing forms must update
+            var _t = this;
+            //locate and update the submitting form´s identifier and update
+            this._Lang.arrForEach(executeForms, function(executeForm) {
+                _t._applyJSFArtifactValueToForm(context, executeForm, value, identifier);
+            });
+
+
+            //check for a portlet condition a present viewroot
+
+            var viewRootId = viewRoot.id || "";
+
             for(var cnt = 0; cnt < context._mfInternal._updateForms.length; cnt++) {
                 var updateForm = context._mfInternal._updateForms[cnt];
-                var viewRootId = viewRoot.id || "";
+
+                //follow the spec 2.3 path 1:1 we update the forms hosting the render targets which start
+                //with the viewroot
+                //if there is a viewroot present, however we seem to have a bug in myfaces
+                //even if we have a naming container response we
+                //cannot rely on the naming container being prefixed
+
+                //This atm is not bad, because we safely can assume
+                //that if new viewroot is rendered
+
+
                 if(updateForm.indexOf(viewRootId) != 0) {
                     continue;
-                } else {
+                } else { //either an empty viewroot, or
                     this._applyJSFArtifactValueToForm(context, this._Dom.byId(updateForm), value, identifier);
                 }
             }

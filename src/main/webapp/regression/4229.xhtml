@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="../templates/template.xhtml">
+
+    <ui:define name="content">
+
+
+        <h:form id="a">
+            <h:outputText value="This is 'form a' "/>
+            <h:outputLabel for="input1" value="Enter a new value for input1: "/> <h:inputText id="input1"
+                                                                                              value="#{myBean2.helloWorld}"/>
+            <h:commandButton id="submitButton1"
+                             value="Click here to execute 'form a' and 'form b' but re-render 'form b'">
+                <f:ajax execute="a :b" render=":b"/>
+            </h:commandButton>
+        </h:form>
+        <h:form id="b">
+            <h:outputText value="This is 'form b' "/>
+            <h:outputLabel for="input2" value="Enter a new value for input2: "/> <h:inputText id="input2"
+                                                                                              value="#{myBean2.helloWorld}"/>
+            <h:commandLink id="commandLink1"
+                           value="Click here to execute 'form a' and 'form b'  but re-render 'form a'">
+                <f:ajax execute="b :a" render=":a"/>
+            </h:commandLink>
+        </h:form>
+    </ui:define>
+</ui:composition>
+</html>
