@@ -294,9 +294,6 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
         mfInternal["_mfSourceFormId"] = form.id;
         mfInternal["_mfSourceControlId"] = elementId;
         mfInternal["_mfTransportType"] = transportType;
-        //we transfer the executes into the response, to update properly
-        //all issuing forms
-        mfInternal["_mfExecuteForms"] = this._fetchExecuteFormIds(options.execute, form.id);
 
         //mojarra compatibility, mojarra is sending the form id as well
         //this is not documented behavior but can be determined by running
@@ -460,52 +457,6 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
         //the final list must be blank separated
         passThrgh[target] = vals.join(" ");
         return passThrgh;
-    },
-
-    /**
-     * fetches all issuing execute forms
-     * @param strExecutes a string of executes to be fetched
-     * @param the form hosting the trigger element
-     * @private
-     */
-    _fetchExecuteFormIds: function(strExecutes, issuingFormId) {
-
-        var executes = (strExecutes || "").split(/\s+/gi);
-        var retVal = [];
-        this._Lang.arrForEach(executes, function(element) {
-            if(element === "") {
-                return;
-            }
-            if(element === "@this" || element == "@form") {
-                retVal.push(issuingFormId);
-            }
-            else if(element == "@all") {
-                retVal.push("@all"); //all under this viewroot
-            } else if(element === "@none") {
-                return [];
-
-            } else {
-                var domElem = this._Dom.byIdOrName(element);
-                if(domElem.tagName && domElem.tagName.toLowerCase() === "form") {
-                    retVal.push(domElem.id);
-                    return;
-                }
-                var parentForm = this._Dom.getParent(domElem, "form");
-                if(parentForm) {
-                    retVal.push(parentForm.id);
-                    return;
-                }
-                //otherwise executing forms must be children
-                var childs = this._Dom.findByTagName(domElem, "form");
-                if(childs && childs.length) {
-                    for(var cnt = 0; cnt < childs.length; cnt++) {
-                        retVal.push(childs[cnt].id);
-                    }
-                }
-            }
-        });
-        return retVal;
-
     },
 
     addOnError:function (/*function*/errorListener) {

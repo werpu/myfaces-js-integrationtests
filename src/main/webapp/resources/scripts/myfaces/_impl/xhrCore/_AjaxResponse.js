@@ -289,13 +289,14 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
      * @private
      */
     _updateJSFClientArtifacts: function (context, value, identifier) {
-
+        debugger;
         //elem not found for whatever reason
         //https://issues.apache.org/jira/browse/MYFACES-3544
 
         var prefix = this._getPrefix(context);
 
         //do we still need the issuing form update? I guess it is needed.
+        //jsf spec 2.3 and earlier all issuing forms must update
         var sourceForm = (context._mfInternal._mfSourceFormId) ? this._Dom.byId(context._mfInternal._mfSourceFormId) : null;
         if (sourceForm) {
             sourceForm = this._Dom.byId(sourceForm);
@@ -305,16 +306,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
                 this._applyJSFArtifactValueToForm(context, sourceForm, value, identifier);
             }
         }
-        //issuing forms
-        var executeForms = [];
-        if(context._mfInternal._mfExecuteForms) {
-            this._Lang.arrForEach(context._mfInternal._mfExecuteForms, function(strFormId) {
-                var executeForm = this._Dom.byId(strFormId);
-                if(executeForm) {
-                    executeForms.push(executeForm);
-                }
-            });
-        }
+
 
 
         var viewRoot = this._getViewRoot(context);
@@ -323,6 +315,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
         //since the spec thanks to the over intrusive portlet api still is broken
         //we need our old fallback hack for proper handling without having
         //to deal with multiple render targets.
+
 
         if(this._RT.getLocalOrGlobalConfig(context, "no_portlet_env", false)) {
 
@@ -341,18 +334,6 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
                 this._applyJSFArtifactValueToForm(context, elem, value, identifier);
             }));
         } else {
-
-
-            var inputs = this._Dom.findByTagName(document.body, "input");
-
-
-
-            //jsf spec 2.3 and earlier all issuing forms must update
-            var _t = this;
-            //locate and update the submitting form´s identifier and update
-            this._Lang.arrForEach(executeForms, function(executeForm) {
-                _t._applyJSFArtifactValueToForm(context, executeForm, value, identifier);
-            });
 
 
             //check for a portlet condition a present viewroot
@@ -578,13 +559,13 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
         });
 
         var pushEmbedded = this._Lang.hitch(this, function(currNode) {
-            if(currNode.tagName && currNode.tagName == "form") {
-                mfInternal._updateForms.push(currNode);
+            if(currNode.tagName && this._Lang.equalsIgnoreCase(currNode.tagName, "form")) {
+                mfInternal._updateForms.push(currNode.id);
             } else {
                 var childForms = this._Dom.findByTagName(currNode, "form");
                 if(childForms && childForms.length) {
                     for(var cnt = 0; cnt < childForms.lenght; cnt++) {
-                        mfInternal._updateForms.push(childForms[cnt]);
+                        mfInternal._updateForms.push(childForms[cnt].id);
                     }
                 }
             }

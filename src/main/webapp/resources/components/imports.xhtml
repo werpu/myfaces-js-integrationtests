@@ -14,8 +14,7 @@
     </cc:interface>
 
     <cc:implementation>
-
-
+ 
         <!-- runtime -->
         <h:outputScript name="myfaces/_impl/core/_EvalHandlers.js" library="scripts" target="head"/>
         <h:outputScript name="myfaces/_impl/core/_Runtime.js" library="scripts" target="head"/>
@@ -63,7 +62,7 @@
 
         <!-- Implementation -->
         <h:outputScript name="myfaces/_impl/core/Impl.js" library="scripts" target="head"
-                        rendered="#{information.implementation == 'myfaces'}"/>
+                        />
         <!--
             we try to register our overrides deliberately later
             to check whether they register themselves properly
@@ -92,12 +91,9 @@
                         rendered="#{information.implementation == 'myfaces'}"/>
 
 
-        <h:outputScript name="myfaces/api/jsf.js" library="scripts" target="head"
-                        rendered="#{information.implementation == 'myfaces'}"/>
+        <h:outputScript name="myfaces/api/jsf.js" library="scripts" target="head"/>
 
 
-        <h:outputScript name="jsf.js" library="javax.faces"
-                        target="head" rendered="#{information.implementation == 'mojarra'}"/>
 
         <script type="text/javascript" defer="defer">
             myfaces = window.myfaces ||{};
