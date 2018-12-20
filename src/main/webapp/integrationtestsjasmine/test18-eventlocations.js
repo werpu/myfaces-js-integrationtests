@@ -4,6 +4,7 @@ var assertSuccessPosition = false;
 
 var oldResponse = jsf.ajax.response;
 jsf.ajax.response = function (request, context) {
+
     var newContext = {};
     newContext.source = context.source;
     newContext.onevent = function (evt) {
@@ -14,6 +15,8 @@ jsf.ajax.response = function (request, context) {
             context.onevent(evt);
         }
     };
+
+
 
     assertSuccessPosition = successCalled == 0;
     oldResponse(request, newContext);

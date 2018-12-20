@@ -15,19 +15,28 @@
  */
 /**
  * this method is used only for pure multipart form parts
- * otherwise the normal method is used
- * IT is a specialized request which uses the form data
- * element for the handling of forms
+ * like form data with file uploads.
+ * This is a replacement for the iframe request which ie used until now
  */
-_MF_CLS(_PFX_XHR+"_AjaxRequestLevel2", myfaces._impl.xhrCore._AjaxRequest, {
+_MF_CLS(_PFX_XHR+"_FormDataRequest", myfaces._impl.xhrCore._AjaxRequest, {
+    _AJAXUTIL: myfaces._impl.xhrCore._AjaxUtils,
 
-    _sourceForm: null,
 
+    /**
+     * @constant
+     * @description request marker that the request is an iframe based request
+     */
+    JX_PART_IFRAME: "javax.faces.partial.iframe",
+    /**
+     * @constant
+     * @description request marker that the request is an apache myfaces iframe request based request
+     */
+    MF_PART_IFRAME: "org.apache.myfaces.partial.iframe",
 
     constructor_: function(arguments) {
         this._callSuper("constructor_", arguments);
-        //TODO xhr level2 can deal with real props
 
+        this._contentType = "multipart/form-data";
     },
 
     /**
@@ -45,25 +54,33 @@ _MF_CLS(_PFX_XHR+"_AjaxRequestLevel2", myfaces._impl.xhrCore._AjaxRequest, {
 
         //now this is less performant but we have to call it to allow viewstate decoration
         if (!this._partialIdsArray || !this._partialIdsArray.length) {
-            ret = this._callSuper("getFormData");
+            ret = new FormData(this._sourceForm);
             //just in case the source item is outside of the form
             //only if the form override is set we have to append the issuing item
             //otherwise it is an element of the parent form
             if (this._source && myfacesOptions && myfacesOptions.form)
                 _AJAXUTIL.appendIssuingItem(this._source, ret);
         } else {
-            ret = this._Lang.createFormDataDecorator(new Array());
+            ret = new FormData();
             _AJAXUTIL.encodeSubmittableFields(ret, this._sourceForm, this._partialIdsArray);
             if (this._source && myfacesOptions && myfacesOptions.form)
                 _AJAXUTIL.appendIssuingItem(this._source, ret);
 
         }
+
+        ret.append(this.JX_PART_IFRAME, "true");
+        ret.append(this.MF_PART_IFRAME, "true");
+
+
         return ret;
     },
 
-
     _getTransport: function() {
         return new XMLHttpRequest();
+    },
+
+    _applyContentType: function(xhr) {
+
     }
 
 });

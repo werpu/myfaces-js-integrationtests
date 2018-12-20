@@ -148,9 +148,7 @@ _MF_CLS(_PFX_XHR + "_AjaxRequest", _MF_OBJECT, /** @lends myfaces._impl.xhrCore.
 
             xhr.timeout = this._timeout || 0;
 
-            var contentType = this._contentType+"; charset=utf-8";
-
-            xhr.setRequestHeader(this._CONTENT_TYPE, contentType);
+            this._applyContentType(xhr);
             xhr.setRequestHeader(this._HEAD_FACES_REQ, this._VAL_AJAX);
 
             //some webkit based mobile browsers do not follow the w3c spec of
@@ -173,6 +171,15 @@ _MF_CLS(_PFX_XHR + "_AjaxRequest", _MF_OBJECT, /** @lends myfaces._impl.xhrCore.
         }
     },
 
+    /**
+     * helper, in multipart situations we might alter the content type
+     * from the urlencoded one
+     */
+    _applyContentType: function(xhr) {
+        var contentType = this._contentType+"; charset=utf-8";
+
+        xhr.setRequestHeader(this._CONTENT_TYPE, contentType);
+    },
 
     ondone: function() {
         this._requestDone();
