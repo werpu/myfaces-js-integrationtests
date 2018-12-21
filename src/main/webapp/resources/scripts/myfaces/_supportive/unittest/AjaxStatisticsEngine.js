@@ -144,9 +144,9 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.AjaxStatis
     /*send the test results down the server
      * via a synchronous http post*/
     _sendTestResults:function () {
-        //TODO drop the xhr code here
-        var xhr = new XMLHttpRequest();
-
+        var xhr = new myfaces._impl.xhrCore.engine.Xhr1({
+            xhrObject:myfaces._impl.core._Runtime.getXHRObject()
+            });
 
         var data = "sendstats=true&testGroup=" + escape(JSON.stringify(this._groupsPerformed));
         xhr.open("post", this._serviceUrl, false);
