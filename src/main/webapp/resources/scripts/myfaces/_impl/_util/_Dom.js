@@ -390,15 +390,24 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
     detectAttributes: function(element) {
         //test if 'hasAttribute' method is present and its native code is intact
         //for example, Prototype can add its own implementation if missing
-        //JSF 2.3 we now can reduce the complexity here, one of the functions now
-        //is definitely implemented
         if (element.hasAttribute && this.isFunctionNative(element.hasAttribute)) {
             return function(name) {
                 return element.hasAttribute(name);
             }
         } else {
-            return function (name) {
-                return !!element.getAttribute(name);
+            try {
+                //when accessing .getAttribute method without arguments does not throw an error then the method is not available
+                element.getAttribute;
+
+                var html = element.outerHTML;
+                var startTag = html.match(/^<[^>]*>/)[0];
+                return function(name) {
+                    return startTag.indexOf(name + '=') > -1;
+                }
+            } catch (ex) {
+                return function(name) {
+                    return element.getAttribute(name);
+                }
             }
         }
     },
@@ -1151,9 +1160,8 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
         return (1 == foundElements.length ) ? foundElements[0] : null;
     },
 
-    html5FormDetection:function (item) {
-        var elemForm = this.getAttribute(item, "form");
-        return (elemForm) ? this.byId(elemForm) : null;
+    html5FormDetection: function(/*item*/) {
+        return null;
     },
 
 
