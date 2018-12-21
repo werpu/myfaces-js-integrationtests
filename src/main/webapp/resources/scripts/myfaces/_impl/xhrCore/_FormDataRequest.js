@@ -16,7 +16,10 @@
 /**
  * this method is used only for pure multipart form parts
  * like form data with file uploads.
- * This is a replacement for the iframe request which ie used until now
+ * This is a replacement for the iframe request which we used until now
+ * The iframe method works on older browsers but most likely will
+ * be cut off in future browsers, because there is an alternative
+ * in form of FormData.
  */
 _MF_CLS(_PFX_XHR+"_FormDataRequest", myfaces._impl.xhrCore._AjaxRequest, {
     _AJAXUTIL: myfaces._impl.xhrCore._AjaxUtils,
@@ -54,7 +57,7 @@ _MF_CLS(_PFX_XHR+"_FormDataRequest", myfaces._impl.xhrCore._AjaxRequest, {
 
         //now this is less performant but we have to call it to allow viewstate decoration
         if (!this._partialIdsArray || !this._partialIdsArray.length) {
-            ret = new FormData(this._sourceForm);
+            ret = new FormData();
             //just in case the source item is outside of the form
             //only if the form override is set we have to append the issuing item
             //otherwise it is an element of the parent form

@@ -13,7 +13,6 @@ public class Fileupload {
     private Part uploaded2;
 
 
-
     private String msg = "";
 
 
@@ -45,6 +44,5 @@ public class Fileupload {
         if(uploaded != null && uploaded2 != null) {
             msg = "success";
         }
-
     }
 }
