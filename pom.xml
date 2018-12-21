@@ -17,7 +17,7 @@
         <plexus-compiler-eclipse.version>1.6</plexus-compiler-eclipse.version>
         <shared.resources>src/main/extra-resources/shared-deploy/webapp</shared.resources>
         <maven-war-plugin.version>LATEST</maven-war-plugin.version>
-        <myfaces-stable-api.version>2.2.6</myfaces-stable-api.version>
+        <myfaces-stable-api.version>2.3.2</myfaces-stable-api.version>
         <mojarra.version>2.1.19</mojarra.version>
         <netbeans.hint.deploy.server>gfv3ee6</netbeans.hint.deploy.server>
         <tomcat-embed.version>9.0.14</tomcat-embed.version>
