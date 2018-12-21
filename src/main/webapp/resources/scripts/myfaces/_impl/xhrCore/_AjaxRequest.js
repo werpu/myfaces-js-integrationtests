@@ -290,15 +290,12 @@ _MF_CLS(_PFX_XHR + "_AjaxRequest", _MF_OBJECT, /** @lends myfaces._impl.xhrCore.
         var _AJAXUTIL = this._AJAXUTIL, myfacesOptions = this._context.myfaces, ret = null;
 
 
-        //now this is less performant but we have to call it to allow viewstate decoration
+
         if (!this._partialIdsArray || !this._partialIdsArray.length) {
-            ret = this._Lang.createFormDataDecorator(new Array());
-            //just in case the source item is outside of the form
-            //only if the form override is set we have to append the issuing item
-            //otherwise it is an element of the parent form
-            if (this._source && myfacesOptions && myfacesOptions.form)
-                _AJAXUTIL.appendIssuingItem(this._source, ret);
+            var _AJAXUTIL = this._AJAXUTIL, myfacesOptions = this._context.myfaces;
+            return this._Lang.createFormDataDecorator(jsf.getViewState(this._sourceForm));
         } else {
+            //now this is less performant but we have to call it to allow viewstate decoration
             ret = this._Lang.createFormDataDecorator(new Array());
             _AJAXUTIL.encodeSubmittableFields(ret, this._sourceForm, this._partialIdsArray);
             if (this._source && myfacesOptions && myfacesOptions.form)
@@ -306,6 +303,7 @@ _MF_CLS(_PFX_XHR + "_AjaxRequest", _MF_OBJECT, /** @lends myfaces._impl.xhrCore.
 
         }
         return ret;
+
     },
 
 

@@ -58,6 +58,7 @@ _MF_CLS(_PFX_XHR+"_FormDataRequest", myfaces._impl.xhrCore._AjaxRequest, {
         //now this is less performant but we have to call it to allow viewstate decoration
         if (!this._partialIdsArray || !this._partialIdsArray.length) {
             ret = new FormData();
+            _AJAXUTIL.encodeSubmittableFields(ret, this._sourceForm);
             //just in case the source item is outside of the form
             //only if the form override is set we have to append the issuing item
             //otherwise it is an element of the parent form

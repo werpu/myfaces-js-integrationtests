@@ -63,6 +63,8 @@ describe("Various response tests giving the codebase something to chew on in the
             'javax.faces.behavior.event': 'action'
         }).then(function () {
             setTimeout(function () {
+
+                //TODO sometimes this test fails due to timing issues
                 expect($("#myVal").html().indexOf("1") != -1).toBeTruthy(); //"innerHTML of result must be 1",
                 done();
             }, 500);
