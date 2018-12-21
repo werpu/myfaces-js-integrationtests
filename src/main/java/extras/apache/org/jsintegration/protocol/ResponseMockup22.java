@@ -26,15 +26,8 @@ import extras.apache.org.jsintegration.protocol.xmlNodes.Update;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintWriter;
-import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * @author Werner Punz (latest modification by $Author$)
@@ -51,7 +44,6 @@ public class ResponseMockup22 extends ResponseMockup
         response.setContentType("text/xml;charset=UTF-8");
         PrintWriter out = response.getWriter();
         String op = (String) request.getParameter("op");
-
 
         PartialResponse root = new PartialResponse();
         if (op.equals("newviewstate"))
