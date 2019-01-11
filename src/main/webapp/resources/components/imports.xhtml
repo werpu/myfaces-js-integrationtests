@@ -16,15 +16,15 @@
     <cc:implementation>
  
         <!-- runtime -->
+        <!--
         <h:outputScript name="myfaces/_impl/core/_EvalHandlers.js" library="scripts" target="head"/>
         <h:outputScript name="myfaces/_impl/core/_Runtime.js" library="scripts" target="head"/>
         <h:outputScript name="myfaces/_impl/core/_StartImpl.js" library="scripts" target="head"/>
 
-        <!-- i18n -->
+
         <h:outputScript name="myfaces/_impl/i18n/Messages.js" library="scripts" target="head"/>
 
 
-        <!-- utils / support classes -->
         <h:outputScript name="myfaces/_impl/_util/_Lang.js" library="scripts" target="head"/>
 
         <h:outputScript name="myfaces/_impl/core/Object.js" library="scripts" target="head"/>
@@ -37,15 +37,10 @@
 
         <h:outputScript name="myfaces/_impl/_util/_HtmlStripper.js" library="scripts" target="head"/>
 
-        <!-- xhr engine -->
         <h:outputScript name="myfaces/_impl/xhrCore/engine/XhrConst.js" library="scripts" target="head"/>
         <h:outputScript name="myfaces/_impl/xhrCore/engine/BaseRequest.js" library="scripts" target="head"/>
 
-        <!--
-        <h:outputScript name="myfaces/_impl/xhrCore/engine/Xhr1.js" library="scripts" target="head"/>
-        -->
 
-        <!-- xhr jsf mappers -->
         <h:outputScript name="myfaces/_impl/xhrCore/_AjaxUtils.js" library="scripts" target="head"/>
 
         <h:outputScript name="myfaces/_impl/xhrCore/_AjaxRequestQueue.js" library="scripts" target="head"/>
@@ -60,9 +55,9 @@
 
 
 
-        <!-- Implementation -->
         <h:outputScript name="myfaces/_impl/core/Impl.js" library="scripts" target="head"
                         />
+        -->
         <!--
             we try to register our overrides deliberately later
             to check whether they register themselves properly
@@ -74,7 +69,7 @@
         <!-- clean up the init code -->
 
         <!-- API -->
-
+        <!--
         <h:outputScript name="myfaces/_impl/i18n/Messages_de.js" library="scripts" target="head"/>
         <h:outputScript name="myfaces/_impl/i18n/Messages_nl.js" library="scripts" target="head"/>
 
@@ -84,8 +79,8 @@
 
 
         <h:outputScript name="myfaces/api/jsf.js" library="scripts" target="head"/>
-
-
+        -->
+        <h:outputScript name="releasetestbed/jsf.js" library="scripts" target="head"/>
 
         <script type="text/javascript" defer="defer">
             myfaces = window.myfaces ||{};

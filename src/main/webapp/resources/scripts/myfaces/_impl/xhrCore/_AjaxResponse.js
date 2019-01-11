@@ -243,7 +243,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
             //ie11 has a deviation from the standard behavior, we have to remap the null/undefined name
             //to an empty string
             var eName = e.name || "";
-            var eIdentifier = e.id || "";
+
             if (eName.indexOf(identifier) != -1) {
                 fieldsFound.push(e);
             }
@@ -289,6 +289,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
      * @private
      */
     _updateJSFClientArtifacts: function (context, value, identifier) {
+
         //elem not found for whatever reason
         //https://issues.apache.org/jira/browse/MYFACES-3544
 
@@ -343,7 +344,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
                 var updateForm = context._mfInternal._updateForms[cnt];
 
                 //follow the spec 2.3 path 1:1 we update the forms hosting the render targets which start
-                //with the viewroot as prefix
+                //with the viewroot
                 //if there is a viewroot present, however we seem to have a bug in myfaces
                 //even if we have a naming container response we
                 //cannot rely on the naming container being prefixed
@@ -356,7 +357,7 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
 
                 if(updateForm.indexOf(viewRootId) != 0) {
                     continue;
-                } else { //either an empty viewroot, or
+                } else { //either an empty viewroot, or a namespace match
                     this._applyJSFArtifactValueToForm(context, this._Dom.byId(updateForm), value, identifier);
                 }
             }
@@ -559,12 +560,16 @@ _MF_SINGLTN(_PFX_XHR + "_AjaxResponse", _MF_OBJECT, /** @lends myfaces._impl.xhr
 
         var pushEmbedded = this._Lang.hitch(this, function(currNode) {
             if(currNode.tagName && this._Lang.equalsIgnoreCase(currNode.tagName, "form")) {
-                mfInternal._updateForms.push(currNode.id);
+                if(currNode.id)  { //should not happen but just in case someone manipulates the html
+                    mfInternal._updateForms.push(currNode.id);
+                }
             } else {
                 var childForms = this._Dom.findByTagName(currNode, "form");
                 if(childForms && childForms.length) {
-                    for(var cnt = 0; cnt < childForms.lenght; cnt++) {
-                        mfInternal._updateForms.push(childForms[cnt].id);
+                    for(var cnt = 0; cnt < childForms.length; cnt++) {
+                        if(childForms[cnt].id) {
+                            mfInternal._updateForms.push(childForms[cnt].id);
+                        }
                     }
                 }
             }

@@ -390,7 +390,7 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
     detectAttributes: function(element) {
         //test if 'hasAttribute' method is present and its native code is intact
         //for example, Prototype can add its own implementation if missing
-        //JSF 2.3 we now can reduce the complexity here, one of the functions now
+        //JSF 2.4 we now can reduce the complexity here, one of the functions now
         //is definitely implemented
         if (element.hasAttribute && this.isFunctionNative(element.hasAttribute)) {
             return function(name) {
