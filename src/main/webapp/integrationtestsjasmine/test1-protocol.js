@@ -68,7 +68,8 @@ describe("Testsuite testing the protocol", function () {
             setTimeout(function () {
                 var attributeChange = $("#attributeChange");
                 var style = attributeChange.css("border-bottom-width");
-                expect(style.indexOf("1px")).not.toBe(-1);
+                expect(style.indexOf("px")).not.toBe(-1);
+                expect(style.match(/[1-9]+/).length >= 1).toBe.true;
                 attributeChange.css("border", "0px solid black");
                 done();
             }, 500);
