@@ -5,6 +5,10 @@ afterEach(function() {
     }, 1000);
 });
 
+function _it(parm) {
+
+}
+
 describe("Testsuite testing the protocol", function () {
     beforeEach(function(){
         //we reset the ajax counter before each spec
@@ -13,7 +17,7 @@ describe("Testsuite testing the protocol", function () {
         //ajax cycle
         myfaces.testcases.ajaxCnt = 0;
     });
-    it("It should run an Eval Ajax command", function (done) {
+    _it("It should run an Eval Ajax command", function (done) {
         emitPPR("cmd_eval", null, "eval1").then(function () {
             setTimeout(function () {
                 var innerText = $("#evalarea1").html();
@@ -64,7 +68,9 @@ describe("Testsuite testing the protocol", function () {
 
     it("Should run change attributes", function (done) {
 
-        emitPPR("cmd_attributeschange", null, "attributes").then(function () {
+        emitPPR("cmd_attributeschange", null, "attributes").catch(ex => {
+            fail();
+        }).then(function () {
             setTimeout(function () {
                 var attributeChange = $("#attributeChange");
                 var style = attributeChange.css("border-bottom-width");
@@ -81,7 +87,9 @@ describe("Testsuite testing the protocol", function () {
     it("should trigger Error Trigger Ajax Illegal Response", function (done) {
 
 
-        emitPPR("cmd_illegalresponse", null, "illegalResponse").catch(function () {
+        emitPPR("cmd_illegalresponse", null, "illegalResponse").then(() => {
+            fail();
+        }).catch(function () {
             setTimeout(function () {
                 expect(myfaces.testcases.ajaxEvent.type === "error").toBeTruthy();
                 expect(myfaces.testcases.ajaxEvent.status === "malformedXML").toBeTruthy();

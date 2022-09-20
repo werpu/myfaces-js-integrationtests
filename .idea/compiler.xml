@@ -10,7 +10,12 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="IntegrationJSTest" target="1.7" />
+      <module name="IntegrationJSTest" target="9" />
     </bytecodeTargetLevel>
+  </component>
+  <component name="TypeScriptCompiler">
+    <option name="recompileOnChanges" value="true" />
+    <option name="typeScriptCompilerParams" value="--sourceMap true" />
+    <option name="useConfig" value="true" />
   </component>
 </project>

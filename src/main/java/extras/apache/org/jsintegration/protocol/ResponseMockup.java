@@ -119,8 +119,8 @@ public class ResponseMockup extends HttpServlet
                 out.println(root.toString());
             } else if (op.trim().toLowerCase().equals("errors"))
             {
-                root.addElement(new ErrorResponse(root, "Error1", "Error1 Text"));
-                root.addElement(new ErrorResponse(root, "Error2", "Error2 Text"));
+                root.addElement(new ErrorResponse(root, "Error1", "Error1 Text wanted error"));
+                root.addElement(new ErrorResponse(root, "Error2", "Error2 Text wanted error"));
 
                 out.println(root.toString());
             } else if (op.trim().equals("illegalResponse"))

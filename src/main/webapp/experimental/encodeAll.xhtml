@@ -9,7 +9,7 @@
 <ui:composition template="../templates/template2.xhtml">
     <ui:define name="content">
         <f:phaseListener type="extras.apache.org.jsintegration.experimental.EncodingListener" />
-        <h:outputScript name="encodeAll/encodeAll.js" library="scripts" target="head"/>
+        <h:outputScript name="encodeAll/encodeAll.js" library="myfaces.testscripts" target="head"/>
 
         <h:form id="otherform" >
             <h:inputText id="booga" value="#{executeAll.val1}"/>

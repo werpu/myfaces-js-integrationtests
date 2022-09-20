@@ -63,7 +63,7 @@ describe("Basic DOM Table Operation Tests utilizing the JSF protocol", function 
                 expect($("#table1 tbody tr").first().hasClass("insert_before")).toBeTruthy(); //first element must be insert before
                 expect($("#table1 tbody tr").last().hasClass("insert_after")).toBeTruthy();   //last element must be insert after
                 done();
-            }, 500);
+            }, 100);
         });
 
     });
