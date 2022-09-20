@@ -21,7 +21,7 @@
         <h:outputScript name="jsf-development.js" library="javax.faces"
                         target="head" />
         -->
-        <!-- runtime -->
+        <!-- runtime for testing -->
 
         <h:outputScript name="myfaces/_impl/core/_EvalHandlers.js" library="myfaces.testscripts" target="head"/>
         <h:outputScript name="myfaces/_impl/core/_Runtime.js" library="myfaces.testscripts" target="head"/>
@@ -31,52 +31,7 @@
         <h:outputScript name="myfaces/_impl/_util/_Lang.js" library="myfaces.testscripts" target="head"/>
 
         <h:outputScript name="myfaces/_impl/core/Object.js" library="myfaces.testscripts" target="head"/>
-        <!--
-        <h:outputScript name="myfaces/_impl/_util/_Queue.js" library="scripts" target="head"/>
-        <h:outputScript name="myfaces/_impl/_util/_ListenerQueue.js" library="scripts" target="head"/>
-        -->
         <h:outputScript name="myfaces/_impl/_util/_Dom.js" library="myfaces.testscripts" target="head"/>
-
-        <!--
-
-          <h:outputScript name="myfaces/_impl/_util/_HtmlStripper.js" library="scripts" target="head"/>
-
-          <h:outputScript name="myfaces/_impl/xhrCore/engine/XhrConst.js" library="scripts" target="head"/>
-
-          <h:outputScript name="myfaces/_impl/xhrCore/engine/BaseRequest.js" library="scripts" target="head"/>
-
-
-          <h:outputScript name="myfaces/_impl/xhrCore/_AjaxUtils.js" library="scripts" target="head"/>
-
-          <h:outputScript name="myfaces/_impl/xhrCore/_AjaxRequestQueue.js" library="scripts" target="head"/>
-
-          <h:outputScript name="myfaces/_impl/xhrCore/_AjaxRequest.js" library="scripts" target="head"/>
-
-          <h:outputScript name="myfaces/_impl/xhrCore/_FormDataRequest.js" library="scripts" target="head"/>
-
-          <h:outputScript name="myfaces/_impl/xhrCore/_AjaxResponse.js" library="scripts" target="head"/>
-
-          <h:outputScript name="myfaces/_impl/xhrCore/_Transports.js" library="scripts" target="head"/>
-
-
-
-          <h:outputScript name="myfaces/_impl/core/Impl.js" library="scripts" target="head" />
-          -->
-        <!--
-            we try to register our overrides deliberately later
-            to check whether they register themselves properly
-            into the system post init
-        -->
-
-
-
-        <!-- clean up the init code -->
-
-        <!-- API -->
-        <!--
-        <h:outputScript name="myfaces/_impl/i18n/Messages_de.js" library="scripts" target="head"/>
-        <h:outputScript name="myfaces/_impl/i18n/Messages_nl.js" library="scripts" target="head"/>
-        -->
         <h:outputScript name="myfaces/_impl/_util/_UnitTest.js" library="myfaces.testscripts" target="head"/>
         <h:outputScript name="myfaces/_impl/core/_EndImpl.js" library="myfaces.testscripts" target="head"
                         rendered="#{information.implementation == 'myfaces'}"/>
