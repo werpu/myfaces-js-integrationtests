@@ -1,3 +1,10 @@
+/**
+ * initialize jasmine to perform the tests
+ * once the testrunner is enabled we
+ * basically just run the tests as includes
+ * from the integration test pages
+ * and collect the data on the server
+ */
 (function () {
     var jasmineEnv = jasmine.getEnv();
     jasmineEnv.updateInterval = 250;

@@ -1,5 +1,8 @@
 /*
  * jsf jasmine connection
+ *
+ * We basically decorate the vital jsf api functions with promises and
+ * jasmine hooks
  */
 
 var myfaces = window.myfaces || {};

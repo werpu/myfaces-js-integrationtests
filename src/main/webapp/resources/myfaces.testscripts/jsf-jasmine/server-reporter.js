@@ -1,3 +1,11 @@
+/**
+ * jasmine based reporter
+ * which sends the results to a collecting server
+ * instead of handling the results locally
+ *
+ * theoretically we also could use a session storage
+ * but server is better
+ */
 (function () {
     if (!jasmine) {
         throw new Error("jasmine library does not exist in global namespace!");
