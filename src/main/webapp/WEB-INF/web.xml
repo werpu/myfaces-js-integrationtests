@@ -34,7 +34,7 @@
 
     <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
-        <param-value>Development</param-value>
+        <param-value>Production</param-value>
     </context-param>
 
     <context-param>
@@ -84,6 +84,10 @@
          <multipart-config>true</multipart-config>
          <load-on-startup>1</load-on-startup>
         -->
+        <init-param>
+            <param-name>precompressed</param-name>
+            <param-value>true</param-value>
+        </init-param>
     </servlet>
 
     <servlet>
@@ -121,6 +125,7 @@
         <servlet-name>MockupServlet</servlet-name>
         <url-pattern>*.mockup</url-pattern>
     </servlet-mapping>
+
     <!--
     <filter-mapping>
         <filter-name>CompressionFilter</filter-name>
