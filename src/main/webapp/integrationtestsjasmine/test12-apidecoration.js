@@ -1,11 +1,35 @@
 var req,resp, viest;
+
 beforeEach(function () {
-    req = spyOn(faces.ajax,"request");
-    faces.ajax.request = req;
-    resp = spyOn(faces.ajax,"response");
-    faces.ajax.response = resp;
-    viest = spyOn(faces,"getViewState");
-    faces.getViewState = viest;
+
+
+    let oldReq = faces.ajax.request;
+    faces.ajax.request = function(element, event, options) {
+        try {
+            req = true;
+            oldReq(element, event, options);
+        } finally {
+            faces.ajax.request = oldReq;
+        }
+    }
+    let oldResp = faces.ajax.response;
+    faces.ajax.response = (request, context) => {
+        try {
+            resp = true;
+            oldResp(request, context);
+        } finally {
+            faces.ajax.response = oldResp;
+        }
+    };
+    let oldViewst = faces.getViewState;
+    faces.getViewState = (formElement) => {
+        try {
+            viest = true;
+            oldViewst(formElement);
+        } finally {
+            faces.getViewState = oldViewst;
+        }
+    };
 });
 afterEach(function () {
     setTimeout(function () {
@@ -14,27 +38,22 @@ afterEach(function () {
 });
 describe("Test for decoratable calls within our jsf lifecycle", function () {
     it("checks whether all functions are properly called", function (done) {
-       /* jsfAjaxRequestPromise('reloader', null, {
+        return jsfAjaxRequestPromise('reloader', null, {
             execute: '@none',
             render: 'outputWriter',
             'jakarta.faces.behavior.event': 'action'
-        }).then(function () {
+        }).then(function (success) {
             setTimeout(function () {
-
-                expect(req).toHaveBeenCalled();
-                expect(resp).toHaveBeenCalled();
-                expect(viest).toHaveBeenCalled();
+                expect(req).toEqual(true);
+                expect(resp).toEqual(true);
+                expect(viest).toEqual(true);
                 done();
             }, 500);
         }).catch(function () {
-            debugger;
-            expect(faces.ajax.request).toHaveBeenCalled();
-            expect(faces.ajax.response).toHaveBeenCalled();
-            expect(faces.getViewState).toHaveBeenCalled();
+            expect(req).toEqual(true);
+            expect(resp).toEqual(true);
+            expect(viest).toEqual(true);
             done();
         });
-        */
-       //skipping the test for now, spyon seems to not work anymore as it used to be
-       done();
     });
 });
