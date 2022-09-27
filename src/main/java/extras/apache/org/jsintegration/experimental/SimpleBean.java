@@ -19,14 +19,16 @@
 
 package extras.apache.org.jsintegration.experimental;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Named;
+
 
 /**
  * @author Werner Punz (latest modification by $Author$)
  * @version $Revision$ $Date$
  */
-@ManagedBean
+@Named
 @RequestScoped
 public class SimpleBean
 {

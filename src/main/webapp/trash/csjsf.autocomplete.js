@@ -26,7 +26,7 @@
         init : function() {
             this.bindEvents();
             
-            jsf.ajax.addOnError(this.errorHandler);
+            faces.ajax.addOnError(this.errorHandler);
 
             var widget = this;
             //register afterResponse event handler
@@ -37,7 +37,7 @@
                     widget.afterResponse(data);
                 }
             };
-            jsf.ajax.addOnEvent(afterResponse);
+            faces.ajax.addOnEvent(afterResponse);
         },
 
         bindEvents: function() {
@@ -238,7 +238,7 @@
                 this.element.next().hide();
                 jQuery("table",this.element.next()).first().remove();
 
-                jsf.ajax.request(this.element[0], null,{render: this.options.reRender})
+                faces.ajax.request(this.element[0], null,{render: this.options.reRender})
             }
 
         },
@@ -248,7 +248,7 @@
         },
 
         afterResponse : function(data) {
-            // afterResponse has been added by jsf.ajax.addOnEvent and hence is kind 
+            // afterResponse has been added by faces.ajax.addOnEvent and hence is kind 
             // of static instead of instance method. So do not use "this.element", but check data.source (returns DOM element)
         	if (jQuery(data.source).attr('id') != this.element.attr('id')) {
         		return true;
@@ -313,7 +313,7 @@
 
               //now do the ajax requestInternal for the input field and its current value
               //reRender just the autoComplete area
-              jsf.ajax.request(this.element[0], null, {render: this.element.next().attr("id")});
+              faces.ajax.request(this.element[0], null, {render: this.element.next().attr("id")});
           }
         },
 

@@ -23,10 +23,12 @@ import extras.apache.org.jsintegration.core.model2.Results;
 import extras.apache.org.jsintegration.core.model2.Suite;
 import extras.apache.org.jsintegration.core.model2.TestResults2;
 
-import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-import javax.faces.context.FacesContext;
+
+import jakarta.annotation.PostConstruct;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.faces.context.FacesContext;
+import jakarta.inject.Named;
+
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -37,49 +39,40 @@ import java.util.Map;
  * @version $Revision$ $Date$
  */
 
-@ManagedBean(name = "statisticsVisualizer2")
+@Named("statisticsVisualizer2")
 @RequestScoped
-public class HTMLStatisticsExporter2
-{
+public class HTMLStatisticsExporter2 {
     List<Results> testResults = null;
     List<Results> failedResults = Collections.EMPTY_LIST;
 
     @PostConstruct
-    public void postCreate()
-    {
+    public void postCreate() {
         testResults = getResultsContainer();
         failedResults = new LinkedList<Results>();
-        for (Results results : testResults)
-        {
-            for (Map.Entry<String, Suite> entry : results.getSuites().entrySet())
-            {
-                if (entry.getValue().isFailed())
-                {
+        for (Results results : testResults) {
+            for (Map.Entry<String, Suite> entry : results.getSuites().entrySet()) {
+                if (entry.getValue().isFailed()) {
                     failedResults.add(results);
                 }
             }
         }
     }
 
-    public List<Results> getResults()
-    {
+    public List<Results> getResults() {
         //List<Results> retVal = new ArrayList<Results>(testResults.size());
         //retVal.addAll(testResults);
         //return retVal;
         return testResults;
     }
 
-    public List<Results> getFailedResults()
-    {
+    public List<Results> getFailedResults() {
         return failedResults;
     }
 
-    private List<Results> getResultsContainer()
-    {
+    private List<Results> getResultsContainer() {
         Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
         TestResults2 results = (TestResults2) sessionMap.get(StatisticsCollector2.TEST_RESULTS);
-        if (results == null)
-        {
+        if (results == null) {
             results = new TestResults2();
             results.setResults(Collections.EMPTY_LIST);
         }

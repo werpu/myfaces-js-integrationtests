@@ -11,17 +11,17 @@ myfaces.testcases = myfaces.testcases || {};
 
 
 myfaces.testcases.ajaxCnt = 0;
-myfaces.testcases.ajaxRequest = jsf.ajax.request;
+myfaces.testcases.ajaxRequest = faces.ajax.request;
 myfaces.testcases.ajaxEvent = null;
 myfaces.testcases.ajaxEvents = {};
 
 
-jsf.ajax.request = function (source, evt, options) {
+faces.ajax.request = function (source, evt, options) {
     myfaces.testcases.ajaxEvents = {};
     myfaces.testcases.ajaxRequest(source, evt, options);
 };
 
-jsf.ajax.addOnEvent(function (evt) {
+faces.ajax.addOnEvent(function (evt) {
     myfaces.testcases.ajaxEvent = evt;
     myfaces.testcases.ajaxEvents[evt.status] = true;
     if (evt.status === "success") {
@@ -29,7 +29,7 @@ jsf.ajax.addOnEvent(function (evt) {
     }
 });
 
-jsf.ajax.addOnError(function (evt) {
+faces.ajax.addOnError(function (evt) {
     myfaces.testcases.ajaxEvent = evt;
     myfaces.testcases.ajaxEvents["error"] = true;
     myfaces.testcases.ajaxCnt ++;
@@ -80,6 +80,6 @@ window.jsfAjaxRequestPromise = function(element, event, options) {
         };
 
 
-        jsf.ajax.request.apply(jsf.ajax.request, finalArgs)
+        faces.ajax.request.apply(faces.ajax.request, finalArgs)
     });
 };

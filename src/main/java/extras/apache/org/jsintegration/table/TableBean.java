@@ -20,20 +20,22 @@
 package extras.apache.org.jsintegration.table;
 
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+
+import jakarta.annotation.ManagedBean;
+import jakarta.faces.view.ViewScoped;
+import jakarta.inject.Named;
+
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
-import javax.annotation.PostConstruct;
-import javax.faces.bean.ViewScoped;
+
 
 /**
  * @author Werner Punz (latest modification by $Author$)
  * @version $Revision$ $Date$
  */
 
-@ManagedBean
+@Named
 @ViewScoped
 public class TableBean implements Serializable
 {

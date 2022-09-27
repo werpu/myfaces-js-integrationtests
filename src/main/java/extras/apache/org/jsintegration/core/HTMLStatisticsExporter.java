@@ -21,21 +21,24 @@ package extras.apache.org.jsintegration.core;
 
 import extras.apache.org.jsintegration.core.model.Group;
 
-import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletRequest;
+
+
+import jakarta.annotation.ManagedBean;
+import jakarta.annotation.PostConstruct;
+import jakarta.enterprise.context.RequestScoped;
+
+import jakarta.faces.context.FacesContext;
+
 import java.util.*;
 
-import extras.apache.org.jsintegration.core.model.Group;
+import jakarta.inject.Named;
 
 /**
  * @author Werner Punz (latest modification by $Author$)
  * @version $Revision$ $Date$
  */
 
-@ManagedBean(name = "statisticsVisualizer")
+@Named("statisticsVisualizer")
 @RequestScoped
 public class HTMLStatisticsExporter
 {

@@ -19,9 +19,10 @@
 
 package extras.apache.org.jsintegration.core;
 
-import javax.faces.bean.ApplicationScoped;
-import javax.faces.bean.ManagedBean;
-import javax.faces.context.FacesContext;
+
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.faces.context.FacesContext;
+import jakarta.inject.Named;
 
 
 /**
@@ -30,7 +31,7 @@ import javax.faces.context.FacesContext;
  *          <p/>
  *          Central information singleton
  */
-@ManagedBean
+@Named
 @ApplicationScoped
 public class Information
 {

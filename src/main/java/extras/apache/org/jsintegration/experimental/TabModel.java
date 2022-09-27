@@ -19,16 +19,17 @@
 
 package extras.apache.org.jsintegration.experimental;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Named;
+
 import java.io.Serializable;
 
 /**
  * @author Werner Punz (latest modification by $Author$)
  * @version $Revision$ $Date$
  */
-@ManagedBean
 @RequestScoped
+@Named
 public class TabModel  implements Serializable
 {
     String activeTab = "";

@@ -14,11 +14,11 @@ function emitPPR(source, event, action, useIframe, formName) {
     document.getElementById(formName || "form1").action = target;
 
     if (arguments.length <= 3) {
-        jsf.ajax.request(/*String|Dom Node*/ source, /*|EVENT|*/ (window.event)? window.event: event, /*{|OPTIONS|}*/ {op:action, onevent: (data) => {
+        faces.ajax.request(/*String|Dom Node*/ source, /*|EVENT|*/ (window.event)? window.event: event, /*{|OPTIONS|}*/ {op:action, onevent: (data) => {
             console.log(JSON.stringify(data));
             }});
     } else {
-        jsf.ajax.request(/*String|Dom Node*/ source, /*|EVENT|*/ (window.event)? window.event: event, /*{|OPTIONS|}*/ {op:action,
+        faces.ajax.request(/*String|Dom Node*/ source, /*|EVENT|*/ (window.event)? window.event: event, /*{|OPTIONS|}*/ {op:action,
 
             onevent: (data) => {
                 console.log(JSON.stringify(data));
@@ -40,7 +40,7 @@ function fixViewStates(data) {
         var foundUpdates = responseXML.getElementsByTagName("update");
         if (!foundUpdates) return;
         for (var cnt = foundUpdates.length - 1; viewStateVal == null && cnt >= 0; cnt -= 1) {
-            if (foundUpdates[cnt].getAttribute("id") == "javax.faces.ViewState") {
+            if (foundUpdates[cnt].getAttribute("id") == "jakarta.faces.ViewState") {
                 viewStateVal = foundUpdates[cnt].firstChild.nodeValue;
             }
         }
@@ -56,13 +56,13 @@ function fixViewStates(data) {
 }
 
 function _setVSTForm(theForm, viewstateVal) {
-    var viewStateField = (theForm.elements) ? theForm.elements["javax.faces.ViewState"] : null;//this._Dom.findFormElement(elem, this.P_VIEWSTATE);
+    var viewStateField = (theForm.elements) ? theForm.elements["jakarta.faces.ViewState"] : null;//this._Dom.findFormElement(elem, this.P_VIEWSTATE);
 
     if (viewStateField) {
         viewStateField.value = viewstateVal;
     } else if (!viewStateField) {
         var element = document.createElement("div");
-        element.innerHTML = ["<input type='hidden' name='", "javax.faces.ViewState" ,"' value='" , viewstateVal , "' />"].join("");
+        element.innerHTML = ["<input type='hidden' name='", "jakarta.faces.ViewState" ,"' value='" , viewstateVal , "' />"].join("");
         try {
             theForm.appendChild(element.childNodes[0]);
         } finally {

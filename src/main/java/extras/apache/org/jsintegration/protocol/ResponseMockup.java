@@ -15,10 +15,10 @@ import extras.apache.org.jsintegration.protocol.xmlNodes.Insert2;
 import extras.apache.org.jsintegration.protocol.xmlNodes.PartialResponse;
 import extras.apache.org.jsintegration.protocol.xmlNodes.Update;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -36,14 +36,14 @@ public class ResponseMockup extends HttpServlet
     int red = 0;
     String defaultResponse = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
             "<partial-response><changes><update id=\"out1\"><![CDATA[<span id=\"out1\">2</span>]]></update><update id" +
-            "=\"javax.faces.ViewState\"><![CDATA[j_id1:j_id3]]></update></changes></partial-response>";
+            "=\"jakarta.faces.ViewState\"><![CDATA[j_id1:j_id3]]></update></changes></partial-response>";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      *
      * @param request  servlet request
      * @param response servlet response
-     * @throws javax.servlet.ServletException if a servlet-specific error occurs
+     * @throws jakarta.servlet.ServletException if a servlet-specific error occurs
      * @throws java.io.IOException            if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -103,7 +103,7 @@ public class ResponseMockup extends HttpServlet
             } else if (op.trim().toLowerCase().equals("viewstate"))
             {
                 Changes changes = new Changes(root);
-                changes.addChild(new Update(changes, "javax.faces.ViewState", "hello world"));
+                changes.addChild(new Update(changes, "jakarta.faces.ViewState", "hello world"));
                 root.addElement(changes);
                 out.println(root.toString());
             } else if (op.trim().toLowerCase().equals("attributes"))
@@ -157,7 +157,7 @@ public class ResponseMockup extends HttpServlet
 
                 Changes changes = new Changes(root);
                 root.addElement(changes);
-                changes.addChild(new Update(changes, "javax.faces.ViewBody", replacement.toString()));
+                changes.addChild(new Update(changes, "jakarta.faces.ViewBody", replacement.toString()));
                 out.println(root.toString());
             } else if (op.trim().toLowerCase().equals("body2"))
             {
@@ -178,7 +178,7 @@ public class ResponseMockup extends HttpServlet
 
                 Changes changes = new Changes(root);
                 root.addElement(changes);
-                changes.addChild(new Update(changes, "javax.faces.ViewBody", replacement.toString()));
+                changes.addChild(new Update(changes, "jakarta.faces.ViewBody", replacement.toString()));
                 out.println(root.toString());
 
             } else if (op.trim().toLowerCase().equals("body3"))
@@ -200,7 +200,7 @@ public class ResponseMockup extends HttpServlet
                 } while (line != null);
                 Changes changes = new Changes(root);
                 root.addElement(changes);
-                changes.addChild(new Update(changes, "javax.faces.ViewRoot", replacement.toString()));
+                changes.addChild(new Update(changes, "jakarta.faces.ViewRoot", replacement.toString()));
                 out.println(root.toString());
 
             } else if (op.trim().toLowerCase().equals("serversideresponsewriter"))
@@ -351,8 +351,8 @@ public class ResponseMockup extends HttpServlet
                 out.println(root.toString());
             } else if (op.trim().toLowerCase().equals("executenone"))
             {
-                boolean execute = request.getParameter("javax.faces.partial.execute") != null;
-                boolean render = request.getParameter("javax.faces.partial.render") != null;
+                boolean execute = request.getParameter("jakarta.faces.partial.execute") != null;
+                boolean render = request.getParameter("jakarta.faces.partial.render") != null;
 
                 Changes changes = new Changes(root);
                 changes.addChild(new Update(changes, "result",(!execute && !render) ?  "<div " +
@@ -376,7 +376,7 @@ public class ResponseMockup extends HttpServlet
      *
      * @param request  servlet request
      * @param response servlet response
-     * @throws javax.servlet.ServletException if a servlet-specific error occurs
+     * @throws jakarta.servlet.ServletException if a servlet-specific error occurs
      * @throws java.io.IOException            if an I/O error occurs
      */
     @Override
@@ -391,7 +391,7 @@ public class ResponseMockup extends HttpServlet
      *
      * @param request  servlet request
      * @param response servlet response
-     * @throws javax.servlet.ServletException if a servlet-specific error occurs
+     * @throws jakarta.servlet.ServletException if a servlet-specific error occurs
      * @throws java.io.IOException            if an I/O error occurs
      */
     @Override

@@ -16,7 +16,7 @@ describe("Partial Page Rendering Nav Case", function () {
         jsfAjaxRequestPromise('forward', null, {
             execute: 'mainForm',
             render: 'fullContent',
-            'javax.faces.behavior.event': 'action'
+            'jakarta.faces.behavior.event': 'action'
         }).then(function () {
             setTimeout(function () {
                 htmlReporter.appendTo("body");

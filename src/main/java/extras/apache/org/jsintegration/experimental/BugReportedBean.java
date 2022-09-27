@@ -19,8 +19,10 @@
 
 package extras.apache.org.jsintegration.experimental;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Named;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -28,7 +30,7 @@ import java.util.List;
  * @author Werner Punz (latest modification by $Author$)
  * @version $Revision$ $Date$
  */
-@ManagedBean
+@Named
 @RequestScoped
 public class BugReportedBean
 {

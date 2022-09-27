@@ -19,16 +19,17 @@
 
 package extras.apache.org.jsintegration.other;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
+
+import jakarta.enterprise.context.SessionScoped;
+import jakarta.inject.Named;
+
 import java.io.Serializable;
 
 /**
  * @author Werner Punz (latest modification by $Author$)
  * @version $Revision$ $Date$
  */
-@ManagedBean
+@Named
 @SessionScoped
 public class ResponseOnly implements Serializable
 {

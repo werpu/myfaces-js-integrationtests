@@ -2,7 +2,7 @@
 <partial-response id="j_id__v_0">
     <changes>
         <update id="b">
-            <![CDATA[<form id="b" name="b" method="post" action="/IntegrationJSTest/regression/4229.jsf" enctype="application/x-www-form-urlencoded">This is 'form b' <label for="b:input2">Enter a new value for input2: </label><input id="b:input2" name="b:input2" type="text" value="hello world" /><a href="#" onclick="jsf.util.chain(this, event,'jsf.ajax.request(this,event,{execute:\'b a \',render:\'a \',\'javax.faces.behavior.event\':\'action\'})'); return false;" id="b:commandLink1" name="b:commandLink1">Click here to execute 'form a' and 'form b'  but re-render 'form a'</a><input type="hidden" name="b_SUBMIT" value="1" /></form>]]></update>
-        <update id="j_id__v_0:javax.faces.ViewState:1"><![CDATA[NTNCMjMyMjgyNjUzMjFGOTAwMDAwMDA3]]></update>
+            <![CDATA[<form id="b" name="b" method="post" action="/IntegrationJSTest/regression/4229.jsf" enctype="application/x-www-form-urlencoded">This is 'form b' <label for="b:input2">Enter a new value for input2: </label><input id="b:input2" name="b:input2" type="text" value="hello world" /><a href="#" onclick="faces.util.chain(this, event,'faces.ajax.request(this,event,{execute:\'b a \',render:\'a \',\'jakarta.faces.behavior.event\':\'action\'})'); return false;" id="b:commandLink1" name="b:commandLink1">Click here to execute 'form a' and 'form b'  but re-render 'form a'</a><input type="hidden" name="b_SUBMIT" value="1" /></form>]]></update>
+        <update id="j_id__v_0:jakarta.faces.ViewState:1"><![CDATA[NTNCMjMyMjgyNjUzMjFGOTAwMDAwMDA3]]></update>
     </changes>
 </partial-response>

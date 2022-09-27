@@ -19,12 +19,15 @@
 
 package extras.apache.org.jsintegration.experimental;
 
-import javax.faces.bean.ApplicationScoped;
-import javax.faces.bean.ManagedBean;
+
+import jakarta.annotation.ManagedBean;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Named;
+
 import java.util.ArrayList;
 import java.util.List;
 
-@ManagedBean
+@Named
 @ApplicationScoped
 public class ExecuteNone
 {

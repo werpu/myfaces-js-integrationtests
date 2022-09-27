@@ -1,4 +1,4 @@
-var oldResponse = jsf.ajax.response;
+var oldResponse = faces.ajax.response;
 
 //we are going to decorate the response for the first testcase
 function applySourceOnly() {
@@ -11,11 +11,11 @@ function applySourceOnly() {
 
         oldResponse(request, newContext);
     }
-    jsf.ajax.response = newResponse;
+    faces.ajax.response = newResponse;
 };
 
 function resetResponse() {
-    jsf.ajax.response = oldResponse;
+    faces.ajax.response = oldResponse;
 }
 
 function applyEmpty() {
@@ -28,7 +28,7 @@ function applyEmpty() {
 
         oldResponse(request, newContext);
     }
-    jsf.ajax.response = newResponse;
+    faces.ajax.response = newResponse;
 }
 
 afterEach(function () {
@@ -45,7 +45,7 @@ describe("Various response tests giving the codebase something to chew on in the
         jsfAjaxRequestPromise('resetme', null, {
             execute: '@this',
             render: 'myVal',
-            'javax.faces.behavior.event': 'action'
+            'jakarta.faces.behavior.event': 'action'
         }).then(function () {
             done();
         }).catch(function (val) {
@@ -60,7 +60,7 @@ describe("Various response tests giving the codebase something to chew on in the
         jsfAjaxRequestPromise('idgiven', null, {
             execute: '@this',
             render: 'myVal',
-            'javax.faces.behavior.event': 'action'
+            'jakarta.faces.behavior.event': 'action'
         }).then(function () {
             setTimeout(function () {
 
@@ -78,7 +78,7 @@ describe("Various response tests giving the codebase something to chew on in the
         jsfAjaxRequestPromise('emptymap', null, {
             execute: '@none',
             render: 'outputWriter',
-            'javax.faces.behavior.event': 'action'
+            'jakarta.faces.behavior.event': 'action'
         }).then(function () {
             setTimeout(function () {
                 expect($("#myVal").html().indexOf("1") != -1).toBeTruthy(); //"innerHTML of result must be 1",

@@ -28,14 +28,14 @@
         <script type="text/javascript">
             /**
              helpper function to encapsule the recurring parts
-             @param source the source (same as the source of jsf.ajax request
+             @param source the source (same as the source of faces.ajax request
              @param event the event which causes the trigger
              @param options the options passed down
              @param target a helper target to trigger various simulation backend servlets
              */
             function emitPPR(source, event, options, target) {
                 document.getElementById("testform").action = target;
-                jsf.ajax.request(/*String|Dom Node*/ source, /*|EVENT|*/ event, /*{|OPTIONS|}*/ options);
+                faces.ajax.request(/*String|Dom Node*/ source, /*|EVENT|*/ event, /*{|OPTIONS|}*/ options);
             }
         </script>
 

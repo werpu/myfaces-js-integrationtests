@@ -6,7 +6,7 @@
  * This software is the proprietary information of CREDIT SUISSE Technology and
  * Operations. Use is subject to license and non-disclosure terms.
  */
-package com.csg.jsf.component.field;
+package com.csg.faces.component.field;
 
 import java.io.Serializable;
 import java.util.List;
@@ -15,11 +15,11 @@ import javax.el.ELContext;
 import javax.el.ExpressionFactory;
 import javax.el.MethodExpression;
 import javax.el.ValueExpression;
-import javax.faces.component.FacesComponent;
-import javax.faces.component.UINamingContainer;
-import javax.faces.context.FacesContext;
-import javax.faces.event.AbortProcessingException;
-import javax.faces.event.ComponentSystemEvent;
+import jakarta.faces.component.FacesComponent;
+import jakarta.faces.component.UINamingContainer;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.event.AbortProcessingException;
+import jakarta.faces.event.ComponentSystemEvent;
 
 /**
  * @author Gerald Muellan
@@ -33,7 +33,7 @@ public class AutoComplete extends UINamingContainer implements Serializable {
 		limit
 	}
 
-	public static final String COMPONENT_TYPE = "com.csg.jsf.component.field.AutoComplete";
+	public static final String COMPONENT_TYPE = "com.csg.faces.component.field.AutoComplete";
 
 	private transient List<Object> autoCompleteItems;
 

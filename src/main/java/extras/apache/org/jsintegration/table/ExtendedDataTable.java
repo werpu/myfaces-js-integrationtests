@@ -19,8 +19,14 @@
 
 package extras.apache.org.jsintegration.table;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+
+
+
+import jakarta.annotation.ManagedBean;
+import jakarta.enterprise.context.SessionScoped;
+import jakarta.inject.Named;
+
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -28,9 +34,9 @@ import java.util.List;
  * @author Werner Punz (latest modification by $Author$)
  * @version $Revision$ $Date$
  */
-@ManagedBean(name = "dataBean")
+@Named("dataBean")
 @SessionScoped
-public class ExtendedDataTable
+public class ExtendedDataTable implements Serializable
 {
     List<Item> testListA = new LinkedList<Item>();
     String sortOrderColumnA = "";

@@ -1,11 +1,11 @@
 var req,resp, viest;
 beforeEach(function () {
-    req = spyOn(jsf.ajax,"request");
-    jsf.ajax.request = req;
-    resp = spyOn(jsf.ajax,"response");
-    jsf.ajax.response = resp;
-    viest = spyOn(jsf,"getViewState");
-    jsf.getViewState = viest;
+    req = spyOn(faces.ajax,"request");
+    faces.ajax.request = req;
+    resp = spyOn(faces.ajax,"response");
+    faces.ajax.response = resp;
+    viest = spyOn(faces,"getViewState");
+    faces.getViewState = viest;
 });
 afterEach(function () {
     setTimeout(function () {
@@ -14,11 +14,10 @@ afterEach(function () {
 });
 describe("Test for decoratable calls within our jsf lifecycle", function () {
     it("checks whether all functions are properly called", function (done) {
-
        /* jsfAjaxRequestPromise('reloader', null, {
             execute: '@none',
             render: 'outputWriter',
-            'javax.faces.behavior.event': 'action'
+            'jakarta.faces.behavior.event': 'action'
         }).then(function () {
             setTimeout(function () {
 
@@ -29,9 +28,9 @@ describe("Test for decoratable calls within our jsf lifecycle", function () {
             }, 500);
         }).catch(function () {
             debugger;
-            expect(jsf.ajax.request).toHaveBeenCalled();
-            expect(jsf.ajax.response).toHaveBeenCalled();
-            expect(jsf.getViewState).toHaveBeenCalled();
+            expect(faces.ajax.request).toHaveBeenCalled();
+            expect(faces.ajax.response).toHaveBeenCalled();
+            expect(faces.getViewState).toHaveBeenCalled();
             done();
         });
         */

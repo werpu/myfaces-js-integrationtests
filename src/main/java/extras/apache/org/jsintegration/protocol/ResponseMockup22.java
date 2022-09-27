@@ -23,10 +23,10 @@ import extras.apache.org.jsintegration.protocol.xmlNodes.Changes;
 import extras.apache.org.jsintegration.protocol.xmlNodes.PartialResponse;
 import extras.apache.org.jsintegration.protocol.xmlNodes.Update;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
@@ -57,7 +57,7 @@ public class ResponseMockup22 extends ResponseMockup
         if (op.equals("newviewstate"))
         {
             Changes changes = new Changes(root);
-            changes.addChild(new Update(changes, "javax.faces.ViewState",
+            changes.addChild(new Update(changes, "jakarta.faces.ViewState",
                     "update1"));
             root.addElement(changes);
             out.println(root.toString());
@@ -66,7 +66,7 @@ public class ResponseMockup22 extends ResponseMockup
         else if (op.equals("newviewstate2"))
         {
             Changes changes = new Changes(root);
-            changes.addChild(new Update(changes, "form2:javax.faces.ViewState",
+            changes.addChild(new Update(changes, "form2:jakarta.faces.ViewState",
                     "update2"));
             root.addElement(changes);
             out.println(root.toString());

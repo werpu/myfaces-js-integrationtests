@@ -149,7 +149,7 @@ div.error {
 }
 
 .gotoFinalResults {
-    background-image: url("../javax.faces.resource/icons/famfam/arrow_right.png.jsf");
+    background-image: url("../jakarta.faces.resource/icons/famfam/arrow_right.png.jsf");
     background-position: left 0;
     background-repeat: no-repeat;
     font-weight: bold;

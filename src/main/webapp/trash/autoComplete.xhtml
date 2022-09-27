@@ -17,12 +17,12 @@
     xmlns:cs="http://credit-suisse.com/csJsf"
     xmlns:composite="http://java.sun.com/jsf/composite">
 
-<composite:interface componentType="com.csg.jsf.component.field.AutoComplete">
+<composite:interface componentType="com.csg.faces.component.field.AutoComplete">
 	<composite:attribute name="value" required="false"/>
 	<composite:attribute name="var" required="false" default="item"/>
-	<composite:attribute name="items" required="true" method-signature="java.util.List f(com.csg.jsf.component.field.AutoComplete)" />
+	<composite:attribute name="items" required="true" method-signature="java.util.List f(com.csg.faces.component.field.AutoComplete)" />
 	<composite:attribute name="valueChangeListener" required="false"
-			method-signature="java.lang.String f(javax.faces.event.ValueChangeEvent)" default="null"/>
+			method-signature="java.lang.String f(jakarta.faces.event.ValueChangeEvent)" default="null"/>
 	<composite:attribute name="minQueryLength" required="false"  default="#{cc.attrs.autoCompleteStart}" shortDescription="Number of characters to be typed before starting to query."/>
     <composite:attribute name="autoCompleteStart" required="false" default="0" shortDescription="deprecated: use minQueryLength instead."/>
     <composite:attribute name="autoCompleteArrow" required="false" default="true"/>

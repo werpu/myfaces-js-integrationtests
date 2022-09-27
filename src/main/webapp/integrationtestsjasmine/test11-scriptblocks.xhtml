@@ -42,9 +42,9 @@
             <!--
             If this panelGroup contains only one script, it works well - the
     script
-            is evaluated only once - in runScripts() from jsf.js.
+            is evaluated only once - in runScripts() from faces.js.
             But if it contains more script elements, the following code from
-            jsf.js _outerHTMLCompliant() evaluates them first:
+            faces.js _outerHTMLCompliant() evaluates them first:
             item.parentNode.replaceChild(ret, item);
             And then runScripts() evaluates them also.
             -->

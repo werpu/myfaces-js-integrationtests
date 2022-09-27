@@ -25,7 +25,7 @@ describe("Spreadsheet test for the replacement of table elements", function () {
             promises.push(jsfAjaxRequestPromise(origin, null, {
                 execute: currentField2 + " " + currentField1,
                 render: currentOutput1 + " " + currentOutput2,
-                'javax.faces.behavior.event': 'action'
+                'jakarta.faces.behavior.event': 'action'
             }));
         }
         Promise.all(promises).finally(function() {

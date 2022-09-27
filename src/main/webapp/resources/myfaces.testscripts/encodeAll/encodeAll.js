@@ -28,7 +28,7 @@ function encodeAdditionalFormElements(originalFormId) {
             //name before id, submit order
 
             //we can ignore the viewstate of the other forms
-            if (submitName == "javax.faces.ViewState") continue;
+            if (submitName == "jakarta.faces.ViewState") continue;
             myfaces._impl.xhrCore._AjaxUtils.encodeElement(element, targetBuf);
 
 
@@ -62,5 +62,5 @@ function requestAll(origin, event, options) {
     options["org.apache.myfaces.manualApplyValues"] = targetIds.join(" ");
 
     //now that we have encoded the additional forms we safely now can submit our request
-    jsf.ajax.request(origin, event, options);
+    faces.ajax.request(origin, event, options);
 }

@@ -11,7 +11,7 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.JSFAjaxErr
 
     /**
      * event
-     * @param data the incoming jsf.js xhr data
+     * @param data the incoming faces.js xhr data
      */
     _onEvent: function(evt) {
 

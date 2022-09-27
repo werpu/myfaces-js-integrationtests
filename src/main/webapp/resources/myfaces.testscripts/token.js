@@ -6,7 +6,7 @@
     //we now store the history of this page
     if (!window.jsf)
         window.jsf = {};
-    window.jsf.history = {};
+    window.faces.history = {};
 
     //we assume a parametrized hash here
 
@@ -75,12 +75,12 @@
     /**
      * our snapshotting function which snapshots the page
      */
-    window.jsf.history.snapshotPage = function () {
+    window.faces.history.snapshotPage = function () {
         //no onpopstate and no sessionstorage then we do nothing,
         // ie I am talking about you
         setTimeout(function () {
             if (!window.onpopstate) {
-                window.jsf.history.setPopstateHandler();
+                window.faces.history.setPopstateHandler();
             }
 
             var stateObj = {state:document.body.innerHTML};
@@ -96,7 +96,7 @@
      * which sets the simualted pop state function (in our
      * case here an onhashchange function)
      */
-    window.jsf.history.setPopstateHandler = function (handler) {
+    window.faces.history.setPopstateHandler = function (handler) {
         window.onhashchange = function () {
             var token = getHashValue("token");
             if (token != _oldToken) {
@@ -129,16 +129,16 @@
     /**
      * initial snapshotting
      */
-    window.jsf.history.snapshotPage();
+    window.faces.history.snapshotPage();
 
     /**
      * Global jsf event handler which does snapshotting on every success
      */
     function theHandler(evt) {
         if (evt.status == "success") {
-            window.jsf.history.snapshotPage();
+            window.faces.history.snapshotPage();
         }
     }
 
-    jsf.ajax.addOnEvent(theHandler);
+    faces.ajax.addOnEvent(theHandler);
 })();

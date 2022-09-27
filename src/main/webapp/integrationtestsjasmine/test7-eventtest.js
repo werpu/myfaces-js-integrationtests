@@ -63,7 +63,7 @@ describe("Event handler phases test", function () {
 
     it("Checks the global events", function (done) {
 
-        jsf.ajax.addOnEvent(globalEventHandler);
+        faces.ajax.addOnEvent(globalEventHandler);
         jsfAjaxRequestPromise(document.getElementById("updateTrigger"), null, {
             render: "updatePanel",
             execute: "updatePanel updateTrigger"

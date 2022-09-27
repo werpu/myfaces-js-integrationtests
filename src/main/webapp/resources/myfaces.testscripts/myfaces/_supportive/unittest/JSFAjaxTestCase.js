@@ -60,8 +60,8 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.JSFAjaxTes
         setup: function() {
             this._callSuper("setup");
             if (this._globalProcess) {
-                jsf.ajax.addOnEvent(this._onGlobalEvent);
-                jsf.ajax.addOnError(this.onError);
+                faces.ajax.addOnEvent(this._onGlobalEvent);
+                faces.ajax.addOnError(this.onError);
             }
         },
 
@@ -122,7 +122,7 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.JSFAjaxTes
             options.onevent = this._onEvent;
             options.onerror = this._onError;
 
-            jsf.ajax.request(source, evt, finalOptions);
+            faces.ajax.request(source, evt, finalOptions);
         }
         ,
 
@@ -161,7 +161,7 @@ myfaces._impl.core._Runtime.extendClass("myfaces._supportive.unittest.JSFAjaxTes
 
         /**
              * event
-             * @param data the incoming jsf.js xhr data
+             * @param data the incoming faces.js xhr data
              */
         _onEvent: function(evt) {
             try {
