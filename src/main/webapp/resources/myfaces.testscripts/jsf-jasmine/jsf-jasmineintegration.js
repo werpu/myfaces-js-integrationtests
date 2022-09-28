@@ -81,7 +81,6 @@ window.jsfAjaxRequestPromise = function(element, event, options) {
 
         try {
             faces.ajax.request.apply(faces.ajax.request, finalArgs)
-            resolve();
         } catch(e) {
             reject(e);
         }

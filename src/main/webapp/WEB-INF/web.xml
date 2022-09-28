@@ -29,12 +29,12 @@
 
     <context-param>
         <param-name>jakarta.faces.FACELETS_VIEW_MAPPINGS</param-name>
-        <param-value>*.xhtml;*.jspx;*.jsf</param-value>
+        <param-value>*.xhtml;*.jspx;*.jsf;*.faces</param-value>
     </context-param>
 
     <context-param>
         <param-name>jakarta.faces.PROJECT_STAGE</param-name>
-        <param-value>Production</param-value>
+        <param-value>Development</param-value>
     </context-param>
 
     <context-param>
@@ -64,7 +64,10 @@
         <param-name>org.richfaces.fileUpload.createTempFiles</param-name>
         <param-value>false</param-value>
     </context-param>
-
+    <context-param>
+        <param-name>jakarta.faces.SEPARATOR_CHAR</param-name>
+        <param-value>-</param-value>
+    </context-param>
 
 
     <listener>
@@ -139,6 +142,9 @@
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/faces/*</url-pattern>
         <url-pattern>*.jsf</url-pattern>
+        <!-- enable the internal map files, we use a marker extension called mf_ap, the file itself ends with map -->
+        <!-- if you do not want to enable map files, simply remove this the line with the mf_map mapping -->
+        <url-pattern>*.mf_map</url-pattern>
         <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
 
