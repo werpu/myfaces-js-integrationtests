@@ -1,4 +1,5 @@
 
+
 afterEach(function() {
     setTimeout(function(){
         myfaces.testcases.redirect("./test2-viewroot.jsf");
@@ -20,7 +21,7 @@ describe("Testsuite testing the protocol", function () {
     _it("It should run an Eval Ajax command", function (done) {
         emitPPR("cmd_eval", null, "eval1").then(function () {
             setTimeout(function () {
-                var innerText = $("#evalarea1").html();
+                let innerText = $("#evalarea1").html();
                 expect(innerText.toLowerCase().indexOf("succeed")).not.toBe(-1);
                 done();
             }, 500);
@@ -32,13 +33,13 @@ describe("Testsuite testing the protocol", function () {
     it("It should run Update Insert Spec - Insert Path", function (done) {
         emitPPR("cmd_update_insert2", null, "updateinsert2").then(function () {
             setTimeout(function () {
-                var innerText = $("#evalarea2").html();
+                let innerText = $("#evalarea2").html();
                 expect(innerText.toLowerCase().indexOf("succeed")).not.toBe(-1);
                 innerText = $("#evalarea3").html();
                 expect(innerText.toLowerCase().indexOf("succeed")).not.toBe(-1);
                 //insert before must exist
-                var insertBefore = $("#insertbefore");
-                var insertAfter = $("#insertafter");
+                let insertBefore = $("#insertbefore");
+                let insertAfter = $("#insertafter");
                 expect(!!insertBefore.length).toBe(true);
                 expect(!!insertAfter.length).toBe(true);
                 insertBefore.remove();
@@ -53,7 +54,7 @@ describe("Testsuite testing the protocol", function () {
 
         emitPPR("cmd_delete", null, "delete1").then(function () {
             setTimeout(function () {
-                var deleteGone = !!document.getElementById("deleteable");
+                let deleteGone = !!document.getElementById("deleteable");
                 expect(deleteGone).toBe(false);
                 if (deleteGone) {
                     $("#testResults").append("<div id='deleteable'>deletearea readded by automated test</div>");
@@ -72,8 +73,8 @@ describe("Testsuite testing the protocol", function () {
             fail();
         }).then(function () {
             setTimeout(function () {
-                var attributeChange = $("#attributeChange");
-                var style = attributeChange.css("border-bottom-width");
+                let attributeChange = $("#attributeChange");
+                let style = attributeChange.css("border-bottom-width");
                 expect(style.indexOf("1px")).not.toBe(-1);
                 attributeChange.css("border", "0px solid black");
                 done();

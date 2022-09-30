@@ -27,18 +27,9 @@
 
         <!-- runtime for testing -->
 
-        <h:outputScript name="myfaces/_impl/core/_EvalHandlers.js" library="myfaces.testscripts" target="head"/>
-        <h:outputScript name="myfaces/_impl/core/_Runtime.js" library="myfaces.testscripts" target="head"/>
-        <h:outputScript name="myfaces/_impl/core/_StartImpl.js" library="myfaces.testscripts" target="head"/>
-        <h:outputScript name="myfaces/_impl/i18n/Messages.js" library="myfaces.testscripts" target="head"/>
 
         <h:outputScript name="myfaces/_impl/_util/_Lang.js" library="myfaces.testscripts" target="head"/>
-
-        <h:outputScript name="myfaces/_impl/core/Object.js" library="myfaces.testscripts" target="head"/>
-        <h:outputScript name="myfaces/_impl/_util/_Dom.js" library="myfaces.testscripts" target="head"/>
-        <h:outputScript name="myfaces/_impl/_util/_UnitTest.js" library="myfaces.testscripts" target="head"/>
-        <h:outputScript name="myfaces/_impl/core/_EndImpl.js" library="myfaces.testscripts" target="head"
-                        rendered="#{information.implementation == 'myfaces'}"/>
+        <h:outputScript name="mona-dish/index.js" library="myfaces.testscripts" target="head"/>
 
         <!--
         <h:outputScript name="myfaces/api/faces.js" library="scripts" target="head"/>
