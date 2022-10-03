@@ -28,17 +28,13 @@ describe("Testsuite testing the protocol", function () {
             DomQuery.querySelectorAll("#evalarea1").waitUntilDom(condition).then(() => {
                 expect(true).toEqual(true);
                 done();
-            }).catch(() => {
-                fail();
-                done();
-            });
+            }).catch(done);
         })
     });
 
     it("It should run Update Insert Spec - Insert Path", function (done) {
 
         emitPPR("cmd_update_insert2", null, "updateinsert2").then(function () {
-
 
             setTimeout(function () {
                 let innerText = DomQuery.byId("evalarea2").html().value;
@@ -55,7 +51,6 @@ describe("Testsuite testing the protocol", function () {
                 done();
             }, 500);
         });
-
     });
 
     it("It should run delete", function (done) {
@@ -63,17 +58,11 @@ describe("Testsuite testing the protocol", function () {
         emitPPR("cmd_delete", null, "delete1").then(function () {
             DomQuery.byId("deleteable").waitUntilDom((element) => element.isAbsent())
                 .then(() => {
-                    expect(true).toEqual(true);
                     let newNode = DomQuery.fromMarkup("<div id='deleteable'>deletearea readded by automated test</div>");
-                    newNode.appendTo(DomQuery.byId("testResults"))
-                }).catch(() => {
-                fail();
-            }).finally(() => {
-                done();
-            });
+                    newNode.appendTo(DomQuery.byId("testResults"));
+                    done();
+                }).catch(done);
         });
-
-
     });
 
     it("Should run change attributes", function (done) {
@@ -85,16 +74,12 @@ describe("Testsuite testing the protocol", function () {
                 .waitUntilDom((element) => element.style('borderWidth').value == "1px")
                 .then((element) => {
                     element.style('borderWidth').value = "0px";
-                    expect(true).toEqual(true);
-                }).catch(() => fail())
-                .finally(done);
+                    done();
+                }).catch(done);
         });
-
-
     });
 
     it("should trigger Error Trigger Ajax Illegal Response", function (done) {
-
 
         emitPPR("cmd_illegalresponse", null, "illegalResponse").then(() => {
             fail();
@@ -107,21 +92,16 @@ describe("Testsuite testing the protocol", function () {
                 done();
             }, 500);
         });
-
-
     });
 
     it("Should trigger an ajax server error and onerror and onsuccess must have been called in this case", function (done) {
 
         emitPPR("cmd_error", null, "errors").catch(function () {
-            setTimeout(function () {
-                //onerror and oncomplete must have been called in this case
-                expect(myfaces.testcases.ajaxEvents["error"] && myfaces.testcases.ajaxEvents["success"]).toBeTruthy();
-                done();
-            }, 500);
+            DomQuery.byId("body")
+                .waitUntilDom(() => myfaces.testcases.ajaxEvents["error"] && myfaces.testcases.ajaxEvents["success"])
+                .then(done)
+                .catch(done);
         });
     });
-
-
 });
 
