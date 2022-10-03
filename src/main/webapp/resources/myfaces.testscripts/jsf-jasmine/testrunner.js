@@ -18,12 +18,13 @@
     //var consoleReporter = new jasmine.ConsoleReporter(jasmineEnv);
     //var serverReporter = new jasmine.ServerReporter(jasmineEnv);
 
-    var serverReporter = new jasmine.ServerReporter();
+    let serverReporter = new jasmine.ServerReporter();
 
 
     //jasmineEnv.addReporter(htmlReporter);
     //jasmineEnv.addReporter(consoleReporter);
     jasmineEnv.addReporter(serverReporter);
+    jasmineEnv.addReporter(jasmine.SessionReporter);
     /**
      Delegate filtering of specs to the reporter. Allows for clicking on single suites or specs in the results to only run a subset of the suite.
      */

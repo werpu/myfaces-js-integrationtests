@@ -17,7 +17,10 @@ describe("Testsuite testing the protocol", function () {
             //another faster and better way we use wait untilDom
             const condition = (element) => element.html().value.indexOf("succeed") != -1;
             DomQuery.querySelectorAll("#evalarea1").waitUntilDom(condition).then(() => {
-                expect(true).toEqual(true);
+                //  jasmine expects at least one expectation, but tat this stage we
+                //  already are correct
+                throw Error("Booga");
+                expect(true).toBeTruthy();
                 done();
             }).catch(done);
         })
@@ -35,9 +38,9 @@ describe("Testsuite testing the protocol", function () {
             }).then(() => {
                 DomQuery.byId("insertbefore").delete();
                 DomQuery.byId("insertafter").delete();
+                expect(true).toBeTruthy();
                 done();
             }).catch(done);
-
         });
     });
 
@@ -48,6 +51,7 @@ describe("Testsuite testing the protocol", function () {
                 .then(() => {
                     let newNode = DomQuery.fromMarkup("<div id='deleteable'>deletearea readded by automated test</div>");
                     newNode.appendTo(DomQuery.byId("testResults"));
+                    expect(true).toBeTruthy();
                     done();
                 }).catch(done);
         });
@@ -62,6 +66,7 @@ describe("Testsuite testing the protocol", function () {
                 .waitUntilDom((element) => element.style('borderWidth').value == "1px")
                 .then((element) => {
                     element.style('borderWidth').value = "0px";
+                    expect(true).toBeTruthy();
                     done();
                 }).catch(done);
         });
@@ -76,7 +81,10 @@ describe("Testsuite testing the protocol", function () {
                     myfaces.testcases.ajaxEvent.status === "malformedXML" &&
                     myfaces.testcases.ajaxEvent.responseCode == 200 &&
                     myfaces.testcases.ajaxEvent.source.id == "cmd_illegalresponse";
-            }).then(done).catch(done);
+            }).then(() => {
+                expect(true).toBeTruthy();
+                done();
+            }).catch(done);
         });
     });
 
@@ -84,7 +92,10 @@ describe("Testsuite testing the protocol", function () {
         emitPPR("cmd_error", null, "errors").catch(function () {
             DomQuery.byId("body")
                 .waitUntilDom(() => myfaces.testcases.ajaxEvents["error"] && myfaces.testcases.ajaxEvents["success"])
-                .then(done)
+                .then(() => {
+                    expect(true).toBeTruthy();
+                    done();
+                })
                 .catch(done);
         });
     });
