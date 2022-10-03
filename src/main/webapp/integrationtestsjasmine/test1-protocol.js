@@ -1,7 +1,5 @@
-
-
-afterEach(function() {
-    setTimeout(function(){
+afterEach(function () {
+    setTimeout(function () {
         myfaces.testcases.redirect("./test2-viewroot.jsf");
     }, 1000);
 });
@@ -10,40 +8,50 @@ function _it(parm) {
 
 }
 
+
 describe("Testsuite testing the protocol", function () {
-    beforeEach(function(){
+    beforeEach(function () {
         //we reset the ajax counter before each spec
         //because every spec has only one ajax request
         //and needs the counter to detect the end of the
         //ajax cycle
         myfaces.testcases.ajaxCnt = 0;
     });
-    _it("It should run an Eval Ajax command", function (done) {
+    it("It should run an Eval Ajax command", function (done) {
+
         emitPPR("cmd_eval", null, "eval1").then(function () {
-            setTimeout(function () {
-                let innerText = $("#evalarea1").html();
-                expect(innerText.toLowerCase().indexOf("succeed")).not.toBe(-1);
+            //another faster and better way we use wait untilDom
+            const condition = (element) => {
+                let innerText = element.html().value;
+                return innerText.toLowerCase().indexOf("succeed");
+            };
+            DomQuery.querySelectorAll("#evalarea1").waitUntilDom(condition).then(() => {
+                expect(true).toEqual(true);
                 done();
-            }, 500);
-
+            }).catch(() => {
+                fail();
+                done();
+            });
         })
-
     });
 
     it("It should run Update Insert Spec - Insert Path", function (done) {
+
         emitPPR("cmd_update_insert2", null, "updateinsert2").then(function () {
+
+
             setTimeout(function () {
-                let innerText = $("#evalarea2").html();
+                let innerText = DomQuery.byId("evalarea2").html().value;
                 expect(innerText.toLowerCase().indexOf("succeed")).not.toBe(-1);
-                innerText = $("#evalarea3").html();
+                innerText = DomQuery.byId("evalarea3").html().value;
                 expect(innerText.toLowerCase().indexOf("succeed")).not.toBe(-1);
                 //insert before must exist
-                let insertBefore = $("#insertbefore");
-                let insertAfter = $("#insertafter");
+                let insertBefore = DomQuery.byId("insertbefore");
+                let insertAfter = DomQuery.byId("insertafter");
                 expect(!!insertBefore.length).toBe(true);
                 expect(!!insertAfter.length).toBe(true);
-                insertBefore.remove();
-                insertAfter.remove();
+                insertBefore.delete();
+                insertAfter.delete();
                 done();
             }, 500);
         });
@@ -53,15 +61,16 @@ describe("Testsuite testing the protocol", function () {
     it("It should run delete", function (done) {
 
         emitPPR("cmd_delete", null, "delete1").then(function () {
-            setTimeout(function () {
-                let deleteGone = !!document.getElementById("deleteable");
-                expect(deleteGone).toBe(false);
-                if (deleteGone) {
-                    $("#testResults").append("<div id='deleteable'>deletearea readded by automated test</div>");
-                }
+            DomQuery.byId("deleteable").waitUntilDom((element) => element.isAbsent())
+                .then(() => {
+                    expect(true).toEqual(true);
+                    let newNode = DomQuery.fromMarkup("<div id='deleteable'>deletearea readded by automated test</div>");
+                    newNode.appendTo(DomQuery.byId("testResults"))
+                }).catch(() => {
+                fail();
+            }).finally(() => {
                 done();
-            }, 500);
-
+            });
         });
 
 
@@ -72,14 +81,13 @@ describe("Testsuite testing the protocol", function () {
         emitPPR("cmd_attributeschange", null, "attributes").catch(ex => {
             fail();
         }).then(function () {
-            setTimeout(function () {
-                let attributeChange = $("#attributeChange");
-                let style = attributeChange.css("border-bottom-width");
-                expect(style.indexOf("1px")).not.toBe(-1);
-                attributeChange.css("border", "0px solid black");
-                done();
-            }, 500);
-
+            DomQuery.byId("attributeChange")
+                .waitUntilDom((element) => element.style('borderWidth').value == "1px")
+                .then((element) => {
+                    element.style('borderWidth').value = "0px";
+                    expect(true).toEqual(true);
+                }).catch(() => fail())
+                .finally(done);
         });
 
 
@@ -99,7 +107,6 @@ describe("Testsuite testing the protocol", function () {
                 done();
             }, 500);
         });
-
 
 
     });
