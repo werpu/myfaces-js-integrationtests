@@ -1,3 +1,7 @@
+let formatHref = (href) => {
+    return href.substring(href.lastIndexOf('/'));
+}
+
 let resultData = JSON.parse(sessionStorage.getItem("_jasmine_log__") || "[]");
 
 let failures = resultData.filter(item => 'undefined' != typeof item.status && item.status != 'passed');
@@ -16,7 +20,7 @@ if (!resultData.length) {
    ;
 
     failures.forEach(failure => {
-        DomQuery.fromMarkup(`<li> ${failure.from}: ${failure.message}</li>`).appendTo(details);
+        DomQuery.fromMarkup(`<li> <b style='color: darkred;'>${formatHref(failure.from)}</b>: ${failure.message}</li>`).appendTo(details);
     })
 }
 

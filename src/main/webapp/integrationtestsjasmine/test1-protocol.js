@@ -19,7 +19,6 @@ describe("Testsuite testing the protocol", function () {
             DomQuery.querySelectorAll("#evalarea1").waitUntilDom(condition).then(() => {
                 //  jasmine expects at least one expectation, but tat this stage we
                 //  already are correct
-                throw Error("Booga");
                 expect(true).toBeTruthy();
                 done();
             }).catch(done);
