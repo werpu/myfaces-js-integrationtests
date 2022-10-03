@@ -4,11 +4,6 @@ afterEach(function () {
     }, 1000);
 });
 
-function _it(parm) {
-
-}
-
-
 describe("Testsuite testing the protocol", function () {
     beforeEach(function () {
         //we reset the ajax counter before each spec
@@ -18,13 +13,9 @@ describe("Testsuite testing the protocol", function () {
         myfaces.testcases.ajaxCnt = 0;
     });
     it("It should run an Eval Ajax command", function (done) {
-
         emitPPR("cmd_eval", null, "eval1").then(function () {
             //another faster and better way we use wait untilDom
-            const condition = (element) => {
-                let innerText = element.html().value;
-                return innerText.toLowerCase().indexOf("succeed");
-            };
+            const condition = (element) => element.html().value.indexOf("succeed") != -1;
             DomQuery.querySelectorAll("#evalarea1").waitUntilDom(condition).then(() => {
                 expect(true).toEqual(true);
                 done();
@@ -35,21 +26,18 @@ describe("Testsuite testing the protocol", function () {
     it("It should run Update Insert Spec - Insert Path", function (done) {
 
         emitPPR("cmd_update_insert2", null, "updateinsert2").then(function () {
-
-            setTimeout(function () {
-                let innerText = DomQuery.byId("evalarea2").html().value;
-                expect(innerText.toLowerCase().indexOf("succeed")).not.toBe(-1);
-                innerText = DomQuery.byId("evalarea3").html().value;
-                expect(innerText.toLowerCase().indexOf("succeed")).not.toBe(-1);
-                //insert before must exist
-                let insertBefore = DomQuery.byId("insertbefore");
-                let insertAfter = DomQuery.byId("insertafter");
-                expect(!!insertBefore.length).toBe(true);
-                expect(!!insertAfter.length).toBe(true);
-                insertBefore.delete();
-                insertAfter.delete();
+            DomQuery.querySelectorAll("body").waitUntilDom(() => {
+                return
+                DomQuery.byId("evalarea2").html().value.indexOf("succeed") != -1 &&
+                DomQuery.byId("evalarea3").html().value.indexOf("succeed") != -1 &&
+                DomQuery.byId("insertbefore").length &&
+                DomQuery.byId("insertafter").length;
+            }).then(() => {
+                DomQuery.byId("insertbefore").delete();
+                DomQuery.byId("insertafter").delete();
                 done();
-            }, 500);
+            }).catch(done);
+
         });
     });
 
@@ -80,22 +68,19 @@ describe("Testsuite testing the protocol", function () {
     });
 
     it("should trigger Error Trigger Ajax Illegal Response", function (done) {
-
         emitPPR("cmd_illegalresponse", null, "illegalResponse").then(() => {
             fail();
         }).catch(function () {
-            setTimeout(function () {
-                expect(myfaces.testcases.ajaxEvent.type === "error").toBeTruthy();
-                expect(myfaces.testcases.ajaxEvent.status === "malformedXML").toBeTruthy();
-                expect(myfaces.testcases.ajaxEvent.responseCode == 200).toBeTruthy();
-                expect(myfaces.testcases.ajaxEvent.source.id == "cmd_illegalresponse").toBeTruthy();
-                done();
-            }, 500);
+            DomQuery.byId("body").waitUntilDom(() => {
+                return myfaces.testcases.ajaxEvent.type === "error" &&
+                    myfaces.testcases.ajaxEvent.status === "malformedXML" &&
+                    myfaces.testcases.ajaxEvent.responseCode == 200 &&
+                    myfaces.testcases.ajaxEvent.source.id == "cmd_illegalresponse";
+            }).then(done).catch(done);
         });
     });
 
     it("Should trigger an ajax server error and onerror and onsuccess must have been called in this case", function (done) {
-
         emitPPR("cmd_error", null, "errors").catch(function () {
             DomQuery.byId("body")
                 .waitUntilDom(() => myfaces.testcases.ajaxEvents["error"] && myfaces.testcases.ajaxEvents["success"])
