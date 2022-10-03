@@ -41,8 +41,5 @@ describe("Spreadsheet test for the replacement of table elements", function () {
                 done();
             }, 500);
         });
-
-
-
     });
 });
