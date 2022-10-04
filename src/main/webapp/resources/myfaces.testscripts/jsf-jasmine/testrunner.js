@@ -24,7 +24,7 @@
     //jasmineEnv.addReporter(htmlReporter);
     //jasmineEnv.addReporter(consoleReporter);
     jasmineEnv.addReporter(serverReporter);
-    jasmineEnv.addReporter(jasmine.SessionReporter);
+    //jasmineEnv.addReporter(jasmine.SessionReporter);
     /**
      Delegate filtering of specs to the reporter. Allows for clicking on single suites or specs in the results to only run a subset of the suite.
      */

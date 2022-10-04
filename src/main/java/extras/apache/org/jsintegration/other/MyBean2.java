@@ -19,6 +19,7 @@
 
 package extras.apache.org.jsintegration.other;
 
+
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 
