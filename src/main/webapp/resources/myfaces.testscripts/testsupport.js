@@ -8,11 +8,7 @@ var target = "./test.mockup";
  * ppr emitting function
  */
 function emitPPR(source, event, action, useIframe, formName) {
-    var Lang = myfaces._impl._util._Lang;
-
-
     document.getElementById(formName || "form1").action = target;
-
     if (arguments.length <= 3) {
         faces.ajax.request(/*String|Dom Node*/ source, /*|EVENT|*/ (window.event)? window.event: event, /*{|OPTIONS|}*/ {op:action, onevent: (data) => {
             console.log(JSON.stringify(data));
@@ -25,7 +21,6 @@ function emitPPR(source, event, action, useIframe, formName) {
             }
             , myfaces: {transportType:"multipartQueuedPost"}});
    }
-
 }
 
 

@@ -17,14 +17,7 @@
     /**
      Create the `HTMLReporter`, which Jasmine calls to provide results of each spec and each suite. The Reporter is responsible for presenting results to the user.
      */
-    //let htmlReporter = new jasmine.HtmlReporter(jasmineEnv);
     //let consoleReporter = new jasmine.ConsoleReporter(jasmineEnv);
-    //let serverReporter = new jasmine.ServerReporter(jasmineEnv);
-
-    let serverReporter = new jasmine.ServerReporter();
-
-
-    //jasmineEnv.addReporter(htmlReporter);
     //jasmineEnv.addReporter(consoleReporter);
     jasmineEnv.addReporter(jasmine.SessionReporter);
     /**
