@@ -156,7 +156,7 @@ describe('Integration Testsuite MyFaces', function () {
         const pageEvalResult = await runStandardPage.call(this, "test19-execute");
         expect(pageEvalResult.innerText.match(/0\s*failures/gi) != null).to.be.true;
     });
-    it('execute parameter test', async function () {
+    it('form field combinations test', async function () {
         const pageEvalResult = await runStandardPage.call(this, "test20-formfields");
         expect(pageEvalResult.innerText.match(/0\s*failures/gi) != null).to.be.true;
     });
