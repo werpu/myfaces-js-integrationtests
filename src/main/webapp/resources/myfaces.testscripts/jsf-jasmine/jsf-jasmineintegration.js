@@ -4,7 +4,7 @@
  * We basically decorate the vital jsf api functions with promises and
  * jasmine hooks
  */
-
+var target = "./test.mockup";
 var myfaces = window.myfaces || {};
 myfaces.testcases = myfaces.testcases || {};
 //marks the current ajax request cycle to be finished
