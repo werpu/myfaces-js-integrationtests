@@ -31,10 +31,10 @@ describe("Spreadsheet test for the replacement of table elements", function () {
             setTimeout(function () {
 
                 for (let cnt = 0; cnt < 100; cnt++) {
-                    let currentOutput1 = "#testTable2"+faces.separatorchar + cnt + faces.separatorchar+"field1";
-                    let currentOutput2 = "#testTable2"+faces.separatorchar + cnt + faces.separatorchar+"field2";
-                    let assert1 = $(currentOutput1).html().indexOf("value1:" + cnt) != -1;
-                    let assert2 = $(currentOutput2).html().indexOf("value2:" + cnt) != -1;
+                    let currentOutput1 = "#testTable2" + faces.separatorchar + cnt + faces.separatorchar + "field1";
+                    let currentOutput2 = "#testTable2" + faces.separatorchar + cnt + faces.separatorchar + "field2";
+                    let assert1 = $(currentOutput1.replace(/\:/g, "\\:")).html().indexOf("value1:" + cnt) != -1;
+                    let assert2 = $(currentOutput2.replace(/\:/g, "\\:")).html().indexOf("value2:" + cnt) != -1;
                     expect( assert1 && assert2).toBeTruthy(); //field must have ajax content
                 }
                 console.log("Processing time last request:"+(Date.now() - 500 - start))

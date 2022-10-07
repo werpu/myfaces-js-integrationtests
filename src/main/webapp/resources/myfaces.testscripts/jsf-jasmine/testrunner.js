@@ -6,25 +6,27 @@
  * and collect the data on the server
  */
 (function () {
-    var jasmineEnv = jasmine.getEnv();
-    jasmineEnv.updateInterval = 250;
+    let jasmineEnv = jasmine.getEnv();
+    jasmineEnv.configure({
+        random: false,
+        updateInterval: 250
+    })
     /*some tests rely historically grown on the results of others*/
-    jasmineEnv.randomizeTests(false);
+
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000;
     /**
      Create the `HTMLReporter`, which Jasmine calls to provide results of each spec and each suite. The Reporter is responsible for presenting results to the user.
      */
-    //var htmlReporter = new jasmine.HtmlReporter(jasmineEnv);
-    //var consoleReporter = new jasmine.ConsoleReporter(jasmineEnv);
-    //var serverReporter = new jasmine.ServerReporter(jasmineEnv);
+    //let htmlReporter = new jasmine.HtmlReporter(jasmineEnv);
+    //let consoleReporter = new jasmine.ConsoleReporter(jasmineEnv);
+    //let serverReporter = new jasmine.ServerReporter(jasmineEnv);
 
     let serverReporter = new jasmine.ServerReporter();
 
 
     //jasmineEnv.addReporter(htmlReporter);
     //jasmineEnv.addReporter(consoleReporter);
-    jasmineEnv.addReporter(serverReporter);
-    //jasmineEnv.addReporter(jasmine.SessionReporter);
+    jasmineEnv.addReporter(jasmine.SessionReporter);
     /**
      Delegate filtering of specs to the reporter. Allows for clicking on single suites or specs in the results to only run a subset of the suite.
      */

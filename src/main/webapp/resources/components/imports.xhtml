@@ -15,34 +15,24 @@
 
     <cc:implementation>
 
-        <!--
-        enable this to run the scripts from a local cdn server (in my case the github project)
-        -->
-        <!--
-        <script type="text/javascript" src="http://localhost:8900/dist/window/faces-development.js"></script>
-        -->
 
-        <h:outputScript name="faces.js" library="jakarta.faces"
+        <h:outputScript name="jsf.js_next_gen/dist/window/faces-development.js" library="node_modules" target="head"/>
+
+        <!--
+            <h:outputScript name="faces.js" library="jakarta.faces"
                         target="head" />
-
-        <!--
-        <h:outputScript name="myfaces/faces_js/faces-development.js" library="myfaces.testscripts" target="head"/>
         -->
 
         <!-- runtime for testing -->
 
 
         <h:outputScript name="myfaces/_impl/_util/_Lang.js" library="myfaces.testscripts" target="head"/>
-        <h:outputScript name="mona-dish/index.js" library="myfaces.testscripts" target="head"/>
 
-        <!--
-        <h:outputScript name="myfaces/api/faces.js" library="scripts" target="head"/>
-
-
-        <h:outputScript name="releasetestbed/faces.js" library="scripts" target="head"/>
-        -->
 
         <script type="text/javascript" defer="defer">
+
+            //disable for impl testing not local testing
+
             myfaces = window.myfaces ||{};
             myfaces.config = myfaces.config ||{};
             myfaces.config.projectStage = "Development";

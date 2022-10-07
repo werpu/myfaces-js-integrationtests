@@ -64,10 +64,12 @@
         <param-name>org.richfaces.fileUpload.createTempFiles</param-name>
         <param-value>false</param-value>
     </context-param>
+    <!-- enable if you want to test for separator char (server impl only)
     <context-param>
         <param-name>jakarta.faces.SEPARATOR_CHAR</param-name>
         <param-value>-</param-value>
     </context-param>
+    -->
 
 
     <listener>

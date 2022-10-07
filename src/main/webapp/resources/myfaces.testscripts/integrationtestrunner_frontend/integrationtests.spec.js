@@ -4,22 +4,30 @@
  */
 const puppeteer = require('puppeteer');
 const {expect} = require('chai');
-const _ = require('lodash');
-const globalVariables = _.pick(global, ['browser', 'expect', 'window']);
+
+const filteredGlobal =
+    {
+        browser: global.browser,
+        expect: global.expect,
+        window: global.window
+    }
 
 // puppeteer options
-const opts = {
+const TEST_TIMEOUT = 20000; /*maximum time a test can run until it hits timeout*/
+const BROWSER_OPTIONS = {
     headless: true,
-    timeout: 10000
+    timeout: TEST_TIMEOUT
 };
 
+const RESULT_TIMEOUT = 10000; /*maximum time until the test result can ba analyzed*/
+
 async function runStandardPage(pageIndex) {
-    this.timeout(10000);
+    this.timeout(TEST_TIMEOUT);
     const page = await browser.newPage();
     console.log(`http://localhost:8080/IntegrationJSTest/integrationtestsjasmine/${pageIndex}.jsf`)
     await page.goto(`http://localhost:8080/IntegrationJSTest/integrationtestsjasmine/${pageIndex}.jsf`);
     await page.waitForFunction("document.body.querySelector('.jasmine-overall-result') != null && !!document.body.querySelector('.jasmine-overall-result').innerText.length", {
-        timeout: 5000
+        timeout: RESULT_TIMEOUT
     });
     //note this is an isolated scope, the function is passed to the chrome process
     //we can only send serializable data back for analysis
@@ -47,8 +55,8 @@ async function runStandardPage(pageIndex) {
 // expose variables
 before(async function () {
     global.expect = expect;
-    global.browser = await puppeteer.launch(opts);
-    this.timeout(10000);
+    global.browser = await puppeteer.launch(BROWSER_OPTIONS);
+    this.timeout(TEST_TIMEOUT);
 
 });
 
@@ -125,10 +133,17 @@ describe('Integration Testsuite MyFaces', function () {
         const pageEvalResult = await runStandardPage.call(this, "test14-multiform");
         expect(pageEvalResult.innerText.match(/0\s*failures/gi) != null).to.be.true;
     });
-    it('multiform test', async function () {
-        const pageEvalResult = await runStandardPage.call(this, "test14-multiform");
+    it('delay test', async function () {
+        const pageEvalResult = await runStandardPage.call(this, "test15-jsf22delay");
         expect(pageEvalResult.innerText.match(/0\s*failures/gi) != null).to.be.true;
     });
+    /* not ported yet
+    it('file upload test', async function () {
+        const pageEvalResult = await runStandardPage.call(this, "test16-fileupload");
+        expect(pageEvalResult.innerText.match(/0\s*failures/gi) != null).to.be.true;
+    });
+    */
+
     it('response with out source corner condition', async function () {
         const pageEvalResult = await runStandardPage.call(this, "test17-responseonly");
         expect(pageEvalResult.innerText.match(/0\s*failures/gi) != null).to.be.true;
@@ -141,12 +156,15 @@ describe('Integration Testsuite MyFaces', function () {
         const pageEvalResult = await runStandardPage.call(this, "test19-execute");
         expect(pageEvalResult.innerText.match(/0\s*failures/gi) != null).to.be.true;
     });
+    it('execute parameter test', async function () {
+        const pageEvalResult = await runStandardPage.call(this, "test20-formfields");
+        expect(pageEvalResult.innerText.match(/0\s*failures/gi) != null).to.be.true;
+    });
 });
 
 // close browser and reset global variables
 after(function () {
     global.browser.close();
-
-    global.browser = globalVariables.browser;
-    global.expect = globalVariables.expect;
+    global.browser = filteredGlobal.browser;
+    global.expect = filteredGlobal.expect;
 });

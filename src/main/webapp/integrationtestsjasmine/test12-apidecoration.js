@@ -38,7 +38,7 @@ afterEach(function () {
 });
 describe("Test for decoratable calls within our jsf lifecycle", function () {
     it("checks whether all functions are properly called", function (done) {
-        return jsfAjaxRequestPromise('reloader', null, {
+        jsfAjaxRequestPromise('reloader', null, {
             execute: '@none',
             render: 'outputWriter',
             'jakarta.faces.behavior.event': 'action'

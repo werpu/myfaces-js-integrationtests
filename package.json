@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "description": "package json for the client part",
   "scripts": {
-    "integration-tests": "mocha src/main/webapp/resources/myfaces.testscripts/integrationtestrunner_frontend/integrationtests.spec.js"
+    "update:resources": "npm install --prefix src/main/webapp/resources",
+    "integration-tests": "mocha src/main/webapp/resources/myfaces.testscripts/integrationtestrunner_frontend/integrationtests.spec.js",
+    "postinstall": "npm run update:resources"
   },
   "keywords": [
     "typescript",
@@ -16,6 +18,7 @@
   "license": "Apache-2.0",
   "devDependencies": {
     "chai": "^4.3.6",
+    "jasmine": "^4.4.0",
     "lodash": "^4.17.21",
     "mocha": "^10.0.0",
     "puppeteer": "^18.2.0",

@@ -14,14 +14,14 @@ if (!window.viewRoot) {
     });
 
 
-    var env = getJasmineRequireObj().Env;
+    let env = getJasmineRequireObj().Env;
     describe("Viewroot with execute @all and render @all", function () {
 
         beforeEach(function (done) {
-            var htmlReporter = $(".jasmine_html-reporter");
+            let htmlReporter = $(".jasmine_html-reporter");
             htmlReporter.detach();
             //render all kills the new jasmine code because it kills off old script configs
-            return jsfAjaxRequestPromise("allKeyword", null, {render: "@all", execute: "@all"}).then(function () {
+            jsfAjaxRequestPromise("allKeyword", null, {render: "@all", execute: "@all"}).then(function () {
 
                 setTimeout(function() {
                     htmlReporter.appendTo("body");
