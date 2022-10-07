@@ -83,10 +83,6 @@
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>jakarta.faces.webapp.FacesServlet</servlet-class>
-        <!--
-         <multipart-config>true</multipart-config>
-         <load-on-startup>1</load-on-startup>
-        -->
         <init-param>
             <param-name>precompressed</param-name>
             <param-value>true</param-value>
@@ -98,44 +94,14 @@
         <servlet-class>extras.apache.org.jsintegration.protocol.JSF21Simulation</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
-    <servlet>
-        <servlet-name>StatisticsCollector</servlet-name>
-        <servlet-class>extras.apache.org.jsintegration.core.StatisticsCollector</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>StatisticsCollector2</servlet-name>
-        <servlet-class>extras.apache.org.jsintegration.core.StatisticsCollector2</servlet-class>
-    </servlet>
-    <servlet>
-        <description>Exports the Statistics as XML</description>
-        <display-name>StatisticsXMLExporter</display-name>
-        <servlet-name>StatisticsXMLExporter</servlet-name>
-        <servlet-class>extras.apache.org.jsintegration.core.StatisticsXMLExporter</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>JSF21Simulation</servlet-name>
         <url-pattern>*.timeout</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>StatisticsCollector</servlet-name>
-        <url-pattern>*.statistics</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>StatisticsCollector2</servlet-name>
-        <url-pattern>*.statistics2</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>MockupServlet</servlet-name>
         <url-pattern>*.mockup</url-pattern>
     </servlet-mapping>
-
-    <!--
-    <filter-mapping>
-        <filter-name>CompressionFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
-    -->
-
 
     <!-- Faces Servlet Mapping -->
     <servlet-mapping>
@@ -146,11 +112,6 @@
         <!-- if you do not want to enable map files, simply remove this the line with the mf_map mapping -->
         <url-pattern>*.mf_map</url-pattern>
         <url-pattern>*.xhtml</url-pattern>
-    </servlet-mapping>
-
-    <servlet-mapping>
-        <servlet-name>StatisticsXMLExporter</servlet-name>
-        <url-pattern>*.xmlstats</url-pattern>
     </servlet-mapping>
 
 
