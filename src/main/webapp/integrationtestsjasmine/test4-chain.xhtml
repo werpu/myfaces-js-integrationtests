@@ -28,19 +28,19 @@
             <h2>This test case tests the faces.util.chain function</h2>
             <script type="text/javascript">
                 function testFunc1(event) {
-                    var element = document.getElementById("testResults");
+                    let element = document.getElementById("testResults");
                     element.innerHTML = "test1 succeeded ";
                     return true;
                 }
-                var testFunc2 = "  var element = document.getElementById('testResults'); element.innerHTML += ('test2 succeeded'); return true;";
-                var testFunc3 = function() {
-                    var element = document.getElementById("testResults");
+                let testFunc2 = "  let element = document.getElementById('testResults'); element.innerHTML += ('test2 succeeded'); return true;";
+                let testFunc3 = function() {
+                    let element = document.getElementById("testResults");
                     element.innerHTML += "test3 succeeded ";
                     //this function returns false so the  chain should stop here!
                     return false;
                 }
-                var testFunc4 = function() {
-                    var element = document.getElementById("testResults");
+                let testFunc4 = function() {
+                    let element = document.getElementById("testResults");
                     element.innerHTML += ("test4 failed ");
                     return false;
                 }

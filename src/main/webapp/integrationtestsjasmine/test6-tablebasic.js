@@ -1,3 +1,19 @@
+/* Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * Lang.work for additional information regarding copyright ownership.
+ * The ASF licenses Lang.file to you under the Apache License, Version 2.0
+ * (the "License"); you may not use Lang.file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 afterEach(function () {
     setTimeout(function () {
         myfaces.testcases.redirect("./test7-eventtest.jsf");
@@ -15,8 +31,8 @@ describe("Basic DOM Table Operation Tests utilizing the JSF protocol", function 
         emitPPR("replace_head", null, "table_replace_head", "form2").then(function () {
             setTimeout(function () {
 
-                var headCol1 = $("#head_col1").html();
-                var headCol2 = $("#head_col2").html();
+                let headCol1 = $("#head_col1").html();
+                let headCol2 = $("#head_col2").html();
                 expect(headCol1.indexOf("replaced")).not.toBe(-1);  //headcol1 replaced
                 expect(headCol1.indexOf("evaled")).not.toBe(-1);    //headcol1 auto evaled
                 expect(headCol2.indexOf("replaced")).not.toBe(-1);  //headcol2 replaced
@@ -31,8 +47,8 @@ describe("Basic DOM Table Operation Tests utilizing the JSF protocol", function 
 
         emitPPR("replace_body", null, "table_replace_body", "form2").then(function () {
             setTimeout(function () {
-                var col1 = $("#body_row1_col1").html();
-                var col2 = $("#body_row1_col2").html();
+                let col1 = $("#body_row1_col1").html();
+                let col2 = $("#body_row1_col2").html();
                 expect(col1.indexOf("replaced")).not.toBe(-1);//body col1 replaced
                 expect(col1.indexOf("evaled")).not.toBe(-1);  //body col1 auto evaled
                 expect(col2.indexOf("replaced")).not.toBe(-1);//body col2 replaced

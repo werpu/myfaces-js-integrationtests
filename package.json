@@ -3,9 +3,8 @@
   "version": "0.0.1",
   "description": "package json for the client part",
   "scripts": {
-    "update:resources": "npm install --prefix src/main/webapp/resources",
-    "integration-tests": "mocha src/main/javascript/integrationtests.spec.js",
-    "postinstall": "npm run update:resources"
+    "install:resources": "npm install --prefix src/main/webapp/resources && npm install",
+    "integration-tests": "mocha src/main/javascript/integrationtests.spec.js"
   },
   "keywords": [
     "typescript",

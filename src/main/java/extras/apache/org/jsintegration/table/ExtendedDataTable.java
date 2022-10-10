@@ -20,9 +20,6 @@
 package extras.apache.org.jsintegration.table;
 
 
-
-
-import jakarta.annotation.ManagedBean;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Named;
 
@@ -36,38 +33,31 @@ import java.util.List;
  */
 @Named("dataBean")
 @SessionScoped
-public class ExtendedDataTable implements Serializable
-{
+public class ExtendedDataTable implements Serializable {
     List<Item> testListA = new LinkedList<Item>();
     String sortOrderColumnA = "";
 
 
-    public ExtendedDataTable()
-    {
-        for (int cnt = 0; cnt < 100; cnt++)
-        {
-            Item elem = new Item("col1_"+cnt, "col2_"+cnt, "col3_"+cnt);
+    public ExtendedDataTable() {
+        for (int cnt = 0; cnt < 100; cnt++) {
+            Item elem = new Item("col1_" + cnt, "col2_" + cnt, "col3_" + cnt);
             testListA.add(elem);
         }
     }
 
-    public List<Item> getTestListA()
-    {
+    public List<Item> getTestListA() {
         return testListA;
     }
 
-    public void setTestListA(List<Item> testListA)
-    {
+    public void setTestListA(List<Item> testListA) {
         this.testListA = testListA;
     }
 
-    public String getSortOrderColumnA()
-    {
+    public String getSortOrderColumnA() {
         return sortOrderColumnA;
     }
 
-    public void setSortOrderColumnA(String sortOrderColumnA)
-    {
+    public void setSortOrderColumnA(String sortOrderColumnA) {
         this.sortOrderColumnA = sortOrderColumnA;
     }
 }

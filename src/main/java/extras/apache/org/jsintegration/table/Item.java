@@ -4,8 +4,6 @@
  */
 package extras.apache.org.jsintegration.table;
 
-import java.util.logging.Logger;
-
 /**
  *
  * @author werpu2

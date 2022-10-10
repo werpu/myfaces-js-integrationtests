@@ -1,6 +1,25 @@
+/* Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * Lang.work for additional information regarding copyright ownership.
+ * The ASF licenses Lang.file to you under the Apache License, Version 2.0
+ * (the "License"); you may not use Lang.file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 /**
- * we are setting a mocha puppeteer layer as integration test client on top
- * and call the running server to evaluate the results
+ * This is the integration test client. We basically run a mocha/puppeteer layer against a
+ * running faces server, which serves the test pages.
+ * (puppeteer is basically an embedded chromium with a thin Ecmascript layer on top, mocha
+ * is used to collect the test data and run the tests in a well specified testing framework
+ * for post test analysis and build integration)
  */
 const puppeteer = require('puppeteer');
 const {expect} = require('chai');
@@ -13,7 +32,11 @@ const filteredGlobal =
     }
 
 // puppeteer options
-const TEST_TIMEOUT = 20000; /*maximum time a test can run until it hits timeout*/
+const TEST_TIMEOUT = 120000;
+/*
+maximum time a test can run until it hits timeout, we set it deliberately high
+sometimes chromium takes a while to trigger (30 seconds on my machine every here and then)
+*/
 const BROWSER_OPTIONS = {
     headless: true,
     timeout: TEST_TIMEOUT
@@ -54,10 +77,9 @@ async function runStandardPage(pageIndex) {
 
 // expose variables
 before(async function () {
+    this.timeout(TEST_TIMEOUT);
     global.expect = expect;
     global.browser = await puppeteer.launch(BROWSER_OPTIONS);
-    this.timeout(TEST_TIMEOUT);
-
 });
 
 
