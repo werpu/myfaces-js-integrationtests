@@ -65,11 +65,11 @@ describe("Test for decoratable calls within our jsf lifecycle", function () {
                 expect(viest).toEqual(true);
                 done();
             }, 500);
-        }).catch(function () {
+        }).catch(function (ex) {
             expect(req).toEqual(true);
             expect(resp).toEqual(true);
             expect(viest).toEqual(true);
-            done();
+            done(ex);
         });
     });
 });
