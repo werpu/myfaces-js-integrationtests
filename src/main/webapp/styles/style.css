@@ -136,7 +136,7 @@ div.error {
     padding: 1px;
     border-style: inset;
     border-color: gray;
-    -moz-border-radius:;
+    -moz-border-radius:unset;
     background-color: #fbd850;
 }
 
@@ -145,11 +145,11 @@ div.error {
     padding: 1px;
     border-style: inset;
     border-color: gray;
-    -moz-border-radius:;
+    -moz-border-radius:unset;
 }
 
 .gotoFinalResults {
-    background-image: url("../jakarta.faces.resource/icons/famfam/arrow_right.png.jsf");
+    background-image: url("../resources/node_modules/famfamfam-silk/dist/png/arrow_right.png");
     background-position: left 0;
     background-repeat: no-repeat;
     font-weight: bold;

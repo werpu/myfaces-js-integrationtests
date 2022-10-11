@@ -216,7 +216,7 @@
                                     </target>
                                 </configuration>
                             </execution>
-                            <!--
+
                             <execution>
                                 <id>cleanup</id>
                                 <phase>clean</phase>
@@ -234,7 +234,7 @@
                                     </target>
                                 </configuration>
                             </execution>
-                            -->
+
                         </executions>
                     </plugin>
                     <plugin>
@@ -262,8 +262,8 @@
                         <configuration>
                             <nodeVersion>v16.13.1</nodeVersion>
                             <npmVersion>8.1.2</npmVersion>
-                            <installDirectory>./</installDirectory>
-                            <workingDirectory>./</workingDirectory>
+                            <installDirectory>target/</installDirectory>
+                            <workingDirectory>target/</workingDirectory>
                         </configuration>
                         <executions>
                             <execution>

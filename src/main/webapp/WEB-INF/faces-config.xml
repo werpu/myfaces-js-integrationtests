@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- 
-	Copyright 2007 Ganesh Jung
-	
+<!--
 	Licensed under the Apache License, Version 2.0 (the "License");
 	you may not use this file except in compliance with the License.
 	You may obtain a copy of the License at
@@ -13,13 +11,11 @@
 	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 	See the License for the specific language governing permissions and
 	limitations under the License.
-	
-	Author: Ganesh Jung (latest modification by $Author: ganeshpuri $)
-	Version: $Revision: 1.1 $ $Date: 2009/04/21 05:53:14 $
+
 -->
-<faces-config xmlns = "http://java.sun.com/xml/ns/javaee"
+<faces-config xmlns = "http://xmlns.jcp.org/xml/ns/javaee"
               xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
-              xsi:schemaLocation = "http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
+              xsi:schemaLocation = "http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_0.xsd"
               version = "2.1">
     <navigation-rule>
         <from-view-id>/index.xhtml</from-view-id>
@@ -35,48 +31,6 @@
             <to-view-id>/index.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
-
-    
-
-  
-    
-    <!--
-    <render-kit>
-        <render-kit-id>HTML_BASIC</render-kit-id>
-
-        <client-behavior-renderer>
-            <client-behavior-renderer-type>org.j4fry.behavior.Ajax</client-behavior-renderer-type>
-            <client-behavior-renderer-class>org.j4fry.renderkit.html.AjaxBehaviorRenderer
-            </client-behavior-renderer-class>
-        </client-behavior-renderer>
-    </render-kit>
-    -->
-    <!--
-    <managed-bean>
-        <managed-bean-class >test.TestBean</managed-bean-class>
-        <managed-bean-name >count</managed-bean-name>
-        <managed-bean-scope >session</managed-bean-scope>
-    </managed-bean>
-    -->
-
-  <!--
-   <factories>
-       <tag-handler-delegate-factory></tag-handler-delegate-factory>
-   </factories>
-   -->
-   <!--
-    <application>
-          <resource-handler>
-             org.apache.myfaces.extensions.scripting.jsf2.resources.SourceResourceHandler
-         </resource-handler>
-     </application>
-    -->
-
-   <!--
-    <factory>
-        <faces-context-factory>navigationTest.OptimizedFacesContextFactory</faces-context-factory>
-    </factory>
-    -->
 
     <navigation-rule>
         <from-view-id>/*</from-view-id>
