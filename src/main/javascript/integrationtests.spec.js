@@ -182,15 +182,19 @@ describe('Integration Testsuite MyFaces', function () {
         const pageEvalResult = await runStandardPage.call(this, "test20-formfields");
         expect(pageEvalResult.innerText.match(/0\s*failures/gi) != null).to.be.true;
     });
-    it('must run all nonce tests', async function () {
+    it('must run all possible nonce conditions correctly', async function () {
+        // first condition nonce fail on script src
         let pageEvalResult = await runStandardPage.call(this, "test21-nonce");
-        expect(pageEvalResult.innerText.match(/0\s*failures/gi) != null).to.be.true;
+        expect(pageEvalResult.innerText.match(/0\s*failures/gi) != null, 'none fail on src').to.be.true;
+        // nonce pass on script src
         pageEvalResult = await runStandardPage.call(this, "test22-nonce");
-        expect(pageEvalResult.innerText.match(/0\s*failures/gi) != null).to.be.true;
+        expect(pageEvalResult.innerText.match(/0\s*failures/gi) != null, 'nonce pass on src').to.be.true;
+        // nonce fail on embedded script
         pageEvalResult = await runStandardPage.call(this, "test23-nonce");
-        expect(pageEvalResult.innerText.match(/0\s*failures/gi) != null).to.be.true;
+        expect(pageEvalResult.innerText.match(/0\s*failures/gi) != null, 'nonce fail on embedded script').to.be.true;
+        // nonce pass on embedded script
         pageEvalResult = await runStandardPage.call(this, "test24-nonce");
-        expect(pageEvalResult.innerText.match(/0\s*failures/gi) != null).to.be.true;
+        expect(pageEvalResult.innerText.match(/0\s*failures/gi) != null, 'nonce pass on embedded script').to.be.true;
     });
 
 });
