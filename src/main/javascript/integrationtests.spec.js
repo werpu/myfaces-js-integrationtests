@@ -182,6 +182,17 @@ describe('Integration Testsuite MyFaces', function () {
         const pageEvalResult = await runStandardPage.call(this, "test20-formfields");
         expect(pageEvalResult.innerText.match(/0\s*failures/gi) != null).to.be.true;
     });
+    it('must run all nonce tests', async function () {
+        let pageEvalResult = await runStandardPage.call(this, "test21-nonce");
+        expect(pageEvalResult.innerText.match(/0\s*failures/gi) != null).to.be.true;
+        pageEvalResult = await runStandardPage.call(this, "test22-nonce");
+        expect(pageEvalResult.innerText.match(/0\s*failures/gi) != null).to.be.true;
+        pageEvalResult = await runStandardPage.call(this, "test23-nonce");
+        expect(pageEvalResult.innerText.match(/0\s*failures/gi) != null).to.be.true;
+        pageEvalResult = await runStandardPage.call(this, "test24-nonce");
+        expect(pageEvalResult.innerText.match(/0\s*failures/gi) != null).to.be.true;
+    });
+
 });
 
 // close browser and reset global variables

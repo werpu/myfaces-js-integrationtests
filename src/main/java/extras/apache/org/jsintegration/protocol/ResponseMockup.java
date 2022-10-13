@@ -69,13 +69,13 @@ public class ResponseMockup extends HttpServlet
             if (StringUtils.isBlank(op))
             {
                 out.println(defaultResponse);
-            } else if (op.trim().toLowerCase().equals("eval1"))
+            } else if (op.trim().equalsIgnoreCase("eval1"))
             {
                 Changes changes = new Changes(root);
                 changes.addChild(new Eval(changes, "document.getElementById('evalarea1').innerHTML = 'eval test succeeded';"));
                 root.addElement(changes);
                 out.println(root.toString());
-            } else if (op.trim().toLowerCase().equals("updateinsert1"))
+            } else if (op.trim().equalsIgnoreCase("updateinsert1"))
             {
                 Changes changes = new Changes(root);
                 changes.addChild(new Update(changes, "changesArea", "<div id='changesArea'>update succeeded " + (cnt++) + "</div><script type='text/javascript'>document.getElementById('evalarea2').innerHTML='embedded script at update succeed';</script>"));
@@ -83,7 +83,7 @@ public class ResponseMockup extends HttpServlet
                 changes.addChild(new Insert(changes, "inserted2", "<div  id='insertafter'>insert after succeeded should display after test1</div>", null, "changesArea"));
                 root.addElement(changes);
                 out.println(root.toString());
-            } else if (op.trim().toLowerCase().equals("updateinsert2"))
+            } else if (op.trim().equalsIgnoreCase("updateinsert2"))
             {
                 Changes changes = new Changes(root);
                 changes.addChild(new Update(changes, "changesArea", "<div id='changesArea'>update succeeded " + (cnt++) + "</div><script type='text/javascript'>document.getElementById('evalarea2').innerHTML='embedded script at update succeed';</script>"));
@@ -94,19 +94,19 @@ public class ResponseMockup extends HttpServlet
                 root.addElement(changes);
                 out.println(root.toString());
 
-            } else if (op.trim().toLowerCase().equals("delete1"))
+            } else if (op.trim().equalsIgnoreCase("delete1"))
             {
                 Changes changes = new Changes(root);
                 changes.addChild(new Delete(changes, "deleteable"));
                 root.addElement(changes);
                 out.println(root.toString());
-            } else if (op.trim().toLowerCase().equals("viewstate"))
+            } else if (op.trim().equalsIgnoreCase("viewstate"))
             {
                 Changes changes = new Changes(root);
                 changes.addChild(new Update(changes, "jakarta.faces.ViewState", "hello world"));
                 root.addElement(changes);
                 out.println(root.toString());
-            } else if (op.trim().toLowerCase().equals("attributes"))
+            } else if (op.trim().equalsIgnoreCase("attributes"))
             {
                 Changes changes = new Changes(root);
                 Attributes attr = new Attributes(changes, "attributeChange");
@@ -159,7 +159,7 @@ public class ResponseMockup extends HttpServlet
                 root.addElement(changes);
                 changes.addChild(new Update(changes, "jakarta.faces.ViewBody", replacement.toString()));
                 out.println(root.toString());
-            } else if (op.trim().toLowerCase().equals("body2"))
+            } else if (op.trim().equalsIgnoreCase("body2"))
             {
                 //we omit our xml builder for now
                 StringBuilder replacement = new StringBuilder();
@@ -298,7 +298,7 @@ public class ResponseMockup extends HttpServlet
                         "            </tr>", null, "body_row1"));
                 root.addElement(changes);
                 out.println(root.toString());
-            } else if (op.trim().toLowerCase().equals("table_insert_column_head"))
+            } else if (op.trim().equalsIgnoreCase("table_insert_column_head"))
             {
                 Changes changes = new Changes(root);
                 changes.addChild(new Insert2(changes, "head_col1", "<td id='head_col1_1_" + (elemCnt++) + "'>inserted " +
@@ -314,7 +314,7 @@ public class ResponseMockup extends HttpServlet
 
                 root.addElement(changes);
                 out.println(root.toString());
-            } else if (op.trim().toLowerCase().equals("table_insert_column_body"))
+            } else if (op.trim().equalsIgnoreCase("table_insert_column_body"))
             {
                 Changes changes = new Changes(root);
                 changes.addChild(new Insert2(changes, "body_row1_col1", "<td id='body_row1_col1_1_" + (elemCnt++) +
@@ -332,7 +332,7 @@ public class ResponseMockup extends HttpServlet
 
                 root.addElement(changes);
                 out.println(root.toString());
-            } else if (op.trim().toLowerCase().equals("table_insert_footer"))
+            } else if (op.trim().equalsIgnoreCase("table_insert_footer"))
             {
                 Changes changes = new Changes(root);
                 changes.addChild(new Insert2(changes, "body_row1_col1", "<tfooter>footer inserted</tfooter>",
@@ -349,7 +349,7 @@ public class ResponseMockup extends HttpServlet
                         "tbody1"));
                 root.addElement(changes);
                 out.println(root.toString());
-            } else if (op.trim().toLowerCase().equals("executenone"))
+            } else if (op.trim().equalsIgnoreCase("executenone"))
             {
                 boolean execute = request.getParameter("jakarta.faces.partial.execute") != null;
                 boolean render = request.getParameter("jakarta.faces.partial.render") != null;
@@ -360,8 +360,38 @@ public class ResponseMockup extends HttpServlet
                                                 "id='result'>fail</div>"));
                 root.addElement(changes);
                 out.println(root.toString());
-            }
 
+            } else if (op.trim().equalsIgnoreCase("execute_nonce")) {
+
+                Changes changes = new Changes(root);
+                changes.addChild(new Update(changes, "result", "<script nonce='test12d3' type='text/javascript' src='./nonce_script.js'></script>"));
+
+                root.addElement(changes);
+                out.println(root.toString());
+            } else if (op.trim().equalsIgnoreCase("execute_nonce2")) {
+
+                Changes changes = new Changes(root);
+                changes.addChild(new Update(changes, "result", "<script nonce='test123' type='text/javascript' src='./nonce_script2.js'></script>"));
+
+                root.addElement(changes);
+                out.println(root.toString());
+            } else if (op.trim().equalsIgnoreCase("execute_nonce3")) {
+
+                Changes changes = new Changes(root);
+                changes.addChild(new Update(changes, "result", "<script nonce='test12d3' type='text/javascript'>document.getElementById(\"result2\").innerHTML = \"success\";</script>"));
+
+                root.addElement(changes);
+                out.println(root.toString());
+
+            } else if (op.trim().equalsIgnoreCase("execute_nonce4")) {
+
+                Changes changes = new Changes(root);
+                changes.addChild(new Update(changes, "result", "<script nonce='test123' type='text/javascript'>document.getElementById(\"result3\").innerHTML = \"success\";</script>"));
+
+                root.addElement(changes);
+                out.println(root.toString());
+
+            }
         }
         finally
         {
