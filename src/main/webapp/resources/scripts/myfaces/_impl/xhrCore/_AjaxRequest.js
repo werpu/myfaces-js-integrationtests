@@ -148,9 +148,7 @@ _MF_CLS(_PFX_XHR + "_AjaxRequest", _MF_OBJECT, /** @lends myfaces._impl.xhrCore.
 
             xhr.timeout = this._timeout || 0;
 
-            var contentType = this._contentType+"; charset=utf-8";
-
-            xhr.setRequestHeader(this._CONTENT_TYPE, contentType);
+            this._applyContentType(xhr);
             xhr.setRequestHeader(this._HEAD_FACES_REQ, this._VAL_AJAX);
 
             //some webkit based mobile browsers do not follow the w3c spec of
@@ -173,6 +171,15 @@ _MF_CLS(_PFX_XHR + "_AjaxRequest", _MF_OBJECT, /** @lends myfaces._impl.xhrCore.
         }
     },
 
+    /**
+     * helper, in multipart situations we might alter the content type
+     * from the urlencoded one
+     */
+    _applyContentType: function(xhr) {
+        var contentType = this._contentType+"; charset=utf-8";
+
+        xhr.setRequestHeader(this._CONTENT_TYPE, contentType);
+    },
 
     ondone: function() {
         this._requestDone();
@@ -255,39 +262,51 @@ _MF_CLS(_PFX_XHR + "_AjaxRequest", _MF_OBJECT, /** @lends myfaces._impl.xhrCore.
         return formData;
     },
 
+    /**
+     * change for jsf 2.3 since we drop legacy browser support
+     * there is no need anymore to support xhr level 1.
+     * @returns {XMLHttpRequest} the transport object
+     * @private
+     */
     _getTransport: function() {
-
-        var xhr = this._RT.getXHRObject();
-        //the current xhr level2 timeout w3c spec is not implemented by the browsers yet
-        //we have to do a fallback to our custom routines
-
-        //add for xhr level2 support
-		//Chrome fails in the current builds, on our loadend, we disable the xhr
-        //level2 optimisations for now
-        //if (/*('undefined' == typeof this._timeout || null == this._timeout) &&*/ this._RT.getXHRLvl() >= 2) {
-        //no timeout we can skip the emulation layer
-        //    return xhr;
-        //}
-        return new myfaces._impl.xhrCore.engine.Xhr1({xhrObject: xhr});
+        return new XMLHttpRequest();
     },
-
 
 
     //----------------- backported from the base request --------------------------------
     //non abstract ones
+
+
     /**
      * Spec. 13.3.1
      * Collect and encode input elements.
      * Additionally the hidden element javax.faces.ViewState
-     *
+     * Enhancement partial page submit
      *
      * @return  an element of formDataWrapper
      * which keeps the final Send Representation of the
      */
     getFormData : function() {
-        var _AJAXUTIL = this._AJAXUTIL, myfacesOptions = this._context.myfaces;
-        return this._Lang.createFormDataDecorator(jsf.getViewState(this._sourceForm));
+        var _AJAXUTIL = this._AJAXUTIL, myfacesOptions = this._context.myfaces, ret = null;
+
+
+
+        if (!this._partialIdsArray || !this._partialIdsArray.length) {
+            var _AJAXUTIL = this._AJAXUTIL, myfacesOptions = this._context.myfaces;
+            return this._Lang.createFormDataDecorator(jsf.getViewState(this._sourceForm));
+        } else {
+            //now this is less performant but we have to call it to allow viewstate decoration
+            ret = this._Lang.createFormDataDecorator(new Array());
+            _AJAXUTIL.encodeSubmittableFields(ret, this._sourceForm, this._partialIdsArray);
+            if (this._source && myfacesOptions && myfacesOptions.form)
+                _AJAXUTIL.appendIssuingItem(this._source, ret);
+
+        }
+        return ret;
+
     },
+
+
 
     /**
      * Client error handlers which also in the long run route into our error queue
@@ -322,14 +341,7 @@ _MF_CLS(_PFX_XHR + "_AjaxRequest", _MF_OBJECT, /** @lends myfaces._impl.xhrCore.
         }
         //ie6 helper cleanup
         delete this._context.source;
-        this._finalize();
-    },
 
-    //cleanup
-    _finalize: function() {
-        if (this._xhr.readyState == this._XHR_CONST.READY_STATE_DONE) {
-            this._callSuper("_finalize");
-        }
     }
 });
 

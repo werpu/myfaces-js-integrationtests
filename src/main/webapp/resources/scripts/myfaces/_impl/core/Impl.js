@@ -100,8 +100,8 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
         }
 
         if (!form
-            || !form.nodeName
-            || form.nodeName.toLowerCase() != "form") {
+                || !form.nodeName
+                || form.nodeName.toLowerCase() != "form") {
             throw new Error(this._Lang.getMessage("ERR_VIEWSTATE"));
         }
 
@@ -142,7 +142,7 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
          *all the time
          **/
         var _Lang = this._Lang,
-            _Dom = this._Dom;
+                _Dom = this._Dom;
         /*assert if the onerror is set and once if it is set it must be of type function*/
         _Lang.assertType(options.onerror, "function");
         /*assert if the onevent is set and once if it is set it must be of type function*/
@@ -209,14 +209,14 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
          * with detached objects
          */
         var form = (options.myfaces && options.myfaces.form) ?
-            _Lang.byId(options.myfaces.form) :
-            this._getForm(elem, event);
+                _Lang.byId(options.myfaces.form) :
+                this._getForm(elem, event);
 
         /**
          * JSF2.2 client window must be part of the issuing form so it is encoded
          * automatically in the request
          */
-            //we set the client window before encoding by a call to jsf.getClientWindow
+        //we set the client window before encoding by a call to jsf.getClientWindow
         var clientWindow = jsf.getClientWindow(form);
         //in case someone decorates the getClientWindow we reset the value from
         //what we are getting
@@ -356,11 +356,11 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
          * we have to pass them down as a blank delimited string representation
          * of an array of ids!
          */
-            //for now we turn off the transport auto selection, to enable 2.0 backwards compatibility
-            //on protocol level, the file upload only can be turned on if the auto selection is set to true
+        //for now we turn off the transport auto selection, to enable 2.0 backwards compatibility
+        //on protocol level, the file upload only can be turned on if the auto selection is set to true
         var getConfig = this._RT.getLocalOrGlobalConfig,
-            _Lang = this._Lang,
-            _Dom = this._Dom;
+                _Lang = this._Lang,
+                _Dom = this._Dom;
 
         var transportAutoSelection = getConfig(context, "transportAutoSelection", true);
         /*var isMultipart = (transportAutoSelection && _Dom.getAttribute(form, "enctype") == "multipart/form-data") ?
@@ -371,7 +371,7 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
             return getConfig(context, "transportType", "xhrQueuedPost");
         }
         var multiPartCandidate = _Dom.isMultipartCandidate((!getConfig(context, "pps", false)) ?
-            form : passThrgh[this.P_EXECUTE]);
+                form : passThrgh[this.P_EXECUTE]);
         var multipartForm = (_Dom.getAttribute(form, "enctype") || "").toLowerCase() == "multipart/form-data";
         //spec section jsdoc, if we have a multipart candidate in our execute (aka fileupload)
         //and the form is not multipart then we have to raise an error
@@ -392,8 +392,8 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
          *
          */
         var transportType = (!isMultipart) ?
-            getConfig(context, "transportType", "xhrQueuedPost") :
-            getConfig(context, "transportType", "multipartQueuedPost");
+                getConfig(context, "transportType", "xhrQueuedPost") :
+                getConfig(context, "transportType", "multipartQueuedPost");
         if (!this._transport[transportType]) {
             //throw new Error("Transport type " + transportType + " does not exist");
             throw new Error(_Lang.getMessage("ERR_TRANSPORT", null, transportType));
@@ -422,14 +422,14 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
         //false
         srcStr = this._Lang.trim(srcStr);
         var offset = 1,
-            vals = (srcStr) ? srcStr.split(/\s+/) : [],
-            idIdx = (vals.length) ? _Lang.arrToMap(vals, offset) : {},
+                vals = (srcStr) ? srcStr.split(/\s+/) : [],
+                idIdx = (vals.length) ? _Lang.arrToMap(vals, offset) : {},
 
-            //helpers to improve speed and compression
-            none = idIdx[this.IDENT_NONE],
-            all = idIdx[this.IDENT_ALL],
-            theThis = idIdx[this.IDENT_THIS],
-            theForm = idIdx[this.IDENT_FORM];
+        //helpers to improve speed and compression
+                none = idIdx[this.IDENT_NONE],
+                all = idIdx[this.IDENT_ALL],
+                theThis = idIdx[this.IDENT_THIS],
+                theForm = idIdx[this.IDENT_FORM];
 
         if (none) {
             //in case of none nothing is returned
@@ -532,10 +532,10 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
 
         if (jsf.getProjectStage() === "Development" && this._errListeners.length() == 0 && !context["onerror"]) {
             var DIVIDER = "--------------------------------------------------------",
-                defaultErrorOutput = myfaces._impl.core._Runtime.getGlobalConfig("defaultErrorOutput", alert),
-                finalMessage = [],
-                //we remap the function to achieve a better compressability
-                pushMsg = _Lang.hitch(finalMessage, finalMessage.push);
+                    defaultErrorOutput = myfaces._impl.core._Runtime.getGlobalConfig("defaultErrorOutput", alert),
+                    finalMessage = [],
+            //we remap the function to achieve a better compressability
+                    pushMsg = _Lang.hitch(finalMessage, finalMessage.push);
 
             (errorMessage) ? pushMsg(_Lang.getMessage("MSG_ERROR_MESSAGE") + " " + errorMessage + "\n") : null;
 
@@ -585,7 +585,7 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
             } catch (e) {
                 var impl = myfaces._impl.core._Runtime.getGlobalConfig("jsfAjaxImpl", myfaces._impl.core.Impl);
                 impl.sendError(request, context, this.CLIENT_ERROR, "ErrorRetrievingResponse",
-                    _Lang.getMessage("ERR_CONSTRUCT", e.toString()));
+                        _Lang.getMessage("ERR_CONSTRUCT", e.toString()));
 
                 //client errors are not swallowed
                 throw e;
@@ -623,9 +623,9 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
             return this.separatorchar;
         }
         var SEPARATOR_CHAR = "separatorchar",
-            found = false,
-            getConfig = myfaces._impl.core._Runtime.getGlobalConfig,
-            scriptTags = document.getElementsByTagName("script");
+                found = false,
+                getConfig = myfaces._impl.core._Runtime.getGlobalConfig,
+                scriptTags = document.getElementsByTagName("script");
         for (var i = 0; i < scriptTags.length && !found; i++) {
             if (scriptTags[i].src.search(/\/javax\.faces\.resource.*\/jsf\.js.*separator/) != -1) {
                 found = true;
@@ -647,13 +647,13 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
 
         if (!this._projectStage) {
             var PRJ_STAGE = "projectStage",
-                STG_PROD = "Production",
+                    STG_PROD = "Production",
 
-                scriptTags = document.getElementsByTagName("script"),
-                getConfig = myfaces._impl.core._Runtime.getGlobalConfig,
-                projectStage = null,
-                found = false,
-                allowedProjectStages = {STG_PROD:1, "Development":1, "SystemTest":1, "UnitTest":1};
+                    scriptTags = document.getElementsByTagName("script"),
+                    getConfig = myfaces._impl.core._Runtime.getGlobalConfig,
+                    projectStage = null,
+                    found = false,
+                    allowedProjectStages = {STG_PROD:1, "Development":1, "SystemTest":1, "UnitTest":1};
 
             /* run through all script tags and try to find the one that includes jsf.js */
             for (var i = 0; i < scriptTags.length && !found; i++) {
@@ -782,7 +782,7 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
             var finalMsg = [];
             finalMsg.push(exception.message);
             this.sendError(request, context,
-                mfInternal.title || this.CLIENT_ERROR, mfInternal.name || exception.name, finalMsg.join("\n"), mfInternal.caller, mfInternal.callFunc);
+                    mfInternal.title || this.CLIENT_ERROR, mfInternal.name || exception.name, finalMsg.join("\n"), mfInternal.caller, mfInternal.callFunc);
         }
     },
 
