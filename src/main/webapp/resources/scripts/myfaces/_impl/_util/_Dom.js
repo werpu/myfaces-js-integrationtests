@@ -214,9 +214,6 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
                         }
                         // we have to run the script under a global context
                         //we store the script for less calls to eval
-                        if(!finalScripts) {
-                            debugger;
-                        }
                         finalScripts.push(nonce ? {
                             cspMeta: {nonce: nonce},
                             text: test
