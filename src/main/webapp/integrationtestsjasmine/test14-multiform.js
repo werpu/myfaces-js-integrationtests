@@ -32,14 +32,14 @@ describe("Multi form situation", function () {
             if (cnt % 2) {
                 DQ$("#first_input").val = Math.random();
 
-                promises.push(faces.ajax.request("first_input", null, {
+                promises.push(jsf.ajax.request("first_input", null, {
                     execute: 'firstForm',
                     render: 'renderTarget1 renderTarget2'
                 }));
             } else {
 
                 DQ$("#second_input").val = Math.random();
-                promises.push(faces.ajax.request("second_input", null, {
+                promises.push(jsf.ajax.request("second_input", null, {
                     execute: 'firstForm',
                     render: 'renderTarget1 renderTarget2'
                 }));

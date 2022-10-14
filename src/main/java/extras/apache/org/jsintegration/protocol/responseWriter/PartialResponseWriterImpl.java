@@ -14,7 +14,7 @@
  */
 package extras.apache.org.jsintegration.protocol.responseWriter;
 
-import jakarta.faces.component.UIComponent;
+import javax.faces.component.UIComponent;
 import java.io.IOException;
 import java.util.Map;
 

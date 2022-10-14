@@ -22,8 +22,8 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="jakarta.faces.html"
-      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:components="http://xmlns.jcp.org/jsf/composite/components">
 <ui:composition template="../templates/template.xhtml">
 
@@ -74,7 +74,7 @@
                        onclick="emitPPR(this, ('undefined' == typeof event)? null: event, 'errors');"/>
 
                 <input type="button" id="cmd_error_component" value="Error: no component given"
-                       onclick="faces.ajax.request(null, event, {}); return false"/>
+                       onclick="jsf.ajax.request(null, event, {}); return false"/>
 
                 <h2>Same with an iframe transport</h2>
 

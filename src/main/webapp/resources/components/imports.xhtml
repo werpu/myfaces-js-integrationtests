@@ -14,8 +14,8 @@
   limitations under the License.
 -->
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="jakarta.faces.html"
-      xmlns:cc="jakarta.faces.composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
       xmlns:jstl="http://xmlns.jcp.org/jstl/core">
 
     <!-- INTERFACE -->
@@ -32,14 +32,17 @@
         <!--
         <h:outputScript  name="jsf.js_next_gen/dist/window/faces-development.js" library="node_modules" target="head"/>
             -->
+        <h:outputScript name="jsf.js" library="javax.faces" target="head" />
 
-        <script type="text/javascript" nonce="test123" src="../resources/node_modules/jsf.js_next_gen/dist/window/faces-development.js"></script>
+        <!--
+       <script type="text/javascript" nonce="test123" src="./jsf.js.jsf?ln=javax.faces"></script>
+       -->
         <!--
         <script type="text/javascript" nonce="test123" src="http://127.0.0.1:8900/dist/window/faces-development.js"></script>
         -->
         <!--
         Import the official scripts, (note old scripts fail on one test hence disabled)
-        <h:outputScript name="faces.js" library="jakarta.faces" target="head" />
+        <h:outputScript name="faces.js" library="javax.faces" target="head" />
         -->
 
         <!-- runtime for testing -->

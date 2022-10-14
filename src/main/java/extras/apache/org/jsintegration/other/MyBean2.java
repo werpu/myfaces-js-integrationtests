@@ -20,8 +20,10 @@
 package extras.apache.org.jsintegration.other;
 
 
-import jakarta.faces.view.ViewScoped;
-import jakarta.inject.Named;
+
+import javax.faces.bean.ManagedBean;
+import javax.faces.view.ViewScoped;
+
 
 import java.io.ObjectInputStream;
 import java.io.Serializable;
@@ -33,7 +35,7 @@ import java.util.List;
  * @version $Revision$ $Date$
  */
 
-@Named
+@ManagedBean
 @ViewScoped
 public class MyBean2 implements Serializable {
 

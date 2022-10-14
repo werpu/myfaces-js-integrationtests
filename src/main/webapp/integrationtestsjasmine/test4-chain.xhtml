@@ -16,8 +16,8 @@
   limitations under the License.
 -->
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="jakarta.faces.html"
-      xmlns:ui="jakarta.faces.facelets" xmlns:components="http://xmlns.jcp.org/jsf/composite/components">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:components="http://xmlns.jcp.org/jsf/composite/components">
 <ui:composition template="../templates/template.xhtml">
     <ui:define name="content">
         <components:jasmineTest testRunner="./test4-chain.js" />
@@ -25,7 +25,7 @@
         <div id="centerDiv">
             <h1>Chain Test</h1>
 
-            <h2>This test case tests the faces.util.chain function</h2>
+            <h2>This test case tests the jsf.util.chain function</h2>
             <script type="text/javascript">
                 function testFunc1(event) {
                     let element = document.getElementById("testResults");
@@ -53,7 +53,7 @@
 
 
         <input type="button" id="chaincall" value="press for chaintest"
-               onclick="faces.util.chain(this, event, testFunc1,testFunc2,testFunc3,testFunc4);"/>
+               onclick="jsf.util.chain(this, event, testFunc1,testFunc2,testFunc3,testFunc4);"/>
 
     </ui:define>
 </ui:composition>

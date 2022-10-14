@@ -19,31 +19,31 @@ let req,resp, viest;
 beforeEach(function () {
 
 
-    let oldReq = faces.ajax.request;
-    faces.ajax.request = function(element, event, options) {
+    let oldReq = jsf.ajax.request;
+    jsf.ajax.request = function(element, event, options) {
         try {
             req = true;
             oldReq(element, event, options);
         } finally {
-            faces.ajax.request = oldReq;
+            jsf.ajax.request = oldReq;
         }
     }
-    let oldResp = faces.ajax.response;
-    faces.ajax.response = (request, context) => {
+    let oldResp = jsf.ajax.response;
+    jsf.ajax.response = (request, context) => {
         try {
             resp = true;
             oldResp(request, context);
         } finally {
-            faces.ajax.response = oldResp;
+            jsf.ajax.response = oldResp;
         }
     };
-    let oldViewst = faces.getViewState;
-    faces.getViewState = (formElement) => {
+    let oldViewst = jsf.getViewState;
+    jsf.getViewState = (formElement) => {
         try {
             viest = true;
             oldViewst(formElement);
         } finally {
-            faces.getViewState = oldViewst;
+            jsf.getViewState = oldViewst;
         }
     };
 });
@@ -57,7 +57,7 @@ describe("Test for decoratable calls within our jsf lifecycle", function () {
         jsfAjaxRequestPromise('reloader', null, {
             execute: '@none',
             render: 'outputWriter',
-            'jakarta.faces.behavior.event': 'action'
+            'javax.faces.behavior.event': 'action'
         }).then(function (success) {
             setTimeout(function () {
                 expect(req).toEqual(true);

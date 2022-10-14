@@ -4,8 +4,8 @@
  */
 package extras.apache.org.jsintegration.protocol.responseWriter;
 
-import jakarta.faces.component.UIComponent;
-import jakarta.faces.context.ResponseWriter;
+import javax.faces.component.UIComponent;
+import javax.faces.context.ResponseWriter;
 import java.io.IOException;
 import java.io.Writer;
 

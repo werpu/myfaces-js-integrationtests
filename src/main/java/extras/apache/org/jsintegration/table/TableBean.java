@@ -21,9 +21,9 @@ package extras.apache.org.jsintegration.table;
 
 
 
-import jakarta.annotation.ManagedBean;
-import jakarta.faces.view.ViewScoped;
-import jakarta.inject.Named;
+
+import javax.faces.bean.ManagedBean;
+import javax.faces.view.ViewScoped;
 
 import java.io.Serializable;
 import java.util.LinkedList;
@@ -35,7 +35,7 @@ import java.util.List;
  * @version $Revision$ $Date$
  */
 
-@Named
+@ManagedBean
 @ViewScoped
 public class TableBean implements Serializable
 {

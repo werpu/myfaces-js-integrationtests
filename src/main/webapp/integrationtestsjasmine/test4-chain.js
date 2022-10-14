@@ -20,9 +20,9 @@ afterEach(function () {
     }, 1000);
 });
 describe("Chain function suite", function () {
-    it("Should process faces.util.chain properly", function () {
+    it("Should process jsf.util.chain properly", function () {
         //testfunc1 til 4 are defined in the html page
-        faces.util.chain(document.getElementById("chaincall"), null, testFunc1, testFunc2, testFunc3, testFunc4);
+        jsf.util.chain(document.getElementById("chaincall"), null, testFunc1, testFunc2, testFunc3, testFunc4);
         expect(DQ$("body").innerHTML.indexOf("test1 succeeded test2 succeededtest3 succeeded")).not.toBe(-1);
     });
 });

@@ -16,7 +16,7 @@
 
 /**
  * This is the integration test client. We basically run a mocha/puppeteer layer against a
- * running faces server, which serves the test pages.
+ * running jsf server, which serves the test pages.
  * (puppeteer is basically an embedded chromium with a thin Ecmascript layer on top, mocha
  * is used to collect the test data and run the tests in a well specified testing framework
  * for post test analysis and build integration)

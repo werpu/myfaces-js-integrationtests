@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-let oldResponse = faces.ajax.response;
+let oldResponse = jsf.ajax.response;
 
 //we are going to decorate the response for the first testcase
 function applySourceOnly() {
@@ -26,11 +26,11 @@ function applySourceOnly() {
 
         oldResponse(request, newContext);
     }
-    faces.ajax.response = newResponse;
+    jsf.ajax.response = newResponse;
 };
 
 function resetResponse() {
-    faces.ajax.response = oldResponse;
+    jsf.ajax.response = oldResponse;
 }
 
 function applyEmpty() {
@@ -43,7 +43,7 @@ function applyEmpty() {
 
         oldResponse(request, newContext);
     }
-    faces.ajax.response = newResponse;
+    jsf.ajax.response = newResponse;
 }
 
 afterEach(function () {
@@ -60,7 +60,7 @@ describe("Various response tests giving the codebase something to chew on in the
         jsfAjaxRequestPromise('resetme', null, {
             execute: '@this',
             render: 'myVal',
-            'jakarta.faces.behavior.event': 'action'
+            'javax.faces.behavior.event': 'action'
         }).then(function () {
             done();
         }).catch(function (val) {
@@ -75,7 +75,7 @@ describe("Various response tests giving the codebase something to chew on in the
         jsfAjaxRequestPromise('idgiven', null, {
             execute: '@this',
             render: 'myVal',
-            'jakarta.faces.behavior.event': 'action'
+            'javax.faces.behavior.event': 'action'
         }).then(function () {
             setTimeout(function () {
 
@@ -93,7 +93,7 @@ describe("Various response tests giving the codebase something to chew on in the
         jsfAjaxRequestPromise('emptymap', null, {
             execute: '@none',
             render: 'outputWriter',
-            'jakarta.faces.behavior.event': 'action'
+            'javax.faces.behavior.event': 'action'
         }).then(function () {
             setTimeout(function () {
                 expect(DQ$("#myVal").innerHTML.indexOf("1") != -1).toBeTruthy(); //"innerHTML of result must be 1",

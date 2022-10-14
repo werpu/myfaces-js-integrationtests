@@ -16,8 +16,8 @@
   limitations under the License.
 -->
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="jakarta.faces.html"
-      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:components="http://xmlns.jcp.org/jsf/composite/components"
         >
 <ui:composition template="../templates/template.xhtml">
@@ -28,14 +28,14 @@
         <script type="text/javascript">
             /**
              helpper function to encapsule the recurring parts
-             @param source the source (same as the source of faces.ajax request
+             @param source the source (same as the source of jsf.ajax request
              @param event the event which causes the trigger
              @param options the options passed down
              @param target a helper target to trigger various simulation backend servlets
              */
             function emitPPR(source, event, options, target) {
                 document.getElementById("testform").action = target;
-                faces.ajax.request(/*String|Dom Node*/ source, /*|EVENT|*/ event, /*{|OPTIONS|}*/ options);
+                jsf.ajax.request(/*String|Dom Node*/ source, /*|EVENT|*/ event, /*{|OPTIONS|}*/ options);
             }
         </script>
 

@@ -27,7 +27,7 @@ describe("Regression test for double eval on a single script element", function 
             promises.push(jsfAjaxRequestPromise('reloader', null, {
                 execute: '@none',
                 render: 'outputWriter',
-                'jakarta.faces.behavior.event': 'action'
+                'javax.faces.behavior.event': 'action'
             }));
         }
         let beDone = () => {

@@ -19,15 +19,16 @@
 
 package extras.apache.org.jsintegration.other;
 
-import jakarta.enterprise.context.RequestScoped;
-import jakarta.inject.Named;
+
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 
 
 /**
  * @author Werner Punz (latest modification by $Author$)
  * @version $Revision$ $Date$
  */
-@Named
+@ManagedBean
 @RequestScoped
 public class MultiFormBean
 {

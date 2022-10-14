@@ -20,12 +20,14 @@ package extras.apache.org.jsintegration.other;
 
 
 
-import jakarta.enterprise.context.RequestScoped;
-import jakarta.inject.Named;
-import jakarta.servlet.http.Part;
 
-@Named
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
+import javax.servlet.http.Part;
+
+
 @RequestScoped
+@ManagedBean
 public class Fileupload {
 
     private Part uploaded;

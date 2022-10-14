@@ -26,7 +26,7 @@ describe("Script blocks in various formats", function () {
         jsfAjaxRequestPromise('reloader', null, {
             execute: '@none',
             render: 'outputWriter',
-            'jakarta.faces.behavior.event': 'action'
+            'javax.faces.behavior.event': 'action'
         }).finally(function () {
             setTimeout(function () {
                 expect(DQ$(".result2").innerHTML == "normal script --&gt;").toBeTruthy();//contents of result2 must match

@@ -16,9 +16,9 @@
 
 let successCalled = 0;
 let assertSuccessPosition = false;
-let oldResponse = faces.ajax.response;
+let oldResponse = jsf.ajax.response;
 
-faces.ajax.response = function (request, context) {
+jsf.ajax.response = function (request, context) {
 
     let newContext = {};
     newContext.source = context.source;
@@ -49,7 +49,7 @@ describe("event location test, success must be called in response function", fun
         jsfAjaxRequestPromise('idgiven', null, {
             execute: '@this',
             render: 'myVal',
-            'jakarta.faces.behavior.event': 'action'
+            'javax.faces.behavior.event': 'action'
         }).finally(function () {
             setTimeout(function () {
                 expect(assertSuccessPosition).toBeTruthy();

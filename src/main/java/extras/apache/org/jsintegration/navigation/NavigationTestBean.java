@@ -21,8 +21,9 @@ package extras.apache.org.jsintegration.navigation;
 
 
 
-import jakarta.enterprise.context.SessionScoped;
-import jakarta.inject.Named;
+
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 
 
 import java.io.Serializable;
@@ -32,7 +33,7 @@ import java.io.Serializable;
  * @version $Revision$ $Date$
  */
 
-@Named
+@ManagedBean
 @SessionScoped
 public class NavigationTestBean implements Serializable
 {

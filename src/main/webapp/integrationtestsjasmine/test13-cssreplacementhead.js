@@ -27,7 +27,7 @@ describe("CSS Head replacement test", function () {
             jsfAjaxRequestPromise('nextPage', null, {
                 execute: 'mainForm',
                 render: '@all',
-                'jakarta.faces.behavior.event': 'action'
+                'javax.faces.behavior.event': 'action'
             }).finally(function () {
                 htmlReporter.appendTo("body");
                 setTimeout(function () {

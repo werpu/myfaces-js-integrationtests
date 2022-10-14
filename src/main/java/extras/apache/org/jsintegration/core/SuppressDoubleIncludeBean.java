@@ -19,8 +19,8 @@
 
 package extras.apache.org.jsintegration.core;
 
-import jakarta.faces.view.ViewScoped;
-import jakarta.inject.Named;
+import javax.faces.view.ViewScoped;
+import javax.faces.bean.ManagedBean;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -33,7 +33,7 @@ import java.io.Serializable;
  * @version $Revision$ $Date$
  */
 
-@Named
+@ManagedBean
 @ViewScoped
 public class SuppressDoubleIncludeBean implements Serializable
 {
