@@ -16,6 +16,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:pr="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:jstl="http://xmlns.jcp.org/jstl/core">
 
     <!-- INTERFACE -->
@@ -26,26 +27,84 @@
     </cc:interface>
 
     <cc:implementation>
-        <!--
-        you can use this import for cross verification this is the latest script from github
-        -->
-        <!--
-        <h:outputScript  name="jsf.js_next_gen/dist/window/faces-development.js" library="node_modules" target="head"/>
-            -->
-        <h:outputScript name="jsf.js" library="javax.faces" target="head" />
 
+        <!-- runtime -->
+        <h:outputScript pr:nonce="test123"  name="myfaces/_impl/core/_EvalHandlers.js" library="scripts" target="head"/>
+        <h:outputScript pr:nonce="test123"  name="myfaces/_impl/core/_Runtime.js" library="scripts" target="head"/>
+        <h:outputScript pr:nonce="test123"  name="myfaces/_impl/core/_StartImpl.js" library="scripts" target="head"/>
+
+        <!-- i18n -->
+        <h:outputScript pr:nonce="test123"  name="myfaces/_impl/i18n/Messages.js" library="scripts" target="head"/>
+
+        <!-- utils / support classes -->
+        <h:outputScript pr:nonce="test123"  name="myfaces/_impl/_util/_Lang.js" library="scripts" target="head"/>
+
+        <h:outputScript pr:nonce="test123"  name="myfaces/_impl/core/Object.js" library="scripts" target="head"/>
+
+        <h:outputScript pr:nonce="test123"  name="myfaces/_impl/_util/_Queue.js" library="scripts" target="head"/>
+        <h:outputScript pr:nonce="test123"  name="myfaces/_impl/_util/_ListenerQueue.js" library="scripts" target="head"/>
+        <h:outputScript pr:nonce="test123"  name="myfaces/_impl/_util/_Dom.js" library="scripts" target="head"/>
+        <h:outputScript pr:nonce="test123"  name="myfaces/_impl/_util/_DomQuirks.js" library="scripts" target="head"/>
+
+
+        <h:outputScript pr:nonce="test123"  name="myfaces/_impl/_util/_HtmlStripper.js" library="scripts" target="head"/>
+
+        <!-- xhr engine -->
+        <h:outputScript pr:nonce="test123"  name="myfaces/_impl/xhrCore/engine/XhrConst.js" library="scripts" target="head"/>
+        <h:outputScript pr:nonce="test123"  name="myfaces/_impl/xhrCore/engine/FormData.js" library="scripts" target="head"/>
+        <h:outputScript pr:nonce="test123"  name="myfaces/_impl/xhrCore/engine/BaseRequest.js" library="scripts" target="head"/>
+
+        <h:outputScript pr:nonce="test123"  name="myfaces/_impl/xhrCore/engine/Xhr1.js" library="scripts" target="head"/>
+
+
+        <!-- xhr jsf mappers -->
+        <h:outputScript pr:nonce="test123"  name="myfaces/_impl/xhrCore/_AjaxUtils.js" library="scripts" target="head"/>
+
+        <h:outputScript pr:nonce="test123"  name="myfaces/_impl/xhrCore/_AjaxRequestQueue.js" library="scripts" target="head"/>
+
+        <h:outputScript pr:nonce="test123"  name="myfaces/_impl/xhrCore/_AjaxRequest.js" library="scripts" target="head"/>
+        <h:outputScript pr:nonce="test123"  name="myfaces/_impl/xhrCore/_ExtAjaxRequest.js" library="scripts" target="head"/>
+
+        <h:outputScript pr:nonce="test123"  name="myfaces/_impl/xhrCore/_AjaxRequestLevel2.js" library="scripts" target="head"/>
+
+        <h:outputScript pr:nonce="test123"  name="myfaces/_impl/xhrCore/_AjaxResponse.js" library="scripts" target="head"/>
+
+        <h:outputScript pr:nonce="test123"  name="myfaces/_impl/xhrCore/_Transports.js" library="scripts" target="head"/>
+
+
+
+        <!-- Implementation -->
+        <h:outputScript pr:nonce="test123"  name="myfaces/_impl/core/Impl.js" library="scripts" target="head"
+                        />
         <!--
-       <script type="text/javascript" nonce="test123" src="./jsf.js.jsf?ln=javax.faces"></script>
-       -->
-        <!--
-        <script type="text/javascript" nonce="test123" src="http://127.0.0.1:8900/dist/window/faces-development.js"></script>
-        -->
-        <!--
-        Import the official scripts, (note old scripts fail on one test hence disabled)
-        <h:outputScript name="faces.js" library="javax.faces" target="head" />
+            we try to register our overrides deliberately later
+            to check whether they register themselves properly
+            into the system post init
         -->
 
-        <!-- runtime for testing -->
+
+
+        <!-- clean up the init code -->
+
+        <!-- API -->
+        <h:outputScript pr:nonce="test123"  name="myfaces/_impl/core/_RuntimeQuirks.js" library="scripts" target="head"/>
+
+        <h:outputScript pr:nonce="test123"  name="myfaces/_impl/i18n/Messages_de.js" library="scripts" target="head"/>
+        <h:outputScript pr:nonce="test123"  name="myfaces/_impl/i18n/Messages_nl.js" library="scripts" target="head"/>
+
+        <h:outputScript pr:nonce="test123"  name="myfaces/_impl/_util/_LangQuirks.js" library="scripts" target="head"/>
+        <h:outputScript pr:nonce="test123"  name="myfaces/_impl/_util/_DomQuirks.js" library="scripts" target="head"/>
+        <h:outputScript pr:nonce="test123"  name="myfaces/_impl/_util/_DomExperimental.js" library="scripts" target="head"/>
+        <h:outputScript pr:nonce="test123"  name="myfaces/_impl/xhrCore/_ExtTransport.js" library="scripts" target="head"/>
+        <h:outputScript pr:nonce="test123"  name="myfaces/_impl/xhrCore/engine/IFrame.js" library="scripts" target="head"/>
+        <h:outputScript pr:nonce="test123"  name="myfaces/_impl/xhrCore/_IFrameRequest.js" library="scripts" target="head"/>
+        <h:outputScript pr:nonce="test123"  name="myfaces/_impl/xhrCore/_PartialSubmitUtils.js" library="scripts" target="head"/>
+        <h:outputScript pr:nonce="test123"  name="myfaces/_impl/_util/_UnitTest.js" library="scripts" target="head"/>
+        <h:outputScript pr:nonce="test123"  name="myfaces/_impl/core/_EndImpl.js" library="scripts" target="head"
+                        rendered="#{information.implementation == 'myfaces'}"/>
+
+
+        <h:outputScript pr:nonce="test123"  name="myfaces/api/jsf.js" library="scripts" target="head"/>
 
         <script type="text/javascript" nonce="test123" src="../resources/myfaces.testscripts/myfaces/_impl/_util/_Lang.js"></script>
         <script type="text/javascript" nonce="test123" src="../resources/myfaces.testscripts/myfaces/_impl/_util/_ImportCounter.js"></script>
