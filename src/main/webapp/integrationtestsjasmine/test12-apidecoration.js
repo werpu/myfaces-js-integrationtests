@@ -54,7 +54,7 @@ afterEach(function () {
 });
 describe("Test for decoratable calls within our Faces lifecycle", function () {
     it("checks whether all functions are properly called", function (done) {
-        jsfAjaxRequestPromise('reloader', null, {
+        facesRequest('reloader', null, {
             execute: '@none',
             render: 'outputWriter',
             'jakarta.faces.behavior.event': 'action'

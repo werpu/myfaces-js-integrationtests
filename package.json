@@ -4,7 +4,8 @@
   "description": "package json for the client part",
   "scripts": {
     "install:resources": "npm install --prefix src/main/webapp/resources && npm install",
-    "integration-tests": "mocha src/main/javascript/integrationtests.spec.js"
+    "integration-tests": "mocha src/main/javascript/integrationtests.spec.js",
+    "copy:npm-sources": "ts-node src/main/typescript/copysources.ts"
   },
   "keywords": [
     "typescript",
@@ -16,11 +17,13 @@
   "author": "Werner Punz",
   "license": "Apache-2.0",
   "devDependencies": {
+    "@types/fs-extra": "^9.0.13",
     "chai": "^4.3.6",
+    "fs-extra": "^10.1.0",
     "jasmine": "^4.4.0",
     "lodash": "^4.17.21",
-    "mocha": "^10.0.0",
-    "puppeteer": "^18.2.1",
+    "mocha": "^10.1.0",
+    "puppeteer": "^19.0.0",
     "ts-loader": "^9.4.1",
     "ts-node": "^10.9.1",
     "typedoc": "^0.23.16",
