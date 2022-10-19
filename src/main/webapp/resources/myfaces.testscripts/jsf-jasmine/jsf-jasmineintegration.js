@@ -102,7 +102,7 @@
             }
             let oldOnError = finalArgs[2]["onerror"];
             finalArgs[2]["onerror"] = function (evt) {
-                reject(new Error(evt));
+                reject(new Error(evt || "OnErrorCalled"));
                 errorTriggered = true;
                 if (oldOnError) {
                     oldOnError(evt);
