@@ -47,5 +47,8 @@ export const MYFACES_DIR = `${os.homedir()}/IdeaProjects/myfaces_github`;
  */
 copyFilesRecursively('./src/main/javascript', `${MYFACES_DIR}/integration-tests/client/src/main/javascript`);
 copyFilesRecursively('./src/main/webapp/integrationtestsjasmine', `${MYFACES_DIR}/integration-tests/client/src/main/webapp/integrationtestsjasmine`);
+copyFilesRecursively('./src/main/webapp/resources/myfaces.testscripts/jsf-jasmine', `${MYFACES_DIR}/integration-tests/client/src/main/webapp/resources/myfaces.testscripts/jsf-jasmine`);
+copyFilesRecursively('./src/main/webapp/resources/package.json', `${MYFACES_DIR}/integration-tests/client/src/main/webapp/resources/package.json`);
+copyFilesRecursively('./src/main/webapp/resources/package-lock.json', `${MYFACES_DIR}/integration-tests/client/src/main/webapp/resources/package-lock.json`);
 
 
