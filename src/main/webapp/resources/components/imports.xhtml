@@ -54,8 +54,8 @@
 
         <!-- runtime for testing -->
 
-        <script type="text/javascript" nonce="test123" src="../resources/myfaces.testscripts/myfaces/_impl/_util/_Lang.js"></script>
-        <script type="text/javascript" nonce="test123" src="../resources/myfaces.testscripts/myfaces/_impl/_util/_ImportCounter.js"></script>
+        <h:outputScript library="myfaces.testscripts" pr:nonce="test123"  name="myfaces/_impl/_util/_Lang.js" target="head" rendered="#{!suppressDoubleIncludeBean.alreadyCalled}"></h:outputScript>
+        <h:outputScript library="myfaces.testscripts" pr:nonce="test123"  name="myfaces/_impl/_util/_ImportCounter.js" target="head"></h:outputScript>
 
         <script nonce="test123" type="text/javascript" defer="defer">
             //disable for impl testing not local testing

@@ -69,6 +69,7 @@ describe("Testsuite testing the protocol", function () {
                 .waitUntilDom((element) => element.style('borderWidth').value === "1px")
                 .then((element) => {
                     element.style('borderWidth').value = "0px";
+                    expect(false).toBeTruthy();
                     success(done);
                 }).catch(done);
         }).catch(done);
