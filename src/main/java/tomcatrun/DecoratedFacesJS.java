@@ -41,6 +41,41 @@ public class DecoratedFacesJS extends Resource {
     }
 
     @Override
+    public String getContentType() {
+        return delegate.getContentType();
+    }
+
+    @Override
+    public String getLibraryName() {
+        return delegate.getLibraryName();
+    }
+
+    @Override
+    public String getResourceName() {
+        return delegate.getResourceName();
+    }
+
+    @Override
+    public void setContentType(String contentType) {
+        delegate.setContentType(contentType);
+    }
+
+    @Override
+    public void setLibraryName(String libraryName) {
+        delegate.setLibraryName(libraryName);
+    }
+
+    @Override
+    public void setResourceName(String resourceName) {
+        delegate.setResourceName(resourceName);
+    }
+
+    @Override
+    public String toString() {
+        return delegate.toString();
+    }
+
+    @Override
     public String getRequestPath() {
         return delegate.getRequestPath();
     }

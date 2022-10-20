@@ -15,19 +15,14 @@
  */
 package tomcatrun;
 
+import jakarta.faces.FacesException;
 import jakarta.faces.application.Resource;
-import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.FacesContext;
-import jakarta.servlet.ServletContext;
-import jakarta.servlet.http.HttpServletRequest;
-import org.apache.catalina.util.ParameterMap;
 
 import java.io.*;
+import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
-import java.util.Arrays;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class FacesJSMappingDecorator extends Resource {
 
@@ -47,58 +42,22 @@ public class FacesJSMappingDecorator extends Resource {
             new BufferedReader(new InputStreamReader(inputStream))
                     .lines()
                     .forEach(line -> {
-                        if(line.contains("//# sourceMappingURL=")) {
+                        if (line.contains("//# sourceMappingURL=")) {
                             return;
                         }
                         try {
                             writer.write(line.getBytes());
                             writer.write("\n".getBytes());
                         } catch (IOException e) {
-                            throw new RuntimeException(e);
+                            throw new FacesException(e);
                         }
                     });
-            //lets add the decoration
-
-            ExternalContext ctx = FacesContext.getCurrentInstance().getExternalContext();
-            String requestUri = ((HttpServletRequest) ctx.getRequest()).getRequestURI();
-            Map<String, String[]> parameterMap = ((HttpServletRequest) ctx.getRequest()).getParameterMap();
-
-            String parameterString = parameterMap.entrySet().stream().flatMap(item -> {
-                if (item.getValue().length <= 1) {
-                    try {
-                        StringBuilder ret = new StringBuilder();
-                        ret.append(URLEncoder.encode(item.getKey(), URL_ENCODING));
-                        ret.append("=");
-                        if (item.getValue().length == 1) {
-                            ret.append(URLEncoder.encode(item.getValue()[0], URL_ENCODING));
-                        }
-                        return Arrays.stream(new String[]{ret.toString()});
-                    } catch (UnsupportedEncodingException e) {
-                        throw new RuntimeException(e);
-                    }
-                } else {
-                    return Arrays.stream(item.getValue()).map(value -> {
-                        StringBuilder ret = new StringBuilder();
-                        try {
-                            ret.append(URLEncoder.encode(item.getKey(), URL_ENCODING) + "[]");
-                            ret.append("=");
-                            ret.append(URLEncoder.encode(value, URL_ENCODING));
-                            return ret.toString();
-                        } catch (UnsupportedEncodingException e) {
-                            throw new RuntimeException(e);
-                        }
-                    });
-
-                }
-
-            }).collect(Collectors.joining("&"));
-            requestUri = requestUri.replace("faces.js", "faces.js.map");
-            requestUri = requestUri.replace("faces-development.js", "faces-development.js.map");
+            // let´s add the decoration
+            String resourcePath = remapNames(delegate.getRequestPath());
+            resourcePath = resourcePath.substring(resourcePath.lastIndexOf("/") + 1);
 
             writer.write("\n//# sourceMappingURL=".getBytes());
-            writer.write(requestUri.getBytes());
-            writer.write("?".getBytes());
-            writer.write(parameterString.getBytes());
+            writer.write(resourcePath.getBytes());
             return new ByteArrayInputStream(writer.toByteArray());
         }
     }
@@ -115,11 +74,60 @@ public class FacesJSMappingDecorator extends Resource {
 
     @Override
     public URL getURL() {
-        return delegate.getURL();
+        try {
+            return remapNames(delegate.getURL());
+        } catch (MalformedURLException e) {
+            throw new FacesException(e);
+        }
     }
 
     @Override
     public boolean userAgentNeedsUpdate(FacesContext context) {
         return delegate.userAgentNeedsUpdate(context);
+    }
+
+    @Override
+    public String getContentType() {
+        return delegate.getContentType();
+    }
+
+    @Override
+    public String getLibraryName() {
+        return delegate.getLibraryName();
+    }
+
+    @Override
+    public String getResourceName() {
+        return remapNames(delegate.getResourceName());
+    }
+
+    @Override
+    public void setContentType(String contentType) {
+        delegate.setContentType(contentType);
+    }
+
+    @Override
+    public void setLibraryName(String libraryName) {
+        delegate.setLibraryName(libraryName);
+    }
+
+    @Override
+    public void setResourceName(String resourceName) {
+        delegate.setResourceName(resourceName);
+    }
+
+    @Override
+    public String toString() {
+        return delegate.toString();
+    }
+
+    private String remapNames(String in) {
+        return in.replace("faces-development.js", "faces-development.js.map")
+                .replace("faces.js", "faces.js.map");
+    }
+
+    private URL remapNames(URL in) throws MalformedURLException {
+        return new URL(in.toString().replace("faces-development.js", "faces-development.js.map")
+                .replace("faces.js", "faces.js.map"));
     }
 }
