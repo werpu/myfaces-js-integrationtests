@@ -19,8 +19,8 @@ import jakarta.faces.application.Resource;
 import jakarta.faces.application.ResourceHandler;
 import jakarta.faces.application.ResourceHandlerWrapper;
 
-public class MapFileResourceHandlerWrapper extends ResourceHandlerWrapper {
-    public MapFileResourceHandlerWrapper(ResourceHandler delegate) {
+public class FacesJSMapFileResourceWrapper extends ResourceHandlerWrapper {
+    public FacesJSMapFileResourceWrapper(ResourceHandler delegate) {
         super(delegate);
     }
 

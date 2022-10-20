@@ -46,8 +46,8 @@
         </navigation-case>
     </navigation-rule>
     <application>
-        <resource-handler>tomcatrun.DecoratingResourceHandlerWrapper</resource-handler>
-        <resource-handler>tomcatrun.MapFileResourceHandlerWrapper</resource-handler>
+        <resource-handler>tomcatrun.DecoratingResourceWrapper</resource-handler>
+        <resource-handler>tomcatrun.FacesJSMapFileResourceWrapper</resource-handler>
     </application>
 
 </faces-config>

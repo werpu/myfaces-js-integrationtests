@@ -4,8 +4,8 @@ import jakarta.faces.application.Resource;
 import jakarta.faces.application.ResourceHandler;
 import jakarta.faces.application.ResourceHandlerWrapper;
 
-public class DecoratingResourceHandlerWrapper extends ResourceHandlerWrapper {
-    public DecoratingResourceHandlerWrapper(ResourceHandler delegate) {
+public class DecoratingResourceWrapper extends ResourceHandlerWrapper {
+    public DecoratingResourceWrapper(ResourceHandler delegate) {
         super(delegate);
     }
 
