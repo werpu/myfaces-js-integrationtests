@@ -47,6 +47,7 @@
     </navigation-rule>
     <application>
         <resource-handler>tomcatrun.DecoratingResourceHandlerWrapper</resource-handler>
+        <resource-handler>tomcatrun.MapFileResourceHandlerWrapper</resource-handler>
     </application>
 
 </faces-config>
