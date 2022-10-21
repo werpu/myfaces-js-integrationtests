@@ -26,7 +26,7 @@ public class FacesJSMapFileResourceWrapper extends ResourceHandlerWrapper {
 
     @Override
     public Resource createResource(String resourceName) {
-        if (resourceName.contains("faces.js") || resourceName.contains("faces-development.js")) {
+        if (!resourceName.contains(".map") && (resourceName.contains("faces.js") || resourceName.contains("faces-development.js"))) {
             return new DecoratedFacesJS(super.createResource(resourceName));
         }
         return super.createResource(resourceName);
@@ -34,7 +34,8 @@ public class FacesJSMapFileResourceWrapper extends ResourceHandlerWrapper {
 
     @Override
     public Resource createResource(String resourceName, String libraryName) {
-        if (!resourceName.contains(".map") && (resourceName.contains("faces.js") || resourceName.contains("faces-development.js"))) {
+        if (!libraryName.equals("jakarta.faces") && !resourceName.contains(".map") &&
+                (resourceName.contains("faces.js") || resourceName.contains("faces-development.js"))) {
             return new FacesJSMappingDecorator(super.createResource(resourceName, libraryName));
         }
         return super.createResource(resourceName, libraryName);
@@ -42,6 +43,10 @@ public class FacesJSMapFileResourceWrapper extends ResourceHandlerWrapper {
 
     @Override
     public Resource createResource(String resourceName, String libraryName, String contentType) {
+        if (!libraryName.equals("jakarta.faces") && !resourceName.contains(".map") &&
+                (resourceName.contains("faces.js") || resourceName.contains("faces-development.js"))) {
+            return new FacesJSMappingDecorator(super.createResource(resourceName, libraryName, contentType));
+        }
         return super.createResource(resourceName, libraryName, contentType);
     }
 }
