@@ -42,7 +42,7 @@ const BROWSER_OPTIONS = {
     timeout: TEST_TIMEOUT
 };
 
-const RESULT_TIMEOUT = 10000; /*maximum time until the test result can ba analyzed*/
+const RESULT_TIMEOUT = 20000; /*maximum time until the test result can ba analyzed*/
 
 async function runStandardPage(pageIndex) {
     this.timeout(TEST_TIMEOUT);
