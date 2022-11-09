@@ -192,10 +192,22 @@ describe('Integration Testsuite MyFaces', function () {
         // nonce fail on embedded script
         pageEvalResult = await runStandardPage.call(this, "test23-nonce");
         expect(pageEvalResult.innerText.match(/0\s*failures/gi) != null, 'nonce fail on embedded script').to.be.true;
+
         // nonce pass on embedded script
         pageEvalResult = await runStandardPage.call(this, "test24-nonce");
         expect(pageEvalResult.innerText.match(/0\s*failures/gi) != null, 'nonce pass on embedded script').to.be.true;
     });
+    it('passing f:param must work', async function () {
+        const pageEvalResult = await runStandardPage.call(this, "test25-f-param");
+        expect(pageEvalResult.innerText.match(/0\s*failures/gi) != null).to.be.true;
+    });
+    /**
+     * not working with puppeteer only working from browser, for now, no support yet as it seems
+    it('simple push test', async function () {
+        const pageEvalResult = await runStandardPage.call(this, "test26-simplepush.jsf");
+        expect(pageEvalResult.innerText.match(/0\s*failures/gi) != null).to.be.true;
+    });
+     */
 
 });
 
