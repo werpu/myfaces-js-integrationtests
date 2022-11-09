@@ -14,18 +14,19 @@
  * limitations under the License.
  */
 afterEach(function () {
-    myfaces.testcases.redirect("./test25-f-param.jsf");
+    myfaces.testcases.redirect("./finalResults.jsf");
 });
 
-describe("Nonce testing working", function () {
+describe("Simple Push Testing", function () {
 
-    it("runs an embedded script with a nonce and works", function (done) {
-        emitPPR("cmd_eval", null, "execute_nonce4").then(function () {
-            //another faster and better way we use wait untilDom
-            DQ$("body")
-                .waitUntilDom(() => DQ$("#result3").innerHTML === "success")
-                .then(() => success(done)).catch(done);
-        })
+    it("runs a basic simulated websocket test", function (done) {
+        // For whatever reasons the combination innerHTML and MutationObservers seems to be broken on push notifications
+        // browser bug
+        setTimeout(() => {
+            expect(  DQ$("#pushtarget #channel").innerHTML).toEqual("hello");
+            expect( DQ$("#pushtarget #messsage").innerHTML).toEqual("hello from push notification");
+            done();
+        }, 1000);
     });
 
 });

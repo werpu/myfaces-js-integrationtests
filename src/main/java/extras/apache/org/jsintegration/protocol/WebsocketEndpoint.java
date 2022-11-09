@@ -16,53 +16,31 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package extras.apache.org.jsintegration.other;
+package extras.apache.org.jsintegration.protocol;
 
-
-
-
-import jakarta.enterprise.context.RequestScoped;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.faces.push.Push;
+import jakarta.faces.push.PushContext;
+import jakarta.faces.view.ViewScoped;
+import jakarta.inject.Inject;
 import jakarta.inject.Named;
-import jakarta.servlet.http.Part;
 
+import java.io.Serializable;
+
+/**
+ * Endpoint for new Websocket integration test
+ */
+@ApplicationScoped
 @Named
-@RequestScoped
-public class Fileupload {
-
-    private Part uploaded;
-    private Part uploaded2;
-
-
-    private String msg = "";
+public class WebsocketEndpoint implements Serializable {
+    @Inject
+    @Push(channel = "hello")
+    PushContext hello;
 
 
-    public Part getUploaded2() {
-        return uploaded2;
+    public String doSimplePush() {
+        hello.send("Hello from Websocket endpoint");
+        return null;
     }
 
-    public void setUploaded2(Part uploaded2) {
-        this.uploaded2 = uploaded2;
-    }
-
-    public void setUploaded(Part uploadedFile) {
-        this.uploaded = uploadedFile;
-    }
-
-    public Part getUploaded() {
-        return uploaded;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public void doUpload() {
-        if(uploaded != null && uploaded2 != null) {
-            msg = "success";
-        }
-    }
 }

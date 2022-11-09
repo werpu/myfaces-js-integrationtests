@@ -1,0 +1,25 @@
+<html>
+<head>
+    <script type="text/javascript">
+
+        var webSocket = new WebSocket("ws://localhost:8080/IntegrationJSTest/testws");
+        function wsSendMessage() {
+            webSocket.send("hello world");
+        }
+        function wsCloseConnection() {
+            webSocket.close();
+        }
+        function wsOpen(message){
+            console.log("Connected:"+message);
+        }
+        webSocket.onopen = function(message){ wsOpen(message);};
+
+    </script>
+</head>
+<body>
+    <form>
+        <input onclick="wsSendMessage();" value="Send Msg" type="button">
+        <input onclick="wsCloseConnection();" value="Disconnect" type="button">
+    </form>
+</body>
+</html>

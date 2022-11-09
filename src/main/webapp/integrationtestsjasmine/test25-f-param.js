@@ -14,19 +14,19 @@
  * limitations under the License.
  */
 afterEach(function () {
-    myfaces.testcases.redirect("./test25-f-param.jsf");
+    myfaces.testcases.redirect("./test26-simplepush.jsf");
 });
 
-describe("Nonce testing working", function () {
+describe("f:param testing", function () {
 
-    it("runs an embedded script with a nonce and works", function (done) {
-        emitPPR("cmd_eval", null, "execute_nonce4").then(function () {
-            //another faster and better way we use wait untilDom
-            DQ$("body")
-                .waitUntilDom(() => DQ$("#result3").innerHTML === "success")
-                .then(() => success(done)).catch(done);
+    it("must run f:param on submit properly", function (done) {
+        DQ$("#results").waitUntilDom(() => {
+            return DQ$("#output").innerHTML === "Hello from f:param";
         })
-    });
+            .then(() => success(done))
+            .catch(done);
 
+        setTimeout(() => DQ$("#submitButton").click(), 10);
+    })
 });
 
