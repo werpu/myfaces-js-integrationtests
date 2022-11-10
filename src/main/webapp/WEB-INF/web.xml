@@ -66,16 +66,16 @@
         <param-value>false</param-value>
     </context-param>
     <context-param>
-        <param-name>javax.faces.ENABLE_CDI_RESOLVER_CHAIN</param-name>
+        <param-name>jakarta.faces.ENABLE_CDI_RESOLVER_CHAIN</param-name>
         <param-value>true</param-value>
     </context-param>
     <context-param>
-        <param-name>javax.faces.ENABLE_WEBSOCKET_ENDPOINT</param-name>
+        <param-name>jakarta.faces.ENABLE_WEBSOCKET_ENDPOINT</param-name>
         <param-value>true</param-value>
     </context-param>
 
     <context-param>
-        <param-name>javax.faces.WEBSOCKET_ENDPOINT_PORT</param-name>
+        <param-name>jakarta.faces.WEBSOCKET_ENDPOINT_PORT</param-name>
         <param-value>8080</param-value>
     </context-param>
     <!-- enable if you want to test for separator char (server impl only)

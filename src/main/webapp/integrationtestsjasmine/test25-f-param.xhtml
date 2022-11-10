@@ -28,8 +28,9 @@
         <h:form id="form1" prependId="false">
             <!-- needed for the test trigger -->
             <h:commandLink id="submitButton" value="Click here" action="#{myBean2.execute}">
-                <f:ajax execute="@form" render="output" />
+                <f:ajax execute="@this" render="output" />
                 <f:param name="hello2" value="Hello from f:param"/>
+                <f:param name="Hello World" value="Hello from f:param2"/>
             </h:commandLink>
 
             <h:panelGroup id="results">
