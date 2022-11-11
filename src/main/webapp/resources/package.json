@@ -18,8 +18,10 @@
     "chai": "^4.3.7",
     "famfamfam-silk": "^1.0.0",
     "jasmine": "^4.5.0",
-    "jsf.js_next_gen": "^4.0.0-RC.2",
     "mocha": "^10.1.0",
-    "mona-dish": "0.23.5"
+    "mona-dish": "0.23.6"
+  },
+  "dependencies": {
+    "jsf.js_next_gen": "^4.0.0-RC.3"
   }
 }

@@ -28,11 +28,10 @@
         </h2>
 
         <h:form id="testForm" type="multipart/form-data" enctype="multipart/form-data">
-            <h:inputFile id="bla" value="#{fileupload.uploaded}">
+            <h:inputFile id="bla" value="#{fileupload.uploaded3}" multiple="true">
             </h:inputFile>
-            <h:inputFile id="bla3" value="#{fileupload.uploaded2}">
-            </h:inputFile>
-            <h:commandLink id="bla2" value="Upload" action="#{fileupload.doUpload}" type="button">
+
+            <h:commandLink id="bla2" value="Upload" action="#{fileupload.doUpload2}" type="button">
                 <f:ajax execute="@form" render="successfield" />
             </h:commandLink>
             <h:outputText id="successfield" value="#{fileupload.msg}"></h:outputText>

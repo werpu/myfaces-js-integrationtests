@@ -60,7 +60,7 @@
             }
         </script>
         <h:form id="form1">
-            <h:commandButton id="sendMessage" value="Send Message" action="#{websocketEndpoint.doSimplePush()}">
+            <h:commandButton id="sendMessage" value="Send Message" action="#{websocketEndpoint.doSimplePush}">
                 <f:ajax execute="@this" render="@form"></f:ajax>
             </h:commandButton>
         </h:form>

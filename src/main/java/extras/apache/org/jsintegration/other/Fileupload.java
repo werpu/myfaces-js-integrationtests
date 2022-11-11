@@ -25,12 +25,16 @@ import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
 import jakarta.servlet.http.Part;
 
+import java.util.List;
+
 @Named
 @RequestScoped
 public class Fileupload {
 
     private Part uploaded;
     private Part uploaded2;
+
+    private List<Part> uploaded3;
 
 
     private String msg = "";
@@ -52,6 +56,14 @@ public class Fileupload {
         return uploaded;
     }
 
+    public List<Part> getUploaded3() {
+        return uploaded3;
+    }
+
+    public void setUploaded3(List<Part> uploaded3) {
+        this.uploaded3 = uploaded3;
+    }
+
     public String getMsg() {
         return msg;
     }
@@ -62,6 +74,11 @@ public class Fileupload {
 
     public void doUpload() {
         if(uploaded != null && uploaded2 != null) {
+            msg = "success";
+        }
+    }
+    public void doUpload2() {
+        if(uploaded3 != null) {
             msg = "success";
         }
     }
