@@ -18,41 +18,28 @@
  */
 package htmlunit;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
+import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.html.DomElement;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
-import java.time.Duration;
+import java.io.IOException;
 
+/**
+ * Same as our webdriver test
+ * but now in html unit to determine the deficiencies of html unit
+ * compared to the headless chromium engine webdriver uses
+ */
 public class HtmlUnitTesting {
     public static void main(String ... argv) {
-        // if chrome is not in your path you have to take care that the build system loads it and then set the driver
-        // to its path (aka containers for instance do not have it preinstalled)
-        // System.setProperty("webdriver.chrome.driver", <path to chrome in your testing environment>);
-        WebDriverManager.chromedriver().setup();
-        ChromeOptions options = new ChromeOptions();
-        // this disables any gpu output so that the driver runs chrome in a headless environment
-        options.addArguments("--headless");
-        options.addArguments("--disable-gpu");
-        WebDriver driver = new ChromeDriver(options);
-        try {
-            // to kiss, we just fetch the page from a running server and then check for errors by hitting one of the test buttons
-            // which triggers the ajax cycle
-            driver.manage().timeouts().implicitlyWait(Duration.ofMillis(500));
-            driver.get("http://localhost:8080/IntegrationJSTest/experimental/htmlunit.jsf");
-            WebElement cmdEvl = driver.findElement(By.id("cmd_eval"));
-            WebElement evalArea = driver.findElement(By.id("evalarea1"));
-
-            cmdEvl.click();
+        try (final WebClient webClient = new WebClient()) {
+            final HtmlPage page = webClient.getPage("http://localhost:8080/IntegrationJSTest/experimental/htmlunit.jsf");
+            DomElement evlCmd = page.getElementById("cmd_eval");
+            DomElement evalArea = page.getElementById("evalarea1");
+            evlCmd.click();
             Thread.sleep(1000);
-            System.out.println(evalArea.getText().equals("eval test succeeded"));
-        } catch (InterruptedException e) {
+            System.out.println(evalArea.getTextContent().equals("eval test succeeded"));
+        } catch (InterruptedException | IOException e) {
             throw new RuntimeException(e);
-        } finally {
-            driver.close();
         }
     }
 }

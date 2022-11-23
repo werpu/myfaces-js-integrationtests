@@ -27,6 +27,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
@@ -39,40 +40,36 @@ import java.util.stream.Collectors;
 /**
  * @author Werner Punz (latest modification by $Author$)
  * @version $Revision$ $Date$
- *          <p/>
- *          JSF 2.2 response mockup which simulates the changed viewstate behavior
+ * <p/>
+ * JSF 2.2 response mockup which simulates the changed viewstate behavior
  */
-public class ResponseMockup22 extends ResponseMockup
-{
+public class ResponseMockup22 extends ResponseMockup {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException
-    {
+            throws ServletException, IOException {
         response.setContentType("text/xml;charset=UTF-8");
         PrintWriter out = response.getWriter();
         String op = (String) request.getParameter("op");
 
 
         PartialResponse root = new PartialResponse();
-        if (op.equals("newviewstate"))
-        {
+        if (op == null) {
+            super.processRequest(request, response);
+        } else if (op.equals("newviewstate")) {
             Changes changes = new Changes(root);
             changes.addChild(new Update(changes, "jakarta.faces.ViewState",
                     "update1"));
             root.addElement(changes);
             out.println(root.toString());
 
-        }
-        else if (op.equals("newviewstate2"))
-        {
+        } else if (op.equals("newviewstate2")) {
             Changes changes = new Changes(root);
             changes.addChild(new Update(changes, "form2:jakarta.faces.ViewState",
                     "update2"));
             root.addElement(changes);
             out.println(root.toString());
 
-        } else
-        {
+        } else {
             super.processRequest(request, response);
         }
 

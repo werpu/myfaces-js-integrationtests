@@ -17,7 +17,7 @@
  theoretically we could save some code
  by
  defining the parent object as
- let parent = new Object();
+ var parent = new Object();
  parent.prototype = new myfaces._impl.core._Runtime();
  extendClass(function () {
  }, parent , {
@@ -31,11 +31,15 @@
  * @description Object singleton for Language related methods, Lang.object singleton
  * decorates the namespace myfaces._impl.core._Runtime and adds a bunch of new methods to
  * what _Runtime provided
+ *
+ * es5 backport to proof that we should not HTMLUnit anymore
  * */
 if(!window.LangUtils) {
 
-    class _LangUtils {
-        static _installedLocale = null;
+    var _LangUtils = {};
+
+
+    _LangUtils._installedLocale = null;
         /**
          * returns a given localized message upon a given key
          * basic java log like templating functionality is included
@@ -48,17 +52,17 @@ if(!window.LangUtils) {
          *
          * @param key
          */
-        static getMessage (key, defaultMessage /*,vararg templateParams*/) {
+        _LangUtils.getMessage = function(key, defaultMessage /*,vararg templateParams*/) {
             if (!LangUtils._installedLocale) {
                 //we first try to install language and variant, if that one fails
                 //we try to install the language only, and if that one fails
                 //we install the base messages
                 LangUtils.initLocale();
             }
-            let msg = LangUtils._installedLocale[key] || defaultMessage || key + " - undefined message";
+            var msg = LangUtils._installedLocale[key] || defaultMessage || key + " - undefined message";
             //we now make a simple templating replace of {0}, {1} etc... with their corresponding
             //arguments
-            for (let cnt = 2; cnt < arguments.length; cnt++) {
+            for (var cnt = 2; cnt < arguments.length; cnt++) {
                 msg = msg.replace(new RegExp(["\\{", cnt - 2, "\\}"].join(""), "g"), new String(arguments[cnt]));
             }
             return msg;
@@ -71,32 +75,32 @@ if(!window.LangUtils) {
          *
          * @param newLocale locale override
          */
-        static initLocale (newLocale) {
+        _LangUtils.initLocale  = function(newLocale) {
             if (newLocale) {
                 LangUtils._installedLocale = new newLocale();
                 return;
             }
-            let language_Variant = LangUtils._RT.getLanguage(LangUtils._RT.getGlobalConfig("locale")),
+            var language_Variant = LangUtils._RT.getLanguage(LangUtils._RT.getGlobalConfig("locale")),
                 langStr = language_Variant ? language_Variant.language : "",
                 variantStr = language_Variant ? [language_Variant.language, "_", language_Variant.variant || ""].join("") : "",
                 i18nRoot = myfaces._impl.i18n, i18nHolder = i18nRoot["Messages_" + variantStr] || i18nRoot["Messages_" + langStr] || i18nRoot["Messages"];
             LangUtils._installedLocale = new i18nHolder();
         };
-        static assertType (probe, theType) {
+        _LangUtils.assertType  = function(probe, theType) {
             return LangUtils._RT.assertType(probe, theType);
         };
-        static exists (nms, theType) {
+        _LangUtils.exists  = function(nms, theType) {
             return LangUtils._RT.exists(nms, theType);
         };
-        static fetchNamespace (namespace) {
+        _LangUtils.fetchNamespace  = function(namespace) {
             LangUtils._assertStr(namespace, "fetchNamespace", "namespace");
             return LangUtils._RT.fetchNamespace(namespace);
         };
-        static reserveNamespace (namespace) {
+        _LangUtils.reserveNamespace  = function(namespace) {
             LangUtils._assertStr(namespace, "reserveNamespace", "namespace");
             return LangUtils._RT.reserveNamespace(namespace);
         };
-        static globalEval (code) {
+        _LangUtils.globalEval  = function(code) {
             LangUtils._assertStr(code, "globalEval", "code");
             return  LangUtils._RT.globalEval(code);
         };
@@ -109,7 +113,7 @@ if(!window.LangUtils) {
          *
          * @return an event object no matter what is incoming
          */
-        static getEvent (evt) {
+        _LangUtils.getEvent  = function(evt) {
             evt = (!evt) ? window.event || {} : evt;
             return evt;
         };
@@ -119,7 +123,7 @@ if(!window.LangUtils) {
          * @param evt the event object
          * (with a fallback for ie events if none is present)
          */
-        static getEventTarget (evt) {
+        _LangUtils.getEventTarget  = function(evt) {
             //ie6 and 7 fallback
             evt = LangUtils.getEvent(evt);
             /**
@@ -131,7 +135,7 @@ if(!window.LangUtils) {
              * behavior. I dont use it that way but nevertheless it
              * does not break anything so why not
              * */
-            let t = evt.srcElement || evt.target || evt.source || null;
+            var t = evt.srcElement || evt.target || evt.source || null;
             while ((t) && (t.nodeType != 1)) {
                 t = t.parentNode;
             }
@@ -144,7 +148,7 @@ if(!window.LangUtils) {
          * @param source
          * @param destination
          */
-        static equalsIgnoreCase (source, destination) {
+        _LangUtils.equalsIgnoreCase  = function(source, destination) {
             //either both are not set or null
             if (!source && !destination) {
                 return true;
@@ -160,7 +164,7 @@ if(!window.LangUtils) {
          * the idea is that either a string or domNode can be passed
          * @param {Object} reference the reference which has to be byIded
          */
-        static byId (/*object*/ reference) {
+        _LangUtils.byId  = function(/*object*/ reference) {
             if (!reference) {
                 throw LangUtils.makeException(new Error(), null, null, LangUtils._nameSpace, "byId", LangUtils.getMessage("ERR_REF_OR_ID", null, "_Lang.byId", "reference"));
             }
@@ -173,22 +177,22 @@ if(!window.LangUtils) {
          * @param {RegExp} splitter our splitter reglar expression
          * @return an array of the splitted string
          */
-        static strToArray (/*string*/ it, /*regexp*/ splitter) {
+        _LangUtils.strToArray  = function(/*string*/ it, /*regexp*/ splitter) {
             //	summary:
             //		Return true if it is a String
             LangUtils._assertStr(it, "strToArray", "it");
             if (!splitter) {
                 throw LangUtils.makeException(new Error(), null, null, LangUtils._nameSpace, "strToArray", LangUtils.getMessage("ERR_PARAM_STR_RE", null, "myfaces._impl._util._Lang.strToArray", "splitter"));
             }
-            let retArr = it.split(splitter);
-            let len = retArr.length;
-            for (let cnt = 0; cnt < len; cnt++) {
+            var retArr = it.split(splitter);
+            var len = retArr.length;
+            for (var cnt = 0; cnt < len; cnt++) {
                 retArr[cnt] = LangUtils.trim(retArr[cnt]);
             }
             return retArr;
         };
 
-        static _assertStr (it, functionName, paramName) {
+        _LangUtils._assertStr  = function(it, functionName, paramName) {
             if (!LangUtils.isString(it)) {
                 throw LangUtils.makeException(new Error(), null, null, LangUtils._nameSpace, functionName, LangUtils.getMessage("ERR_PARAM_STR", null, "myfaces._impl._util._Lang." + functionName, paramName));
             }
@@ -198,10 +202,10 @@ if(!window.LangUtils) {
          * http://blog.stevenlevithan.com/archives/faster-trim-javascript
          * crossported from dojo
          */
-        static trim (/*string*/ str) {
+        _LangUtils.trim  = function(/*string*/ str) {
             LangUtils._assertStr(str, "trim", "str");
             str = str.replace(/^\s\s*/, '');
-            let ws = /\s/, i = str.length;
+            var ws = /\s/, i = str.length;
 
             while (ws.test(str.charAt(--i))) {
                 //do nothing
@@ -215,7 +219,7 @@ if(!window.LangUtils) {
          * @param it {|Object|} the object to be checked for being a string
          * @return true in case of being a string false otherwise
          */
-        static isString (/*anything*/ it) {
+        _LangUtils.isString  = function(/*anything*/ it) {
             //	summary:
             //		Return true if it is a String
             return !!arguments.length && it != null && (typeof it == "string" || it instanceof String); // Boolean
@@ -232,7 +236,7 @@ if(!window.LangUtils) {
          *
          * @return whatever the executed method returns
          */
-        static hitch (scope, method) {
+        _LangUtils.hitch  = function(scope, method) {
             return !scope ? () => method.apply(this, arguments || []):
                 () => method.apply(scope, arguments || []);
         };
@@ -243,12 +247,12 @@ if(!window.LangUtils) {
          * @param {Object} src the source map
          * @param {boolean} overwrite if set to true the destination is overwritten if the keys exist in both maps
          **/
-        static mixMaps (dest, src, overwrite, blockFilter, whitelistFilter) {
+        _LangUtils.mixMaps  = function(dest, src, overwrite, blockFilter, whitelistFilter) {
             if (!dest || !src) {
                 throw LangUtils.makeException(new Error(), null, null, LangUtils._nameSpace, "mixMaps", LangUtils.getMessage("ERR_PARAM_MIXMAPS", null, "_Lang.mixMaps"));
             }
-            let _undef = "undefined";
-            for (let key in src) {
+            var _undef = "undefined";
+            for (var key in src) {
                 if (!src.hasOwnProperty(key)) continue;
                 if (blockFilter && blockFilter[key]) {
                     continue;
@@ -274,30 +278,30 @@ if(!window.LangUtils) {
          * @param {Array} arr   array
          * @param {String} str string to check for
          */
-        static contains (arr, str) {
+        _LangUtils.contains  = function(arr, str) {
             if (!arr || !str) {
                 throw LangUtils.makeException(new Error(), null, null, LangUtils._nameSpace, "contains", LangUtils.getMessage("ERR_MUST_BE_PROVIDED", null, "_Lang.contains", "arr {array}", "str {string}"));
             }
             return LangUtils.arrIndexOf(arr, str) != -1;
         };
-        static arrToMap (arr, offset) {
-            let ret = new Array(arr.length);
-            let len = arr.length;
+        _LangUtils.arrToMap  = function(arr, offset) {
+            var ret = new Array(arr.length);
+            var len = arr.length;
             offset = (offset) ? offset : 0;
-            for (let cnt = 0; cnt < len; cnt++) {
+            for (var cnt = 0; cnt < len; cnt++) {
                 ret[arr[cnt]] = cnt + offset;
             }
             return ret;
         };
-        static objToArray (obj, offset, pack) {
+        _LangUtils.objToArray  = function(obj, offset, pack) {
             if (!obj) {
                 return null;
             }
             //since offset is numeric we cannot use the shortcut due to 0 being false
             //special condition array delivered no offset no pack
             if (obj instanceof Array && !offset && !pack)  return obj;
-            let finalOffset = ('undefined' != typeof offset || null != offset) ? offset : 0;
-            let finalPack = pack || [];
+            var finalOffset = ('undefined' != typeof offset || null != offset) ? offset : 0;
+            var finalPack = pack || [];
             try {
                 return finalPack.concat(Array.prototype.slice.call(obj, finalOffset));
             } catch (e) {
@@ -307,7 +311,7 @@ if(!window.LangUtils) {
                 //objects break the function is everything methodology of javascript
                 //and do not implement apply call, or are pseudo arrays which cannot
                 //be sliced
-                for (let cnt = finalOffset; cnt < obj.length; cnt++) {
+                for (var cnt = finalOffset; cnt < obj.length; cnt++) {
                     finalPack.push(obj[cnt]);
                 }
                 return finalPack;
@@ -324,9 +328,9 @@ if(!window.LangUtils) {
          * @param arr the array
          * @param element the index to search for
          */
-        static arrIndexOf (arr, element /*fromIndex*/) {
+        _LangUtils.arrIndexOf  = function(arr, element /*fromIndex*/) {
             if (!arr || !arr.length) return -1;
-            let pos = Number(arguments[2]) || 0;
+            var pos = Number(arguments[2]) || 0;
             arr = LangUtils.objToArray(arr);
             return arr.indexOf(element, pos);
         };
@@ -338,10 +342,10 @@ if(!window.LangUtils) {
          * @param args the arguments array or map
          * @param argNames the argument names to be transferred
          */
-        static applyArgs (dest, args, argNames) {
-            let UDEF = 'undefined';
+        _LangUtils.applyArgs  = function(dest, args, argNames) {
+            var UDEF = 'undefined';
             if (argNames) {
-                for (let cnt = 0; cnt < args.length; cnt++) {
+                for (var cnt = 0; cnt < args.length; cnt++) {
                     //dest can be null or 0 hence no shortcut
                     if (UDEF != typeof dest["_" + argNames[cnt]]) {
                         dest["_" + argNames[cnt]] = args[cnt];
@@ -351,7 +355,7 @@ if(!window.LangUtils) {
                     }
                 }
             } else {
-                for (let key in args) {
+                for (var key in args) {
                     if (!args.hasOwnProperty(key)) continue;
                     if (UDEF != typeof dest["_" + key]) {
                         dest["_" + key] = args[key];
@@ -364,37 +368,37 @@ if(!window.LangUtils) {
         };
 
 
-        static parseXML (txt) {
+        _LangUtils.parseXML  = function(txt) {
             try {
-                let parser = new DOMParser();
+                var parser = new DOMParser();
                 return parser.parseFromString(txt, "text/xml");
             } catch (e) {
                 //undefined internal parser error
                 return null;
             }
         };
-        static serializeXML (xmlNode, escape) {
+        _LangUtils.serializeXML  = function(xmlNode, escape) {
             if (!escape) {
                 if (xmlNode.data) return xmlNode.data; //CDATA block has raw data
                 if (xmlNode.textContent) return xmlNode.textContent; //textNode has textContent
             }
             return (new XMLSerializer()).serializeToString(xmlNode);
         };
-        static serializeChilds (xmlNode) {
-            let buffer = [];
+        _LangUtils.serializeChilds = function (xmlNode) {
+            var buffer = [];
             if (!xmlNode.childNodes) return "";
-            for (let cnt = 0; cnt < xmlNode.childNodes.length; cnt++) {
+            for (var cnt = 0; cnt < xmlNode.childNodes.length; cnt++) {
                 buffer.push(LangUtils.serializeXML(xmlNode.childNodes[cnt]));
             }
             return buffer.join("");
         };
-        static isXMLParseError (xmlContent) {
+        _LangUtils.isXMLParseError  = function(xmlContent) {
             //no xml content
             if (xmlContent == null) return true;
-            let findParseError = function (node) {
+            var findParseError = function (node) {
                 if (!node || !node.childNodes) return false;
-                for (let cnt = 0; cnt < node.childNodes.length; cnt++) {
-                    let childNode = node.childNodes[cnt];
+                for (var cnt = 0; cnt < node.childNodes.length; cnt++) {
+                    var childNode = node.childNodes[cnt];
                     if (childNode.tagName && childNode.tagName == "parsererror") return true;
                 }
                 return false;
@@ -416,11 +420,11 @@ if(!window.LangUtils) {
          * @param name
          * @param value
          */
-        static attr (obj, name, value) {
-            let findAccessor = function (theObj, theName) {
+        _LangUtils.attr  = function(obj, name, value) {
+            var findAccessor = function (theObj, theName) {
                 return (theObj["_" + theName]) ? "_" + theName : ( (theObj[theName]) ? theName : null)
             };
-            let applyAttr = function (theObj, theName, value, isFunc) {
+            var applyAttr = function (theObj, theName, value, isFunc) {
                 if (value) {
                     if (isFunc) {
                         theObj[theName](value);
@@ -432,14 +436,14 @@ if(!window.LangUtils) {
                 return (isFunc) ? theObj[theName]() : theObj[theName];
             };
             try {
-                let finalAttr = findAccessor(obj, name);
+                var finalAttr = findAccessor(obj, name);
                 //simple attibute no setter and getter overrides
                 if (finalAttr) {
                     return applyAttr(obj, finalAttr, value);
                 }
                 //lets check for setter and getter overrides
-                let found = false;
-                let prefix = (value) ? "set" : "get";
+                var found = false;
+                var prefix = (value) ? "set" : "get";
                 finalAttr = [prefix, name.substr(0, 1).toUpperCase(), name.substr(1)].join("");
                 finalAttr = findAccessor(obj, finalAttr);
                 if (finalAttr) {
@@ -463,7 +467,7 @@ if(!window.LangUtils) {
          * @param {String} callFunc the caller function
          * @param {String} message the message for the exception
          */
-        static makeException (error, title, name, callerCls, callFunc, message) {
+        _LangUtils.makeException  = function(error, title, name, callerCls, callFunc, message) {
             error.name = name || "clientError";
             error.title = title || "";
             error.message = message || "";
@@ -474,6 +478,6 @@ if(!window.LangUtils) {
             error._mfInternal.callFunc = callFunc || (callerCls+"."+callFunc);
             return error;
         }
-    }
+
     window.LangUtils = _LangUtils;
 }

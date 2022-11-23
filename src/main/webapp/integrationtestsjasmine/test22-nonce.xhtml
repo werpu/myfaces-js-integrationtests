@@ -17,18 +17,29 @@
 -->
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="jakarta.faces.html"
+      xmlns:pr="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:ui="jakarta.faces.facelets" xmlns:components="http://xmlns.jcp.org/jsf/composite/components"
       xmlns:f="jakarta.faces.core">
 
 <ui:composition template="../templates/template.xhtml">
     <ui:define name="content">
         <components:jasmineTest testRunner="test22-nonce.js"/>
-        <form id="form1" prependId="false">
+        <h:form id="form1" prependId="false">
             <input type="button" id="cmd_eval" value="execute_nonce"></input>
             <div id="result"></div>
             <div id="result2"></div>
             <div id="result3"></div>
-        </form>
+            <h:commandLink id="doSubmit"  value="booga" action="#{myBean2.execute}">
+                <f:passThroughAttribute name="data-booga" value="true" />
+            </h:commandLink>
+            aaa
+            -
+            <script nonce="test123">
+                let commandLink = document.querySelector("[data-booga='true']");
+                commandLink.onclick = (evt) => myfaces.oam.submitForm('form1','doSubmit');;
+            </script>
+
+        </h:form>
     </ui:define>
 
 </ui:composition>

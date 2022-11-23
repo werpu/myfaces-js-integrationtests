@@ -22,6 +22,6 @@
     "mona-dish": "0.23.6"
   },
   "dependencies": {
-    "jsf.js_next_gen": "^4.0.0-RC.3"
+    "jsf.js_next_gen": "^4.0.0-RC.6"
   }
 }
