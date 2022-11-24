@@ -95,7 +95,7 @@ if (!myfaces._impl.core._EvalHandlers) {
         };
 
         _T.resolveNonce = function(item) {
-            let nonce = null;
+            var nonce = null;
             if(!!(item && item.nonce)) {
                 nonce = item.nonce;
             } else if(!!item) {

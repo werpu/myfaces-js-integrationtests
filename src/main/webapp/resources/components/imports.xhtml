@@ -107,8 +107,9 @@
 
         <h:outputScript pr:nonce="test123"  name="myfaces/api/jsf.js" library="scripts" target="head"/>
 
-        <script type="text/javascript" nonce="test123" src="../resources/myfaces.testscripts/myfaces/_impl/_util/_Lang.js"></script>
-        <script type="text/javascript" nonce="test123" src="../resources/myfaces.testscripts/myfaces/_impl/_util/_ImportCounter.js"></script>
+        <h:outputScript pr:nonce="test123"  name="myfaces/_impl/_util/_Lang.js" library="myfaces.testscripts" target="head"/>
+        <h:outputScript pr:nonce="test123"  name="myfaces/_impl/_util/_ImportCounter.js" library="myfaces.testscripts" target="head"/>
+
 
         <script nonce="test1x23" type="text/javascript" defer="defer">
             //disable for impl testing not local testing
