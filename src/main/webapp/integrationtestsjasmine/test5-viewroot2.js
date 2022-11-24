@@ -32,18 +32,19 @@ beforeEach(function () {
 describe("ViewRoot with execute @all and render @all", function () {
     //expect does not like double includes
     it("Needs to have the root replaced", function (done) {
-        DQ$("body").waitUntilDom(() => {
-            return (found = found || (DQ$("body").innerHTML.indexOf("refresh successul2") !== -1 && window.__mf_import_cnt === 2));
-        }, {attributes: true, childList: true, subtree: true, timeout: 2000}).then(() => {
+        //DQ$("body").waitUntilDom(() => {
+        //    return (found = found || (DQ$("body").innerHTML.indexOf("refresh successul2") !== -1 && window.__mf_import_cnt === 2));
+        //}, {attributes: true, childList: true, subtree: true, timeout: 2000}).then(() => {
+         setTimeout(() => {
+
             htmlReporter.appendTo(DQ$("body"))
             console.log(found);
             expect(DQ$("body").innerHTML.indexOf("refresh successul2") !== -1).toBeTruthy();
+            expect(DQ$("body").innerHTML.indexOf("before viewroot") === -1).toBeTruthy();
 
             success(done);
-        }).catch((err) => {
-            DQ$("body").append(htmlReporter);
-            done(err);
-        });
+        }, 500);
+        window["_viewrootRun"] = true;
         facesRequest("allKeyword", null, {render: "@all", execute: "@all"});
 
 

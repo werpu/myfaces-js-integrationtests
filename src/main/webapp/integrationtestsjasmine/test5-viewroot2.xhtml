@@ -25,12 +25,16 @@
             // <![CDATA[
             //we try to deliberately break the xml which should
             //be prevented by the cdata block
-            setTimeout(function () {
-                if (!window.cnt) {
-                    window.cnt = 1;
-                }
-                document.body.innerHTML = document.body.innerHTML + "refresh successul" + (window.cnt++);
-            }, 500);
+            if(window["_viewrootRun"]) {
+                setTimeout(function () {
+                    if (!window.cnt) {
+                        window.cnt = 2;
+                    }
+                    document.body.innerHTML = document.body.innerHTML + "refresh successul" + (window.cnt);
+                    delete window._viewrootRun;
+                }, 100);
+
+            }
             // ]]>
         </script>
 
@@ -53,6 +57,14 @@
             </h:commandButton>
 
         </h:form>
+        <div id="replaced">
+            before viewroot
+        </div>
+        <script type="text/javascript">
+            if(window._viewrootRun) {
+                document.getElementById("replaced").innerHTML = "";
+            }
+        </script>
         <component:jasmineTest testRunner="test5-viewroot2.js" rendered="#{!suppressDoubleIncludeBean.alreadyCalled}" />
     </ui:define>
 </ui:composition>
