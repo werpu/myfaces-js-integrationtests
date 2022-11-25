@@ -15,19 +15,22 @@
  */
 afterEach(function () {
     setTimeout(function () {
-        myfaces.testcases.redirect("./test25-head.jsf");
+        myfaces.testcases.redirect("./finalResults.jsf");
     }, 1000);
 });
 
-describe("Nonce testing working", function () {
+describe("Head replacement tests", function () {
 
-        it("runs an embedded script with a nonce and works", function (done) {
-            emitPPR("cmd_eval", null, "execute_nonce4").then(function () {
+        it("runs a head replacement", function (done) {
+            emitPPR("execute_head", null, "head_replace1").then(function () {
                 //another faster and better way we use wait untilDom
-                DomQuery.byId("body")
-                    .waitUntilDom(() => DQ$("#result3").innerHTML == "success")
+                DomQuery.byTagName("body")
+                    .waitUntilDom(() => DQ$("#result_area").innerHTML == "eval success")
                     .then(() => {
-                        expect(DQ$("#result3").innerHTML == "success").toBe(true);
+                        expect(DQ$("#result_area2").innerHTML == "eval success").toBe(true);
+                        expect(DQ$("head meta").length).toEqual(5);
+                        expect(DQ$("head script").length).toEqual(2);
+                        expect(DQ$("head link").length).toEqual(2);
                         done();
                     }).catch(done);
             })

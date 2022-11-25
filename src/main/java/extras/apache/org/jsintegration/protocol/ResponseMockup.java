@@ -126,6 +126,29 @@ public class ResponseMockup extends HttpServlet
             } else if (op.trim().equals("illegalResponse"))
             {
                 out.println(">>>> xxxx >YYYY-!->>>");
+            } else if (op.trim().equals("head_replace1")) { //pure head replacement
+                StringBuilder replacement = new StringBuilder();
+                replacement.append("<html xmlns=\"http://www.w3.org/1999/xhtml\">" +
+                        "<head>");
+                replacement.append(" <title>After Update</title>\n" +
+                        "        <meta charset=\"UTF-8\"></meta>\n" +
+                        "        <meta name=\"description\" content=\"Unit Test Head Replacement\"></meta>\n" +
+                        "        <meta name=\"keywords\" content=\"HTML, CSS, JavaScript, JSF\"></meta>\n" +
+                        "        <meta name=\"viewport\" content=\"width=device-width, initial-scale=0.8\"></meta>\n" +
+                        "        <meta name=\"author\" content=\"Whoever\"></meta>\n" +
+                        "        <link rel=\"stylesheet\"  href=\"../resources/node_modules/jasmine-core/lib/jasmine-core/jasmine.css\"></link>\n"+
+                        "        <script type=\"text/javascript\" src=\"./fixtures/headscript.js\"></script>\n" +
+                        "        <link rel=\"stylesheet\" href=\"./fixtures/headcss.css\"></link>\n" +
+                        "        <script type=\"text/javascript\">\n" +
+                        "            console.log('from replaced head');   " +
+                        "            setTimeout(() => document.getElementById('result_area').innerHTML = 'eval success', 100);\n" +
+                        "        </script>");
+                replacement.append("</head>");
+                Changes changes = new Changes(root);
+                root.addElement(changes);
+                changes.addChild(new Update(changes, "javax.faces.ViewHead", replacement.toString()));
+                out.println(root.toString());
+
             } else if (op.trim().toLowerCase().equals("body"))
             {
                 //we omit our xml builder for now

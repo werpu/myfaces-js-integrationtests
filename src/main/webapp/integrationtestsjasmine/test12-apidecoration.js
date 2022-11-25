@@ -65,7 +65,8 @@ describe("Test for decoratable calls within our jsf lifecycle", function () {
                 expect(viest).toEqual(true);
                 done();
             }, 500);
-        }).catch(function () {
+        }).catch(function (err) {
+            console.error(err);
             expect(req).toEqual(true);
             expect(resp).toEqual(true);
             expect(viest).toEqual(true);
