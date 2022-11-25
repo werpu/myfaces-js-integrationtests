@@ -19,9 +19,9 @@
     "famfamfam-silk": "^1.0.0",
     "jasmine": "^4.5.0",
     "mocha": "^10.1.0",
-    "mona-dish": "0.23.6"
+    "mona-dish": "0.23.9"
   },
   "dependencies": {
-    "jsf.js_next_gen": "^4.0.0-RC.6"
+    "jsf.js_next_gen": "^4.0.0-RC.11"
   }
 }
