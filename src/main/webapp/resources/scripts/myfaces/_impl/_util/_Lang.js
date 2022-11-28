@@ -84,9 +84,9 @@ _MF_SINGLTN(_PFX_UTIL + "_Lang", Object, /** @lends myfaces._impl._util._Lang.pr
             return;
         }
         var language_Variant = this._RT.getLanguage(this._RT.getGlobalConfig("locale")),
-            langStr = language_Variant ? language_Variant.language : "",
-            variantStr = language_Variant ? [language_Variant.language, "_", language_Variant.variant || ""].join("") : "",
-            i18nRoot = myfaces._impl.i18n, i18nHolder = i18nRoot["Messages_" + variantStr] || i18nRoot["Messages_" + langStr] || i18nRoot["Messages"];
+                langStr = language_Variant ? language_Variant.language : "",
+                variantStr = language_Variant ? [language_Variant.language, "_", language_Variant.variant || ""].join("") : "",
+                i18nRoot = myfaces._impl.i18n, i18nHolder = i18nRoot["Messages_" + variantStr] || i18nRoot["Messages_" + langStr] || i18nRoot["Messages"];
         this._installedLocale = new i18nHolder();
     },
     assertType:function (probe, theType) {
@@ -463,8 +463,8 @@ _MF_SINGLTN(_PFX_UTIL + "_Lang", Object, /** @lends myfaces._impl._util._Lang.pr
             return false;
         };
         return !xmlContent ||
-            (this.exists(xmlContent, "parseError.errorCode") && xmlContent.parseError.errorCode != 0) ||
-            findParseError(xmlContent);
+                (this.exists(xmlContent, "parseError.errorCode") && xmlContent.parseError.errorCode != 0) ||
+                findParseError(xmlContent);
     },
     /**
      * fetches the error message from the xml content

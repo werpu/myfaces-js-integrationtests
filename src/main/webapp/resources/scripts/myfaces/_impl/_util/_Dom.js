@@ -1306,13 +1306,13 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
     },
 
     /**
-     * backport new jsf codebase, should work from ie9 onwards
+     * backport new faces codebase, should work from ie9 onwards
      * (cutoff point)
      * builds the ie nodes properly in a placeholder
      * and bypasses a non script insert bug that way
      * @param markup the markup code to be executed from
      */
-    fromMarkup(markup, reqiredTag) {
+    fromMarkup: function(markup) {
 
         // https:// developer.mozilla.org/de/docs/Web/API/DOMParser license creative commons
         var doc = document.implementation.createHTMLDocument("");
@@ -1329,5 +1329,4 @@ _MF_SINGLTN(_PFX_UTIL + "_Dom", Object, /** @lends myfaces._impl._util._Dom.prot
             return dummyPlaceHolder;
         }
     }
-
 });

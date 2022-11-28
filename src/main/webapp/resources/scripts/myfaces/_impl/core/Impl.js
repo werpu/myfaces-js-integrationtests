@@ -299,7 +299,7 @@ _MF_SINGLTN(_PFX_CORE + "Impl", _MF_OBJECT, /**  @lends myfaces._impl.core.Impl.
         //this is not documented behavior but can be determined by running
         //mojarra under blackbox conditions
         //i assume it does the same as our formId_submit=1 so leaving it out
-        //wont hurt but for the sake of compatibility we are going to add it
+        //won´t hurt but for the sake of compatibility we are going to add it
         passThrgh[form.id] = form.id;
 
         /* jsf2.2 only: options.delay || */
