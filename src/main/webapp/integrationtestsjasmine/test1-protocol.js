@@ -43,14 +43,24 @@ describe("Testsuite testing the protocol", function () {
 
     it("It should run Update Insert Spec - Insert Path", function (done) {
 
+
+
         emitPPR("cmd_update_insert2", null, "updateinsert2").then(function () {
-            DomQuery.querySelectorAll("body").waitUntilDom(() => {
+
+            const expectation = () => {
+                return DomQuery.byId("evalarea2").html().value.indexOf("succeed") != -1 &&
+                    DomQuery.byId("evalarea3").html().value.indexOf("succeed") != -1 &&
+                    DomQuery.byId("insertbefore").length &&
+                    DomQuery.byId("insertafter").length;
+            };
+
+            if(expectation()) {
+                expect(true).toBeTruthy();
+                done();
                 return
-                DomQuery.byId("evalarea2").html().value.indexOf("succeed") != -1 &&
-                DomQuery.byId("evalarea3").html().value.indexOf("succeed") != -1 &&
-                DomQuery.byId("insertbefore").length &&
-                DomQuery.byId("insertafter").length;
-            }).then(() => {
+            }
+
+            DomQuery.querySelectorAll("body").waitUntilDom(expectation).then(() => {
                 DomQuery.byId("insertbefore").delete();
                 DomQuery.byId("insertafter").delete();
                 expect(true).toBeTruthy();

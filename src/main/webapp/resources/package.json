@@ -15,11 +15,11 @@
   "author": "Werner Punz",
   "license": "Apache-2.0",
   "devDependencies": {
-    "chai": "^4.3.6",
+    "chai": "^4.3.7",
     "famfamfam-silk": "^1.0.0",
-    "jasmine": "^4.4.0",
-    "jsf.js_next_gen": "^4.0.0-beta-12",
-    "mocha": "^10.0.0",
-    "mona-dish": "0.22.16"
+    "jasmine": "^4.5.0",
+    "jsf.js_next_gen": "^4.0.0-RC.14",
+    "mocha": "^10.1.0",
+    "mona-dish": "0.23.10"
   }
 }
