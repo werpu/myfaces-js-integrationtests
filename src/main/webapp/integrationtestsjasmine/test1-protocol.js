@@ -77,11 +77,18 @@ describe("Testsuite testing the protocol", function () {
 
     it("should trigger Error Trigger Ajax Illegal Response", function (done) {
         emitPPR("cmd_illegalresponse", null, "illegalResponse").then(() => done(new Error("fail"))).catch(function () {
-            DQ$("body").waitUntilDom(() => {
+            function illegalResponseCondition() {
                 return myfaces.testcases.ajaxEvent.type === "error" &&
                     myfaces.testcases.ajaxEvent.status === "malformedXML" &&
-                    myfaces.testcases.ajaxEvent.responseCode === "200" &&
-                    myfaces.testcases.ajaxEvent.source.id === "cmd_illegalresponse";
+                    myfaces.testcases.ajaxEvent.responseCode == 200 &&
+                    myfaces.testcases.ajaxEvent.source.id.indexOf("cmd_illegalresponse") != -1;
+            }
+            if(illegalResponseCondition()) {
+                success(done);
+                return;
+            }
+            DQ$("body").waitUntilDom(() => {
+                return illegalResponseCondition();
             }).then(() => success(done)).catch(done);
         });
     });

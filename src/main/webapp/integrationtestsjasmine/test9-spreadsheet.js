@@ -43,20 +43,27 @@ describe("Spreadsheet test for the replacement of table elements", function () {
         }
         Promise.all(promises).finally(function() {
             console.log("Processing time last request:"+(Date.now() - 500 - start));
-            DQ$("#testTable2").waitUntilDom(() => {
+
+            let successCondition = () => {
                 const LAST_ELEMENT = 99;
                 let currentOutput1 = "#testTable2" + faces.separatorchar + LAST_ELEMENT + faces.separatorchar + "field1";
                 let currentOutput2 = "#testTable2" + faces.separatorchar + LAST_ELEMENT + faces.separatorchar + "field2";
                 return DQ$(currentOutput1.replace(/:/g, "\\:")).innerHTML.indexOf("value1:" + LAST_ELEMENT) !== -1 &&
                     DQ$(currentOutput2.replace(/:/g, "\\:")).innerHTML.indexOf("value2:" + LAST_ELEMENT) !== -1;
-            }).then(() => {
+            };
+            let expectations = () => {
                 for (let cnt = 0; cnt < 100; cnt++) {
                     let currentOutput1 = "#testTable2" + faces.separatorchar + cnt + faces.separatorchar + "field1";
                     let currentOutput2 = "#testTable2" + faces.separatorchar + cnt + faces.separatorchar + "field2";
                     let assert1 = DQ$(currentOutput1.replace(/:/g, "\\:")).innerHTML.indexOf("value1:" + cnt) !== -1;
                     let assert2 = DQ$(currentOutput2.replace(/:/g, "\\:")).innerHTML.indexOf("value2:" + cnt) !== -1;
-                    expect( assert1 && assert2).toBeTruthy(); //field must have ajax content
+                    expect(assert1 && assert2).toBeTruthy(); //field must have ajax content
                 }
+            }
+
+
+            DQ$("#testTable2").waitUntilDom(successCondition).then(() => {
+                expectations();
                 done();
             }).catch(done);
         }).catch(done);

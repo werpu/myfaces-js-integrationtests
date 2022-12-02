@@ -32,9 +32,7 @@
         <!--
        Import the official scripts, (note old scripts fail on one test hence disabled)
        -->
-        <!--
         <h:outputScript pr:nonce="test123" name="faces.js" library="jakarta.faces" target="head" />
-        -->
         <!--
        <script type="text/javascript" nonce="test123" src="http://127.0.0.1:8900/dist/window/faces-development.js"></script>
        -->
@@ -45,9 +43,9 @@
         <!--
         you can use this import for cross verification this is the latest script from github
         -->
-
+        <!--
         <h:outputScript pr:nonce="test123"  name="jsf.js_next_gen/dist/window/faces-development.js" library="node_modules" target="head"/>
-
+        -->
         <!--
         <script type="text/javascript" nonce="test123" src="../resources/compiled/faces.js"></script>
         -->
@@ -58,6 +56,7 @@
 
         <h:outputScript library="myfaces.testscripts" pr:nonce="test123"  name="myfaces/_impl/_util/_Lang.js" target="head" rendered="#{!suppressDoubleIncludeBean.alreadyCalled}"></h:outputScript>
         <h:outputScript library="myfaces.testscripts" pr:nonce="test123"  name="myfaces/_impl/_util/_ImportCounter.js" target="head"></h:outputScript>
+
 
         <script nonce="test123" type="text/javascript" defer="defer">
             //disable for impl testing not local testing

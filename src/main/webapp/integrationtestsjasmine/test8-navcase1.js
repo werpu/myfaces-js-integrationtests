@@ -30,21 +30,28 @@ describe("Partial Page Rendering Nav Case", function () {
         DQ$("#lastName").val = "Tester";
         DQ$("#city").val = "Linz";
         DQ$("#zip").val = "Tester";
-        facesRequest('forward', null, {
+       facesRequest('forward', null, {
             execute: 'mainForm',
             render: 'fullContent',
             'jakarta.faces.behavior.event': 'action'
         }).then(function () {
-            DQ$("body").waitUntilDom(() => {
+            function domCondition() {
+               // debugger;
                 return DQ$("span#firstName").innerHTML.indexOf("Werner") !== -1 &&
                     DQ$("span#lastName").innerHTML.indexOf("Tester") !== -1 &&
                     DQ$("body").innerHTML.indexOf("script executed") !== -1;
-            }).then(() => {
+            }
+
+
+            setTimeout(() => {
                 DQ$("body").append(htmlReporter);
-                success(done);
-            }).catch(err => {
-                testFail(err);
-            });
+                if(domCondition()) {
+                    success(done);
+                    return;
+                } else {
+                    testFail("state of dome not reached")
+                }
+            }, 200);
         }).catch(err => {
             testFail(err);
         });
