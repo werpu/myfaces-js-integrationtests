@@ -22,6 +22,7 @@ package extras.apache.org.jsintegration.other;
 
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 
 
@@ -29,6 +30,7 @@ import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Werner Punz (latest modification by $Author$)
@@ -96,6 +98,20 @@ public class MyBean2 implements Serializable {
         this.results = results;
     }
 
+
+    public String execute() {
+        Map<String,String> params =
+                FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        this.helloWorld = params.get("hello2");
+        return null;
+    }
+
+    public String execute2() {
+        Map<String,String> params =
+                FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        this.helloWorld = params.get("hello2");
+        return null;
+    }
 
     private void readObject(ObjectInputStream ois) throws Exception {
         ois.defaultReadObject();

@@ -15,7 +15,7 @@
  */
 afterEach(function () {
     setTimeout(function () {
-        myfaces.testcases.redirect("./test25-head.jsf");
+        myfaces.testcases.redirect("./test25-f-param.jsf");
     }, 1000);
 });
 

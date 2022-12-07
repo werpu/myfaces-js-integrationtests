@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:components="http://xmlns.jcp.org/jsf/composite/components"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="../templates/template.xhtml">
+    <ui:define name="content">
+
+        <components:jasmineTest testRunner="test25-f-param.js"/>
+
+        <h:form id="form1" prependId="false">
+            <!-- needed for the test trigger -->
+            <h:commandLink id="submitButton" value="Click here" action="#{myBean2.execute()}">
+                <f:ajax execute="@this" render="output" />
+                <f:param name="hello2" value="Hello from f:param"/>
+                <f:param name="Hello World" value="Hello from f:param2"/>
+            </h:commandLink>
+
+
+            <script type="text/javascript">
+                function issueParamRequest(evt) {
+                    jsf.ajax.request(document.getElementById("submitButton2"),
+                    evt, {
+                        execute: "@this",
+                        render: "output",
+                        params: {
+                            "hello2": "hello2 from jsf.ajax.request",
+                            "Hello World2": "hello2 world2 from jsf.ajax.request"
+                        }
+                        });
+                    return false;
+                }
+            </script>
+            <h:commandLink id="submitButton2" value="Click here 2" onclick="return issueParamRequest(event);" action="#{myBean2.execute2()}">
+            </h:commandLink>
+
+            <h:panelGroup id="results">
+                <h:outputText id="output" value="#{myBean2.helloWorld}"></h:outputText>
+            </h:panelGroup>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+</html>
