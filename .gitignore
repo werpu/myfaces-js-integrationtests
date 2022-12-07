@@ -19,3 +19,4 @@ src/main/webapp/resources/scripts/myfaces_ts/**/*.js
 src/main/webapp/resources/scripts/myfaces_ts/ts_test/**/*.js
 src/main/typescript/*.js
 src/main/typescript/*.js.map
+/node/

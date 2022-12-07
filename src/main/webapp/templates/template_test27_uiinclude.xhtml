@@ -41,7 +41,15 @@
         <div id="myfaces.logging" />
     </ui:insert>
 
-    <ui:insert name="contentTop"></ui:insert>
+
+
+    <ui:insert name="contentTop">
+        <h:form prependId="false">
+            <h:commandLink id="submitter" value="press me for content change" action="#{includeBean.doSwitchPage}">
+                <f:ajax render="@all" execute="@this"></f:ajax>
+            </h:commandLink>
+        </h:form>
+    </ui:insert>
     <ui:insert name="content" />
     <ui:insert name="contentBottom"></ui:insert>
 </h:body>

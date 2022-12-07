@@ -14,19 +14,31 @@
  * limitations under the License.
  */
 afterEach(function () {
-    myfaces.testcases.redirect("./test27-uiinclude.jsf");
+    myfaces.testcases.redirect("./finalResults.jsf");
 });
+
+
 
 describe("Simple Push Testing", function () {
 
-    it("runs a basic simulated websocket test", function (done) {
+    it("runs a basic viewroot include switch", function (done) {
+        if(window.already_run) {
+            done();
+            return;
+        }
+        window["already_run"] = true;
         // For whatever reasons the combination innerHTML and MutationObservers seems to be broken on push notifications
         // browser bug
-        setTimeout(() => {
-            expect(  DQ$("#pushtarget #channel").innerHTML).toEqual("hello");
-            expect( DQ$("#pushtarget #messsage").innerHTML).toEqual("hello from push notification");
+        let p1State =  DQ$("body").innerHTML.indexOf("Page 1") != -1;
+        let htmlReporter = DQ$(".jasmine_html-reporter");
+        htmlReporter.detach();
+
+        setTimeout(()=> {
+            DQ$("body").append(htmlReporter);
+            expect(DQ$("body").innerHTML.indexOf("Page " + (p1State) ? 2 : 1)).toBeGreaterThan( -1);
             done();
-        }, 1000);
+        }, 500)
+        DQ$("#submitter").click();
     });
 
 });
