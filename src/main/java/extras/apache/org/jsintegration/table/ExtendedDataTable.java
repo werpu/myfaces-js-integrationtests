@@ -21,8 +21,9 @@ package extras.apache.org.jsintegration.table;
 
 
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Named;
+
 
 import java.io.Serializable;
 import java.util.LinkedList;
@@ -32,7 +33,7 @@ import java.util.List;
  * @author Werner Punz (latest modification by $Author$)
  * @version $Revision$ $Date$
  */
-@ManagedBean(name = "dataBean")
+@Named("dataBean")
 @SessionScoped
 public class ExtendedDataTable implements Serializable {
     List<Item> testListA = new LinkedList<Item>();

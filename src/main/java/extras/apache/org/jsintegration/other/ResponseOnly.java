@@ -22,8 +22,9 @@ package extras.apache.org.jsintegration.other;
 
 
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Named;
+
 
 import java.io.Serializable;
 
@@ -31,7 +32,7 @@ import java.io.Serializable;
  * @author Werner Punz (latest modification by $Author$)
  * @version $Revision$ $Date$
  */
-@ManagedBean
+@Named
 @SessionScoped
 public class ResponseOnly implements Serializable
 {

@@ -61,6 +61,14 @@ emitPPR = function (source, event, action, formName) {
     });
 };
 
+//missing success expectation
+window.success = (done) => {
+    expect(true).toBeTruthy();
+    if (!!done) {
+        done();
+    }
+}
+
 myfaces.testcases.redirect = function (href) {
     if (window.location.href.indexOf("autoTest=true") != -1) {
         window.location.href = href + "?autoTest=true";

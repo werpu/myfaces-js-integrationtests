@@ -20,7 +20,7 @@
 package extras.apache.org.jsintegration.other;
 
 
-import javax.faces.bean.ManagedBean;
+import javax.inject.Named;
 import javax.faces.bean.RequestScoped;
 
 
@@ -28,7 +28,7 @@ import javax.faces.bean.RequestScoped;
  * @author Werner Punz (latest modification by $Author$)
  * @version $Revision$ $Date$
  */
-@ManagedBean
+@Named
 @RequestScoped
 public class MultiFormBean
 {

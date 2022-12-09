@@ -57,20 +57,13 @@ describe("Test for decoratable calls within our jsf lifecycle", function () {
         jsfAjaxRequestPromise('reloader', null, {
             execute: '@none',
             render: 'outputWriter',
-            'javax.faces.behavior.event': 'action'
-        }).then(function (success) {
-            setTimeout(function () {
-                expect(req).toEqual(true);
-                expect(resp).toEqual(true);
-                expect(viest).toEqual(true);
-                done();
-            }, 500);
-        }).catch(function (err) {
-            console.error(err);
-            expect(req).toEqual(true);
-            expect(resp).toEqual(true);
-            expect(viest).toEqual(true);
-            done();
-        });
+            'jakarta.faces.behavior.event': 'action'
+        }).then(() => {
+            DQ$("body")
+                .waitUntilDom(() => req && resp && viest)
+                .then(() => {
+                success(done);
+            });
+        }).catch(done);
     });
 });

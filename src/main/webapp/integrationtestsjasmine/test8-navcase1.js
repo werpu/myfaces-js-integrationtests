@@ -23,8 +23,12 @@ describe("Partial Page Rendering Nav Case", function () {
     it("Nav Case Test", function (done) {
         let htmlReporter = DQ$(".jasmine_html-reporter");
 
-
         htmlReporter.detach();
+        const testFail = (err) => {
+            DQ$("body").append(htmlReporter);
+            done(err);
+        };
+
         DQ$("#firstName").val = "Werner";
         DQ$("#lastName").val = "Tester";
         DQ$("#city").val = "Linz";
@@ -34,13 +38,25 @@ describe("Partial Page Rendering Nav Case", function () {
             render: 'fullContent',
             'javax.faces.behavior.event': 'action'
         }).then(function () {
-            setTimeout(function () {
-                htmlReporter.appendTo("body");
-                expect(DQ$("span#firstName").innerHTML.indexOf("Werner")).not.toBe(-1);
-                expect(DQ$("span#lastName").innerHTML.indexOf("Tester")).not.toBe(-1);
-                expect(DQ$("body").innerHTML.indexOf("script executed")).not.toBe(-1);
-                done();
-            }, 500);
+            function domCondition() {
+               // debugger;
+                return DQ$("span#firstName").innerHTML.indexOf("Werner") !== -1 &&
+                    DQ$("span#lastName").innerHTML.indexOf("Tester") !== -1 &&
+                    DQ$("body").innerHTML.indexOf("script executed") !== -1;
+            }
+
+
+            setTimeout(() => {
+                DQ$("body").append(htmlReporter);
+                if(domCondition()) {
+                    success(done);
+                    return;
+                } else {
+                    testFail("state of dom not reached")
+                }
+            }, 200);
+        }).catch(err => {
+            testFail(err);
         });
     });
 });

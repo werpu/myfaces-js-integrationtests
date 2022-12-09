@@ -21,13 +21,13 @@ package extras.apache.org.jsintegration.other;
 
 
 
-import javax.faces.bean.ManagedBean;
+import javax.inject.Named;
 import javax.faces.bean.RequestScoped;
 import javax.servlet.http.Part;
 
 
 @RequestScoped
-@ManagedBean
+@Named
 public class Fileupload {
 
     private Part uploaded;

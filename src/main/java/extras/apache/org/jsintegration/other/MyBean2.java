@@ -21,9 +21,12 @@ package extras.apache.org.jsintegration.other;
 
 
 
-import javax.faces.bean.ManagedBean;
+
+
+
+import javax.enterprise.context.ConversationScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
 
 import java.io.ObjectInputStream;
@@ -37,8 +40,8 @@ import java.util.Map;
  * @version $Revision$ $Date$
  */
 
-@ManagedBean
-@ViewScoped
+@Named
+@ConversationScoped
 public class MyBean2 implements Serializable {
 
     String helloWorld = "hello world";
