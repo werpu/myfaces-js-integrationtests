@@ -23,11 +23,11 @@ describe("Spreadsheet test for the replacement of table elements", function () {
         let promises =  [];
         for (let cnt = 0; cnt < 100; cnt++) {
             //first we set 100 values
-            let currentField1 = "#testTable2\\"+faces.separatorchar + cnt + "\\"+faces.separatorchar+"input1";
-            let currentField2 = "#testTable2\\"+faces.separatorchar+ cnt + "\\"+faces.separatorchar+"input2";
-            let currentOutput2 = "testTable2"+faces.separatorchar + cnt + faces.separatorchar+"field1";
-            let currentOutput1 = "testTable2"+faces.separatorchar + cnt + faces.separatorchar+"field2";
-            let origin = "testTable2"+faces.separatorchar + cnt + faces.separatorchar+"submitall";
+            let currentField1 = "#testTable2\\"+jsf.separatorchar + cnt + "\\"+jsf.separatorchar+"input1";
+            let currentField2 = "#testTable2\\"+jsf.separatorchar+ cnt + "\\"+jsf.separatorchar+"input2";
+            let currentOutput2 = "testTable2"+jsf.separatorchar + cnt + jsf.separatorchar+"field1";
+            let currentOutput1 = "testTable2"+jsf.separatorchar + cnt + jsf.separatorchar+"field2";
+            let origin = "testTable2"+jsf.separatorchar + cnt + jsf.separatorchar+"submitall";
 
             DQ$(currentField1).val = "value1:" + cnt;
             DQ$(currentField2).val = "value2:" + cnt;
@@ -46,15 +46,15 @@ describe("Spreadsheet test for the replacement of table elements", function () {
 
             let successCondition = () => {
                 const LAST_ELEMENT = 99;
-                let currentOutput1 = "#testTable2" + faces.separatorchar + LAST_ELEMENT + faces.separatorchar + "field1";
-                let currentOutput2 = "#testTable2" + faces.separatorchar + LAST_ELEMENT + faces.separatorchar + "field2";
+                let currentOutput1 = "#testTable2" + jsf.separatorchar + LAST_ELEMENT + jsf.separatorchar + "field1";
+                let currentOutput2 = "#testTable2" + jsf.separatorchar + LAST_ELEMENT + jsf.separatorchar + "field2";
                 return DQ$(currentOutput1.replace(/:/g, "\\:")).innerHTML.indexOf("value1:" + LAST_ELEMENT) !== -1 &&
                     DQ$(currentOutput2.replace(/:/g, "\\:")).innerHTML.indexOf("value2:" + LAST_ELEMENT) !== -1;
             };
             let expectations = () => {
                 for (let cnt = 0; cnt < 100; cnt++) {
-                    let currentOutput1 = "#testTable2" + faces.separatorchar + cnt + faces.separatorchar + "field1";
-                    let currentOutput2 = "#testTable2" + faces.separatorchar + cnt + faces.separatorchar + "field2";
+                    let currentOutput1 = "#testTable2" + jsf.separatorchar + cnt + jsf.separatorchar + "field1";
+                    let currentOutput2 = "#testTable2" + jsf.separatorchar + cnt + jsf.separatorchar + "field2";
                     let assert1 = DQ$(currentOutput1.replace(/:/g, "\\:")).innerHTML.indexOf("value1:" + cnt) !== -1;
                     let assert2 = DQ$(currentOutput2.replace(/:/g, "\\:")).innerHTML.indexOf("value2:" + cnt) !== -1;
                     expect(assert1 && assert2).toBeTruthy(); //field must have ajax content

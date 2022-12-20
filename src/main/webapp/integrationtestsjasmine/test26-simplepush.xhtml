@@ -16,9 +16,9 @@
   limitations under the License.
 -->
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="jakarta.faces.html"
-      xmlns:ui="jakarta.faces.facelets" xmlns:components="http://xmlns.jcp.org/jsf/composite/components"
-      xmlns:f="jakarta.faces.core">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:components="http://xmlns.jcp.org/jsf/composite/components"
+      xmlns:f="http://java.sun.com/jsf/core">
 
 <ui:composition template="../templates/template.xhtml">
     <ui:define name="content">
@@ -26,13 +26,13 @@
         <components:jasmineTest testRunner="test26-simplepush.js"/>
 
         <script type="text/javascript">
-            let faces4Init = faces.push.init;
+            let faces4Init = jsf.push.init;
             /*
              * we shim back the breaking api change from 3.0 to 4.0
              * onerror is gone
              */
             let _socketClientId = null;
-            faces.push.init = (socketClientId,
+            jsf.push.init = (socketClientId,
                                url,
                                channel,
                                onopen,

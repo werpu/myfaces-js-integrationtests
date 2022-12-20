@@ -123,11 +123,11 @@ public class FacesJSMappingDecorator extends Resource {
 
     private String remapNames(String in) {
         return in.replace("faces-development.js", "faces-development.js.map")
-                .replace("faces.js", "faces.js.map");
+                .replace("jsf.js", "jsf.js.map");
     }
 
     private URL remapNames(URL in) throws MalformedURLException {
         return new URL(in.toString().replace("faces-development.js", "faces-development.js.map")
-                .replace("faces.js", "faces.js.map"));
+                .replace("jsf.js", "jsf.js.map"));
     }
 }

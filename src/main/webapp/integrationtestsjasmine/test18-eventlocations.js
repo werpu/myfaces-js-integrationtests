@@ -16,9 +16,9 @@
 
 let successCalled = 0;
 let assertSuccessPosition = false;
-let oldResponse = faces.ajax.response;
+let oldResponse = jsf.ajax.response;
 
-faces.ajax.response = function (request, context) {
+jsf.ajax.response = function (request, context) {
 
     let newContext = {};
     newContext.source = context.source;

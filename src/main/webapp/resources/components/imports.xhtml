@@ -14,10 +14,10 @@
   limitations under the License.
 -->
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="jakarta.faces.html"
-      xmlns:f="jakarta.faces.core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:pr="http://xmlns.jcp.org/jsf/passthrough"
-      xmlns:cc="jakarta.faces.composite"
+      xmlns:cc="http://java.sun.com/jsf/composite"
       xmlns:jstl="http://xmlns.jcp.org/jstl/core">
 
     <!-- INTERFACE -->
@@ -33,14 +33,14 @@
        Import the official scripts, (note old scripts fail on one test hence disabled)
        -->
 
-        <h:outputScript pr:nonce="test123" name="faces.js" library="jakarta.faces" target="head" />
+        <h:outputScript pr:nonce="test123" name="jsf.js" library="jakarta.faces" target="head" />
 
         <!--
        <script type="text/javascript" nonce="test123" src="http://127.0.0.1:8900/dist/window/faces-development.js"></script>
        -->
 
         <!--
-        <script type="text/javascript" src="/IntegrationJSTest/jakarta.faces.resource/faces.js.jsf?ln=jakarta.faces"></script>
+        <script type="text/javascript" src="/IntegrationJSTest/jakarta.faces.resource/jsf.js.jsf?ln=jakarta.faces"></script>
         -->
         <!--
         you can use this import for cross verification this is the latest script from github
@@ -49,7 +49,7 @@
         <h:outputScript pr:nonce="test123"  name="jsf.js_next_gen/dist/window/faces-development.js" library="node_modules" target="head"/>
         -->
         <!--
-        <script type="text/javascript" nonce="test123" src="../resources/compiled/faces.js"></script>
+        <script type="text/javascript" nonce="test123" src="../resources/compiled/jsf.js"></script>
         -->
 
 

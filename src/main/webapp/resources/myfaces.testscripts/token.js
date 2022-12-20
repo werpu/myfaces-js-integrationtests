@@ -155,5 +155,5 @@
         }
     }
 
-    faces.ajax.addOnEvent(theHandler);
+    jsf.ajax.addOnEvent(theHandler);
 })();

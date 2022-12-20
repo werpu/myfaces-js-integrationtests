@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-let oldResponse = faces.ajax.response;
+let oldResponse = jsf.ajax.response;
 
 //we are going to decorate the response for the first testcase
 function applySourceOnly() {
-    faces.ajax.response = function (request, context) {
+    jsf.ajax.response = function (request, context) {
         let newContext = {};
         newContext.source = context.source;
         newContext.onevent = context.onevent;
@@ -30,7 +30,7 @@ function applySourceOnly() {
 
 function applyEmpty() {
 
-    faces.ajax.response = function (request, context) {
+    jsf.ajax.response = function (request, context) {
         let newContext = {};
 
         newContext.onevent = context.onevent;

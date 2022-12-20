@@ -79,7 +79,7 @@ describe("Event handler phases test", function () {
 
     it("Checks the global events", function (done) {
 
-        faces.ajax.addOnEvent(globalEventHandler);
+        jsf.ajax.addOnEvent(globalEventHandler);
         // noinspection JSUnresolvedVariable,JSUnresolvedFunction
         facesRequest(document.getElementById("updateTrigger"), null, {
             render: "updatePanel",

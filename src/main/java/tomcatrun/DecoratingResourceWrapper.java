@@ -11,7 +11,7 @@ public class DecoratingResourceWrapper extends ResourceHandlerWrapper {
 
     @Override
     public Resource createResource(String resourceName) {
-        if (resourceName.contains("faces.js") || resourceName.contains("faces-development.js")) {
+        if (resourceName.contains("jsf.js") || resourceName.contains("faces-development.js")) {
             return new DecoratedFacesJS(super.createResource(resourceName));
         }
         return super.createResource(resourceName);
@@ -19,7 +19,7 @@ public class DecoratingResourceWrapper extends ResourceHandlerWrapper {
 
     @Override
     public Resource createResource(String resourceName, String libraryName) {
-        if (resourceName.contains("faces.js") || resourceName.contains("faces-development.js")) {
+        if (resourceName.contains("jsf.js") || resourceName.contains("faces-development.js")) {
             return new DecoratedFacesJS(super.createResource(resourceName, libraryName));
         }
         return super.createResource(resourceName, libraryName);
