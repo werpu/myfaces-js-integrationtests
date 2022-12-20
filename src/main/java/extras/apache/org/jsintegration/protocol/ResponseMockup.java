@@ -141,7 +141,7 @@ public class ResponseMockup extends HttpServlet
                         "        <link rel=\"stylesheet\" href=\"./fixtures/headcss.css\"></link>\n" +
                         "        <script type=\"text/javascript\">\n" +
                         "            console.log('from replaced head');   " +
-                        "            setTimeout(() => document.getElementById('result_area').innerHTML = 'eval success', 100);\n" +
+                        "            setTimeout(function () { document.getElementById('result_area').innerHTML = 'eval success'; }, 100);\n" +
                         "        </script>");
                 replacement.append("</head>");
                 Changes changes = new Changes(root);

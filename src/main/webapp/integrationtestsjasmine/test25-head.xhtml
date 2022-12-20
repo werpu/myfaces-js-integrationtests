@@ -23,8 +23,25 @@
 <ui:composition template="../templates/template.xhtml">
     <ui:define name="content">
         <components:jasmineTest testRunner="test25-head.js"/>
-        <form id="form1" prependId="false">
-            <input type="button" id="execute_head" value="execute head"></input>
+        -->
+        <script type="text/javascript">
+            var runAjax = function (event) {
+                var source =  event.target;
+
+                jsf.ajax.request("execute_head", event, {
+                    render: "@all",
+                    execute: "@this",
+                    params: {
+                        op: "head_replace1"
+                    }
+
+                });
+            }
+        </script>
+        <form id="form1" prependId="false" action="./test.mockup">
+            <a href="javascript:void(0)" id="execute_head"  onclick="runAjax(event); return false;">
+                        Click
+            </a>
             <div id="result_area"></div>
             <div id="result_area2"></div>
         </form>
