@@ -21,10 +21,10 @@
     <groupId>github.werpu</groupId>
     <artifactId>IntegrationJSTest</artifactId>
     <packaging>jar</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>2.3.11-SNAPSHOT</version>
     <properties>
         <openwebbeans.version>2.0.27</openwebbeans.version>
-        <myfaces-version>2.3-next-SNAPSHOT</myfaces-version>
+        <myfaces-version>2.3.11-SNAPSHOT</myfaces-version>
         <java.source.version>1.8</java.source.version>
         <maven-compiler-plugin.version>LATEST</maven-compiler-plugin.version>
         <webapp.name>TestScripts</webapp.name>

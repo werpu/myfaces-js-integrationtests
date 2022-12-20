@@ -27,7 +27,7 @@ describe("Head replacement tests", function () {
                 DomQuery.byTagName("body")
                     .waitUntilDom(() => DQ$("#result_area").innerHTML == "eval success")
                     .then(() => {
-                        expect(DQ$("#result_area2").innerHTML == "eval success").toBe(true);
+                        expect(DQ$("#result_area2").innerHTML == "eval success 2").toBe(true);
                         expect(DQ$("head meta").length).toEqual(5);
                         expect(DQ$("head script").length).toEqual(2);
                         expect(DQ$("head link").length).toEqual(2);

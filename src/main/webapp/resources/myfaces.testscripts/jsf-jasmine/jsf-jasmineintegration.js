@@ -56,13 +56,19 @@ jsf.ajax.addOnError(function (evt) {
  */
 emitPPR = function (source, event, action, formName) {
     document.getElementById(formName || "form1").action = target;
+    if(!window.Promise) {//old browsers only manual tests possible
+        jsf.ajax.request(source, (window.event) ? window.event : event, {op: action})
+        return;
+    }
+
+
     return jsfAjaxRequestPromise(/*String|Dom Node*/ source, /*|EVENT|*/ (window.event) ? window.event : event, /*{|OPTIONS|}*/ {
         op: action
     });
 };
 
 //missing success expectation
-window.success = (done) => {
+window["success"] = function(done) {
     expect(true).toBeTruthy();
     if (!!done) {
         done();
