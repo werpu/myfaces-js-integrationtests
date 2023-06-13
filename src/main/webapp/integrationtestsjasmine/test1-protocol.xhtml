@@ -77,6 +77,12 @@
                 <input type="button" id="cmd_error_component" value="Error: no component given"
                        onclick="faces.ajax.request(null, event, {}); return false"/>
 
+                <input type="button" id="cmd_error_component2" value="Error: no component given"
+                       onclick="faces.ajax.request(this, event, {
+                           onerror: function(data) {
+                               document.getElementById(logError).innerText = JSON.stringify(data);
+                           }
+                       }); return false"/>
 
 
             </form>
@@ -85,6 +91,9 @@
             <script type="text/javascript">
                 document.getElementById("evalarea1").innerHTML = "booga";
             </script>
+            <div id="logError">
+                for error handlers
+            </div>
 
         </div>
 

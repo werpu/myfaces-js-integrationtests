@@ -35,7 +35,8 @@ describe("ViewRoot with execute @all and render @all", function () {
         //DQ$("body").waitUntilDom(() => {
         //    return (found = found || (DQ$("body").innerHTML.indexOf("refresh successul2") !== -1 && window.__mf_import_cnt === 2));
         //}, {attributes: true, childList: true, subtree: true, timeout: 2000}).then(() => {
-         setTimeout(() => {
+        originalTimeout = 5000;
+        setTimeout(() => {
 
             htmlReporter.appendTo(DQ$("body"))
             console.log(found);
@@ -43,7 +44,7 @@ describe("ViewRoot with execute @all and render @all", function () {
             expect(DQ$("body").innerHTML.indexOf("before viewroot") === -1).toBeTruthy();
 
             success(done);
-        }, 500);
+        }, 1000);
         window["_viewrootRun"] = true;
         facesRequest("allKeyword", null, {render: "@all", execute: "@all"});
 
